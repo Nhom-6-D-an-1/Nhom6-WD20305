@@ -12,30 +12,25 @@
 
     <!-- Latest compiled JavaScript -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="<?= BASE_URL ?>assets/css/views.css">
 </head>
 
 <body>
+    <?php require_once PATH_VIEW . "partials/header.php"; ?>
 
-    <nav class="navbar navbar-expand-md bg-light justify-content-center">
-        <ul class="navbar-nav">
-            <li class="nav-item">
-                <a class="nav-link text-uppercase" href="<?= BASE_URL ?>"><b>Home</b></a>
-            </li>
-        </ul>
-    </nav>
+    <div class="d-flex">
+        <?php require_once PATH_VIEW . "partials/sidebar.php"; ?>
 
-    <div class="container">
-        <h2 class="mt-3 mb-3"><?= $title ?? 'Base MVC PHP 1' ?></h2>
-
-        <div class="row">
-            <?php
-            if (isset($view)) {
-                require_once PATH_VIEW . $view . '.php';
-            }
-            ?>
-        </div>
+        <main class="min-vh-100 flex-grow-1" style="margin-left: 260px;">
+            <div class="container-fluid py-4 px-4">
+                <?php
+                if (isset($view)) {
+                    require_once PATH_VIEW . $view . '.php';
+                }
+                ?>
+            </div>
+        </main>
     </div>
-
 </body>
 
 </html>
