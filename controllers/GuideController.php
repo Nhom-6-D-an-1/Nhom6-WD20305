@@ -28,10 +28,42 @@ class GuideController
     }
     public function viewRequest()
     {
-        $title = "Yêu cầu đặc biệt";
-        $view = 'guide/request/request';
-        require_once PATH_VIEW_MAIN;
+        $request = new GuestSpecialRequest();
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $guest_id = $_POST['guest_id'];
+            $description = trim($_POST['description']);
+            $medical_condition = trim($_POST['medical_condition'] ?? "");
+            if ($description == '') {
+                $_SESSION['flash_error'] = "Yêu cầu không được để trống!";
+                header("Location: " . BASE_URL . "?action=viewrequest");
+                exit();
+            }
+            $request->insertRequest($guest_id, $description, $medical_condition);
+            header("Location: " . BASE_URL . "?action=viewrequest");
+            exit();
+        } else {
+            $guest = new Guest();
+            $data_guest = $guest->getAllGuest();
+            $data = $request->getAllRequest();
+            $title = "Yêu cầu đặc biệt";
+            $view = 'guide/request/request';
+            require_once PATH_VIEW_MAIN;
+        }
     }
+
+    public function deleteRequest()
+    {
+        if (!isset($_GET['id'])) {
+            header("Location: " . BASE_URL . "?action=viewrequest");
+            exit();
+        }
+        $request = new GuestSpecialRequest();
+        $id = $_GET['id'];
+        $request->deleteRequest($id);
+        header("Location: " . BASE_URL . "?action=viewrequest");
+        exit();
+    }
+
     public function viewReport()
     {
         $title = "Báo cáo sự cố";

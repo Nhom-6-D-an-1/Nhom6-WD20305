@@ -1,8 +1,8 @@
-<?php 
+<?php
 
 session_start();
 
-spl_autoload_register(function ($class) {    
+spl_autoload_register(function ($class) {
     $fileName = "$class.php";
 
     $fileModel              = PATH_MODEL . $fileName;
@@ -10,8 +10,7 @@ spl_autoload_register(function ($class) {
 
     if (is_readable($fileModel)) {
         require_once $fileModel;
-    } 
-    else if (is_readable($fileController)) {
+    } else if (is_readable($fileController)) {
         require_once $fileController;
     }
 });
@@ -20,4 +19,4 @@ require_once './configs/env.php';
 require_once './configs/helper.php';
 
 // Điều hướng
-require_once './routes/index.php';
+require_once './routes/guide.php';
