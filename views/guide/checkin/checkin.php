@@ -1,7 +1,5 @@
 <div class="col-12">
     <h2>Check in, điểm danh</h2>
-
-    <!-- Địa điểm checkin -->
     <div class="dropdown">
         <a class="btn btn-light dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Địa điểm
@@ -44,7 +42,6 @@
                             <button type="submit" class="btn btn-primary">Cập nhật</button>
                         </div>
                     </td>
-
                 </tr>
             </tbody>
         </table>
