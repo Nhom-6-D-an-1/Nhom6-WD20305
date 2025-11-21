@@ -1,33 +1,37 @@
 <?php
 
-class HomeController
+class GuideController
 {
     public function index() {
-        $view = 'schedule/index';
+        $title = 'Lịch làm việc';
+        $view = 'guide/schedule/schedule';
         require_once PATH_VIEW_MAIN;
     }
     public function viewSchedule()  {
-        $view = 'schedule/index';
+        $schedule = new ScheduleModel();
+        $data = $schedule->getAll();
+        $title = "Lịch làm việc";
+        $view = 'guide/schedule/schedule';
         require_once PATH_VIEW_MAIN;
     }
     public function viewCustomers()  {
-        $view = 'customers/index';
+        $view = 'guide/customers/customers';
         require_once PATH_VIEW_MAIN;
     }
     public function viewDiary()  {
-        $view = 'diary/index';
+        $view = 'guide/diary/diary';
         require_once PATH_VIEW_MAIN;
     }
     public function viewCheckin()  {
-        $view = 'check-in/index';
+        $view = 'guide/check-in/check-in';
         require_once PATH_VIEW_MAIN;
     }
     public function viewRequest()  {
-        $view = 'request/index';
+        $view = 'guide/request/request';
         require_once PATH_VIEW_MAIN;
     }
     public function viewReport()  {
-        $view = 'report/index';
+        $view = 'guide/report/report';
         require_once PATH_VIEW_MAIN;
     }
 }

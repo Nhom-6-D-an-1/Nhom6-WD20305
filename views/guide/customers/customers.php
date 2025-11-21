@@ -10,7 +10,7 @@
                         <tr>
                             <th class="ps-4 py-3">Tên khách</th>
                             <th class="py-3">Liên hệ</th>
-                            <th class="py-3">Nhóm</th>
+                            <th class="py-4">Nhóm</th>
                             <th class="py-3">Yêu cầu đặc biệt</th>
                         </tr>
                     </thead>

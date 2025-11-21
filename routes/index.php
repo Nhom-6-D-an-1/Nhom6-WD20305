@@ -3,11 +3,11 @@
 $action = $_GET['action'] ?? '/';
 
 match ($action) {
-    '/'         => (new HomeController)->index(),
-    'viewschedule'         => (new HomeController)->viewSchedule(),
-    'viewcustomers'         => (new HomeController)->viewCustomers(),
-    'viewdiary'         => (new HomeController)->viewDiary(),
-    'viewcheck-in'         => (new HomeController)->viewCheckin(),
-    'viewrequest'         => (new HomeController)->viewRequest(),
-    'viewreport'         => (new HomeController)->viewReport(),
+    '/'         => (new GuideController)->index(),
+    'viewschedule'         => (new GuideController)->viewSchedule(),
+    'viewcustomers'         => (new GuideController)->viewCustomers(),
+    'viewdiary'         => (new GuideController)->viewDiary(),
+    'viewcheck-in'         => (new GuideController)->viewCheckin(),
+    'viewrequest'         => (new GuideController)->viewRequest(),
+    'viewreport'         => (new GuideController)->viewReport(),
 };
