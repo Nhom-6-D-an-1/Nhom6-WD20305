@@ -3,7 +3,7 @@
 $action = $_GET['action'] ?? '/';
 
 match ($action) {
-    '/'         => (new GuideController)->index(),
+    '/'         => (new GuideController)->viewSchedule(),
     'viewschedule'         => (new GuideController)->viewSchedule(),
     'viewcustomers'         => (new GuideController)->viewCustomers(),
     'viewdiary'         => (new GuideController)->viewDiary(),

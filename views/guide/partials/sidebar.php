@@ -1,11 +1,11 @@
 <nav class="sidebar position-fixed top-0 start-0 vh-100 bg-dark text-white">
     <div class="position-sticky">
         <!-- Logo -->
-         <div class="text-center mb-2 logo">
+        <div class="text-center mb-2 logo">
             <img class="img-fluid" src="<?php BASE_URL ?>assets/images/logo.png" width="100" alt="">
             <h5 class="text-white mb-5">Premium Tour</h5>
-         </div>
-         <ul class="nav flex-column px-3">
+        </div>
+        <ul class="nav flex-column px-3">
             <li class="nav-item mb-2">
                 <a class="nav-link <?= ($view ?? '') === 'guide/schedule/schedule' ? 'active' : '' ?>" href="<?= BASE_URL ?>?action=viewschedule">
                     Lịch làm việc
@@ -22,7 +22,7 @@
                 </a>
             </li>
             <li class="nav-item mb-2">
-                <a class="nav-link <?= ($view ?? '') === 'guide/check-in/check-in' ? 'active' : '' ?>" href="<?= BASE_URL ?>?action=viewcheck-in">
+                <a class="nav-link <?= ($view ?? '') === 'guide/checkin/checkin' ? 'active' : '' ?>" href="<?= BASE_URL ?>?action=viewcheck-in">
                     Check-in, điểm danh
                 </a>
             </li>
@@ -41,6 +41,6 @@
                     Đăng xuất
                 </a>
             </li>
-         </ul>
+        </ul>
     </div>
 </nav>
