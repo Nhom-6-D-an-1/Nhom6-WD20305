@@ -9,6 +9,7 @@ match ($action) {
     'viewdiary'     => (new GuideController)->viewDiary(),
     'viewcheckin'   => (new GuideController)->viewCheckin(),
     'viewrequest'   => (new GuideController)->viewRequest(),
+    'deleteRequest'   => (new GuideController)->deleteRequest(),
     'viewreport'    => (new GuideController)->viewReport(),
     default         => (new GuideController)->viewSchedule(),
 };
