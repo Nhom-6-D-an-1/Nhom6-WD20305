@@ -1,12 +1,8 @@
-<?php
-
-?>
-
-<div class="col-12">
+<<div class="col-12">
     <h2 class="">Tour của tôi</h2>
 
     <!-- Form tìm kiếm -->
-     <div class="card shadow-sm border-0 mb-4">
+    <div class="card shadow-sm border-0 mb-4">
         <div class="card-body">
             <form class="row g-3 align-items-center">
                 <div class="col-lg-4 col-md-6">
@@ -30,10 +26,10 @@
                 </div>
             </form>
         </div>
-     </div>
+    </div>
 
-     <!-- Bảng danh sách tour -->
-      <div class="card shadow-sm border-0">
+    <!-- Bảng danh sách tour -->
+    <div class="card shadow-sm border-0">
         <div class="card-body p-0">
             <div class="table-responsive">
                 <table class="table table-hover align-middle mb-0">
@@ -60,5 +56,5 @@
                 </table>
             </div>
         </div>
-      </div>
-</div>
+    </div>
+    </div>

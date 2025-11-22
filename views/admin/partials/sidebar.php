@@ -7,33 +7,33 @@
         </div>
         <ul class="nav flex-column px-3">
             <li class="nav-item mb-2">
-                <a class="nav-link <?= ($view ?? '') === 'guide/schedule/schedule' ? 'active' : '' ?>" href="<?= BASE_URL ?>?action=viewschedule">
-                    Lịch làm việc
+                <a class="nav-link <?= ($view ?? '') === 'admin/dashboard/dashboard' ? 'active' : '' ?>" href="<?= BASE_URL ?>?mode=admin&action=viewsdashboard">
+                    Dashboard
                 </a>
             </li>
             <li class="nav-item mb-2">
-                <a class="nav-link <?= ($view ?? '') === 'guide/customers/customers' ? 'active' : '' ?>" href="<?= BASE_URL ?>?action=viewcustomers">
-                    Danh sách khách
+                <a class="nav-link <?= ($view ?? '') === 'admin/danhmuc/danhmuc' ? 'active' : '' ?>" href="<?= BASE_URL ?>?mode=admin&action=viewsdanhmuc">
+                    Danh mục tour
                 </a>
             </li>
             <li class="nav-item mb-2">
-                <a class="nav-link <?= ($view ?? '') === 'guide/diary/diary' ? 'active' : '' ?>" href="<?= BASE_URL ?>?action=viewdiary">
-                    Nhật ký tour
+                <a class="nav-link <?= ($view ?? '') === 'admin/tour/tour' ? 'active' : '' ?>" href="<?= BASE_URL ?>?mode=admin&action=viewstour">
+                    Quản lý tour
                 </a>
             </li>
             <li class="nav-item mb-2">
-                <a class="nav-link <?= ($view ?? '') === 'guide/checkin/checkin' ? 'active' : '' ?>" href="<?= BASE_URL ?>?action=viewcheck-in">
-                    Check-in, điểm danh
+                <a class="nav-link <?= ($view ?? '') === 'admin/booking/booking' ? 'active' : '' ?>" href="<?= BASE_URL ?>?mode=admin&action=viewsbooking">
+                    Quản lý booking
                 </a>
             </li>
             <li class="nav-item mb-2">
-                <a class="nav-link <?= ($view ?? '') === 'guide/request/request' ? 'active' : '' ?>" href="<?= BASE_URL ?>?action=viewrequest">
-                    Yêu cầu đặc biệt
+                <a class="nav-link <?= ($view ?? '') === 'admin/account/account' ? 'active' : '' ?>" href="<?= BASE_URL ?>?mode=admin&action=viewsaccount">
+                    Quản lý tài khoản
                 </a>
             </li>
             <li class="nav-item mb-2">
-                <a class="nav-link <?= ($view ?? '') === 'guide/report/report' ? 'active' : '' ?>" href="<?= BASE_URL ?>?action=viewreport">
-                    Báo cáo sự cố
+                <a class="nav-link <?= ($view ?? '') === 'admin/resources/resources' ? 'active' : '' ?>" href="<?= BASE_URL ?>?mode=admin&action=viewsresources">
+                    Quản lý nhân sự
                 </a>
             </li>
             <li class="nav-item mb-2">

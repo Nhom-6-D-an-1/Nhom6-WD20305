@@ -18,8 +18,9 @@ spl_autoload_register(function ($class) {
 require_once './configs/env.php';
 require_once './configs/helper.php';
 
+
 // Lấy mode
-$mode = $_GET['mode'] ?? 'auth';
+$mode = $_SESSION['user']['role'] ?? 'auth';
 
 /* Chặn truy cập khi chưa login */
 if (($mode == 'admin' || $mode == 'guide') && !isset($_SESSION['user'])) {
@@ -30,15 +31,15 @@ if (($mode == 'admin' || $mode == 'guide') && !isset($_SESSION['user'])) {
 /* Routing chính */
 switch ($mode) {
     case 'admin':
-        require './routes/admin.php';
+        require_once './routes/admin.php';
         break;
 
     case 'guide':
-        require './routes/guide.php';
+        require_once './routes/guide.php';
         break;
 
     case 'auth':
     default:
-        require './routes/auth.php';
+        require_once './routes/auth.php';
         break;
 }
