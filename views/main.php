@@ -28,8 +28,6 @@
     }
     ?>
 
-
-
     <div class="d-flex">
         <main class="min-vh-100 flex-grow-1" style="margin-left: 260px;">
             <div class="container-fluid py-4 px-4">

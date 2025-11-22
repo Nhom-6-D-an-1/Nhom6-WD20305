@@ -20,7 +20,7 @@ require_once './configs/helper.php';
 
 
 // Lấy mode
-$mode = $_GET['mode'] ?? 'auth';
+$mode = $_SESSION['user']['role'] ?? 'auth';
 
 /* Chặn truy cập khi chưa login */
 if (($mode == 'admin' || $mode == 'guide') && !isset($_SESSION['user'])) {
