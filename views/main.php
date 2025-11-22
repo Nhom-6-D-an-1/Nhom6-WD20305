@@ -17,9 +17,9 @@
 
 <body>
     <?php require_once PATH_VIEW . "guide/partials/header.php"; ?>
-
+    <?php require_once PATH_VIEW . "guide/partials/sidebar.php"; ?>
     <div class="d-flex">
-        <?php require_once PATH_VIEW . "guide/partials/sidebar.php"; ?>
+
 
         <main class="min-vh-100 flex-grow-1" style="margin-left: 260px;">
             <div class="container-fluid py-4 px-4">
