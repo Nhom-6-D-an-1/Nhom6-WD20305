@@ -10,4 +10,8 @@ match ($action) {
     'viewcheck-in'         => (new GuideController)->viewCheckin(),
     'viewrequest'         => (new GuideController)->viewRequest(),
     'viewreport'         => (new GuideController)->viewReport(),
+    'detail-schedule-info'         => (new GuideController)->viewScheduleInfo(),
+    'detail-schedule-itinerary'         => (new GuideController)->viewScheduleItinerary(),
+    'detail-schedule-customers'         => (new GuideController)->viewScheduleCustomers(),
+    'detail-schedule-checkin'         => (new GuideController)->viewScheduleCheckin(),
 };

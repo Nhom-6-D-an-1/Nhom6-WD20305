@@ -7,7 +7,7 @@
         </div>
         <ul class="nav flex-column px-3">
             <li class="nav-item mb-2">
-                <a class="nav-link <?= ($view ?? '') === 'guide/schedule/schedule' ? 'active' : '' ?>" href="<?= BASE_URL ?>?action=viewschedule">
+                <a class="nav-link <?= ($view ?? '') === 'guide/schedule/schedule' || ($view ?? '') === 'guide/schedule/detail/info' || ($view ?? '') === 'guide/schedule/detail/itinerary' || ($view ?? '') === 'guide/schedule/detail/customers' || ($view ?? '') === 'guide/schedule/detail/checkin' ? 'active' : '' ?>" href="<?= BASE_URL ?>?action=viewschedule">
                     Lịch làm việc
                 </a>
             </li>

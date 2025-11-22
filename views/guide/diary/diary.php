@@ -1,5 +1,12 @@
 <div class="col-12">
     <h2>Nhật ký tour</h2>
+    
+        <div class="col-12 col-lg-3 mb-2">
+        <select class="form-select">
+            <option value="0" hidden>--Chọn tour--</option>
+            <option value="1">Chưa có tour</option>
+        </select>
+    </div>
 
     <!-- Form thêm nhật ký -->
     <div class="card shadow-sm border-0 mb-4 diary-card">

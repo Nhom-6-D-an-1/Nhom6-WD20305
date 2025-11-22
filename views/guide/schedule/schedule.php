@@ -1,6 +1,3 @@
-<?php
-
-?>
 
 <div class="col-12">
     <h2 class="">Tour của tôi</h2>
@@ -10,7 +7,10 @@
         <div class="card-body">
             <form class="row g-3 align-items-center">
                 <div class="col-lg-4 col-md-6">
-                    <input type="text" class="form-control" placeholder="Nhập từ khoá (mã tour, tên tour...)">
+                    <select class="form-select">
+                        <option value="0" hidden>--Chọn tour--</option>
+                        <option value="1">Chưa có tour</option>
+                    </select>
                 </div>
                 <div class="col-lg-3 col-md-6">
                     <input type="date" class="form-control">
@@ -24,9 +24,7 @@
                     </select>
                 </div>
                 <div class="col-lg-2 col-md-6">
-                    <button type="submit" class="btn btn-primary w-100">
-                        <i class="bi bi-search"></i> Tìm kiếm
-                    </button>
+                    <button type="submit" class="btn btn-primary w-100">Tìm kiếm</button>
                 </div>
             </form>
         </div>
@@ -42,20 +40,25 @@
                             <th>Mã tour</th>
                             <th>Tour</th>
                             <th>Ngày khởi hành</th>
-                            <th class="text-center">Số khách</th>
-                            <th class="text-center">Trạng thái</th>
+                            <th class="">Số khách</th>
+                            <th class="">Trạng thái</th>
                             <th class="text-center">Hành động</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
+                        <?php foreach($scheduleData as $value){ ?>
+                            <tr>
+                                <td><?php $value['departure_id'] ?></td>
+                                <td>Test</td>
+                                <td>Test</td>
+                                <td>Test</td>
+                                <td>Test</td>
+                                <td class="text-center">
+                                    <a href="<?= BASE_URL ?>?action=detail-schedule-info" class="btn btn-primary">Xem</a>
+                                    <a href="<?= BASE_URL ?>?action=viewcheck-in" class="btn btn-success">Checkin</a>
+                                </td>
+                            </tr>
+                        <?php } ?>
                     </tbody>
                 </table>
             </div>

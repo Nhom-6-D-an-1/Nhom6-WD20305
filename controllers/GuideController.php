@@ -2,12 +2,48 @@
 
 class GuideController
 {
+    // SCHEDULE
     public function viewSchedule()
     {
+        $schedule = new ScheduleModel();
+        $schedulaData = $schedule->getAllByGuide($_SESSION['user_id']);
         $title = "Lịch làm việc";
         $view = 'guide/schedule/schedule';
         require_once PATH_VIEW_MAIN;
     }
+    public function viewScheduleInfo()
+    {
+        $schedule = new ScheduleModel();
+        $infoData = $schedule->getInfo($_SESSION['departure_id']);
+        $title = "Lịch làm việc";
+        $view = 'guide/schedule/detail/info';
+        require_once PATH_VIEW_MAIN;
+    }
+    public function viewScheduleItinerary()
+    {
+        $schedule = new ScheduleModel();
+        $itineraryData = $schedule->getItinerary($_SESSION['departure_id']);
+        $title = "Lịch làm việc";
+        $view = 'guide/schedule/detail/itinerary';
+        require_once PATH_VIEW_MAIN;
+    }
+    public function viewScheduleCustomers()
+    {
+        $schedule = new ScheduleModel();
+        $customersData = $schedule->getCustomers($_SESSION['departure_id']);
+        $title = "Lịch làm việc";
+        $view = 'guide/schedule/detail/customers';
+        require_once PATH_VIEW_MAIN;
+    }
+    public function viewScheduleCheckin()
+    {
+        $schedule = new ScheduleModel();
+        $checkinData = $schedule->getCheckin($_SESSION['departure_id']);
+        $title = "Lịch làm việc";
+        $view = 'guide/schedule/detail/checkin';
+        require_once PATH_VIEW_MAIN;
+    }
+    // CUSTOMERS
     public function viewCustomers()
     {
         $title = "Danh sách khách";
