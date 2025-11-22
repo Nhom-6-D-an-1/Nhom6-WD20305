@@ -1,2 +1,34 @@
 <?php
-class AuthController {}
+class AuthController {
+    public function index() {
+        include './views/auth/login.php';
+    }
+
+    public function login() {
+        require_once './models/UserModel.php';
+
+        $username = $_POST['username'];
+        $password = $_POST['password'];
+
+        $model = new UserModel();
+        $user = $model->checkLogin($username);
+
+        if(!$user || !password_verify($password, $user['password_hash'])){
+            header("Location: ?mode=auth&error=Tài khoản hoặc mật khẩu sai");
+            exit;
+        }
+
+        $_SESSION['user'] = $user;
+
+        if($user['role'] == 'admin'){
+            header("Location: ?mode=admin");
+        }else{
+            header("Location: ?mode=guide");
+        }
+    }
+
+    public function logout() {
+        session_destroy();
+        header("Location: ?mode=auth");
+    }
+}
