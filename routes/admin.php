@@ -9,10 +9,16 @@ if (!isset($_SESSION['user']) || $_SESSION['user']['role'] !== 'admin') {
 
 $action = $_GET['action'] ?? '/';
 
-$controller = new AdminController();
+// $controller = new AdminController();
 
 // Router cho admin
 match ($action) {
-    '/'        => $controller->Home(),
-    default    => $controller->Home()
+    '/'        => (new AdminController())->viewDashboard(),
+    'viewsdashboard'         => (new AdminController())->viewDashboard(),
+    'viewsbooking'         => (new AdminController())->viewBooking(),
+    'viewstour'         => (new AdminController())->viewTour(),
+    'viewsdanhmuc'         => (new AdminController())->viewDanhmuc(),
+    'viewsaccount'         => (new AdminController())->viewAccount(),
+    'viewsresources'         => (new AdminController())->viewResources(),
+    default    => (new AdminController())->viewDashboard()
 };
