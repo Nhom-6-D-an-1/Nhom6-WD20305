@@ -1,11 +1,13 @@
 <?php
+
 $action = $_GET['action'] ?? '/';
-if($_SESSION['user']&& $_SERVER['user']['role']== 'admin'){
-    match($action){
-        '/' =>(new AdminController)->Home(),
-    }
-}else{
-    $_SESSION['flash_error']="Bạn không có quyền truy cập trang này!";
-    header("Location: " . BASE_URL);
-    exit();
-}
+
+match ($action) {
+    '/'         => (new AdminController)->viewDashboard(),
+    'viewsdashboard'         => (new AdminController)->viewDashboard(),
+    'viewsbooking'         => (new AdminController)->viewBooking(),
+    'viewstour'         => (new AdminController)->viewTour(),
+    'viewsdanhmuc'         => (new AdminController)->viewDanhmuc(),
+    'viewsaccount'         => (new AdminController)->viewAccount(),
+    'viewsresources'         => (new AdminController)->viewResources(),
+};
