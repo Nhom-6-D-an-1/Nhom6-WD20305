@@ -19,17 +19,14 @@
 
     <?php
     $mode = $_SESSION['user']['role'] ?? 'auth';
-    if ($mode == "admin") {
+    if ($mode == 'admin') {
         require_once PATH_VIEW . "admin/partials/header.php";
         require_once PATH_VIEW . "admin/partials/sidebar.php";
-    } else if ($mode == "guide") {
+    } elseif ($mode == 'guide') {
         require_once PATH_VIEW . "guide/partials/header.php";
         require_once PATH_VIEW . "guide/partials/sidebar.php";
     }
     ?>
-
-
-
 
 
 
