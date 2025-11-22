@@ -17,7 +17,7 @@
 
 
         <div class="flex-grow-1">
-            <input type="text" name="medical_condition" class="form-control custom-input py-2" placeholder="Bệnh lý">
+            <input type="text" name="medical_condition" class="form-control custom-input py-2" placeholder="Bệnh lý (nếu có)">
         </div>
 
         <div>
