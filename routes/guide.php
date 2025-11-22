@@ -1,7 +1,6 @@
 <?php
 
 $action = $_GET['action'] ?? '/';
-
 match ($action) {
 
     '/'             => (new GuideController)->viewSchedule(),
