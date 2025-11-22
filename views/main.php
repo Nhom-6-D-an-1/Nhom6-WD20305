@@ -16,11 +16,19 @@
 </head>
 
 <body>
-    <?php require_once PATH_VIEW . "guide/partials/header.php"; ?>
-    <?php require_once PATH_VIEW . "guide/partials/sidebar.php"; ?>
+
+    <?php
+    $mode = $_SESSION['user']['role'] ?? 'auth';
+    if ($mode == 'admin') {
+        require_once PATH_VIEW . "admin/partials/header.php";
+        require_once PATH_VIEW . "admin/partials/sidebar.php";
+    } elseif ($mode == 'guide') {
+        require_once PATH_VIEW . "guide/partials/header.php";
+        require_once PATH_VIEW . "guide/partials/sidebar.php";
+    }
+    ?>
+
     <div class="d-flex">
-
-
         <main class="min-vh-100 flex-grow-1" style="margin-left: 260px;">
             <div class="container-fluid py-4 px-4">
                 <?php
