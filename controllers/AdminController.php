@@ -3,8 +3,8 @@ class AdminController
 {
     public function Home()
     {
-        $title = "";
-        $view = '';
-        require_once PATH_VIEW_MAIN;
+        $title = "trang quản trị";
+        $view = "admin/home";
+        require_once PATH_VIEW;
     }
 }
