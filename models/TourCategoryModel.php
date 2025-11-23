@@ -30,7 +30,7 @@ class TourCategoryModel
     }
 
     // Thêm danh mục
-    public function addDanhmuc($data)
+    public function addCategory($data)
     {
         $sql = "INSERT INTO tour_category (category_name, description, status) 
                 VALUES (:category_name, :description, :status)";
