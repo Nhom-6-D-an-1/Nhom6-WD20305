@@ -45,16 +45,17 @@
 /* Badge trạng thái */
 .badge-sap-toi {
   background-color: #ff9500 !important;
-  color: white !important;
 }
 .badge-dang-dien-ra {
   background-color: #4361ee !important;
+  color: #fff;
 }
 .badge-hoan-tat {
   background-color: #16a34a !important;
+  color: #fff;
 }
 
-/* Nút hành động trong bảng */
+/* Nút hành động trong bảng
 .btn-sap-toi {
   background-color: #ff9500 !important;
   border-color: #ff9500 !important;
@@ -73,7 +74,7 @@
   color: white !important;
   font-size: 14px;
   padding: 6px 12px;
-}
+} */
 
 /* Card & Table */
 .card {
@@ -173,4 +174,12 @@ main {
 }
 .table-responsive {
   overflow: visible !important;
+}
+
+.card-custom .nav-tabs .nav-link{
+  color: #000;
+ }
+.card-custom .nav-tabs .nav-link.active {
+    color: #4361ee;
+    /* font-weight: bold;   */
 }
