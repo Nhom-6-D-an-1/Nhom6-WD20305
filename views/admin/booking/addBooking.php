@@ -51,6 +51,7 @@
 </div>
 
 <script>
+    
 function updatePrice(selectElement) {
     const selectedOption = selectElement.options[selectElement.selectedIndex];
     const price = selectedOption.getAttribute('data-price');

@@ -94,6 +94,35 @@ class BookingModel extends BaseModel
         return $stmt->execute($data);
     }
 
+    // Lấy chi tiết booking kèm thông tin tour
+    public function getBookingWithDetails($id)
+    {
+        $sql = "SELECT 
+                b.booking_id,
+                b.departure_id,
+                b.customer_name,
+                b.customer_contact,
+                b.total_amount,
+                b.status,
+                b.created_at,
+                d.start_date,
+                tv.version_name,
+                tv.price,
+                t.tour_name,
+                t.description,
+                tc.category_name
+            FROM `booking` b
+            LEFT JOIN departure d ON b.departure_id = d.departure_id
+            LEFT JOIN tour_version tv ON d.version_id = tv.version_id
+            LEFT JOIN tour t ON tv.tour_id = t.tour_id
+            LEFT JOIN tour_category tc ON t.category_id = tc.category_id
+            WHERE b.booking_id = :id";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
     // Xóa booking
     public function deleteBooking($id)
     {

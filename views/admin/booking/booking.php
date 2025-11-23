@@ -57,8 +57,8 @@
             </td>
             <td><?php echo !empty($booking['created_at']) ? date('d/m/Y H:i', strtotime($booking['created_at'])) : ''; ?></td>
             <td>
-              <a href="#" class="btn btn-sm btn-info">Chi tiết</a>
-              <a href="#" class="btn btn-sm btn-warning">Sửa</a>
+              <a href="<?= BASE_URL ?>?mode=admin&action=showbooking&id=<?= urlencode($booking['booking_id']) ?>" class="btn btn-sm btn-info">Chi tiết</a>
+              <a href="<?= BASE_URL ?>?mode=admin&action=suabooking&id=<?= urlencode($booking['booking_id']) ?>" class="btn btn-sm btn-warning">Sửa</a>
               <a href="<?= BASE_URL ?>?mode=admin&action=deletebooking&id=<?= urlencode($booking['booking_id']) ?>" class="btn btn-sm btn-danger" onclick="return confirm('Bạn có chắc muốn xóa booking #<?= htmlspecialchars($booking['booking_id'] ?? '') ?>?');">Xóa</a>
             </td>
           </tr>

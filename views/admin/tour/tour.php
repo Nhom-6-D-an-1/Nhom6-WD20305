@@ -75,8 +75,8 @@
                   <td><?php echo htmlspecialchars($tour['category_id'] ?? ''); ?></td>
                   <td><?php echo htmlspecialchars($tour['description'] ?? ''); ?></td>
                   <td>
-                    <a href="#" class="btn btn-sm btn-success">Chi tiết</a>
-                    <a href="#" class="btn btn-sm btn-warning">Sửa</a>
+                    <a href="<?= BASE_URL ?>?mode=admin&action=showtour&id=<?= urlencode($tour['tour_id']) ?>" class="btn btn-sm btn-success">Chi tiết</a>
+                    <a href="<?= BASE_URL ?>?mode=admin&action=edittour&id=<?= urlencode($tour['tour_id']) ?>" class="btn btn-sm btn-warning">Sửa</a>
                     <a href="<?php echo BASE_URL; ?>?mode=admin&action=deletetour&id=<?php echo urlencode($tour['tour_id']); ?>" class="btn btn-sm btn-danger" onclick="return confirm('Bạn có chắc muốn xóa tour này?');">Xóa</a>
                   </td>
                 </tr>
