@@ -1,13 +1,5 @@
 <?php
-// class AdminController
-// {
-// public function Home()
-// {
-// $title = "trang quản trị";
-// $view = "admin/home";
-// require_once PATH_VIEW;
-// }
-// }
+
 class AdminController
 {
     public function viewBooking()
@@ -22,12 +14,96 @@ class AdminController
         $view = 'admin/tour/tour';
         require_once PATH_VIEW_MAIN;
     }
-    public function viewDanhmuc()
-    {
+
+    public function viewDanhmuc() {
+        $model = new TourCategoryModel();
+        $list = $model->getAll();
+
         $title = "Danh mục tour";
-        $view = 'admin/danhmuc/danhmuc';
+        $view = "admin/danhmuc/danhmuc";
+
         require_once PATH_VIEW_MAIN;
     }
+
+
+    public function addDanhmuc() {
+        $title = "Thêm danh mục tour";
+        $view = "admin/danhmuc/create";
+
+        require_once PATH_VIEW_MAIN;
+    }
+
+
+    public function storeDanhmuc() {
+        $model = new TourCategoryModel();
+
+        $data = [
+            "category_name" => $_POST['category_name'],
+            "description"   => $_POST['description'],
+            "status"        => $_POST['status']
+        ];
+
+        $model->addDanhmuc($data);
+
+        header("Location: ?mode=admin&action=viewsdanhmuc");
+        exit();
+    }
+
+
+    public function editDanhmuc() {
+        $id = $_GET['id'];
+
+        $model = new TourCategoryModel();
+        $category = $model->getById($id);
+
+        $title = "Sửa danh mục tour";
+        $view = "admin/danhmuc/edit";
+
+        require_once PATH_VIEW_MAIN;
+    }
+
+
+    public function updateDanhmuc() {
+        $id = $_GET['id'];
+        $model = new TourCategoryModel();
+
+        $data = [
+            "category_name" => $_POST['category_name'],
+            "description"   => $_POST['description'],
+            "status"        => $_POST['status']
+        ];
+
+        $model->updateDanhmuc($id, $data);
+
+        header("Location: ?mode=admin&action=viewsdanhmuc");
+        exit();
+    }
+
+
+    public function showDanhmuc() {
+        $id = $_GET['id'];
+
+        $model = new TourCategoryModel();
+        $category = $model->getById($id);
+
+        $title = "Chi tiết danh mục tour";
+        $view = "admin/danhmuc/show";
+
+        require_once PATH_VIEW_MAIN;
+    }
+
+
+    public function deleteDanhmuc() {
+        $id = $_GET['id'];
+
+        $model = new TourCategoryModel();
+        $model->deleteDanhmuc($id);
+
+        header("Location: ?mode=admin&action=viewsdanhmuc");
+        exit();
+    }
+
+
     public function viewAccount()
     {
         $title = "Quản lý tài khoản";
