@@ -1,9 +1,21 @@
-
+<?php foreach($scheduleData as $value){ 
+    $today = date('Y-m-d');
+    if ($value['end_date'] < $today) {
+        $status = "Hoàn tất";
+    } elseif ($value['start_date'] > $today) {
+        $status = "Sắp tới";
+    } else {
+        $status = "Đang diễn ra";
+    }
+    $statusClass = ($value['end_date'] < $today) ? "badge-hoan-tat" : 
+                   (($value['start_date'] > $today) ? "badge-sap-toi" : "badge-dang-dien-ra");
+}
+?>
 <div class="col-12">
     <h2 class="">Tour của tôi</h2>
 
     <!-- Form tìm kiếm -->
-     <div class="card shadow-sm border-0 mb-4">
+    <div class="card shadow-sm border-0 mb-4">
         <div class="card-body">
             <form class="row g-3 align-items-center">
                 <div class="col-lg-4 col-md-6">
@@ -28,10 +40,10 @@
                 </div>
             </form>
         </div>
-     </div>
+    </div>
 
-     <!-- Bảng danh sách tour -->
-      <div class="card shadow-sm border-0">
+    <!-- Bảng danh sách tour -->
+    <div class="card shadow-sm border-0">
         <div class="card-body p-0">
             <div class="table-responsive">
                 <table class="table table-hover align-middle mb-0">
@@ -46,22 +58,24 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach($scheduleData as $value){ ?>
+                        <?php foreach($scheduleData as $value): ?>
                             <tr>
-                                <td><?php $value['departure_id'] ?></td>
-                                <td>Test</td>
-                                <td>Test</td>
-                                <td>Test</td>
-                                <td>Test</td>
+                                <td><?= $value['departure_id'] ?></td>
+                                <td><?= $value['tour_name'] ?></td>
+                                <td><?= date('d/m/Y', strtotime($value['start_date'])) ?></td>
+                                <td><?= $value['max_guests'] ?> khách</td>
+                                <td class="">
+                                    <span class="px-2 rounded text-white <?= $statusClass ?>"><?= $status ?></span>
+                                </td>
                                 <td class="text-center">
-                                    <a href="<?= BASE_URL ?>?action=detail-schedule-info" class="btn btn-primary">Xem</a>
+                                    <a href="<?= BASE_URL ?>?mode=guide&action=detail-schedule-info&id=<?= $value['departure_id'] ?>" class="btn btn-primary">Xem</a>
                                     <a href="<?= BASE_URL ?>?action=viewcheck-in" class="btn btn-success">Checkin</a>
                                 </td>
                             </tr>
-                        <?php } ?>
+                        <?php endforeach; ?>
                     </tbody>
                 </table>
             </div>
         </div>
-      </div>
-</div>
+    </div>
+    </div>

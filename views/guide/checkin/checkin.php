@@ -6,7 +6,7 @@
         </a>
 
         <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">Bến xe</a></li>
+            <li><a class="dropdown-item" href="#">Tập trung</a></li>
             <li><a class="dropdown-item" href="#">Trạm nghỉ</a></li>
             <li><a class="dropdown-item" href="#">Khách sạn</a></li>
         </ul>

@@ -4,10 +4,10 @@
     <div class="card shadow-sm border-0 card-custom">
         <div class="card-header bg-white border-0">
             <ul class="nav nav-tabs nav-tabs-custom border-0">
-                <li class="nav-item"><a class="nav-link <?= ($view ?? '') === 'guide/schedule/detail/info' ? 'active' : '' ?>" href="<?= BASE_URL ?>?action=detail-schedule-info">Thông tin</a></li>
-                <li class="nav-item"><a class="nav-link <?= ($view ?? '') === 'guide/schedule/detail/itinerary' ? 'active' : '' ?>" href="<?= BASE_URL ?>?action=detail-schedule-itinerary">Lịch trình</a></li>
-                <li class="nav-item"><a class="nav-link <?= ($view ?? '') === 'guide/schedule/detail/customers' ? 'active' : '' ?>" href="<?= BASE_URL ?>?action=detail-schedule-customers">Danh sách khách</a></li>
-                <li class="nav-item"><a class="nav-link <?= ($view ?? '') === 'guide/schedule/detail/checkin' ? 'active' : '' ?>" href="<?= BASE_URL ?>?action=detail-schedule-checkin">Check-in</a></li>
+                <li class="nav-item"><a class="nav-link <?= ($view ?? '') === 'guide/schedule/detail/info' ? 'active' : '' ?>" href="<?= BASE_URL ?>?mode=guide&action=detail-schedule-info&id=<?= $departure_id ?>">Thông tin</a></li>
+                <li class="nav-item"><a class="nav-link <?= ($view ?? '') === 'guide/schedule/detail/itinerary' ? 'active' : '' ?>" href="<?= BASE_URL ?>?mode=guide&action=detail-schedule-itinerary&id=<?= $departure_id ?>">Lịch trình</a></li>
+                <li class="nav-item"><a class="nav-link <?= ($view ?? '') === 'guide/schedule/detail/customers' ? 'active' : '' ?>" href="<?= BASE_URL ?>?mode=guide&action=detail-schedule-customers&id=<?= $departure_id ?>">Danh sách khách</a></li>
+                <li class="nav-item"><a class="nav-link <?= ($view ?? '') === 'guide/schedule/detail/checkin' ? 'active' : '' ?>" href="<?= BASE_URL ?>?mode=guide&action=detail-schedule-checkin&id=<?= $departure_id ?>">Check-in</a></li>
             </ul>
         </div>
 
@@ -21,21 +21,13 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td class="ps-4">1</td>
-                        <td class="fw-semibold">Nguyễn Văn A</td>
-                        <td class="text-center"><span class="badge bg-success text-white">Đã check-in</span></td>
-                    </tr>
-                    <tr>
-                        <td class="ps-4">2</td>
-                        <td class="fw-semibold">Trần Thị B</td>
-                        <td class="text-center"><span class="badge bg-warning text-white">Chưa đến</span></td>
-                    </tr>
-                    <tr>
-                        <td class="ps-4">3</td>
-                        <td class="fw-semibold">Đinh Công C</td>
-                        <td class="text-center"><span class="badge bg-success text-white">Đã check-in</span></td>
-                    </tr>
+                    <?php foreach($customersData as $key => $customer): ?>
+                        <tr>
+                            <td class="ps-4"><?= $key +1 ?></td>
+                            <td class="fw-semibold"><?= $customer['full_name'] ?></td>
+                            <td class="text-center"><span class="badge text-white <?php echo $customer['checkin_status'] == 'present' ? 'bg-success' : 'bg-warning' ?>"><?php echo $customer['checkin_status'] == 'present' ? 'Đã check-in' : 'Chưa check-in' ?></span></td>
+                        </tr>
+                    <?php endforeach; ?>
                 </tbody>
             </table>
             <div class="card-footer bg-white py-4">

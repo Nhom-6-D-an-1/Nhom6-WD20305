@@ -45,13 +45,14 @@
 /* Badge trạng thái */
 .badge-sap-toi {
   background-color: #ff9500 !important;
-  color: white !important;
 }
 .badge-dang-dien-ra {
   background-color: #4361ee !important;
+  color: #fff;
 }
 .badge-hoan-tat {
   background-color: #16a34a !important;
+  color: #fff;
 }
 
 /* Nút hành động trong bảng

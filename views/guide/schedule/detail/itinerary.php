@@ -4,10 +4,10 @@
     <div class="card shadow-sm border-0 card-custom">
         <div class="card-header bg-white border-0">
             <ul class="nav nav-tabs nav-tabs-custom border-0">
-                <li class="nav-item"><a class="nav-link <?= ($view ?? '') === 'guide/schedule/detail/info' ? 'active' : '' ?>" href="<?= BASE_URL ?>?action=detail-schedule-info">Thông tin</a></li>
-                <li class="nav-item"><a class="nav-link <?= ($view ?? '') === 'guide/schedule/detail/itinerary' ? 'active' : '' ?>" href="<?= BASE_URL ?>?action=detail-schedule-itinerary">Lịch trình</a></li>
-                <li class="nav-item"><a class="nav-link <?= ($view ?? '') === 'guide/schedule/detail/customers' ? 'active' : '' ?>" href="<?= BASE_URL ?>?action=detail-schedule-customers">Danh sách khách</a></li>
-                <li class="nav-item"><a class="nav-link <?= ($view ?? '') === 'guide/schedule/detail/checkin' ? 'active' : '' ?>" href="<?= BASE_URL ?>?action=detail-schedule-checkin">Check-in</a></li>
+                <li class="nav-item"><a class="nav-link <?= ($view ?? '') === 'guide/schedule/detail/info' ? 'active' : '' ?>" href="<?= BASE_URL ?>?mode=guide&action=detail-schedule-info&id=<?= $departure_id ?>">Thông tin</a></li>
+                <li class="nav-item"><a class="nav-link <?= ($view ?? '') === 'guide/schedule/detail/itinerary' ? 'active' : '' ?>" href="<?= BASE_URL ?>?mode=guide&action=detail-schedule-itinerary&id=<?= $departure_id ?>">Lịch trình</a></li>
+                <li class="nav-item"><a class="nav-link <?= ($view ?? '') === 'guide/schedule/detail/customers' ? 'active' : '' ?>" href="<?= BASE_URL ?>?mode=guide&action=detail-schedule-customers&id=<?= $departure_id ?>">Danh sách khách</a></li>
+                <li class="nav-item"><a class="nav-link <?= ($view ?? '') === 'guide/schedule/detail/checkin' ? 'active' : '' ?>" href="<?= BASE_URL ?>?mode=guide&action=detail-schedule-checkin&id=<?= $departure_id ?>">Check-in</a></li>
             </ul>
         </div>
 
@@ -21,41 +21,16 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr><td colspan="3" class="bg-white fw-bold ps-4 py-3">Ngày 1: 20/11/2025</td></tr>
-                    <tr>
-                        <td class="ps-5 text-muted">08:00 - 09:00</td>
-                        <td>Bến xe Mỹ Đình</td>
-                        <td>Xe đón khách</td>
-                    </tr>
-                    <tr>
-                        <td class="ps-5 text-muted">10:00 - 12:00</td>
-                        <td>Bãi Cát Cát</td>
-                        <td>Tham quan, chụp ảnh</td>
-                    </tr>
-
-                    <tr><td colspan="3" class="bg-white fw-bold ps-4 py-3">Ngày 2: 21/11/2025</td></tr>
-                    <tr>
-                        <td class="ps-5 text-muted">07:00 - 08:00</td>
-                        <td>Khách sạn</td>
-                        <td>Ăn sáng</td>
-                    </tr>
-                    <tr>
-                        <td class="ps-5 text-muted">08:00 - 12:00</td>
-                        <td>Fansipan</td>
-                        <td>Trekking</td>
-                    </tr>
-
-                    <tr><td colspan="3" class="bg-white fw-bold ps-4 py-3">Ngày 3: 22/11/2025</td></tr>
-                    <tr>
-                        <td class="ps-5 text-muted">07:00 - 08:00</td>
-                        <td>Khách sạn</td>
-                        <td>Ăn sáng</td>
-                    </tr>
-                    <tr>
-                        <td class="ps-5 text-muted">09:00 - 12:00</td>
-                        <td>Chợ Sapa</td>
-                        <td>Mua sắm</td>
-                    </tr>
+                    <?php foreach($itineraryData as $day => $activities): ?>
+                        <tr><td class="fw-bold" colspan="3">Ngày <?= $day ?></td></tr>
+                        <?php foreach($activities as $act): ?>
+                            <tr>
+                                <td><?= $act['start_time'] ?> - <?= $act['end_time'] ?></td>
+                                <td><?= $act['place'] ?></td>
+                                <td><?= $act['activity'] ?></td>
+                            </tr>
+                        <?php endforeach; ?>
+                    <?php endforeach; ?>
                 </tbody>
             </table>
             <div class="card-footer bg-white py-4">
