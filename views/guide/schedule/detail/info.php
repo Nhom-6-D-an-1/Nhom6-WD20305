@@ -13,33 +13,33 @@
 
         <div class="card-body p-5">
             <div class="row g-4">
-                    <div class="col-md-6">
-                        <label class="form-label text-muted small">Mã tour</label>
-                        <p class="fw-bold fs-5"><?php echo $infoData['departure_id'] ?></p>
-                    </div>
-                    <div class="col-md-6">
-                        <label class="form-label text-muted small">Tên tour</label>
-                        <p class="fw-bold fs-5"><?php echo $infoData['tour_name'] ?></p>
-                    </div>
-                    <div class="col-md-6">
-                        <label class="form-label text-muted small">Khởi hành</label>
-                        <p class="fw-bold"><?= date('d/m/Y', strtotime($infoData['start_date'])) ?></p>
-                    </div>
-                    <div class="col-md-6">
-                        <label class="form-label text-muted small">Kết thúc</label>
-                        <p class="fw-bold"><?= date('d/m/Y', strtotime($infoData['end_date'])) ?></p>
-                    </div>
-                    <div class="col-md-6">
-                        <label class="form-label text-muted small">Số khách</label>
-                        <p class="fw-bold"><?php echo $infoData['current_guests'] ?></p>
-                    </div>
-                    <div class="col-md-6">
-                        <label class="form-label text-muted small">HDV</label>
-                        <p class="fw-bold"><?php echo $infoData['guide_name'] ?></p>
-                    </div>
+                <div class="col-md-6">
+                    <label class="form-label text-muted small">Mã tour</label>
+                    <p class="fw-bold fs-5"><?php echo $infoData['departure_id'] ?></p>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label text-muted small">Tên tour</label>
+                    <p class="fw-bold fs-5"><?php echo $infoData['tour_name'] ?></p>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label text-muted small">Khởi hành</label>
+                    <p class="fw-bold"><?= date('d/m/Y', strtotime($infoData['start_date'])) ?></p>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label text-muted small">Kết thúc</label>
+                    <p class="fw-bold"><?= date('d/m/Y', strtotime($infoData['end_date'])) ?></p>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label text-muted small">Số khách</label>
+                    <p class="fw-bold"><?php echo $infoData['current_guests'] ?></p>
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label text-muted small">HDV</label>
+                    <p class="fw-bold"><?php echo $infoData['guide_name'] ?></p>
+                </div>
             </div>
             <div class="mt-4">
-                <button class="btn btn-secondary px-4">Quay lại</button>
+                <a href="<?= BASE_URL ?>?mode=guide&action=detail-schedule-info" class="btn btn-secondary px-4">Quay lại</a>
             </div>
         </div>
     </div>
