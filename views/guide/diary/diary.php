@@ -1,14 +1,24 @@
 <div class="col-12">
     <h2>Nhật ký tour</h2>
+    
+        <div class="col-12 col-lg-3 mb-2">
+        <select class="form-select">
+            <option value="0" hidden>--Chọn tour--</option>
+            <option value="1">Chưa có tour</option>
+        </select>
+    </div>
 
     <!-- Form thêm nhật ký -->
     <div class="card shadow-sm border-0 mb-4 diary-card">
         <div class="card-body p-4">
             <div class="row g-3 align-items-center diary-form-row">
-                <div class="col-12 col-lg-9">
+                <div class="col-12 col-lg-6">
                     <input type="text" class="form-control form-control-lg diary-input" placeholder="Diễn biến, nhật ký, phản hồi khách...">
                 </div>
-                <div class="col-12 col-lg-3">
+                <div class="col-12 col-lg-4">
+                    <input type="file" class="form-control form-control-lg diary-file">
+                </div>
+                <div class="col-12 col-lg-2">
                     <button class="btn btn-primary diary-btn w-100 fw-semibold">Thêm nhật ký</button>
                 </div>
             </div>

@@ -1,34 +1,38 @@
 <?php
-class AuthController {
-    public function index() {
+class AuthController
+{
+    public function index()
+    {
         include './views/auth/login.php';
     }
 
-    public function login() {
+    public function login()
+    {
         require_once './models/UserModel.php';
 
-        $username = $_POST['username'];
-        $password = $_POST['password'];
+        $username = trim($_POST['username'] ?? "");
+        $password = trim($_POST['password'] ?? "");
 
         $model = new UserModel();
         $user = $model->checkLogin($username);
 
-        if(!$user || !password_verify($password, $user['password_hash'])){
+        if (!$user || !password_verify($password, $user['password_hash'])) {
             header("Location: ?mode=auth&error=Tài khoản hoặc mật khẩu sai");
             exit;
         }
 
         $_SESSION['user'] = $user;
 
-        if($user['role'] == 'admin'){
-            header("Location: ?mode=admin");
-        }else{
-            header("Location: ?mode=guide");
+        if ($user['role'] == 'admin') {
+            header("Location: " . BASE_URL . "?mode=admin");
+        } else {
+            header("Location: " . BASE_URL . "?mode=guide");
         }
     }
 
-    public function logout() {
+    public function logout()
+    {
         session_destroy();
-        header("Location: ?mode=auth");
+        header("Location:" . BASE_URL . "?mode=auth");
     }
 }

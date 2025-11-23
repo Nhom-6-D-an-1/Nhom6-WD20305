@@ -1,6 +1,12 @@
 <div class="col-12">
     <h2>Danh sách khách</h2>
 
+    <div class="col-12 col-lg-3 mb-2">
+        <select class="form-select">
+            <option value="0" hidden>--Chọn tour--</option>
+            <option value="1">Chưa có tour</option>
+        </select>
+    </div>
     <div class="card shadow-sm border-0 customer-card">
         <div class="card-body p-0">
             <div class="table-responsive">
@@ -10,7 +16,7 @@
                         <tr>
                             <th class="ps-4 py-3">Tên khách</th>
                             <th class="py-3">Liên hệ</th>
-                            <th class="py-3">Nhóm</th>
+                            <th class="py-4">Nhóm</th>
                             <th class="py-3">Yêu cầu đặc biệt</th>
                         </tr>
                     </thead>

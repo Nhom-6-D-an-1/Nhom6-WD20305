@@ -7,11 +7,12 @@ match ($action) {
     'viewschedule'  => (new GuideController)->viewSchedule(),
     'viewcustomers' => (new GuideController)->viewCustomers(),
     'viewdiary'     => (new GuideController)->viewDiary(),
-    // ❗ Sửa lại: không dùng viewcheck-in
     'viewcheckin'   => (new GuideController)->viewCheckin(),
     'viewrequest'   => (new GuideController)->viewRequest(),
-    'viewreport'    => (new GuideController)->viewReport(),
-    // bắt buộc phải có default
+    'deleteRequest'   => (new GuideController)->deleteRequest(),
+    'detail-schedule-info'         => (new GuideController)->viewScheduleInfo(),
+    'detail-schedule-itinerary'         => (new GuideController)->viewScheduleItinerary(),
+    'detail-schedule-customers'         => (new GuideController)->viewScheduleCustomers(),
+    'detail-schedule-checkin'         => (new GuideController)->viewScheduleCheckin(),
     default         => (new GuideController)->viewSchedule(),
 };
-
