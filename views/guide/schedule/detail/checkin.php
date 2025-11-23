@@ -23,10 +23,10 @@
                 <div class="progress mb-4" style="height: 12px;">
                     <div class="thanh-progress progress-bar bg-success" style="width: 83%;"></div>
                 </div>
-                <a href="<?= BASE_URL ?>?mode=guide&action=viewcheck-in" class="btn btn-primary px-5 btn-lg">Bắt đầu check-in ngay</a>
+                <a href="<?= BASE_URL ?>?mode=guide&action=viewcheckin" class="btn btn-primary px-5 btn-lg">Bắt đầu check-in ngay</a>
             </div>
             <div class="mt-4">
-                <button class="btn btn-secondary">Quay lại</button>
+                <a href="<?= BASE_URL ?>?mode=guide&action=detail-schedule-info" class="btn btn-secondary px-4">Quay lại</a>
             </div>
         </div>
     </div>

@@ -10,10 +10,18 @@ class GuestSpecialRequest
     }
 
     // Lấy dữ liệu trong bảng
-    public function getAllRequest()
+    public function getAllRequest($tour_id)
     {
-        $sql = "SELECT guest_special_request.*, guest.full_name FROM guest_special_request LEFT JOIN guest ON guest_special_request.guest_id = guest.guest_id";
-        $stmt = $this->conn->query($sql);
+        $sql = "SELECT r.*, g.full_name, t.tour_name 
+                FROM guest_special_request r
+                JOIN guest g ON r.guest_id = g.guest_id
+                LEFT JOIN booking b ON g.booking_id = b.booking_id
+                LEFT JOIN departure d ON b.departure_id = d.departure_id
+                LEFT JOIN tour_version tv ON d.version_id = tv.version_id
+                LEFT JOIN tour t ON tv.tour_id = t.tour_id
+                WHERE t.tour_id = :tour_id";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([':tour_id' => $tour_id]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
