@@ -7,6 +7,7 @@ match ($action) {
     'viewschedule'  => (new GuideController)->viewSchedule(),
     'viewcustomers' => (new GuideController)->viewCustomers(),
     'viewdiary'     => (new GuideController)->viewDiary(),
+    'deleteDiary'   => (new GuideController)->deleteDiary(),
     'viewcheckin'   => (new GuideController)->viewCheckin(),
     'viewrequest'   => (new GuideController)->viewRequest(),
     'deleteRequest'   => (new GuideController)->deleteRequest(),
