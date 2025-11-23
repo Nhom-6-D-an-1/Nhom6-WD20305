@@ -16,8 +16,17 @@ match ($action) {
     '/'        => (new AdminController())->viewDashboard(),
     'viewsdashboard'         => (new AdminController())->viewDashboard(),
     'viewsbooking'         => (new AdminController())->viewBooking(),
+    'views_add_booking'         => (new AdminController())->viewAddBooking(),
+
+    'addbooking'                => (new AdminController())->addBooking(),
+    'deletebooking'             => (new AdminController())->deleteBooking(),
+
     'viewstour'         => (new AdminController())->viewTour(),
+    'addtour'           => (new AdminController())->addTour(),
+    'deletetour'        => (new AdminController())->deleteTour(),
     'viewsdanhmuc'         => (new AdminController())->viewDanhmuc(),
+    'addcategory'       => (new AdminController())->addCategory(),
+    'deletecategory'    => (new AdminController())->deleteCategory(),
     'viewsaccount'         => (new AdminController())->viewAccount(),
     'viewsresources'         => (new AdminController())->viewResources(),
     default    => (new AdminController())->viewDashboard()

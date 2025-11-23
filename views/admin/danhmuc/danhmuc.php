@@ -1,69 +1,48 @@
-<?php
-
-?>
+<?php ?>
 <div class="p-4">
-          <h3>Danh mục tour</h3>
+  <h3>Danh mục tour</h3>
 
-          <!-- Bộ lọc -->
-          <div class="row mb-3">
-            <div class="col-md-3">
-              <select class="form-select">
-                <option selected>Trạng thái</option>
-                <option>Đang hoạt động</option>
-                <option>Tạm ẩn</option>
-              </select>
-            </div>
-            <div class="col-md-3 d-flex gap-2">
-              <button class="btn btn-primary">Tìm kiếm</button>
-              <button class="btn btn-success">Thêm loại</button>
-            </div>
+  <!-- Thêm danh mục -->
+  <div class="card mb-4">
+    <div class="card-body">
+      <form method="post" action="<?= BASE_URL ?>?mode=admin&action=addcategory">
+        <div class="row g-2">
+          <div class="col-md-6">
+            <input type="text" name="category_name" class="form-control" placeholder="Tên danh mục tour" required>
           </div>
-
-          <!-- Bảng danh mục -->
-          <table class="table table-bordered table-hover">
-            <thead class="table-dark">
-              <tr>
-                <th>STT</th>
-                <th>Tên loại tour</th>
-                <th>Mô tả ngắn</th>
-                <th>Trạng thái</th>
-                <th>Hành động</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>1</td>
-                <td>Trong nước</td>
-                <td>Tour trong lãnh thổ Việt Nam</td>
-                <td><span class="badge bg-success">Đang hoạt động</span></td>
-                <td class="table-actions">
-                  <button class="btn btn-sm btn-info">Xem</button>
-                  <button class="btn btn-sm btn-primary">Sửa</button>
-                  <button class="btn btn-sm btn-danger">Xoá</button>
-                </td>
-              </tr>
-              <tr>
-                <td>2</td>
-                <td>Quốc tế</td>
-                <td>Tour ra nước ngoài</td>
-                <td><span class="badge bg-success">Đang hoạt động</span></td>
-                <td class="table-actions">
-                  <button class="btn btn-sm btn-info">Xem</button>
-                  <button class="btn btn-sm btn-primary">Sửa</button>
-                  <button class="btn btn-sm btn-danger">Xoá</button>
-                </td>
-              </tr>
-              <tr>
-                <td>3</td>
-                <td>Theo yêu cầu</td>
-                <td>Tour thiết kế riêng</td>
-                <td><span class="badge bg-secondary">Tạm ẩn</span></td>
-                <td class="table-actions">
-                  <button class="btn btn-sm btn-info">Xem</button>
-                  <button class="btn btn-sm btn-primary">Sửa</button>
-                  <button class="btn btn-sm btn-danger">Xoá</button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+          <div class="col-md-2">
+            <button type="submit" class="btn btn-success w-100">Thêm loại</button>
+          </div>
         </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Bảng danh mục -->
+  <table class="table table-bordered table-hover">
+    <thead class="table-dark">
+      <tr>
+        <th>ID</th>
+        <th>Tên loại tour</th>
+        <th>Hành động</th>
+      </tr>
+    </thead>
+    <tbody>
+      <?php if (!empty($categories) && is_array($categories)): ?>
+        <?php foreach ($categories as $cat): ?>
+          <tr>
+            <td><?php echo htmlspecialchars($cat['category_id'] ?? ''); ?></td>
+            <td><?php echo htmlspecialchars($cat['category_name'] ?? ''); ?></td>
+            <td>
+              <a href="<?= BASE_URL ?>?mode=admin&action=deletecategory&id=<?= urlencode($cat['category_id']) ?>" class="btn btn-sm btn-danger" onclick="return confirm('Bạn có chắc muốn xóa danh mục này?');">Xoá</a>
+            </td>
+          </tr>
+        <?php endforeach; ?>
+      <?php else: ?>
+        <tr>
+          <td colspan="3" class="text-center">Không có danh mục nào</td>
+        </tr>
+      <?php endif; ?>
+    </tbody>
+  </table>
+</div>
