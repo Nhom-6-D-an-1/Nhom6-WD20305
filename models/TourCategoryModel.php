@@ -10,7 +10,7 @@ class TourCategoryModel
     }
 
     // Lấy toàn bộ danh mục
-    public function getAll($status = null)
+    public function getAllCategories($status = null)
     {
         $sql = "SELECT * FROM tour_category";
 
