@@ -6,7 +6,7 @@ class AdminController
     {
         $bookingModel = new BookingModel();
         $bookings = $bookingModel->getAllBooking();
-        
+
         $title = "Quản lý booking";
         $view = 'admin/booking/booking';
         require_once PATH_VIEW_MAIN;
@@ -67,8 +67,8 @@ class AdminController
 
         header('Location: ' . BASE_URL . '?mode=admin&action=views_add_booking');
         exit;
-    }  
-    
+    }
+
     // Xem form sửa booking
     public function editBooking()
     {
@@ -132,23 +132,23 @@ class AdminController
     }
 
     // Xử lý xóa booking
-        public function deleteBooking()
-        {
-            $id = $_GET['id'] ?? null;
-            if ($id) {
-                $bookingModel = new BookingModel();
-                $ok = $bookingModel->deleteBooking((int)$id);
-                if ($ok) {
-                    $_SESSION['flash_success'] = "Xóa booking thành công.";
-                } else {
-                    $_SESSION['flash_error'] = "Xóa booking thất bại. Vui lòng kiểm tra ràng buộc dữ liệu.";
-                }
+    public function deleteBooking()
+    {
+        $id = $_GET['id'] ?? null;
+        if ($id) {
+            $bookingModel = new BookingModel();
+            $ok = $bookingModel->deleteBooking((int)$id);
+            if ($ok) {
+                $_SESSION['flash_success'] = "Xóa booking thành công.";
             } else {
-                $_SESSION['flash_error'] = "ID booking không hợp lệ.";
+                $_SESSION['flash_error'] = "Xóa booking thất bại. Vui lòng kiểm tra ràng buộc dữ liệu.";
             }
-            header('Location: ' . BASE_URL . '?mode=admin&action=viewsbooking');
-            exit;
+        } else {
+            $_SESSION['flash_error'] = "ID booking không hợp lệ.";
         }
+        header('Location: ' . BASE_URL . '?mode=admin&action=viewsbooking');
+        exit;
+    }
 
     // TOUR
     public function viewTour()
@@ -239,40 +239,40 @@ class AdminController
         exit;
     }
 
-        // Xử lý xóa tour
-        public function deleteTour()
-        {
-            $id = $_GET['id'] ?? null;
-            if ($id) {
-                $tourModel = new TourModel();
-                $tourModel->deleteTour((int)$id);
-            }
+    // Xử lý xóa tour
+    public function deleteTour()
+    {
+        $id = $_GET['id'] ?? null;
+        if ($id) {
+            $tourModel = new TourModel();
+            $tourModel->deleteTour((int)$id);
+        }
+        header('Location: ' . BASE_URL . '?mode=admin&action=viewstour');
+        exit;
+    }
+    public function showTour()
+    {
+        $id = $_GET['id'] ?? null;
+        if (!$id) {
             header('Location: ' . BASE_URL . '?mode=admin&action=viewstour');
             exit;
         }
-        public function showTour()
-        {
-            $id = $_GET['id'] ?? null;
-            if (!$id) {
-                header('Location: ' . BASE_URL . '?mode=admin&action=viewstour');
-                exit;
-            }
 
-            $tourModel = new TourModel();
-            $tour = $tourModel->showTour($id);
+        $tourModel = new TourModel();
+        $tour = $tourModel->showTour($id);
 
-            if (!$tour) {
-                $_SESSION['flash_error'] = 'Tour không tồn tại!';
-                header('Location: ' . BASE_URL . '?mode=admin&action=viewstour');
-                exit;
-            }
-
-            $title = "Chi tiết tour";
-            $view = 'admin/tour/show';
-            require_once PATH_VIEW_MAIN;
+        if (!$tour) {
+            $_SESSION['flash_error'] = 'Tour không tồn tại!';
+            header('Location: ' . BASE_URL . '?mode=admin&action=viewstour');
+            exit;
         }
 
-      //DANH MỤC TOUR
+        $title = "Chi tiết tour";
+        $view = 'admin/tour/show';
+        require_once PATH_VIEW_MAIN;
+    }
+
+    //DANH MỤC TOUR
     public function viewDanhmuc()
     {
         $categoryModel = new TourCategoryModel();
@@ -284,16 +284,8 @@ class AdminController
         require_once PATH_VIEW_MAIN;
     }
 
-
-    public function addDanhmuc() {
-        $title = "Thêm danh mục tour";
-        $view = "admin/danhmuc/create";
-
-        require_once PATH_VIEW_MAIN;
-    }
-
-
-    public function storeDanhmuc() {
+    public function storeDanhmuc()
+    {
         $model = new TourCategoryModel();
 
         $data = [
@@ -302,14 +294,15 @@ class AdminController
             "status"        => $_POST['status']
         ];
 
-        $model->addDanhmuc($data);
+        $model->addCategory($data);
 
         header("Location: ?mode=admin&action=viewsdanhmuc");
         exit();
     }
 
 
-    public function editDanhmuc() {
+    public function editDanhmuc()
+    {
         $id = $_GET['id'];
 
         $model = new TourCategoryModel();
@@ -321,44 +314,16 @@ class AdminController
         require_once PATH_VIEW_MAIN;
     }
 
-    public function addDanhmuc() {
+    public function addDanhmuc()
+    {
         $title = "Thêm danh mục tour";
         $view = "admin/danhmuc/create";
 
         require_once PATH_VIEW_MAIN;
     }
 
-
-    public function storeDanhmuc() {
-        $model = new TourCategoryModel();
-
-        $data = [
-            "category_name" => $_POST['category_name'],
-            "description"   => $_POST['description'],
-            "status"        => $_POST['status']
-        ];
-
-        $model->addDanhmuc($data);
-
-        header("Location: ?mode=admin&action=viewsdanhmuc");
-        exit();
-    }
-
-
-    public function editDanhmuc() {
-        $id = $_GET['id'];
-
-        $model = new TourCategoryModel();
-        $category = $model->getById($id);
-
-        $title = "Sửa danh mục tour";
-        $view = "admin/danhmuc/edit";
-
-        require_once PATH_VIEW_MAIN;
-    }
-
-
-    public function updateDanhmuc() {
+    public function updateDanhmuc()
+    {
         $id = $_GET['id'];
         $model = new TourCategoryModel();
 
@@ -375,7 +340,8 @@ class AdminController
     }
 
 
-    public function showDanhmuc() {
+    public function showDanhmuc()
+    {
         $id = $_GET['id'];
 
         $model = new TourCategoryModel();
@@ -388,7 +354,8 @@ class AdminController
     }
 
 
-    public function deleteDanhmuc() {
+    public function deleteDanhmuc()
+    {
         $id = $_GET['id'];
 
         $model = new TourCategoryModel();
@@ -428,23 +395,23 @@ class AdminController
     }
 
     // Xử lý xóa danh mục tour
-    public function deleteCategory()
-    {
-        $id = $_GET['id'] ?? null;
-        if ($id) {
-            $categoryModel = new TourCategoryModel();
-            $ok = $categoryModel->deleteCategory((int)$id);
-            if ($ok) {
-                $_SESSION['flash_success'] = "Xóa danh mục tour thành công.";
-            } else {
-                $_SESSION['flash_error'] = "Xóa danh mục tour thất bại. Vui lòng kiểm tra ràng buộc dữ liệu.";
-            }
-        } else {
-            $_SESSION['flash_error'] = "ID danh mục không hợp lệ.";
-        }
-        header('Location: ' . BASE_URL . '?mode=admin&action=viewsdanhmuc');
-        exit;
-    }
+    // public function deleteCategory()
+    // {
+    // $id = $_GET['id'] ?? null;
+    // if ($id) {
+    // $categoryModel = new TourCategoryModel();
+    // $ok = $categoryModel->deleteCategory((int)$id);
+    // if ($ok) {
+    // $_SESSION['flash_success'] = "Xóa danh mục tour thành công.";
+    // } else {
+    // $_SESSION['flash_error'] = "Xóa danh mục tour thất bại. Vui lòng kiểm tra ràng buộc dữ liệu.";
+    // }
+    // } else {
+    // $_SESSION['flash_error'] = "ID danh mục không hợp lệ.";
+    // }
+    // header('Location: ' . BASE_URL . '?mode=admin&action=viewsdanhmuc');
+    // exit;
+    // }
     public function viewAccount()
     {
         $title = "Quản lý tài khoản";
