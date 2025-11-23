@@ -21,9 +21,11 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach($itineraryData as $day => $activities): ?>
-                        <tr><td class="fw-bold" colspan="3">Ngày <?= $day ?></td></tr>
-                        <?php foreach($activities as $act): ?>
+                    <?php foreach ($itineraryData as $day => $activities): ?>
+                        <tr>
+                            <td class="fw-bold" colspan="3">Ngày <?= $day ?></td>
+                        </tr>
+                        <?php foreach ($activities as $act): ?>
                             <tr>
                                 <td><?= $act['start_time'] ?> - <?= $act['end_time'] ?></td>
                                 <td><?= $act['place'] ?></td>
@@ -34,7 +36,7 @@
                 </tbody>
             </table>
             <div class="card-footer bg-white py-4">
-                <button class="btn btn-secondary">Quay lại</button>
+                <a href="<?= BASE_URL ?>?mode=guide&action=detail-schedule-info" class="btn btn-secondary px-4">Quay lại</a>
             </div>
         </div>
     </div>

@@ -1,9 +1,35 @@
 <div class="col-12">
     <h2>Yêu cầu đặc biệt</h2>
+    <form action="<?= BASE_URL ?>" method="get" class="mb-4">
+        <input type="hidden" name="mode" value="guide">
+        <input type="hidden" name="action" value="viewrequest">
+
+        <div class="d-flex align-items-center gap-2 bg-white p-3 rounded shadow-sm border">
+            <label class="fw-bold">Lọc theo Tour:</label>
+            <select name="tour_id" class="form-select w-auto" onchange="this.form.submit()">
+                <option value="">-- Chọn Tour để xem --</option>
+                <?php foreach ($list_tour as $tour): ?>
+                    <option value="<?= $tour['tour_id'] ?>"
+                        <?= (isset($_GET['tour_id']) && $_GET['tour_id'] == $tour['tour_id']) ? 'selected' : '' ?>>
+                        <?= $tour['tour_name'] ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
+
+            <?php if (isset($_GET['tour_id']) && $_GET['tour_id']): ?>
+                <a href="<?= BASE_URL ?>?mode=guide&action=viewrequest" class="btn btn-secondary btn-sm">Xóa lọc</a>
+            <?php endif; ?>
+        </div>
+    </form>
     <form action="<?= BASE_URL ?>?mode=guide&action=viewrequest" method="post" class="border rounded-3 p-4 d-flex flex-wrap align-items-center gap-3 bg-white shadow-sm">
         <div class="flex-grow-1">
-            <select name="guest_id" class="form-control custom-input py-2" placeholder="Tên khách">
-                <?php foreach ($data_guest as $value): ?> <option value="<?= $value['guest_id'] ?>"><?= $value['full_name'] ?></option> <?php endforeach ?>
+            <select name="guest_id" class="form-control custom-input py-2" <?= empty($data_guest) ? 'disabled' : '' ?>>
+                <option value="" disabled selected>
+                    <?= empty($data_guest) ? '-- Vui lòng chọn Tour trước --' : '-- Chọn khách hàng --' ?>
+                </option>
+                <?php foreach ($data_guest as $value): ?>
+                    <option value="<?= $value['guest_id'] ?>"><?= $value['full_name'] ?></option>
+                <?php endforeach ?>
             </select>
         </div>
 

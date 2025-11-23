@@ -14,9 +14,9 @@ class GuideController
         $view = 'guide/schedule/schedule';
         require_once PATH_VIEW_MAIN;
     }
-public function viewScheduleInfo()
+    public function viewScheduleInfo()
     {
-        if(!isset($_GET['id'])) {
+        if (!isset($_GET['id'])) {
             // Nếu không có id, quay lại trang danh sách
             header("Location: " . BASE_URL . "?mode=guide&action=viewschedule");
             exit();
@@ -30,10 +30,10 @@ public function viewScheduleInfo()
         require_once PATH_VIEW_MAIN;
     }
 
-public function viewScheduleItinerary()
+    public function viewScheduleItinerary()
     {
-        if(!isset($_GET['id'])) {
-            header("Location: " . BASE_URL . "?mode=guide&action=viewschedule");
+        if (!isset($_GET['id'])) {
+            header("Location: " . BASE_URL . "?mode=guide&action=viewSchedule");
             exit();
         }
 
@@ -45,10 +45,10 @@ public function viewScheduleItinerary()
         require_once PATH_VIEW_MAIN;
     }
 
-public function viewScheduleCustomers()
+    public function viewScheduleCustomers()
     {
-        if(!isset($_GET['id'])) {
-            header("Location: " . BASE_URL . "?mode=guide&action=viewschedule");
+        if (!isset($_GET['id'])) {
+            header("Location: " . BASE_URL . "?mode=guide&action=viewSchedule");
             exit();
         }
 
@@ -60,10 +60,10 @@ public function viewScheduleCustomers()
         require_once PATH_VIEW_MAIN;
     }
 
-public function viewScheduleCheckin()
+    public function viewScheduleCheckin()
     {
-        if(!isset($_GET['id'])) {
-            header("Location: " . BASE_URL . "?mode=guide&action=viewschedule");
+        if (!isset($_GET['id'])) {
+            header("Location: " . BASE_URL . "?mode=guide&action=viewSchedule");
             exit();
         }
 
@@ -177,22 +177,35 @@ public function viewDiary()
     public function viewRequest()
     {
         $request = new GuestSpecialRequest();
+        $guest = new Guest();
+        $tour = new Tour();
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $guest_id = $_POST['guest_id'];
             $description = trim($_POST['description']);
             $medical_condition = trim($_POST['medical_condition'] ?? "");
+            $current_tour_id = $_POST['current_tour_id'] ?? '';
             if ($description == '') {
                 $_SESSION['flash_error'] = "Yêu cầu không được để trống!";
-                header("Location: " . BASE_URL . "?mode=guide&action=viewrequest");
-                exit();
+            } else {
+                $request->insertRequest($guest_id, $description, $medical_condition);
             }
-            $request->insertRequest($guest_id, $description, $medical_condition);
-            header("Location: " . BASE_URL . "?mode=guide&action=viewrequest");
+            $redirectUrl = BASE_URL . "?mode=guide&action=viewrequest";
+            if ($current_tour_id) $redirectUrl .= "&tour_id=" . $current_tour_id;
+
+            header("Location: " . $redirectUrl);
             exit();
         } else {
-            $guest = new Guest();
-            $data_guest = $guest->getAllGuest();
-            $data = $request->getAllRequest();
+            $list_tour = $tour->getAllTour();
+            $filter_tour_id = isset($_GET['tour_id']) && $_GET['tour_id'] != '' ? $_GET['tour_id'] : null;
+            if ($filter_tour_id) {
+                $data_guest = $guest->getGuideByTour($filter_tour_id);
+                $data = $request->getAllRequest($filter_tour_id);
+            } else {
+                $data_guest = [];
+                $data = [];
+            }
+
+
             $title = "Yêu cầu đặc biệt";
             $view = 'guide/request/request';
             require_once PATH_VIEW_MAIN;
