@@ -176,6 +176,9 @@ public function viewDiary()
     }
     public function viewRequest()
     {
+        $customers = new CustomersModel();
+        $guide_id = $_SESSION['user']['user_id'];
+        $assignedTours = $customers->getAssignedTours($guide_id);
         $request = new GuestSpecialRequest();
         $guest = new Guest();
         $tour = new Tour();
@@ -196,7 +199,9 @@ public function viewDiary()
             exit();
         } else {
             $list_tour = $tour->getAllTour();
-            $filter_tour_id = isset($_GET['tour_id']) && $_GET['tour_id'] != '' ? $_GET['tour_id'] : null;
+            $filter_tour_id = isset($_GET['departure_id']) && $_GET['departure_id'] != '' 
+                                ? $_GET['departure_id'] 
+                                : null; // CMT: đổi từ tour_id sang departure_id để đồng bộ với View
             if ($filter_tour_id) {
                 $data_guest = $guest->getGuideByTour($filter_tour_id);
                 $data = $request->getAllRequest($filter_tour_id);
