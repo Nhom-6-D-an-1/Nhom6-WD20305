@@ -420,6 +420,8 @@ class AdminController
     }
     public function viewResources()
     {
+        $tourGuide = new TourGuideModel();
+        $data_tourGuide = $tourGuide->getAllGuide();
         $title = "Quản lý nhân sự";
         $view = 'admin/resources/resources';
         require_once PATH_VIEW_MAIN;

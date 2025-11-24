@@ -4,7 +4,7 @@
         <input type="hidden" name="mode" value="guide">
         <input type="hidden" name="action" value="viewrequest">
 
-        <div class="d-flex align-items-center gap-2 bg-white p-3 rounded shadow-sm border">
+        <div class="d-flex align-items-center gap-2 bg-white p-3 ">
             <label class="fw-bold">Lọc theo Tour:</label>
             <select name="tour_id" class="form-select w-auto" onchange="this.form.submit()">
                 <option value="">-- Chọn Tour để xem --</option>
