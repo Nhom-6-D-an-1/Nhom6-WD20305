@@ -1,5 +1,5 @@
 <div class="container-fluid px-4">
-    <h3 class="mt-4 mb-4">Sửa loại tour</h3>
+    <h3 class="mt-4 mb-4">Sửa danh mục tour: <?= $category['category_name'] ?></h3>
 
     <div class="card">
         <div class="card-body">
@@ -12,10 +12,10 @@
                            value="<?= $category['category_name'] ?>" required>
                 </div>
 
-                <div class="mb-3">
+                <!-- <div class="mb-3">
                     <label class="form-label">Mô tả ngắn</label>
                     <textarea name="description" class="form-control" rows="3"><?= $category['description'] ?></textarea>
-                </div>
+                </div> -->
 
                 <div class="mb-3">
                     <label class="form-label">Trạng thái</label>
