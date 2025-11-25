@@ -11,10 +11,10 @@
                     <input type="text" name="category_name" class="form-control" required>
                 </div>
 
-                <div class="mb-3">
+                <!-- <div class="mb-3">
                     <label class="form-label">Mô tả ngắn</label>
                     <textarea name="description" class="form-control" rows="3"></textarea>
-                </div>
+                </div> -->
 
                 <div class="mb-3">
                     <label class="form-label">Trạng thái</label>
