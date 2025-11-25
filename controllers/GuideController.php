@@ -40,6 +40,9 @@ class GuideController
         $departure_id = $_GET['id'];
         $schedule = new ScheduleModel();
         $itineraryData = $schedule->getScheduleItinerary($departure_id);
+        // Lấy tên tour
+        $schedule = new ScheduleModel();
+        $infoData = $schedule->getScheduleInfo($departure_id);
         $title = "Lịch làm việc - Lịch trình tour";
         $view = 'guide/schedule/detail/itinerary';
         require_once PATH_VIEW_MAIN;
@@ -55,6 +58,9 @@ class GuideController
         $departure_id = $_GET['id'];
         $schedule = new ScheduleModel();
         $customersData = $schedule->getScheduleCustomers($departure_id);
+        // Lấy tên tour
+        $schedule = new ScheduleModel();
+        $infoData = $schedule->getScheduleInfo($departure_id);
         $title = "Lịch làm việc - Danh sách khách";
         $view = 'guide/schedule/detail/customers';
         require_once PATH_VIEW_MAIN;
@@ -70,6 +76,9 @@ class GuideController
         $departure_id = $_GET['id'];
         $schedule = new ScheduleModel();
         $checkinData = $schedule->getScheduleCheckin($departure_id);
+        // Lấy tên tour
+        $schedule = new ScheduleModel();
+        $infoData = $schedule->getScheduleInfo($departure_id);
         $title = "Lịch làm việc - Check-in tour";
         $view = 'guide/schedule/detail/checkin';
         require_once PATH_VIEW_MAIN;
@@ -165,13 +174,75 @@ public function viewDiary()
         header("Location: " . BASE_URL . "?mode=guide&action=viewdiary");
         exit();
     }
+    // public function viewCheckin()
+    // {
+    //     $checkinModel = new CheckinModel();
+    //     $checkinData = $checkinModel->getAllCheckin();
+    //     $customers = new CustomersModel();
+    //     $guide_id = $_SESSION['user']['user_id'];
+    //     $assignedTours = $customers->getAssignedTours($guide_id);
+    //     $title = "Check-in, điểm danh";
+    //     $view = 'guide/checkin/checkin';
+    //     require_once PATH_VIEW_MAIN;
+    // }
     public function viewCheckin()
     {
+        // 1. Tái sử dụng CustomersModel để lấy danh sách tour được phân công (Phương án B)
         $customers = new CustomersModel();
         $guide_id = $_SESSION['user']['user_id'];
         $assignedTours = $customers->getAssignedTours($guide_id);
-        $title = "Check-in, điểm danh";
-        $view = 'guide/checkin/checkin';
+        
+        // 2. Khởi tạo CheckinModel
+        $checkinModel = new CheckinModel(); 
+        
+        $selectedDepartureId = $_GET['departure_id'] ?? null;
+        $selectedStage = $_GET['stage'] ?? null;
+        $statusDisplay = []; 
+        $stages = []; 
+
+        // Xử lý CẬP NHẬT trạng thái check-in (Hành động POST)
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'update_checkin') {
+            $guest_id = $_POST['guest_id'] ?? null;
+            $departure_id = $_POST['departure_id'] ?? null;
+            $stage_description = $_POST['stage_description'] ?? null;
+            $status = $_POST['status'] ?? null; // present, absent, late
+
+            if ($guest_id && $departure_id && $stage_description && $status) {
+                $checkinModel->updateCheckinStatus(
+                    $guest_id, 
+                    $departure_id, 
+                    $guide_id, // recorded_by_user_id
+                    $stage_description, 
+                    $status
+                );
+                // Sau khi cập nhật, reload lại trang
+                header("Location: " . BASE_URL . "?mode=guide&action=viewcheckin&departure_id=$departure_id&stage=" . urlencode($stage_description));
+                exit();
+            }
+        }
+
+        // Lấy dữ liệu hiển thị (GET)
+        if ($selectedDepartureId) {
+            // Lấy danh sách chặng/điểm check-in của tour đã chọn
+            $stages = $checkinModel->getCheckinStages($selectedDepartureId);
+
+            // Nếu chưa có chặng nào được chọn, mặc định chọn chặng đầu tiên
+            if (!$selectedStage && !empty($stages)) {
+                $selectedStage = $stages[0];
+            }
+
+            // Lấy danh sách khách và trạng thái điểm danh
+            if ($selectedStage) {
+                $checkinData = $checkinModel->getGuestsAndCheckinStatus($selectedDepartureId, $selectedStage);
+                $statusDisplay = array_map(function($item) use ($checkinModel) {
+                    $item['display_status'] = $checkinModel->getStatusDisplay($item['status']);
+                    return $item;
+                }, $checkinData);
+            }
+        }
+        
+        $title = "Check in, điểm danh";
+        $view = 'guide/checkin/checkin'; 
         require_once PATH_VIEW_MAIN;
     }
     public function viewRequest()
