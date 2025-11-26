@@ -78,7 +78,7 @@
 
     <!-- LEFT SIDE -->
     <div class="col-12 col-md-6 left-panel">
-        <img class="img-fluid" src="<?php BASE_URL ?>assets/images/" alt="Handshake Image">
+        <img class="img-fluid" src="<?php BASE_URL ?>assets/images/anh.png" alt="Handshake Image">
     </div>
 
     <!-- RIGHT SIDE -->

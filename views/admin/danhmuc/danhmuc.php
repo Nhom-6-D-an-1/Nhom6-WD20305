@@ -37,24 +37,24 @@
                     <tr>
                         <th style="width:60px;">STT</th>
                         <th>Tên loại tour</th>
-                        <th style="width:350px;">Mô tả ngắn</th>
+                        <!-- <th style="width:350px;">Mô tả ngắn</th> -->
                         <th style="width:150px;">Trạng thái</th>
                         <th style="width:200px;">Hành động</th>
                     </tr>
                 </thead>
 
                 <tbody>
-                    <?php if (!empty($list)): ?>
-                        <?php foreach($list as $index => $item): ?>
+                    <?php if (!empty($categories)): ?>
+                        <?php foreach($categories as $index => $item): ?>
                             <tr>
                                 <td><?= $index + 1 ?></td>
 
-                                <td><?= $item['category_name'] ?></td>
+                                <td><?= htmlspecialchars($item['category_name'] ?? '') ?></td>
 
-                                <td><?= $item['description'] ?></td>
+                                <!-- <td><?= htmlspecialchars($item['description'] ?? '') ?></td> -->
 
                                 <td>
-                                    <?php if ($item['status'] == 1): ?>
+                                    <?php if (($item['status'] ?? 0) == 1): ?>
                                         <span class="badge bg-success">Đang hoạt động</span>
                                     <?php else: ?>
                                         <span class="badge bg-secondary">Tạm ẩn</span>
