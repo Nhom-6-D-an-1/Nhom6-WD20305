@@ -45,5 +45,7 @@ match ($action) {
     'viewsaccount'         => (new AdminController())->viewAccount(),
 
     'viewsresources'         => (new AdminController())->viewResources(),
+    'viewGuideDetail'         => (new AdminController())->viewGuideDetail(),
+    'viewEditGuide'         => (new AdminController())->viewEditGuide(),
     default    => (new AdminController())->viewDashboard()
 };

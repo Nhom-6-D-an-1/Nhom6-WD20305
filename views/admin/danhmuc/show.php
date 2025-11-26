@@ -7,7 +7,6 @@
 
                 <div class="mb-3">
                     <label class="form-label">Tên loại tour</label>
-                    <label class="form-label">Tên danh mục tour</label>
                     <input type="text" class="form-control" value="<?= $category['category_name'] ?>" disabled>
                 </div>
 
