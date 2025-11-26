@@ -1,5 +1,5 @@
 <div class="container-fluid px-4">
-    <h3 class="mt-4 mb-4">Thêm loại tour</h3>
+    <h3 class="mt-4 mb-4">Thêm danh mục tour</h3>
 
     <div class="card">
         <div class="card-body">
@@ -7,7 +7,7 @@
             <form action="?mode=admin&action=storedanhmuc" method="POST">
 
                 <div class="mb-3">
-                    <label class="form-label">Tên loại tour</label>
+                    <label class="form-label">Tên danh mục</label>
                     <input type="text" name="category_name" class="form-control" required>
                 </div>
 
