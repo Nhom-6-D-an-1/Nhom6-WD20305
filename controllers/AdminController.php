@@ -155,7 +155,7 @@ class AdminController
     {
         // Load tours
         $tourModel = new TourModel();
-        $tours = $tourModel->getAllTours();
+        $tours = $tourModel->getFullInfo();
 
         $title = "Quản lý tour";
         $view = 'admin/tour/tour';
@@ -173,7 +173,7 @@ class AdminController
             ];
 
             $tourModel = new TourModel();
-            $ok = $tourModel->addTour($data);
+            $ok = $tourModel->insertFull($data);
 
             header('Location: ' . BASE_URL . '?mode=admin&action=viewstour');
             exit;
@@ -192,7 +192,7 @@ class AdminController
         }
 
         $tourModel = new TourModel();
-        $tour = $tourModel->getTourById($id);
+        $tour = $tourModel->getFullById($id);
 
         if (!$tour) {
             $_SESSION['flash_error'] = 'Tour không tồn tại!';
@@ -223,7 +223,7 @@ class AdminController
             ];
 
             $tourModel = new TourModel();
-            $ok = $tourModel->updateTour($id, $data);
+            $ok = $tourModel->update($id, $data);
 
             if ($ok) {
                 $_SESSION['flash_success'] = "Cập nhật tour thành công.";
@@ -245,7 +245,7 @@ class AdminController
         $id = $_GET['id'] ?? null;
         if ($id) {
             $tourModel = new TourModel();
-            $tourModel->deleteTour((int)$id);
+            $tourModel->delete((int)$id);
         }
         header('Location: ' . BASE_URL . '?mode=admin&action=viewstour');
         exit;
@@ -259,7 +259,7 @@ class AdminController
         }
 
         $tourModel = new TourModel();
-        $tour = $tourModel->showTour($id);
+        $tour = $tourModel->getFullById($id);
 
         if (!$tour) {
             $_SESSION['flash_error'] = 'Tour không tồn tại!';
