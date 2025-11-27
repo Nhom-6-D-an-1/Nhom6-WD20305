@@ -1,5 +1,5 @@
 <div class="col-12">
-    <h2 class="h3 fw-bold text-dark mb-4">Chi tiết tour</h2>
+    <h2 class="h3 fw-bold text-dark mb-4">Chi tiết tour: <?= $infoData['tour_name'] ?></h2>
 
     <div class="card shadow-sm border-0 card-custom">
         <div class="card-header bg-white border-0">
