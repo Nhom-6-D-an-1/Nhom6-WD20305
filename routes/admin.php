@@ -36,7 +36,10 @@ match ($action) {
     'viewsaccount'    => (new AdminController())->viewAccount(),
 
     // ========== RESOURCES ==========
-    'viewsresources'  => (new AdminController())->viewResources(),
+
+    'viewsresources'         => (new AdminController())->viewResources(),
+    'viewGuideDetail'         => (new AdminController())->viewGuideDetail(),
+    'viewEditGuide'         => (new AdminController())->viewEditGuide(),
 
 
     // ===============   TOUR CONTROLLER   ===============
@@ -48,4 +51,3 @@ match ($action) {
     'deletetour'  => (new TourController())->delete(),
     default            => (new AdminController())->viewDashboard(),
 };
-

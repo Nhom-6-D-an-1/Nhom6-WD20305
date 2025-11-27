@@ -69,14 +69,16 @@
                             <td><?= $t['guide_name'] ?: '—' ?></td>
 
                             <td class="text-center">
-                                <a href="?mode=admin&action=viewtourdetail&id=<?= $t['tour_id'] ?>" class="btn btn-sm btn-info text-white">Xem</a>
-                                <a href="?mode=admin&action=edittour&id=<?= $t['tour_id'] ?>" class="btn btn-sm btn-warning text-white">Sửa</a>
-                                <a onclick="return confirm('Bạn có chắc muốn xoá tour này?')" href="?mode=admin&action=deletetour&id=<?= $t['tour_id'] ?>" class="btn btn-sm btn-danger">Xoá</a>
+                                <a href="<?= BASE_URL ?>?mode=admin&action=viewtour&id=<?= $t['tour_id'] ?>" class="btn btn-sm btn-info text-white">Xem</a>
+                                <a href="<?= BASE_URL ?>?mode=admin&action=edittour&id=<?= $t['tour_id'] ?>" class="btn btn-sm btn-warning text-white">Sửa</a>
+                                <a onclick="return confirm('Bạn có chắc muốn xoá tour này?')" href="<?= BASE_URL ?>?mode=admin&action=deletetour&id=<?= $t['tour_id'] ?>" class="btn btn-sm btn-danger">Xoá</a>
                             </td>
                         </tr>
                     <?php endforeach; ?>
                 <?php else : ?>
-                    <tr><td colspan="7" class="text-center text-muted">Không có tour nào</td></tr>
+                    <tr>
+                        <td colspan="7" class="text-center text-muted">Không có tour nào</td>
+                    </tr>
                 <?php endif; ?>
             </tbody>
 
