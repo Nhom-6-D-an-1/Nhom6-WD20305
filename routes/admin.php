@@ -21,7 +21,14 @@ match ($action) {
     'viewsdashboard'  => (new AdminController())->viewDashboard(),
 
     // ========== BOOKING ==========
-    'viewsbooking'    => (new AdminController())->viewBooking(),
+    'viewsbooking'         => (new AdminController())->viewBooking(),
+    'views_add_booking'         => (new AdminController())->viewAddBooking(),
+    'showbooking'               => (new AdminController())->showBooking(),
+    'suabooking'                => (new AdminController())->editBooking(),
+    'updatebooking'             => (new AdminController())->updateBooking(),
+    'addbooking'                => (new AdminController())->addBooking(),
+    'deletebooking'             => (new AdminController())->deleteBooking(),
+
 
     // ========== DANH MỤC TOUR ==========
     'viewsdanhmuc'       => (new AdminController())->viewDanhmuc(),
@@ -46,6 +53,12 @@ match ($action) {
     'edittour'    => (new TourController())->edit(),
     'updatetour'  => (new TourController())->update(),
     'deletetour'  => (new TourController())->delete(),
+    // ===============   TOUR DETAIL + GUESTS   ===============
+    'viewtourdetail' => (new TourController())->detail(),
+    'guestlist'      => (new TourController())->guestList(),      // ?departure_id=11
+    // 'addguest'       => (new TourController())->addGuestForm(),   // ?departure_id=11
+    // 'storeguest'     => (new TourController())->storeGuest(),     // POST
+
     default            => (new AdminController())->viewDashboard(),
 };
 
