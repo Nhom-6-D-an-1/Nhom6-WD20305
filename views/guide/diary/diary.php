@@ -71,7 +71,7 @@
                                     </td>
                                     <td class="text-center py-4 diary-img">
                                         <?php if(!empty($diary['image'])) { ?>
-                                            <img src="<?= BASE_ASSETS_UPLOADS . $diary['image'] ?>" alt="Hình ảnh" class="diary-img-thumb rounded">
+                                            <img src="<?= BASE_ASSETS_UPLOADS . $diary['image'] ?>" alt="Hình ảnh" class="rounded" width="100" height="100px">
                                         <?php } else { ?>
                                             <span class="text-secondary small">Không có</span>
                                         <?php } ?>

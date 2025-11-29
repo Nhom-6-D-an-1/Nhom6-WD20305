@@ -48,6 +48,15 @@ class DiaryModel {
     public function addDiary($departure_id, $user_id, $log_content, $imagePath = null, $created_at = null) {
         if (!$created_at) $created_at = date('Y-m-d H:i:s'); // tự động lấy ngày giờ hiện tại
 
+    //     // Đổi thành múi giờ Việt Nam
+    //     if (!$created_at) {
+    //     // Tạo đối tượng DateTimeZone cho múi giờ UTC+7
+    //     $timezone = new DateTimeZone('Asia/Ho_Chi_Minh');
+    //     // Tạo đối tượng DateTime với thời gian hiện tại và múi giờ đã chỉ định
+    //     $now = new DateTime('now', $timezone);
+    //     $created_at = $now->format('Y-m-d H:i:s');
+    // }
+
         $sql = "INSERT INTO tour_log (departure_id, user_id, log_content, image, created_at) 
                 VALUES (:departure_id, :user_id, :log_content, :image, :created_at)";
         $stmt = $this->conn->prepare($sql);

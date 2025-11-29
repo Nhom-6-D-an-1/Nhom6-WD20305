@@ -18,7 +18,7 @@
             </select>
         </div>
     </form>
-    <form action="<?= BASE_URL ?>?mode=guide&action=viewrequest" method="post" class="border rounded-3 p-4 d-flex flex-wrap align-items-center gap-3 bg-white shadow-sm">
+    <!-- <form action="<?= BASE_URL ?>?mode=guide&action=viewrequest" method="post" class="border rounded-3 p-4 d-flex flex-wrap align-items-center gap-3 bg-white shadow-sm">
         <div class="flex-grow-1">
             <select name="guest_id" class="form-control custom-input py-2" <?= empty($data_guest) ? 'disabled' : '' ?>>
                 <option value="" disabled selected>
@@ -32,9 +32,10 @@
 
         <div class="flex-grow-1" style="position: relative;">
             <input type="text" name="description" class="form-control custom-input py-2" placeholder="Yêu cầu">
-            <span class="text-danger" style="position: absolute; top: 100%; left: 0; width: 100%; font-size: 13px; margin-top: 2px; white-space: nowrap;"><?php if (isset($_SESSION['flash_error'])): ?>
+            <span class="text-danger" style="position: absolute; top: 100%; left: 0; width: 100%; font-size: 13px; margin-top: 2px; white-space: nowrap;">
+                <?php if (isset($_SESSION['flash_error'])): ?>
                     <?= $_SESSION['flash_error'];
-                                                                                                                                                                unset($_SESSION['flash_error']) ?> <?php endif ?></span>
+                    unset($_SESSION['flash_error']) ?> <?php endif ?></span>
         </div>
 
 
@@ -47,7 +48,7 @@
             <button class="btn btn-primary px-4 py-2 fw-medium">Thêm yêu cầu</button>
         </div>
 
-    </form>
+    </form> -->
 </div>
 <div class="table-responsive">
     <table class="table table-hover align-middle mb-0 customer-table">
@@ -61,17 +62,23 @@
             </tr>
         </thead>
         <tbody>
-            <?php foreach ($data as $key => $value): ?>
-                <tr class="customer-row">
-                    <td class="ps-4 fw-semibold"><?= $key + 1 ?></td>
-                    <td><?= $value['full_name'] ?></td>
-                    <td><?= $value['description'] ?></td>
-                    <td><?= $value['medical_condition'] ?? 'Không có' ?></td>
-                    <td>
-                        <a href="<?= BASE_URL ?>?mode=guide&action=deleteRequest&id=<?= $value['request_id'] ?>" class="btn btn-danger" onclick=" return confirm('Bạn có muốn xóa yêu cầu không?')">Xóa</a>
-                    </td>
+            <?php if(empty($filteredSchedule)): ?>
+                <tr>
+                    <td colspan="6" class="text-center">Không có tour nào.</td>
                 </tr>
-            <?php endforeach; ?>
+            <?php else: ?>
+                <?php foreach ($data as $key => $value): ?>
+                    <tr class="customer-row">
+                        <td class="ps-4 fw-semibold"><?= $key + 1 ?></td>
+                        <td><?= $value['full_name'] ?></td>
+                        <td><?= $value['description'] ?></td>
+                        <td><?= $value['medical_condition'] ?? 'Không có' ?></td>
+                        <td>
+                            <a href="<?= BASE_URL ?>?mode=guide&action=deleteRequest&id=<?= $value['request_id'] ?>" class="btn btn-danger" onclick=" return confirm('Bạn có muốn xóa yêu cầu không?')">Xóa</a>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            <?php endif; ?>
         </tbody>
     </table>
 </div>

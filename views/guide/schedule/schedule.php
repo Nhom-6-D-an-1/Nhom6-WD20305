@@ -90,6 +90,10 @@ $filteredSchedule = array_filter($scheduleData, function($tour) use ($today) {
                             <tr>
                                 <td colspan="6" class="text-center">Không có tour nào.</td>
                             </tr>
+                        <?php elseif(!isset($_GET['departure_id'])) : ?>
+                            <tr>
+                                <td colspan="6" class="text-center">Vui lòng chọn tour.</td>
+                            </tr>
                         <?php else: ?>
                             <?php foreach($filteredSchedule as $value): ?>
                                 <?php
