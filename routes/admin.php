@@ -55,5 +55,9 @@ match ($action) {
     'edittour'    => (new TourController())->edit(),
     'updatetour'  => (new TourController())->update(),
     'deletetour'  => (new TourController())->delete(),
+
+
+    // Logout 
+    'logout' => (new AuthController())->logout(),
     default            => (new AdminController())->viewDashboard(),
 };

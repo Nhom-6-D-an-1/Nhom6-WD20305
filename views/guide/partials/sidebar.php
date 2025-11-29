@@ -37,7 +37,7 @@
             <!-- </a> -->
             </li>
             <li class="nav-item mb-2">
-                <a class="nav-link" href="<?= BASE_URL ?>?logout">
+                <a class="nav-link" href="<?= BASE_URL ?>?mode=guide&action=logout">
                     Đăng xuất
                 </a>
             </li>
