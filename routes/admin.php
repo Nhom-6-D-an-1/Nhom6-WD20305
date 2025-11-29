@@ -22,6 +22,12 @@ match ($action) {
 
     // ========== BOOKING ==========
     'viewsbooking'    => (new AdminController())->viewBooking(),
+    'views_add_booking'         => (new AdminController())->viewAddBooking(),
+    'showbooking'               => (new AdminController())->showBooking(),
+    'suabooking'                => (new AdminController())->editBooking(),
+    'updatebooking'             => (new AdminController())->updateBooking(),
+    'addbooking'                => (new AdminController())->addBooking(),
+    'deletebooking'             => (new AdminController())->deleteBooking(),
 
     // ========== DANH MỤC TOUR ==========
     'viewsdanhmuc'       => (new AdminController())->viewDanhmuc(),
