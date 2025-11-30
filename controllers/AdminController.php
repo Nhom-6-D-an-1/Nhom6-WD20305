@@ -417,10 +417,58 @@ public function addBooking()
     }
     public function viewResources()
     {
+        $tourGuide = new TourGuideModel();
+        $data_tourGuide = $tourGuide->getAllGuide();
         $title = "Quản lý nhân sự";
         $view = 'admin/resources/resources';
         require_once PATH_VIEW_MAIN;
     }
+
+    public function viewGuideDetail()
+    {
+        $tourGuide = new TourGuideModel();
+        $id = $_GET['id'] ?? '';
+        $data_Guide = $tourGuide->getOneGuide($id);
+        $title = "Chi tiết nhân sự";
+        $view = 'admin/resources/guideDetail';
+        require_once PATH_VIEW_MAIN;
+    }
+
+    public function viewEditGuide()
+    {
+        $tourGuide = new TourGuideModel();
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $id = $_GET['id'] ?? '';
+            $data_Guide = $tourGuide->getOneGuide($id);
+            $avatar = $data_Guide['avatar'];
+            if ($_FILES['avatar'] && $_FILES['avatar']['error'] == UPLOAD_ERR_OK) {
+                $avatar = uploadFile($_FILES['avatar'], "guide/");
+            }
+            $full_name = $_POST['full_name'];
+            $birthday = $_POST['birthday'];
+            $phone = $_POST['phone'];
+            $email = $_POST['email'];
+            $_POST['avatar'] = $avatar;
+            $gender = $_POST['gender'] ?? $data_Guide['gender'];
+            $languages = $_POST['languages'] ?? $data_Guide['languages'];
+            $rating = $_POST['rating'];
+            $experience_years = $_POST['experience_years'];
+            $certificates = $_POST['certificates'];
+            $health = $_POST['health'];
+            $notes = $_POST['notes'] ?? $data_Guide['notes'];
+            $tourGuide->updateGuide($full_name, $birthday, $phone, $email, $avatar, $gender, $languages, $rating, $experience_years, $certificates, $health, $notes, $id);
+            header("Location: " . BASE_URL . "?mode=admin&action=viewGuideDetail&id=" . $data_Guide['user_id']);
+            exit();
+        } else {
+
+            $id = $_GET['id'] ?? '';
+            $data_Guide = $tourGuide->getOneGuide($id);
+            $title = "Chỉnh sửa thông tin nhân sự";
+            $view = 'admin/resources/editGuide';
+            require_once PATH_VIEW_MAIN;
+        }
+    }
+
     public function viewDashboard()
     {
         $title = "Dashboard";

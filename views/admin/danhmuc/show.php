@@ -3,25 +3,26 @@
 
     <div class="card">
         <div class="card-body">
+            <div class="card-body">
 
-            <div class="mb-3">
-                <label class="form-label">Tên danh mục tour</label>
-                <input type="text" class="form-control" value="<?= $category['category_name'] ?>" disabled>
-            </div>
+                <div class="mb-3">
+                    <label class="form-label">Tên loại tour</label>
+                    <input type="text" class="form-control" value="<?= $category['category_name'] ?>" disabled>
+                </div>
 
-            <!-- <div class="mb-3">
+                <!-- <div class="mb-3">
                 <label class="form-label">Mô tả</label>
                 <textarea class="form-control" rows="3" disabled><?= $category['description'] ?></textarea>
             </div> -->
 
-            <div class="mb-3">
-                <label class="form-label">Trạng thái</label>
-                <input type="text" class="form-control"
-                       value="<?= $category['status'] == 1 ? 'Đang hoạt động' : 'Tạm ẩn' ?>" disabled>
+                <div class="mb-3">
+                    <label class="form-label">Trạng thái</label>
+                    <input type="text" class="form-control"
+                        value="<?= $category['status'] == 1 ? 'Đang hoạt động' : 'Tạm ẩn' ?>" disabled>
+                </div>
+
+                <a href="?mode=admin&action=viewsdanhmuc" class="btn btn-secondary">Quay lại</a>
+
             </div>
-
-            <a href="?mode=admin&action=viewsdanhmuc" class="btn btn-secondary">Quay lại</a>
-
         </div>
     </div>
-</div>

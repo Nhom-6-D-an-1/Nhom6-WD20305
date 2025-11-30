@@ -15,5 +15,7 @@ match ($action) {
     'detail-schedule-itinerary'         => (new GuideController)->viewScheduleItinerary(),
     'detail-schedule-customers'         => (new GuideController)->viewScheduleCustomers(),
     'detail-schedule-checkin'         => (new GuideController)->viewScheduleCheckin(),
+
+    'logout' => (new AuthController())->logout(),
     default         => (new GuideController)->viewSchedule(),
 };

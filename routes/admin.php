@@ -21,7 +21,7 @@ match ($action) {
     'viewsdashboard'  => (new AdminController())->viewDashboard(),
 
     // ========== BOOKING ==========
-    'viewsbooking'         => (new AdminController())->viewBooking(),
+    'viewsbooking'    => (new AdminController())->viewBooking(),
     'views_add_booking'         => (new AdminController())->viewAddBooking(),
     'showbooking'               => (new AdminController())->showBooking(),
     'suabooking'                => (new AdminController())->editBooking(),
@@ -43,7 +43,10 @@ match ($action) {
     'viewsaccount'    => (new AdminController())->viewAccount(),
 
     // ========== RESOURCES ==========
-    'viewsresources'  => (new AdminController())->viewResources(),
+
+    'viewsresources'         => (new AdminController())->viewResources(),
+    'viewGuideDetail'         => (new AdminController())->viewGuideDetail(),
+    'viewEditGuide'         => (new AdminController())->viewEditGuide(),
 
 
     // ===============   TOUR CONTROLLER   ===============
@@ -59,6 +62,9 @@ match ($action) {
     // 'addguest'       => (new TourController())->addGuestForm(),   // ?departure_id=11
     // 'storeguest'     => (new TourController())->storeGuest(),     // POST
 
+
+
+    // Logout 
+    'logout' => (new AuthController())->logout(),
     default            => (new AdminController())->viewDashboard(),
 };
-
