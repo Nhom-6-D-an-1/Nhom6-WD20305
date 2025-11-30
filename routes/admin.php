@@ -42,7 +42,12 @@ match ($action) {
     // ========== ACCOUNT ==========
     'viewsaccount'    => (new AdminController())->viewAccount(),
 
-    // ========== RESOURCES ==========
+    'viewsaccount'         => (new AdminController())->viewAccount(),
+    'addaccount'        => (new AdminController())->addAccount(),
+    'storeaccount'      => (new AdminController())->storeAccount(),
+    'deleteaccount'    => (new AdminController())->xoaAccount(),
+    'editaccount'      => (new AdminController())->editAccount(),
+    'updateaccount'    => (new AdminController())->updateAccount(),
 
     'viewsresources'         => (new AdminController())->viewResources(),
     'viewGuideDetail'         => (new AdminController())->viewGuideDetail(),

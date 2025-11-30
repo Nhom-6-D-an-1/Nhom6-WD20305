@@ -12,7 +12,7 @@ class BookingModel extends BaseModel
     // Lấy tất cả booking
     public function getAllBooking()
     {
-        $sql = "SELECT * FROM `booking`";
+        $sql = "SELECT * FROM booking ORDER BY booking_id ASC;";
         $stmt = $this->conn->query($sql);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
