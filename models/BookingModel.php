@@ -26,8 +26,7 @@ class BookingModel extends BaseModel
                 customer_name,
                 customer_contact,
                 total_amount,
-                status,
-                created_at
+                status
             FROM `booking`
             WHERE booking_id = :id";
         $stmt = $this->conn->prepare($sql);
@@ -37,31 +36,31 @@ class BookingModel extends BaseModel
     }
 
     // Lấy booking theo trạng thái
-    // public function getBookingByStatus($status)
-    // {
-    //     $sql = "SELECT 
-    //             booking_id,
-    //             departure_id,
-    //             customer_name,
-    //             customer_contact,
-    //             total_amount,
-    //             status,
-    //             created_at
-    //         FROM `booking`
-    //         WHERE status = :status
-    //         ORDER BY created_at DESC";
-    //     $stmt = $this->conn->prepare($sql);
-    //     $stmt->bindParam(':status', $status);
-    //     $stmt->execute();
-    //     return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    // }
+    public function getBookingByStatus($status)
+    {
+        $sql = "SELECT 
+                booking_id,
+                departure_id,
+                customer_name,
+                customer_contact,
+                total_amount,
+                status
+            FROM `booking`
+            WHERE status = :status
+            ORDER BY booking_id DESC";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindParam(':status', $status);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 
     // Thêm booking
     public function addBooking($data)
     {
         $sql = "INSERT INTO `booking` 
-            (departure_id, customer_name, customer_contact, total_amount, status, created_at)
-            VALUES (:departure_id, :customer_name, :customer_contact, :total_amount, :status, :created_at)";
+        (departure_id, customer_name, customer_contact, total_amount, status)
+        VALUES (:departure_id, :customer_name, :customer_contact, :total_amount, :status)";
+
         $stmt = $this->conn->prepare($sql);
         return $stmt->execute($data);
     }
@@ -69,11 +68,16 @@ class BookingModel extends BaseModel
     // Lấy danh sách departure kèm tour để chọn khi tạo booking
     public function getDepartures()
     {
-        $sql = "SELECT d.departure_id, d.start_date, tv.version_name, t.tour_name, tv.price
-            FROM departure d
-            LEFT JOIN tour_version tv ON d.version_id = tv.version_id
-            LEFT JOIN tour t ON tv.tour_id = t.tour_id
-            ORDER BY d.start_date ASC";
+        $sql = "SELECT 
+                    d.departure_id, 
+                    d.start_date, 
+                    tv.version_name, 
+                    t.tour_name, 
+                    tv.price
+                FROM departure d
+                LEFT JOIN tour_version tv ON d.version_id = tv.version_id
+                LEFT JOIN tour t ON tv.tour_id = t.tour_id
+                ORDER BY d.start_date ASC";
         $stmt = $this->conn->query($sql);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
@@ -88,6 +92,7 @@ class BookingModel extends BaseModel
             total_amount = :total_amount,
             status = :status
             WHERE booking_id = :id";
+
         $data['id'] = $id;
         $stmt = $this->conn->prepare($sql);
         return $stmt->execute($data);
@@ -103,7 +108,6 @@ class BookingModel extends BaseModel
                 b.customer_contact,
                 b.total_amount,
                 b.status,
-                b.created_at,
                 d.start_date,
                 tv.version_name,
                 tv.price,
@@ -116,6 +120,7 @@ class BookingModel extends BaseModel
             LEFT JOIN tour t ON tv.tour_id = t.tour_id
             LEFT JOIN tour_category tc ON t.category_id = tc.category_id
             WHERE b.booking_id = :id";
+
         $stmt = $this->conn->prepare($sql);
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
         $stmt->execute();

@@ -1,31 +1,78 @@
-<h3 class="fw-bold mb-4">Sửa tour</h3>
+<div class="col-md-10 p-4">
 
-<div class="form-section">
-    <form method="post" action="<?= BASE_URL ?>?mode=admin&action=updatetour">
-
-        <input type="hidden" name="tour_id" value="<?= htmlspecialchars($tour['tour_id'] ?? '') ?>">
-
-        <div class="mb-3">
-            <label class="form-label">Danh mục tour:</label>
-            <input type="number" name="category_id" class="form-control" placeholder="Nhập ID danh mục" 
-                   value="<?= htmlspecialchars((string)($tour['category_id'] ?? '')) ?>">
+    <!-- Header -->
+    <!-- <div class="d-flex justify-content-between align-items-center mb-4 pb-3 border-bottom">
+        <div class="flex-grow-1 me-3">
+            <input type="text" class="form-control form-control-lg" placeholder="🔍  Tìm kiếm">
         </div>
+        <div>Xin chào <strong>Admin</strong></div>
+    </div> -->
 
-        <div class="mb-3">
-            <label class="form-label">Tên tour:</label>
-            <input type="text" name="tour_name" class="form-control" placeholder="Nhập tên tour" 
-                   value="<?= htmlspecialchars($tour['tour_name'] ?? '') ?>" required>
-        </div>
+    <h3 class="mb-4">Sửa tour: <?= $tour['tour_name'] ?></h3>
 
-        <div class="mb-3">
-            <label class="form-label">Mô tả:</label>
-            <textarea name="description" class="form-control" rows="4" placeholder="Nhập mô tả tour"><?= htmlspecialchars($tour['description'] ?? '') ?></textarea>
-        </div>
+    <div class="card p-4">
 
-        <div class="mt-4 d-flex gap-3">
-            <button type="submit" class="btn btn-primary">Cập nhật</button>
-            <a href="<?= BASE_URL ?>?mode=admin&action=viewstour" class="btn btn-secondary">Huỷ</a>
-        </div>
+        <form action="?mode=admin&action=updatetour" method="POST">
 
-    </form>
+            <input type="hidden" name="tour_id" value="<?= $tour['tour_id'] ?>">
+
+            <!-- Tên tour -->
+            <label class="form-label">Tên tour</label>
+            <input type="text" name="tour_name" class="form-control mb-3"
+                   value="<?= $tour['tour_name'] ?>" required>
+
+            <!-- Danh mục -->
+            <label class="form-label">Loại tour</label>
+            <select name="category_id" class="form-select mb-3" required>
+                <?php foreach($categories as $c): ?>
+                    <option value="<?= $c['category_id'] ?>"
+                        <?= $c['category_id'] == $tour['category_id'] ? 'selected' : '' ?>>
+                        <?= $c['category_name'] ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
+
+            <!-- Trạng thái (UI only – không lưu DB) -->
+            <label class="form-label">Trạng thái</label>
+            <select class="form-select mb-3">
+                <option <?= strtotime($tour['start_date']) > time() ? 'selected' : '' ?>>Hoạt động</option>
+                <option <?= strtotime($tour['start_date']) <= time() ? 'selected' : '' ?>>Tạm dừng</option>
+            </select>
+
+            <!-- Giá -->
+            <label class="form-label">Giá</label>
+            <input type="number" name="price" class="form-control mb-3"
+                   value="<?= $tour['price'] ?>" required>
+
+            <!-- Ngày khởi hành -->
+            <label class="form-label">Ngày khởi hành</label>
+            <input type="datetime-local" name="start_date" class="form-control mb-3"
+                   value="<?= date('Y-m-d\TH:i', strtotime($tour['start_date'])) ?>" required>
+
+            <!-- HDV -->
+            <label class="form-label">HDV phân công</label>
+            <select name="user_id" class="form-select mb-4">
+                <option value="">-- Chọn --</option>
+                <?php foreach($guides as $g): ?>
+                    <option value="<?= $g['user_id'] ?>"
+                        <?= isset($tour['user_id']) && $tour['user_id'] == $g['user_id'] ? 'selected' : '' ?>>
+                        <?= $g['full_name'] ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
+
+            <!-- Các dữ liệu khác không cho sửa -->
+            <input type="hidden" name="version_name" value="Phiên bản tiêu chuẩn">
+            <input type="hidden" name="pickup_location" value="Không có">
+            <input type="hidden" name="pickup_time" value="00:00">
+            <input type="hidden" name="max_guests" value="30">
+
+            <div class="d-flex gap-3">
+                <button class="btn btn-primary">Sửa</button>
+                <a href="?mode=admin&action=viewstour" class="btn btn-secondary">Quay lại</a>
+            </div>
+
+        </form>
+
+    </div>
 </div>

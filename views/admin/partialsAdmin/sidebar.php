@@ -12,17 +12,17 @@
                 </a>
             </li>
             <li class="nav-item mb-2">
-                <a class="nav-link <?= ($view ?? '') === 'admin/danhmuc/danhmuc' ? 'active' : '' ?>" href="<?= BASE_URL ?>?mode=admin&action=viewsdanhmuc">
+                <a class="nav-link <?= ($view ?? '') === 'admin/danhmuc/danhmuc' || ($view ?? '') === 'admin/danhmuc/show' || ($view ?? '') === 'admin/danhmuc/create' || ($view ?? '') === 'admin/danhmuc/edit' ? 'active' : '' ?>" href="<?= BASE_URL ?>?mode=admin&action=viewsdanhmuc">
                     Danh mục tour
                 </a>
             </li>
             <li class="nav-item mb-2">
-                <a class="nav-link <?= ($view ?? '') === 'admin/tour/tour' ? 'active' : '' ?>" href="<?= BASE_URL ?>?mode=admin&action=viewstour">
+                <a class="nav-link <?= ($view ?? '') === 'admin/tour/tour' || ($view ?? '') === 'admin/tour/edit' || ($view ?? '') === 'admin/tour/show' || ($view ?? '') === 'admin/tour/create' ? 'active' : '' ?>" href="<?= BASE_URL ?>?mode=admin&action=viewstour">
                     Quản lý tour
                 </a>
             </li>
             <li class="nav-item mb-2">
-                <a class="nav-link <?= ($view ?? '') === 'admin/booking/booking' ? 'active' : '' ?>" href="<?= BASE_URL ?>?mode=admin&action=viewsbooking">
+                <a class="nav-link <?= ($view ?? '') === 'admin/booking/booking' || ($view ?? '') === 'admin/booking/showBooking' || ($view ?? '') === 'admin/booking/editBooking' || ($view ?? '') === 'admin/booking/addBooking' ? 'active' : '' ?>" href="<?= BASE_URL ?>?mode=admin&action=viewsbooking">
                     Quản lý booking
                 </a>
             </li>
@@ -37,7 +37,7 @@
                 </a>
             </li>
             <li class="nav-item mb-2">
-                <a class="nav-link" href="<?= BASE_URL ?>?logout">
+                <a class="nav-link" href="<?= BASE_URL ?>?mode=admin&action=logout">
                     Đăng xuất
                 </a>
             </li>

@@ -1,6 +1,6 @@
 <div class="col-12">
     <h2>Nhật ký tour</h2>
-    
+
     <form method="get" id="tourFilterForm">
         <input type="hidden" name="mode" value="guide">
         <input type="hidden" name="action" value="viewdiary">
@@ -11,7 +11,7 @@
                     <?php foreach ($assignedTours as $tour) { ?>
                         <option value="<?php echo $tour['departure_id']; ?>"
                             <?php echo (isset($_GET['departure_id']) && $_GET['departure_id'] == $tour['departure_id']) ? 'selected' : ''; ?>>
-                            <?php echo $tour['tour_name']; ?> 
+                            <?php echo $tour['tour_name']; ?>
                             (<?php echo date('d/m', strtotime($tour['start_date'])); ?> - <?php echo date('d/m', strtotime($tour['end_date'])); ?>)
                         </option>
                     <?php } ?>
@@ -57,9 +57,9 @@
                         </tr>
                     </thead>
                     <tbody class="text-dark">
-                        <?php if(!empty($diaryData)) { ?>
-                            <?php foreach($diaryData as $diary) { ?>
-                                <?php if(empty($diary)) continue; ?>
+                        <?php if (!empty($diaryData)) { ?>
+                            <?php foreach ($diaryData as $diary) { ?>
+                                <?php if (empty($diary)) continue; ?>
                                 <tr class="diary-row">
                                     <td class="ps-4 py-4 text-muted small diary-time">
                                         <?php $diaryDate = $diary['created_at'] ?? null; ?>
@@ -70,18 +70,18 @@
                                         <div class="fw-semibold"><?= htmlspecialchars($diary['log_content'] ?? 'Không có') ?></div>
                                     </td>
                                     <td class="text-center py-4 diary-img">
-                                        <?php if(!empty($diary['image'])) { ?>
-                                            <img src="<?= BASE_ASSETS_UPLOADS . $diary['image'] ?>" alt="Hình ảnh" class="diary-img-thumb rounded">
+                                        <?php if (!empty($diary['image'])) { ?>
+                                            <img src="<?= BASE_ASSETS_UPLOADS . $diary['image'] ?>" alt="Hình ảnh" width="2000" class="diary-img-thumb rounded">
                                         <?php } else { ?>
                                             <span class="text-secondary small">Không có</span>
                                         <?php } ?>
                                     </td>
                                     <td class="text-center py-4 diary-action">
-                                        <?php if(isset($diary['log_id'])) { ?>
-                                            <a href="<?php echo BASE_URL; ?>?mode=guide&action=deleteDiary&id=<?php echo $diary['log_id']; ?>" 
-                                            class="btn btn-danger btn-sm" 
-                                            onclick="return confirm('Bạn có chắc muốn xoá nhật ký này?')">
-                                            Xoá
+                                        <?php if (isset($diary['log_id'])) { ?>
+                                            <a href="<?php echo BASE_URL; ?>?mode=guide&action=deleteDiary&id=<?php echo $diary['log_id']; ?>"
+                                                class="btn btn-danger btn-sm"
+                                                onclick="return confirm('Bạn có chắc muốn xoá nhật ký này?')">
+                                                Xoá
                                             </a>
                                         <?php } ?>
                                     </td>

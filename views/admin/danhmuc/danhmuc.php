@@ -37,7 +37,7 @@
                     <tr>
                         <th style="width:60px;">STT</th>
                         <th>Tên loại tour</th>
-                        <th style="width:350px;">Mô tả ngắn</th>
+                        <!-- <th style="width:350px;">Mô tả ngắn</th> -->
                         <th style="width:150px;">Trạng thái</th>
                         <th style="width:200px;">Hành động</th>
                     </tr>
@@ -51,7 +51,7 @@
 
                                 <td><?= htmlspecialchars($item['category_name'] ?? '') ?></td>
 
-                                <td><?= htmlspecialchars($item['description'] ?? '') ?></td>
+                                <!-- <td><?= htmlspecialchars($item['description'] ?? '') ?></td> -->
 
                                 <td>
                                     <?php if (($item['status'] ?? 0) == 1): ?>
