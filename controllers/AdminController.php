@@ -395,7 +395,7 @@ class AdminController
         $id = $_GET['id'] ?? null;
         if ($id) {
             $categoryModel = new TourCategoryModel();
-            $ok = $categoryModel->deleteCategory((int)$id);
+            $ok = $categoryModel->deleteDanhmuc((int)$id);
             if ($ok) {
                 $_SESSION['flash_success'] = "Xóa danh mục tour thành công.";
             } else {
@@ -409,10 +409,49 @@ class AdminController
     }
     public function viewAccount()
     {
+        $accountModel = new AccountModel();
+        $accounts = $accountModel->getAllAccounts();
         $title = "Quản lý tài khoản";
         $view = 'admin/account/account';
         require_once PATH_VIEW_MAIN;
     }
+    public function addAccount()
+    {
+    $title = "Thêm tài khoản";
+    $view = 'admin/account/add';
+    require_once PATH_VIEW_MAIN;
+    }
+    public function storeAccount()
+    {
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+        $data = [
+            'full_name' => $_POST['full_name'],
+            'user_name' => $_POST['user_name'],
+            'password_hash'  => password_hash($_POST['password'], PASSWORD_DEFAULT),
+            'role'      => $_POST['role'],
+            // 'status'    => $_POST['status']
+        ];
+
+        $accountModel = new AccountModel();
+        $accountModel->insertAccount($data);
+
+        header("Location: " . BASE_URL . "?mode=admin&action=viewsaccount");
+        exit;
+    }
+    }
+    public function xoaAccount()
+    {
+        $id = $_GET['id'] ?? null;
+        if ($id) {
+            $accountModel = new AccountModel();
+            $accountModel->deleteAccount($id);
+        }
+        header('Location: ' . BASE_URL . '?mode=admin&action=viewsaccount');
+        exit;
+    }
+
+// Nhân Sự
     public function viewResources()
     {
         $title = "Quản lý nhân sự";

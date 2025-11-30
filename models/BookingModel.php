@@ -12,8 +12,7 @@ class BookingModel extends BaseModel
     // Lấy tất cả booking
     public function getAllBooking()
     {
-        $sql = "SELECT * FROM `booking`
-            ORDER BY created_at DESC";
+        $sql = "SELECT * FROM booking ORDER BY booking_id ASC;";
         $stmt = $this->conn->query($sql);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
@@ -38,24 +37,24 @@ class BookingModel extends BaseModel
     }
 
     // Lấy booking theo trạng thái
-    public function getBookingByStatus($status)
-    {
-        $sql = "SELECT 
-                booking_id,
-                departure_id,
-                customer_name,
-                customer_contact,
-                total_amount,
-                status,
-                created_at
-            FROM `booking`
-            WHERE status = :status
-            ORDER BY created_at DESC";
-        $stmt = $this->conn->prepare($sql);
-        $stmt->bindParam(':status', $status);
-        $stmt->execute();
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
+    // public function getBookingByStatus($status)
+    // {
+    //     $sql = "SELECT 
+    //             booking_id,
+    //             departure_id,
+    //             customer_name,
+    //             customer_contact,
+    //             total_amount,
+    //             status,
+    //             created_at
+    //         FROM `booking`
+    //         WHERE status = :status
+    //         ORDER BY created_at DESC";
+    //     $stmt = $this->conn->prepare($sql);
+    //     $stmt->bindParam(':status', $status);
+    //     $stmt->execute();
+    //     return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    // }
 
     // Thêm booking
     public function addBooking($data)

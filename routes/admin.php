@@ -43,6 +43,9 @@ match ($action) {
 
 
     'viewsaccount'         => (new AdminController())->viewAccount(),
+    'addaccount'        => (new AdminController())->addAccount(),
+    'storeaccount'      => (new AdminController())->storeAccount(),
+    'deleteaccount'    => (new AdminController())->xoaAccount(),
 
     'viewsresources'         => (new AdminController())->viewResources(),
     default    => (new AdminController())->viewDashboard()
