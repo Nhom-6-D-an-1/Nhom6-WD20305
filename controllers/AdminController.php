@@ -279,7 +279,45 @@ class AdminController
         $categories = $categoryModel->getAllCategories();
 
         $title = "Danh mục tour";
-        $view = 'admin/danhmuc/danhmuc';
+        $view = "admin/danhmuc/danhmuc";
+
+        require_once PATH_VIEW_MAIN;
+    }
+
+
+    public function addDanhmuc() {
+        $title = "Thêm danh mục tour";
+        $view = "admin/danhmuc/create";
+
+        require_once PATH_VIEW_MAIN;
+    }
+
+
+    public function storeDanhmuc() {
+        $model = new TourCategoryModel();
+
+        $data = [
+            "category_name" => $_POST['category_name'],
+            "description"   => $_POST['description'],
+            "status"        => $_POST['status']
+        ];
+
+        $model->addDanhmuc($data);
+
+        header("Location: ?mode=admin&action=viewsdanhmuc");
+        exit();
+    }
+
+
+    public function editDanhmuc() {
+        $id = $_GET['id'];
+
+        $model = new TourCategoryModel();
+        $category = $model->getById($id);
+
+        $title = "Sửa danh mục tour";
+        $view = "admin/danhmuc/edit";
+
         require_once PATH_VIEW_MAIN;
     }
 
