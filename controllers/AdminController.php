@@ -284,43 +284,6 @@ class AdminController
         require_once PATH_VIEW_MAIN;
     }
 
-
-    public function addDanhmuc() {
-        $title = "Thêm danh mục tour";
-        $view = "admin/danhmuc/create";
-
-        require_once PATH_VIEW_MAIN;
-    }
-
-
-    public function storeDanhmuc() {
-        $model = new TourCategoryModel();
-
-        $data = [
-            "category_name" => $_POST['category_name'],
-            "description"   => $_POST['description'],
-            "status"        => $_POST['status']
-        ];
-
-        $model->addDanhmuc($data);
-
-        header("Location: ?mode=admin&action=viewsdanhmuc");
-        exit();
-    }
-
-
-    public function editDanhmuc() {
-        $id = $_GET['id'];
-
-        $model = new TourCategoryModel();
-        $category = $model->getById($id);
-
-        $title = "Sửa danh mục tour";
-        $view = "admin/danhmuc/edit";
-
-        require_once PATH_VIEW_MAIN;
-    }
-
     public function addDanhmuc() {
         $title = "Thêm danh mục tour";
         $view = "admin/danhmuc/create";
@@ -488,6 +451,72 @@ class AdminController
         header('Location: ' . BASE_URL . '?mode=admin&action=viewsaccount');
         exit;
     }
+
+    // Hiển thị form sửa tài khoản
+    public function editAccount()
+    {
+        $id = $_GET['id'] ?? null;
+        if (!$id) {
+            header('Location: ' . BASE_URL . '?mode=admin&action=viewsaccount');
+            exit;
+        }
+
+        $accountModel = new AccountModel();
+        $account = $accountModel->getAccountById((int)$id);
+
+        if (!$account) {
+            $_SESSION['flash_error'] = 'Tài khoản không tồn tại.';
+            header('Location: ' . BASE_URL . '?mode=admin&action=viewsaccount');
+            exit;
+        }
+
+        $title = 'Sửa tài khoản';
+        $view = 'admin/account/edit';
+        require_once PATH_VIEW_MAIN;
+    }
+
+    // Xử lý cập nhật tài khoản
+    public function updateAccount()
+    {
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+            header('Location: ' . BASE_URL . '?mode=admin&action=viewsaccount');
+            exit;
+        }
+
+        $id = $_POST['user_id'] ?? null;
+        if (!$id) {
+            $_SESSION['flash_error'] = 'ID tài khoản không hợp lệ.';
+            header('Location: ' . BASE_URL . '?mode=admin&action=viewsaccount');
+            exit;
+        }
+
+        $data = [
+            'full_name' => trim($_POST['full_name'] ?? ''),
+            'username' => trim($_POST['username'] ?? ''),
+            'role' => $_POST['role'] ?? 'guide',
+            'status' => isset($_POST['status']) ? (int)$_POST['status'] : 1,
+        ];
+
+        // Nếu nhập mật khẩu mới, băm
+        if (!empty($_POST['password'])) {
+            $data['password_hash'] = password_hash($_POST['password'], PASSWORD_DEFAULT);
+        } else {
+            $data['password_hash'] = '';
+        }
+
+        $accountModel = new AccountModel();
+        $ok = $accountModel->updateAccount((int)$id, $data);
+
+        if ($ok) {
+            $_SESSION['flash_success'] = 'Cập nhật tài khoản thành công.';
+        } else {
+            $_SESSION['flash_error'] = 'Cập nhật tài khoản thất bại.';
+        }
+
+        header('Location: ' . BASE_URL . '?mode=admin&action=viewsaccount');
+        exit;
+    }
+    
 
 // Nhân Sự
     public function viewResources()

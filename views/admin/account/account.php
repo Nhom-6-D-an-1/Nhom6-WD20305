@@ -44,7 +44,7 @@
                       <?php endif; ?>
                     </td>
                     <td>
-                      <a href="" class="btn btn-sm btn-info">Sửa</a>
+                      <a href="<?= BASE_URL ?>?mode=admin&action=editaccount&id=<?= urlencode($account['user_id']) ?>" class="btn btn-sm btn-info">Sửa</a>
                       <a href="<?= BASE_URL ?>?mode=admin&action=deleteaccount&id=<?= urlencode($account['user_id']) ?>" 
                       class="btn btn-sm btn-danger" 
                       onclick="return confirm('Bạn có chắc chắn muốn xóa tài khoản này?');">
