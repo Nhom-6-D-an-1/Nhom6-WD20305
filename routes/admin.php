@@ -29,6 +29,7 @@ match ($action) {
     'addbooking'                => (new AdminController())->addBooking(),
     'deletebooking'             => (new AdminController())->deleteBooking(),
 
+
     // ========== DANH MỤC TOUR ==========
     'viewsdanhmuc'       => (new AdminController())->viewDanhmuc(),
     'adddanhmuc'         => (new AdminController())->addDanhmuc(),
@@ -41,7 +42,12 @@ match ($action) {
     // ========== ACCOUNT ==========
     'viewsaccount'    => (new AdminController())->viewAccount(),
 
-    // ========== RESOURCES ==========
+    'viewsaccount'         => (new AdminController())->viewAccount(),
+    'addaccount'        => (new AdminController())->addAccount(),
+    'storeaccount'      => (new AdminController())->storeAccount(),
+    'deleteaccount'    => (new AdminController())->xoaAccount(),
+    'editaccount'      => (new AdminController())->editAccount(),
+    'updateaccount'    => (new AdminController())->updateAccount(),
 
     'viewsresources'         => (new AdminController())->viewResources(),
     'viewGuideDetail'         => (new AdminController())->viewGuideDetail(),
@@ -55,5 +61,15 @@ match ($action) {
     'edittour'    => (new TourController())->edit(),
     'updatetour'  => (new TourController())->update(),
     'deletetour'  => (new TourController())->delete(),
+    // ===============   TOUR DETAIL + GUESTS   ===============
+    'viewtourdetail' => (new TourController())->detail(),
+    'guestlist'      => (new TourController())->guestList(),      // ?departure_id=11
+    // 'addguest'       => (new TourController())->addGuestForm(),   // ?departure_id=11
+    // 'storeguest'     => (new TourController())->storeGuest(),     // POST
+
+
+
+    // Logout 
+    'logout' => (new AuthController())->logout(),
     default            => (new AdminController())->viewDashboard(),
 };
