@@ -10,7 +10,7 @@
                     <?php foreach ($assignedTours as $tour) { ?>
                         <option value="<?php echo $tour['departure_id']; ?>"
                             <?php echo (isset($_GET['departure_id']) && $_GET['departure_id'] == $tour['departure_id']) ? 'selected' : ''; ?>>
-                            <?php echo $tour['tour_name']; ?> 
+                            <?php echo $tour['tour_name']; ?>
                             (<?php echo date('d/m', strtotime($tour['start_date'])); ?> - <?php echo date('d/m', strtotime($tour['end_date'])); ?>)
                         </option>
                     <?php } ?>

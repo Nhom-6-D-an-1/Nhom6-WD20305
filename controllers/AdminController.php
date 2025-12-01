@@ -155,7 +155,7 @@ class AdminController
     {
         // Load tours
         $tourModel = new TourModel();
-        $tours = $tourModel->getAllTours();
+        $tours = $tourModel->getFullInfo();
 
         $title = "Quản lý tour";
         $view = 'admin/tour/tour';
@@ -173,7 +173,7 @@ class AdminController
             ];
 
             $tourModel = new TourModel();
-            $ok = $tourModel->addTour($data);
+            $ok = $tourModel->insertFull($data);
 
             header('Location: ' . BASE_URL . '?mode=admin&action=viewstour');
             exit;
@@ -192,7 +192,7 @@ class AdminController
         }
 
         $tourModel = new TourModel();
-        $tour = $tourModel->getTourById($id);
+        $tour = $tourModel->getFullById($id);
 
         if (!$tour) {
             $_SESSION['flash_error'] = 'Tour không tồn tại!';
@@ -223,7 +223,7 @@ class AdminController
             ];
 
             $tourModel = new TourModel();
-            $ok = $tourModel->updateTour($id, $data);
+            $ok = $tourModel->update($id, $data);
 
             if ($ok) {
                 $_SESSION['flash_success'] = "Cập nhật tour thành công.";
@@ -245,7 +245,7 @@ class AdminController
         $id = $_GET['id'] ?? null;
         if ($id) {
             $tourModel = new TourModel();
-            $tourModel->deleteTour((int)$id);
+            $tourModel->delete((int)$id);
         }
         header('Location: ' . BASE_URL . '?mode=admin&action=viewstour');
         exit;
@@ -259,7 +259,7 @@ class AdminController
         }
 
         $tourModel = new TourModel();
-        $tour = $tourModel->showTour($id);
+        $tour = $tourModel->getFullById($id);
 
         if (!$tour) {
             $_SESSION['flash_error'] = 'Tour không tồn tại!';
@@ -420,10 +420,58 @@ class AdminController
     }
     public function viewResources()
     {
+        $tourGuide = new TourGuideModel();
+        $data_tourGuide = $tourGuide->getAllGuide();
         $title = "Quản lý nhân sự";
         $view = 'admin/resources/resources';
         require_once PATH_VIEW_MAIN;
     }
+
+    public function viewGuideDetail()
+    {
+        $tourGuide = new TourGuideModel();
+        $id = $_GET['id'] ?? '';
+        $data_Guide = $tourGuide->getOneGuide($id);
+        $title = "Chi tiết nhân sự";
+        $view = 'admin/resources/guideDetail';
+        require_once PATH_VIEW_MAIN;
+    }
+
+    public function viewEditGuide()
+    {
+        $tourGuide = new TourGuideModel();
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $id = $_GET['id'] ?? '';
+            $data_Guide = $tourGuide->getOneGuide($id);
+            $avatar = $data_Guide['avatar'];
+            if ($_FILES['avatar'] && $_FILES['avatar']['error'] == UPLOAD_ERR_OK) {
+                $avatar = uploadFile($_FILES['avatar'], "guide/");
+            }
+            $full_name = $_POST['full_name'];
+            $birthday = $_POST['birthday'];
+            $phone = $_POST['phone'];
+            $email = $_POST['email'];
+            $_POST['avatar'] = $avatar;
+            $gender = $_POST['gender'] ?? $data_Guide['gender'];
+            $languages = $_POST['languages'] ?? $data_Guide['languages'];
+            $rating = $_POST['rating'];
+            $experience_years = $_POST['experience_years'];
+            $certificates = $_POST['certificates'];
+            $health = $_POST['health'];
+            $notes = $_POST['notes'] ?? $data_Guide['notes'];
+            $tourGuide->updateGuide($full_name, $birthday, $phone, $email, $avatar, $gender, $languages, $rating, $experience_years, $certificates, $health, $notes, $id);
+            header("Location: " . BASE_URL . "?mode=admin&action=viewGuideDetail&id=" . $data_Guide['user_id']);
+            exit();
+        } else {
+
+            $id = $_GET['id'] ?? '';
+            $data_Guide = $tourGuide->getOneGuide($id);
+            $title = "Chỉnh sửa thông tin nhân sự";
+            $view = 'admin/resources/editGuide';
+            require_once PATH_VIEW_MAIN;
+        }
+    }
+
     public function viewDashboard()
     {
         $title = "Dashboard";
