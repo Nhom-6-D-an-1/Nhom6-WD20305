@@ -62,22 +62,28 @@
             </tr>
         </thead>
         <tbody>
-            <?php if(empty($filteredSchedule)): ?>
+            <?php if(empty($_GET['departure_id'])): ?>
                 <tr>
-                    <td colspan="6" class="text-center">Không có tour nào.</td>
+                    <td colspan="6" class="text-center text-danger">Vui lòng chọn tour.</td>
                 </tr>
             <?php else: ?>
-                <?php foreach ($data as $key => $value): ?>
-                    <tr class="customer-row">
-                        <td class="ps-4 fw-semibold"><?= $key + 1 ?></td>
-                        <td><?= $value['full_name'] ?></td>
-                        <td><?= $value['description'] ?></td>
-                        <td><?= $value['medical_condition'] ?? 'Không có' ?></td>
-                        <td>
-                            <a href="<?= BASE_URL ?>?mode=guide&action=deleteRequest&id=<?= $value['request_id'] ?>" class="btn btn-danger" onclick=" return confirm('Bạn có muốn xóa yêu cầu không?')">Xóa</a>
-                        </td>
+                <?php if (!empty($data)) { ?>
+                    <?php foreach ($data as $key => $value): ?>
+                        <tr class="customer-row">
+                            <td class="ps-4 fw-semibold"><?= $key + 1 ?></td>
+                            <td><?= $value['full_name'] ?></td>
+                            <td><?= $value['description'] ?></td>
+                            <td><?= $value['medical_condition'] ?? 'Không có' ?></td>
+                            <td>
+                                <a href="<?= BASE_URL ?>?mode=guide&action=deleteRequest&id=<?= $value['request_id'] ?>" class="btn btn-danger" onclick=" return confirm('Bạn có muốn xóa yêu cầu không?')">Xóa</a>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                <?php } else { ?>
+                    <tr>
+                        <td colspan="4" class="text-center py-4 text-danger">Không có yêu cầu nào.</td>
                     </tr>
-                <?php endforeach; ?>
+                <?php } ?>
             <?php endif; ?>
         </tbody>
     </table>

@@ -31,7 +31,7 @@ $filteredSchedule = array_filter($scheduleData, function ($tour) use ($today) {
     <!-- Form tìm kiếm -->
     <div class="card shadow-sm border-0 mb-4">
         <div class="card-body">
-            <form class="row g-3 align-items-center" method="get" action="<?= BASE_URL ?>">
+            <form class="row g-3 align-items-center" method="get" action="<?= BASE_URL ?>" onsubmit="return validateSearchForm()">
                 <input type="hidden" name="mode" value="guide">
                 <input type="hidden" name="action" value="viewSchedule">
                 <!-- Chọn tour -->
@@ -87,11 +87,11 @@ $filteredSchedule = array_filter($scheduleData, function ($tour) use ($today) {
                     <tbody>
                         <?php if (empty($filteredSchedule)): ?>
                             <tr>
-                                <td colspan="6" class="text-center">Không có tour nào.</td>
+                                <td colspan="6" class="text-center text-danger">Không có tour nào.</td>
                             </tr>
                         <?php elseif(!isset($_GET['departure_id'])) : ?>
                             <tr>
-                                <td colspan="6" class="text-center">Vui lòng chọn tour.</td>
+                                <td colspan="6" class="text-center text-danger">Vui lòng chọn tour.</td>
                             </tr>
                         <?php else: ?>
                             <?php foreach ($filteredSchedule as $value): ?>
@@ -126,3 +126,16 @@ $filteredSchedule = array_filter($scheduleData, function ($tour) use ($today) {
         </div>
     </div>
 </div>
+<script>
+function validateSearchForm() {
+    const departureId = document.querySelector('select[name="departure_id"]').value;
+    const startDate   = document.querySelector('input[name="start_date"]').value;
+    const status      = document.querySelector('select[name="status"]').value;
+
+    if ((departureId == "0" || departureId == "") && startDate == "" && status == "") {
+        alert("Vui lòng chọn ít nhất 1 trường để tìm kiếm");
+        return false; // chặn submit
+    }
+    return true; // cho phép submit
+}
+</script>

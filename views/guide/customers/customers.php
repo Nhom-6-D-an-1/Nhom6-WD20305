@@ -33,15 +33,27 @@
                     </thead>
 
                     <tbody>
-                        <?php foreach($allCustomersData as $key => $customers): ?>
-                            <tr class="customer-row">
-                                <td><?= $key +1 ?></td>
-                                <td class="ps-4 fw-semibold"><?= $customers['guest_name'] ?></td>
-                                <td><?= $customers['customer_contact'] ?></td>
-                                <td class="text-center"><span class="badge customer-group-badge"><?= $customers['group_type'] ?></span></td>
-                                <td class="fw-medium"><?= $customers['special_request'] ?? 'Không có' ?></td>
+                        <?php if(!empty($_GET['departure_id'])): ?>
+                            <?php if(!empty($allCustomersData)){ ?>
+                                <?php foreach($allCustomersData as $key => $customers): ?>
+                                    <tr class="customer-row">
+                                        <td><?= $key +1 ?></td>
+                                        <td class="ps-4 fw-semibold"><?= $customers['guest_name'] ?></td>
+                                        <td><?= $customers['customer_contact'] ?></td>
+                                        <td class="text-center"><span class="badge customer-group-badge"><?= $customers['group_type'] ?></span></td>
+                                        <td class="fw-medium"><?= $customers['special_request'] ?? 'Không có' ?></td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            <?php }else{ ?>
+                                <tr>
+                                    <td colspan="6" class="text-center text-danger">Chưa có danh sách khách.</td>
+                                </tr>
+                            <?php } ?>
+                        <?php else: ?>
+                            <tr>
+                                <td colspan="6" class="text-center text-danger">Vui lòng chọn tour.</td>
                             </tr>
-                        <?php endforeach; ?>
+                        <?php endif; ?>
                     </tbody>
                 </table>
 

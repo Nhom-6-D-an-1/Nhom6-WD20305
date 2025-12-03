@@ -6,8 +6,8 @@ class CustomersModel{
         $db = new BaseModel();
         $this->conn = $db->getConnection();
     }
-    public function getAllCustomers($guide_id)  {
-        $sql = "SELECT 
+public function getAllCustomers($guide_id, $departure_id = 0) {
+    $sql = "SELECT 
                 g.guest_id,
                 g.full_name AS guest_name,
                 b.customer_contact,
@@ -25,17 +25,25 @@ class CustomersModel{
                 GROUP BY booking_id
             ) gc ON gc.booking_id = b.booking_id
             LEFT JOIN guest_special_request gsr ON gsr.guest_id = g.guest_id
-            WHERE a.user_id = :guide_id
-            GROUP BY g.guest_id, g.full_name, b.customer_contact, b.customer_name, gc.cnt
-            ORDER BY b.customer_name ASC, g.full_name ASC
-        ";
+            WHERE a.user_id = :guide_id";
 
-        $stmt = $this->conn->prepare($sql);
-        $stmt->bindParam(':guide_id', $guide_id, PDO::PARAM_INT);
-        $stmt->execute();
-
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    if ($departure_id > 0) {
+        $sql .= " AND d.departure_id = :departure_id";
     }
+
+    $sql .= " GROUP BY g.guest_id, g.full_name, b.customer_contact, b.customer_name
+              ORDER BY b.customer_name ASC, g.full_name ASC";
+
+    $stmt = $this->conn->prepare($sql);
+    $stmt->bindParam(':guide_id', $guide_id, PDO::PARAM_INT);
+
+    if ($departure_id > 0) {
+        $stmt->bindParam(':departure_id', $departure_id, PDO::PARAM_INT);
+    }
+
+    $stmt->execute();
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
     public function getAssignedTours($guide_id) {
         $sql = "SELECT DISTINCT
                 d.departure_id,

@@ -16,7 +16,7 @@ define('PATH_CONTROLLER',       PATH_ROOT . 'controllers/');
 
 define('PATH_MODEL',            PATH_ROOT . 'models/');
 // // Đổi múi giờ thành UTC+7
-// date_default_timezone_set('Asia/Ho_Chi_Minh');
+date_default_timezone_set('Asia/Ho_Chi_Minh');
 
 define('DB_HOST',     'localhost');
 define('DB_PORT',     '3306');
