@@ -1,118 +1,104 @@
 <?php
 
 class TourController
-{
-    private $tourModel;
-
-    public function __construct()
+{ // Xem tour
+    public function viewTour()
     {
-        $this->tourModel = new TourModel();
-    }
-
-    /* =====================================
-        DANH SÁCH TOUR
-    ===================================== */
-    public function index()
-    {
-        $tours = $this->tourModel->getFullInfo();
-        $title = "Quản lý tour";
+        $tour = new TourModel();
+        $data = $tour->getAllTour();
+        $title = "Danh sách tour";
         $view = "admin/tour/tour";
         require_once PATH_VIEW_MAIN;
     }
 
-    public function create()
+    // Tạo tour
+    public function createTour()
     {
-        $categories = $this->tourModel->getCategories();
-        $guides     = $this->tourModel->getGuides();
-        $title = "Thêm tour";
-        $view = "admin/tour/create";
+        $title = "Tạo tour mới";
+        $view = "admin/tour/createTour";
         require_once PATH_VIEW_MAIN;
     }
 
-    public function store()
+    // Chi tiết tour
+    public function tourDetail()
     {
-        $data = [
-            "tour_name"   => $_POST["tour_name"],
-            "category_id" => $_POST["category_id"],
-            "price"       => $_POST["price"],
-            "start_date"  => $_POST["start_date"],
-            "user_id"     => $_POST["user_id"],
-        ];
-
-        $this->tourModel->insertFull($data);
-        header("Location: index.php?mode=admin&action=viewstour");
-        exit;
-    }
-
-    public function edit()
-    {
-        $id = $_GET["id"];
-        $tour = $this->tourModel->getFullById($id);
-        $categories = $this->tourModel->getCategories();
-        $guides     = $this->tourModel->getGuides();
-        $title = "Sửa tour";
-        $view = "admin/tour/edit";
-        require_once PATH_VIEW_MAIN;
-    }
-
-    public function update()
-    {
-        $id = $_GET["tour_id"];
-
-        $data = [
-            "tour_name"   => $_POST["tour_name"],
-            "category_id" => $_POST["category_id"],
-            "price"       => $_POST["price"],
-            "start_date"  => $_POST["start_date"],
-            "user_id"     => $_POST["user_id"],
-        ];
-
-        $this->tourModel->updateFull($id, $data);
-        header("Location: index.php?mode=admin&action=viewstour");
-        exit;
-    }
-
-    public function delete()
-    {
-        $id = $_GET["id"];
-        $this->tourModel->delete($id);
-        header("Location: index.php?mode=admin&action=viewstour");
-        exit;
-    }
-
-    public function detail()
-    {
-        $id = $_GET["id"];
-
-        $tour = $this->tourModel->getTourDetail($id);
-
-        // Lấy đúng departure của tour
-        $departures = $this->tourModel->getDeparturesByTour($id);
-
-        // Lấy departure đầu tiên
-        $departure_id = !empty($departures) ? $departures[0]["departure_id"] : null;
-
+        $tour = new TourModel();
+        $id = $_GET['id'];
+        $data = $tour->getOneTour($id);
+        $tour_version = new TourVersionModel();
+        $data_version = $tour_version->getAllVersionByTourId($id);
         $title = "Chi tiết tour";
-        $view  = "admin/tour/detail";
+        $view = "admin/tour/tourDetail";
         require_once PATH_VIEW_MAIN;
     }
 
-
-    /* =====================================
-        DANH SÁCH KHÁCH THEO BOOKING
-    ===================================== */
-    public function guestList()
+    // Phiên bản tour
+    public function versionCopy()
     {
-        $departure_id = $_GET["departure_id"];
+        $title = "Phiên bản tour";
+        $view = "admin/tour/versionCopy";
+        require_once PATH_VIEW_MAIN;
+    }
 
-        // Lấy khách theo booking, không phải bảng guest
-        $guests = $this->tourModel->getBookingsByDeparture($departure_id);
-        $guests = $this->tourModel->getGuestsFullByDeparture($departure_id);
+    // Thêm phiên bản
+    public function createVersion()
+    {
+        $tour = new TourModel();
+        $id = $_GET['id'];
+        $data = $tour->getOneTour($id);
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $tour_version = new TourVersionModel();
+            $version_name = $_POST['version_name'];
+            $version_code = $_POST['version_code'];
+            $season = $_POST['season'];
+            $price = $_POST['price'];
+            $policies = $_POST['policies'];
+            $valid_from = $_POST['valid_from'];
+            $valid_to = $_POST['valid_to'];
 
-        $tourName = $this->tourModel->getTourNameByDeparture($departure_id);
+            $tour_version->createVersion($id, $version_name, $version_code, $season, $price, $policies, $valid_from, $valid_to);
+            header("Location: " . BASE_URL . "?mode=admin&action=tourDetail&tab=versions&id=" . $id);
+            exit;
+        } else {
+            $title = "Thêm phiên bản tour";
+            $view = "admin/tour/createVersion";
+            require_once PATH_VIEW_MAIN;
+        }
+    }
 
-        $title = "Danh sách khách: $tourName";
-        $view = "admin/tour/guest_list";
+    // Chi tiết phiên bản
+    public function versionDetail()
+    {
+        $id = $_GET['id'];
+        $tour_version = new TourVersionModel();
+        $data_version = $tour_version->getOneVersion($id);
+        $title = "Chi tiết phiên bản tour";
+        $view = "admin/tour/versionDetail";
+        require_once PATH_VIEW_MAIN;
+    }
+
+    // Sửa phiên bản
+    public function editVersion()
+    {
+        $tour_version = new TourVersionModel();
+        $title = "Sửa phiên bản tour";
+        $view  = "admin/tour/editVersion";
+        require_once PATH_VIEW_MAIN;
+    }
+
+    // Thêm lịch trình tour
+    public function itineraryAdd()
+    {
+        $title = "Thêm lịch trình";
+        $view = "admin/tour/itineraryAdd";
+        require_once PATH_VIEW_MAIN;
+    }
+
+    // Sửa lịch trình tour
+    public function itineraryEdit()
+    {
+        $title = "Sửa lịch trình";
+        $view = "admin/tour/itineraryEdit";
         require_once PATH_VIEW_MAIN;
     }
 }

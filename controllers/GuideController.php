@@ -252,7 +252,7 @@ class GuideController
         $assignedTours = $customers->getAssignedTours($guide_id);
         $request = new GuestSpecialRequest();
         $guest = new Guest();
-        $tour = new Tour();
+        $tour = new TourModel();
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $guest_id = $_POST['guest_id'];
             $description = trim($_POST['description']);
