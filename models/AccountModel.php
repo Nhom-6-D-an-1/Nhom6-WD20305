@@ -1,5 +1,6 @@
 <?php
-class AccountModel extends BaseModel{
+class AccountModel extends BaseModel
+{
 
     public function __construct()
     {
@@ -20,16 +21,30 @@ class AccountModel extends BaseModel{
 
         $stmt = $this->conn->prepare($sql);
 
-        return $stmt->execute([
+        $stmt->execute([
             ':full_name' => $data['full_name'],
             ':user_name' => $data['user_name'],
             ':password_hash'  => $data['password_hash'],
             ':role'      => $data['role'],
         ]);
+
+        $newUserId = $this->conn->lastInsertId();
+        if ($data['role'] === 'guide') {
+            $sqlGuide = "INSERT INTO `tour_guide` (user_id) VALUES (:user_id)";
+            $stmtGuide = $this->conn->prepare($sqlGuide);
+            $stmtGuide->execute([
+                ':user_id' => $newUserId
+            ]);
+        }
     }
 
     public function deleteAccount($id)
     {
+        $sqlGuide = "DELETE FROM tour_guide WHERE user_id = :user_id";
+        $stmtGuide = $this->conn->prepare($sqlGuide);
+        $stmtGuide->bindParam(':user_id', $id);
+        $stmtGuide->execute();
+
         $sql = "DELETE FROM users WHERE user_id = :user_id";
         $stmt = $this->conn->prepare($sql);
         $stmt->bindParam(':user_id', $id);
@@ -81,7 +96,6 @@ class AccountModel extends BaseModel{
                 ':role' => $data['role'],
                 ':user_id' => (int)$id
             ];
-
         } else {
             $sql = "UPDATE users 
                     SET full_name = :full_name, 
@@ -100,6 +114,4 @@ class AccountModel extends BaseModel{
         $stmt = $this->conn->prepare($sql);
         return $stmt->execute($params);
     }
-
 }
-?>

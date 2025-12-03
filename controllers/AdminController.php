@@ -46,24 +46,24 @@ class AdminController
     }
 
     // Xử lý thêm booking
-public function addBooking()
-{
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $data = [
-            ':departure_id'     => !empty($_POST['departure_id']) ? (int)$_POST['departure_id'] : null,
-            ':customer_name'    => trim($_POST['customer_name'] ?? ''),
-            ':customer_contact' => trim($_POST['customer_contact'] ?? ''),
-            ':total_amount'     => (float)($_POST['total_amount'] ?? 0),
-            ':status'           => $_POST['status'] ?? 'pending'
-        ];
+    public function addBooking()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $data = [
+                ':departure_id'     => !empty($_POST['departure_id']) ? (int)$_POST['departure_id'] : null,
+                ':customer_name'    => trim($_POST['customer_name'] ?? ''),
+                ':customer_contact' => trim($_POST['customer_contact'] ?? ''),
+                ':total_amount'     => (float)($_POST['total_amount'] ?? 0),
+                ':status'           => $_POST['status'] ?? 'pending'
+            ];
 
-        $bookingModel = new BookingModel();
-        $bookingModel->addBooking($data);
+            $bookingModel = new BookingModel();
+            $bookingModel->addBooking($data);
 
-        header('Location: ' . BASE_URL . '?mode=admin&action=viewsbooking');
-        exit;
+            header('Location: ' . BASE_URL . '?mode=admin&action=viewsbooking');
+            exit;
+        }
     }
-}
 
 
     // Xem form sửa booking
@@ -419,28 +419,28 @@ public function addBooking()
     }
     public function addAccount()
     {
-    $title = "Thêm tài khoản";
-    $view = 'admin/account/add';
-    require_once PATH_VIEW_MAIN;
+        $title = "Thêm tài khoản";
+        $view = 'admin/account/add';
+        require_once PATH_VIEW_MAIN;
     }
     public function storeAccount()
     {
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-        $data = [
-            'full_name' => $_POST['full_name'],
-            'user_name' => $_POST['user_name'],
-            'password_hash'  => password_hash($_POST['password'], PASSWORD_DEFAULT),
-            'role'      => $_POST['role'],
-            // 'status'    => $_POST['status']
-        ];
+            $data = [
+                'full_name' => $_POST['full_name'],
+                'user_name' => $_POST['user_name'],
+                'password_hash'  => password_hash($_POST['password'], PASSWORD_DEFAULT),
+                'role'      => $_POST['role'],
+                // 'status'    => $_POST['status']
+            ];
 
-        $accountModel = new AccountModel();
-        $accountModel->insertAccount($data);
+            $accountModel = new AccountModel();
+            $accountModel->insertAccount($data);
 
-        header("Location: " . BASE_URL . "?mode=admin&action=viewsaccount");
-        exit;
-    }
+            header("Location: " . BASE_URL . "?mode=admin&action=viewsaccount");
+            exit;
+        }
     }
     public function xoaAccount()
     {
@@ -517,9 +517,9 @@ public function addBooking()
         header('Location: ' . BASE_URL . '?mode=admin&action=viewsaccount');
         exit;
     }
-    
 
-// Nhân Sự
+
+    // Nhân Sự
     public function viewResources()
     {
         $tourGuide = new TourGuideModel();

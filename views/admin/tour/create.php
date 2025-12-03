@@ -1,4 +1,4 @@
-<div class="col-md-10 p-4">
+<div class="col-md-12 p-4">
 
     <!-- Header -->
     <!-- <div class="d-flex justify-content-between align-items-center mb-4 pb-3 border-bottom">
@@ -21,7 +21,7 @@
             <label class="form-label">Danh mục tour</label>
             <select name="category_id" class="form-select mb-3" required>
                 <option value="">-- Chọn --</option>
-                <?php foreach($categories as $c): ?>
+                <?php foreach ($categories as $c): ?>
                     <option value="<?= $c['category_id'] ?>"><?= $c['category_name'] ?></option>
                 <?php endforeach; ?>
             </select>
@@ -39,7 +39,7 @@
             <label class="form-label">Hướng dẫn viên phân công</label>
             <select name="user_id" class="form-select mb-3" required>
                 <option value="">-- Chọn --</option>
-                <?php foreach($guides as $g): ?>
+                <?php foreach ($guides as $g): ?>
                     <option value="<?= $g['user_id'] ?>"><?= $g['full_name'] ?></option>
                 <?php endforeach; ?>
             </select>

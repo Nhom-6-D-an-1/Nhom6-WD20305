@@ -1,4 +1,4 @@
-<div class="col-md-10 p-4">
+<div class="col-md-12 p-4">
 
     <div class="card p-4">
         <form action="?mode=admin&action=storeguest" method="POST">
@@ -34,8 +34,8 @@
             <button class="btn btn-primary">Thêm khách</button>
 
             <!-- Nút quay lại đúng departure_id -->
-            <a href="?mode=admin&action=guestlist&departure_id=<?= $_GET['departure_id'] ?>" 
-               class="btn btn-secondary">
+            <a href="?mode=admin&action=guestlist&departure_id=<?= $_GET['departure_id'] ?>"
+                class="btn btn-secondary">
                 Quay lại
             </a>
 

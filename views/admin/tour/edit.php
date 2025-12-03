@@ -1,4 +1,4 @@
-<div class="col-md-10 p-4">
+<div class="col-md-12 p-4">
 
     <!-- Header -->
     <!-- <div class="d-flex justify-content-between align-items-center mb-4 pb-3 border-bottom">
@@ -19,12 +19,12 @@
             <!-- Tên tour -->
             <label class="form-label">Tên tour</label>
             <input type="text" name="tour_name" class="form-control mb-3"
-                   value="<?= $tour['tour_name'] ?>" required>
+                value="<?= $tour['tour_name'] ?>" required>
 
             <!-- Danh mục -->
             <label class="form-label">Loại tour</label>
             <select name="category_id" class="form-select mb-3" required>
-                <?php foreach($categories as $c): ?>
+                <?php foreach ($categories as $c): ?>
                     <option value="<?= $c['category_id'] ?>"
                         <?= $c['category_id'] == $tour['category_id'] ? 'selected' : '' ?>>
                         <?= $c['category_name'] ?>
@@ -42,18 +42,18 @@
             <!-- Giá -->
             <label class="form-label">Giá</label>
             <input type="number" name="price" class="form-control mb-3"
-                   value="<?= $tour['price'] ?>" required>
+                value="<?= $tour['price'] ?>" required>
 
             <!-- Ngày khởi hành -->
             <label class="form-label">Ngày khởi hành</label>
             <input type="datetime-local" name="start_date" class="form-control mb-3"
-                   value="<?= date('Y-m-d\TH:i', strtotime($tour['start_date'])) ?>" required>
+                value="<?= date('Y-m-d\TH:i', strtotime($tour['start_date'])) ?>" required>
 
             <!-- HDV -->
             <label class="form-label">HDV phân công</label>
             <select name="user_id" class="form-select mb-4">
                 <option value="">-- Chọn --</option>
-                <?php foreach($guides as $g): ?>
+                <?php foreach ($guides as $g): ?>
                     <option value="<?= $g['user_id'] ?>"
                         <?= isset($tour['user_id']) && $tour['user_id'] == $g['user_id'] ? 'selected' : '' ?>>
                         <?= $g['full_name'] ?>

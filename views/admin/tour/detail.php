@@ -1,6 +1,8 @@
-<div class="col-md-10 p-4">
+<div class="col-md-12 p-4">
 
-    <h3 class="mb-4">Chi tiết tour: <?= $tour['tour_name'] ?></h3>
+    <h3 class="mb-4">Chi tiết tour:
+        <?php if (!empty($departure_id)): ?>
+            <?= $tour['tour_name'] ?></h3>
 
     <div class="card p-4">
 
@@ -28,16 +30,16 @@
         </div>
 
         <!-- Nút Danh sách khách -->
-        <?php if (!empty($departure_id)): ?>
-            <a href="?mode=admin&action=guestlist&departure_id=<?= $departure_id ?>" 
-               class="btn btn-primary w-100 mb-2">
-                Danh sách khách
-            </a>
-        <?php else: ?>
-            <button class="btn btn-secondary w-100 mb-2" disabled>Không có lịch khởi hành</button>
-        <?php endif; ?>
 
-        <a href="?mode=admin&action=viewstour" class="btn btn-secondary w-100">Quay lại</a>
+        <a href="?mode=admin&action=guestlist&departure_id=<?= $departure_id ?>"
+            class="btn btn-primary w-100 mb-2">
+            Danh sách khách
+        </a>
+    <?php else: ?>
+        <button class="btn btn-secondary w-100 mb-2" disabled>Không có lịch khởi hành</button>
+    <?php endif; ?>
+
+    <a href="?mode=admin&action=viewstour" class="btn btn-secondary w-100">Quay lại</a>
 
     </div>
 

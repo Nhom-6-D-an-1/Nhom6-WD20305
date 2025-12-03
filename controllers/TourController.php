@@ -57,7 +57,7 @@ class TourController
 
     public function update()
     {
-        $id = $_POST["tour_id"];
+        $id = $_GET["tour_id"];
 
         $data = [
             "tour_name"   => $_POST["tour_name"],
@@ -115,5 +115,4 @@ class TourController
         $view = "admin/tour/guest_list";
         require_once PATH_VIEW_MAIN;
     }
-
 }

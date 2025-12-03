@@ -21,18 +21,18 @@
         <div class="mb-3">
             <label>Vai trò</label>
             <select name="role" class="form-select" required>
-            <option value="admin">Admin</option>
-            <option value="guide">Hướng dẫn viên</option>
+                <option value="admin">Admin</option>
+                <option value="guide">Hướng dẫn viên</option>
             </select>
         </div>
 
-        <div class="mb-3">
-            <label>Trạng thái</label>
-            <select name="status" class="form-select" required>
-                <option value="1">Hoạt động</option>
-                <option value="0">Tạm ẩn</option>
-            </select>
-        </div>
+        <!-- <div class="mb-3"> -->
+        <!-- <label>Trạng thái</label> -->
+        <!-- <select name="status" class="form-select" required> -->
+        <!-- <option value="1">Hoạt động</option> -->
+        <!-- <option value="0">Tạm ẩn</option> -->
+        <!-- </select> -->
+        <!-- </div> -->
 
         <button class="btn btn-success">Lưu</button>
         <a href="<?= BASE_URL ?>?mode=admin&action=viewsaccount" class="btn btn-secondary">Hủy</a>

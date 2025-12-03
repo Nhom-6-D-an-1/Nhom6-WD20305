@@ -40,7 +40,6 @@ match ($action) {
     'xoadanhmuc'         => (new AdminController())->deleteDanhmuc(),
 
     // ========== ACCOUNT ==========
-    'viewsaccount'    => (new AdminController())->viewAccount(),
 
     'viewsaccount'         => (new AdminController())->viewAccount(),
     'addaccount'        => (new AdminController())->addAccount(),
