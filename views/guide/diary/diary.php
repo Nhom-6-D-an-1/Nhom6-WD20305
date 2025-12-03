@@ -24,11 +24,11 @@
     <div class="card shadow-sm border-0 mb-4 diary-card">
         <div class="card-body p-4">
             <div class="row g-3 align-items-center diary-form-row">
-                <form method="post" enctype="multipart/form-data" id="diaryForm">
+                <form method="post" enctype="multipart/form-data" id="diaryForm" onsubmit="return validateSearchForm()">
                     <input type="hidden" name="departure_id" value="<?= (int)($_GET['departure_id'] ?? 0) ?>"> <!-- Cast to int -->
                     <div class="row g-3 align-items-center diary-form-row">
                         <div class="col-12 col-lg-6">
-                            <input type="text" name="note" required class="form-control form-control-lg diary-input" placeholder="Diễn biến, nhật ký, phản hồi khách...">
+                            <input type="text" name="note" class="form-control form-control-lg diary-input" placeholder="Diễn biến, nhật ký, phản hồi khách...">
                         </div>
                         <div class="col-12 col-lg-4">
                             <input type="file" name="image" class="form-control form-control-lg diary-file">
@@ -57,44 +57,67 @@
                         </tr>
                     </thead>
                     <tbody class="text-dark">
-                        <?php if (!empty($diaryData)) { ?>
-                            <?php foreach ($diaryData as $diary) { ?>
-                                <?php if (empty($diary)) continue; ?>
-                                <tr class="diary-row">
-                                    <td class="ps-4 py-4 text-muted small diary-time">
-                                        <?php $diaryDate = $diary['created_at'] ?? null; ?>
-                                        <div><?= $diaryDate ? date('H:i', strtotime($diaryDate)) : '--:--' ?></div>
-                                        <div><?= $diaryDate ? date('d/m/Y', strtotime($diaryDate)) : '--/--/----' ?></div>
-                                    </td>
-                                    <td class="py-4 diary-content">
-                                        <div class="fw-semibold"><?= htmlspecialchars($diary['log_content'] ?? 'Không có') ?></div>
-                                    </td>
-                                    <td class="text-center py-4 diary-img">
-                                        <?php if (!empty($diary['image'])) { ?>
-                                            <img src="<?= BASE_ASSETS_UPLOADS . $diary['image'] ?>" alt="Hình ảnh" width="2000" class="diary-img-thumb rounded">
-                                        <?php } else { ?>
-                                            <span class="text-secondary small">Không có</span>
-                                        <?php } ?>
-                                    </td>
-                                    <td class="text-center py-4 diary-action">
-                                        <?php if (isset($diary['log_id'])) { ?>
-                                            <a href="<?php echo BASE_URL; ?>?mode=guide&action=deleteDiary&id=<?php echo $diary['log_id']; ?>"
-                                                class="btn btn-danger btn-sm"
-                                                onclick="return confirm('Bạn có chắc muốn xoá nhật ký này?')">
-                                                Xoá
-                                            </a>
-                                        <?php } ?>
-                                    </td>
+                        <?php if(empty($_GET['departure_id'])): ?>
+                            <tr>
+                               <td colspan="6" class="text-center text-danger">Vui lòng chọn tour.</td>
+                            </tr>
+                        <?php else: ?>
+                            <?php if (!empty($diaryData)) { ?>
+                                <?php foreach ($diaryData as $diary) { ?>
+                                    <?php if (empty($diary)) continue; ?>
+                                    <tr class="diary-row">
+                                        <td class="ps-4 py-4 text-muted small diary-time">
+                                            <?php $diaryDate = $diary['created_at'] ?? null; ?>
+                                            <div><?= $diaryDate ? date('H:i', strtotime($diaryDate)) : '--:--' ?></div>
+                                            <div><?= $diaryDate ? date('d/m/Y', strtotime($diaryDate)) : '--/--/----' ?></div>
+                                        </td>
+                                        <td class="py-4 diary-content">
+                                            <div class="fw-semibold"><?= htmlspecialchars($diary['log_content'] ?? 'Không có') ?></div>
+                                        </td>
+                                        <td class="text-center py-4 diary-img">
+                                            <?php if(!empty($diary['image'])) { ?>
+                                                <img src="<?= BASE_ASSETS_UPLOADS . $diary['image'] ?>" alt="Hình ảnh" class="rounded" width="100" height="100px">
+                                            <?php } else { ?>
+                                                <span class="text-secondary small">Không có</span>
+                                            <?php } ?>
+                                        </td>
+                                        <td class="text-center py-4 diary-action">
+                                            <?php if (isset($diary['log_id'])) { ?>
+                                                <a href="<?php echo BASE_URL; ?>?mode=guide&action=deleteDiary&id=<?php echo $diary['log_id']; ?>"
+                                                    class="btn btn-danger btn-sm"
+                                                    onclick="return confirm('Bạn có chắc muốn xoá nhật ký này?')">
+                                                    Xoá
+                                                </a>
+                                            <?php } ?>
+                                        </td>
+                                    </tr>
+                                <?php } ?>
+                            <?php } else { ?>
+                                <tr>
+                                    <td colspan="4" class="text-center py-4 text-danger">Chưa có nhật ký nào</td>
                                 </tr>
                             <?php } ?>
-                        <?php } else { ?>
-                            <tr>
-                                <td colspan="4" class="text-center text-secondary py-4">Chưa có nhật ký nào</td>
-                            </tr>
-                        <?php } ?>
+                        <?php endif; ?>
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
 </div>
+<script>
+function validateSearchForm() {
+    const note = document.querySelector('#diaryForm input[name="note"]').value.trim();
+    const departureId = document.querySelector('#diaryForm input[name="departure_id"]').value;
+
+    if (departureId == "0" || departureId == "") {
+        alert("Vui lòng chọn tour trước khi thêm nhật ký");
+        return false;
+    }
+
+    if (note === "") {
+        alert("Vui lòng nhập diễn biến nhật ký");
+        return false;
+    }
+    return true;
+}
+</script>

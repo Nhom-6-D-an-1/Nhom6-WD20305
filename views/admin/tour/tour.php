@@ -1,12 +1,12 @@
-<div class="col-md-10 p-4">
+<div class="col-md-12 p-4">
 
-    <!-- HEADER -->
+    <!-- HEADER
     <div class="d-flex justify-content-between align-items-center mb-4 pb-3 border-bottom">
         <div class="flex-grow-1 me-3">
             <input type="text" class="form-control form-control-lg" placeholder="🔍  Tìm kiếm">
         </div>
         <div class="fw-semibold">Xin chào Admin</div>
-    </div>
+    </div> -->
 
     <h3 class="mb-4">Quản lý tour</h3>
 
