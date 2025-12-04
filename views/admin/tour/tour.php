@@ -22,10 +22,17 @@
                     <td><?= $value['version_code'] ?> - <?= $value['season'] ?></td>
                     <td>
                         <a href="<?= BASE_URL ?>?mode=admin&action=tourDetail&id=<?= $value['tour_id'] ?>" class="btn btn-primary btn-sm">Chi tiết</a>
-                        <!-- <a href="<?= BASE_URL ?>?mode=admin&action=tourVersion" class="btn btn-warning btn-sm">Quản lý phiên bản</a> -->
+                        <a href="<?= BASE_URL ?>?mode=admin&action=editTour&id=<?= $value['tour_id'] ?>" class="btn btn-warning btn-sm">Chỉnh sửa</a>
+                        <a href="<?= BASE_URL ?>?mode=admin&action=deleteTour&id=<?= $value['tour_id'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('Bạn có muốn xóa tour không?')">Xóa</a>
                     </td>
                 </tr>
             <?php endforeach; ?>
         </tbody>
     </table>
 </div>
+<?php
+if (!empty($_SESSION['flash_error'])) {
+    echo '<div class="alert alert-danger">' . $_SESSION['flash_error'] . '</div>';
+    unset($_SESSION['flash_error']);
+}
+?>

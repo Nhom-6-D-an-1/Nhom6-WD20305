@@ -43,5 +43,30 @@ class TourVersionModel
             ':valid_to' => $valid_to
         ]);
     }
-    public function editVersion() {}
+
+    public function countVersionByTourId($tour_id)
+    {
+        $sql = "SELECT COUNT(*) AS total FROM tour_version WHERE tour_id = :tour_id";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([':tour_id' => $tour_id]);
+        return $stmt->fetch(PDO::FETCH_ASSOC)['total'];
+    }
+
+    public function editVersion($version_name, $version_code, $season, $price, $policies, $valid_from, $valid_to, $status, $id)
+    {
+        $sql = "UPDATE `tour_version` SET `version_name`=:version_name, `version_code`=:version_code, `season`=:season, `price`=:price, `policies`=:policies, `valid_from`=:valid_from, `valid_to`=:valid_to, `status` = :status
+        WHERE version_id = :id ";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([
+            ':version_name' => $version_name,
+            ':version_code' => $version_code,
+            ':season' => $season,
+            ':price' => $price,
+            ':policies' => $policies,
+            ':valid_from' => $valid_from,
+            ':valid_to' => $valid_to,
+            ':status' => $status,
+            ':id' => $id
+        ]);
+    }
 }

@@ -1,31 +1,35 @@
 <div class="container mt-4">
-
-    <h3 class="mb-3">Sửa Ngày Lịch Trình</h3>
+    <h3>Sửa Ngày Lịch Trình</h3>
 
     <form method="POST">
 
         <div class="mb-3">
-            <label class="form-label fw-bold">Ngày thứ</label>
-            <input type="number" name="day_number" class="form-control"
-                value="<?= $day['day_number'] ?>" required>
+            <label class="form-label">Ngày thứ</label>
+            <input type="number" name="day_number" value="<?= $data_itinerary['day_number'] ?>" class="form-control" required>
         </div>
 
         <div class="mb-3">
-            <label class="form-label fw-bold">Tiêu đề</label>
-            <input type="text" name="title" class="form-control"
-                value="<?= $day['title'] ?>" required>
+            <label class="form-label">Giờ bắt đầu</label>
+            <input type="time" name="start_time" value="<?= $data_itinerary['start_time'] ?>" class="form-control" required>
         </div>
 
         <div class="mb-3">
-            <label class="form-label fw-bold">Nội dung chi tiết</label>
-            <textarea class="form-control" rows="6" name="content"><?= $day['content'] ?></textarea>
+            <label class="form-label">Giờ kết thúc</label>
+            <input type="time" name="end_time" value="<?= $data_itinerary['end_time'] ?>" class="form-control" required>
         </div>
-        <a href="<?= BASE_URL ?>?mode=admin&action=versionDetail&tab=itinerary"
+
+        <div class="mb-3">
+            <label class="form-label">Địa điểm</label>
+            <input type="text" name="place" value="<?= $data_itinerary['place'] ?>" class="form-control" required>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Hoạt động</label>
+            <textarea name="activity" class="form-control" rows="4" required><?= $data_itinerary['activity'] ?></textarea>
+        </div>
+        <a href="<?= BASE_URL ?>?mode=admin&action=versionDetail&id=<?= $data_itinerary['version_id'] ?>&tab=itinerary"
             class="btn btn-secondary">Hủy</a>
         <button class="btn btn-primary">Lưu thay đổi</button>
 
-
-
     </form>
-
 </div>

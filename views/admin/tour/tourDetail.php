@@ -38,7 +38,7 @@ $tab = $_GET['tab'] ?? 'info';
             <h5>Thông tin chung</h5>
             <p><strong>Mã Tour:</strong> <?= $data['tour_code'] ?></p>
             <p><strong>Thời lượng:</strong> <?= $data['duration_days'] ?> ngày</p>
-            <p><strong>Mô tả:</strong> <?= $data['short_description'] ?></p>
+            <p><strong>Mô tả:</strong> <?= $data['description'] ?></p>
         </div>
 
         <!-- Tab 2 -->
@@ -69,7 +69,6 @@ $tab = $_GET['tab'] ?? 'info';
                             <td><span class="badge bg-success"><?= $value['status'] ?></span></td>
                             <td>
                                 <a href="<?= BASE_URL ?>?mode=admin&action=versionDetail&id=<?= $value['version_id'] ?>" class="btn btn-primary btn-sm">Chi tiết</a>
-                                <a href="<?= BASE_URL ?>?mode=admin&action=versionCopy" class="btn btn-secondary btn-sm">Sao chép</a>
                             </td>
                         </tr>
                     <?php endforeach; ?>

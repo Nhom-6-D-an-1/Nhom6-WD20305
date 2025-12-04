@@ -57,12 +57,16 @@ match ($action) {
     'viewstour'   => (new TourController())->viewTour(),
     'createTour'    => (new TourController())->createTour(),
     'tourDetail'     => (new TourController())->tourDetail(),
-    'versionCopy'   => (new TourController())->versionCopy(),
+    'editTour'   => (new TourController())->editTour(),
+    'deleteTour'   => (new TourController())->deleteTour(),
     'createVersion'  => (new TourController())->createVersion(),
     'versionDetail'  => (new TourController())->versionDetail(),
     'editVersion'  => (new TourController())->editVersion(),
     'itineraryAdd' => (new TourController())->itineraryAdd(),
     'itineraryEdit'      => (new TourController())->itineraryEdit(),
+    'deleteItinerary'      => (new TourController())->deleteItinerary(),
+    'addImage'      => (new TourController())->addImage(),
+    'deleteImage'      => (new TourController())->deleteImage(),
 
 
 

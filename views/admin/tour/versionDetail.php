@@ -63,12 +63,12 @@ $tab = $_GET['tab'] ?? 'info';
                     </tr>
                     <tr>
                         <th>Trạng thái</th>
-                        <td><span class="badge bg-success"><?= $data_version['status'] ?></span></td>
+                        <td><span class="<?= $data_version['status'] == 'active' ? 'badge bg-success' : 'badge bg-danger' ?>"><?= $data_version['status'] == 'active' ? 'Đang hoạt động' : 'Tạm dừng' ?></span></td>
                     </tr>
                 </tbody>
             </table>
 
-            <a href="<?= BASE_URL ?>?mode=admin&action=editVersion" class="btn btn-warning">Sửa phiên bản</a>
+            <a href="<?= BASE_URL ?>?mode=admin&action=editVersion&id=<?= $data_version['version_id'] ?>" class="btn btn-warning">Sửa phiên bản</a>
         </div>
 
         <!-- TAB 2: LỊCH TRÌNH -->
@@ -76,28 +76,27 @@ $tab = $_GET['tab'] ?? 'info';
 
             <div class="d-flex justify-content-between mb-3">
                 <h5>Lịch trình Tour</h5>
-                <a href="<?= BASE_URL ?>?mode=admin&action=itineraryAdd" class="btn btn-success btn-sm"> Thêm ngày</a>
+                <a href="<?= BASE_URL ?>?mode=admin&action=itineraryAdd&id=<?= $data_version['version_id'] ?>" class="btn btn-success btn-sm"> Thêm lịch trình</a>
             </div>
 
             <div class="accordion" id="itineraryList">
 
-                <div class="accordion-item mb-2">
-                    <h2 class="accordion-header">
-                        <button class="accordion-button" data-bs-toggle="collapse" data-bs-target="#day1">
-                            Ngày 1: Hà Nội → Hà Giang
-                        </button>
-                    </h2>
+                <?php foreach ($data_itinerary as $value): ?>
+                    <div class="card mb-2">
+                        <div class="card-header bg-primary text-white">
+                            Ngày <?= $value['day_number'] ?>: <?= $value['place'] ?>
+                        </div>
+                        <div class="card-body">
+                            <p><strong>Thời gian:</strong> <?= $value['start_time'] ?> → <?= $value['end_time'] ?></p>
+                            <p><strong>Hoạt động:</strong> <?= $value['activity'] ?></p>
 
-                    <div id="day1" class="accordion-collapse collapse show">
-                        <div class="accordion-body">
-                            <p>Di chuyển – Tham quan – Ăn trưa…</p>
-
-                            <a href="<?= BASE_URL ?>?mode=admin&action=itineraryEdit" class="btn btn-warning btn-sm">Sửa</a>
-                            <button class="btn btn-danger btn-sm">Xóa</button>
+                            <a href="<?= BASE_URL ?>?mode=admin&action=itineraryEdit&id=<?= $value['itinerary_id'] ?>&tab=itinerary" class="btn btn-warning btn-sm">Sửa</a>
+                            <a onclick="return confirm('Bạn có chắc muốn xóa?')"
+                                href="<?= BASE_URL ?>?mode=admin&action=deleteItinerary&id=<?= $value['itinerary_id'] ?>"
+                                class="btn btn-danger btn-sm">Xóa</a>
                         </div>
                     </div>
-                </div>
-
+                <?php endforeach; ?>
             </div>
         </div>
 
@@ -107,44 +106,25 @@ $tab = $_GET['tab'] ?? 'info';
             <h5 class="mb-3">Hình ảnh phiên bản tour</h5>
 
             <!-- Upload -->
-            <form enctype="multipart/form-data" method="POST" class="mb-4">
+            <form action="<?= BASE_URL ?>?mode=admin&action=addImage&id=<?= $data_version['version_id'] ?>" enctype="multipart/form-data" method="POST" class="mb-4">
                 <label class="form-label fw-bold">Thêm hình ảnh</label>
-                <input type="file" class="form-control" name="images[]" multiple>
+                <input type="file" class="form-control" name="image_url" multiple>
                 <button class="btn btn-success mt-2">Upload ảnh</button>
             </form>
 
             <!-- IMAGE GALLERY -->
-            <div class="row">
-
-                <div class="col-3 mb-3">
-                    <div class="card shadow-sm">
-                        <img src="https://picsum.photos/300/200" class="card-img-top">
-                        <div class="card-body text-center">
-                            <button class="btn btn-danger btn-sm">Xóa</button>
+            <?php if (!empty($data_image) && !empty($data_image['image_url'])): ?>
+                <div class="row">
+                    <div class="col-3 mb-3">
+                        <div class="card shadow-sm">
+                            <img src="<?= BASE_ASSETS_UPLOADS . $data_image['image_url'] ?>" class="card-img-top">
+                            <div class="card-body text-center">
+                                <a href="<?= BASE_URL ?>?mode=admin&action=deleteImage&id=<?= $data_version['version_id'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('Bạn có chắc muốn xóa?')">Xóa</a>
+                            </div>
                         </div>
                     </div>
                 </div>
-
-                <div class="col-3 mb-3">
-                    <div class="card shadow-sm">
-                        <img src="https://picsum.photos/301/200" class="card-img-top">
-                        <div class="card-body text-center">
-                            <button class="btn btn-danger btn-sm">Xóa</button>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-
-        </div>
-        <div class="tab-pane fade" id="policy">
-            <h5>Chính sách phiên bản tour</h5>
-
-            <textarea class="form-control mt-3" rows="6">Giá bao gồm... 
-Giá không bao gồm...
-Điều kiện hoàn / hủy...</textarea>
-
-            <button class="btn btn-primary mt-3">Lưu thay đổi</button>
+            <?php endif; ?>
         </div>
     </div>
 </div>

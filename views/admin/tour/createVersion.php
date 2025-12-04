@@ -3,7 +3,7 @@
     <p class="text-muted">Thuộc tour: <?= $data['tour_name'] ?></p>
 
     <form class="mt-3" method="post">
-
+        <input type="hidden" name="tour_id" value="<?= $data['tour_id'] ?>">
         <div class="mb-3">
             <label class="form-label">Tên phiên bản</label>
             <input type="text" class="form-control" name="version_name" placeholder="V1.2 - Summer 2025">
@@ -40,7 +40,7 @@
             <label class="form-label">Chính sách</label>
             <textarea class="form-control" rows="4" name="policies"></textarea>
         </div>
-        <a href="<?= BASE_URL ?>?mode=admin&action=tourDetail&tab=versions<?= $data_version['tour_id'] ?>" class="btn btn-secondary">Quay lại</a>
+        <a href="<?= BASE_URL ?>?mode=admin&action=tourDetail&tab=versions&id=<?= $data['tour_id'] ?>" class="btn btn-secondary">Quay lại</a>
         <button class="btn btn-primary">Tạo phiên bản</button>
 
     </form>
