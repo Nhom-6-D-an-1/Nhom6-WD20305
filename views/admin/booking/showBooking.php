@@ -42,6 +42,17 @@
                             <p><?= htmlspecialchars($booking['customer_contact'] ?? '') ?></p>
                         </div>
                     </div>
+                    <div class="col-md-6">
+                        <label class="fw-bold">Loại khách:</label>
+                        <p>
+                        <?php
+                            $type = $booking['customer_type'] ?? 'le';
+                            $typeText = ($type === 'doan') ? 'Khách đoàn' : 'Khách lẻ';
+                            $badgeType = ($type === 'doan') ? 'bg-primary' : 'bg-secondary';
+                        ?>
+                        <span class="badge <?= $badgeType ?>"><?= $typeText ?></span>
+                        </p>
+                    </div>
 
                     <div class="row mb-3">
                         <div class="col-md-12">

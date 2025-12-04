@@ -26,6 +26,7 @@ class BookingModel extends BaseModel
                 departure_id,
                 customer_name,
                 customer_contact,
+
                 total_amount,
                 status,
                 created_at
@@ -61,8 +62,8 @@ class BookingModel extends BaseModel
     public function addBooking($data)
     {
         $sql = "INSERT INTO `booking` 
-            (departure_id, customer_name, customer_contact, total_amount, status, created_at)
-            VALUES (:departure_id, :customer_name, :customer_contact, :total_amount, :status, :created_at)";
+            (departure_id, customer_name, customer_contact,customer_type, total_amount, status, created_at)
+            VALUES (:departure_id, :customer_name, :customer_contact,:customer_type, :total_amount, :status, :created_at)";
         $stmt = $this->conn->prepare($sql);
         return $stmt->execute($data);
     }
@@ -86,6 +87,7 @@ class BookingModel extends BaseModel
             departure_id = :departure_id,
             customer_name = :customer_name,
             customer_contact = :customer_contact,
+            customer_type = :customer_type,
             total_amount = :total_amount,
             status = :status
             WHERE booking_id = :id";
