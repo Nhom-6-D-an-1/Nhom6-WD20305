@@ -10,7 +10,7 @@ class CheckinModel
     }
 
     // Lấy danh sách các điểm/chặng check-in (từ tour_itinerary)
-    public function getCheckinStages($departure_id)
+    public function getCheckinStages($version_id)
     {
         $sql = "SELECT stage_description FROM (
                     SELECT 
@@ -20,13 +20,13 @@ class CheckinModel
                         -- Cột mô tả chặng cuối cùng
                         CONCAT('Ngày ',day_number, ':', place, ' - ', activity) AS stage_description
                     FROM tour_itinerary
-                    WHERE departure_id = :departure_id
+                    WHERE version_id = :version_id
                     ORDER BY day_number, start_time
                 ) AS ordered_stages";
         
         // Vì truy vấn con đã đảm bảo thứ tự, ta chỉ cần fetchAll(PDO::FETCH_COLUMN)
         $stmt = $this->conn->prepare($sql);
-        $stmt->bindParam(':departure_id', $departure_id, PDO::PARAM_INT);
+        $stmt->bindParam(':version_id', $version_id, PDO::PARAM_INT);
         $stmt->execute();
         
         // Lấy ra danh sách các mô tả chặng đã được sắp xếp
