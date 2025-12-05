@@ -46,19 +46,23 @@ class AdminController
     }
 
     // Xử lý thêm booking
-public function addBooking()
-{
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $data = [
-            ':departure_id'     => !empty($_POST['departure_id']) ? (int)$_POST['departure_id'] : null,
-            ':customer_name'    => trim($_POST['customer_name'] ?? ''),
-            ':customer_contact' => trim($_POST['customer_contact'] ?? ''),
-            ':total_amount'     => (float)($_POST['total_amount'] ?? 0),
-            ':status'           => $_POST['status'] ?? 'pending'
-        ];
+    public function addBooking()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $data = [
+                ':departure_id' => !empty($_POST['departure_id']) ? (int)$_POST['departure_id'] : null,
+                ':customer_name' => trim($_POST['customer_name'] ?? ''),
+                ':customer_contact' => trim($_POST['customer_contact'] ?? ''),
+                'customer_type' => $_POST['customer_type'] ?? 'le',
+                ':total_amount' => (float)($_POST['total_amount'] ?? 0),
+                ':status' => $_POST['status'] ?? 'pending',
+                ':created_at' => date('Y-m-d H:i:s')
+            ];
 
-        $bookingModel = new BookingModel();
-        $bookingModel->addBooking($data);
+            $bookingModel = new BookingModel();
+            $ok = $bookingModel->addBooking($data);
+
+       
 
         header('Location: ' . BASE_URL . '?mode=admin&action=viewsbooking');
         exit;
@@ -106,6 +110,7 @@ public function addBooking()
                 ':departure_id' => !empty($_POST['departure_id']) ? (int)$_POST['departure_id'] : null,
                 ':customer_name' => trim($_POST['customer_name'] ?? ''),
                 ':customer_contact' => trim($_POST['customer_contact'] ?? ''),
+                ':customer_type' => $_POST['customer_type'] ?? 'le',
                 ':total_amount' => (float)($_POST['total_amount'] ?? 0),
                 ':status' => $_POST['status'] ?? 'pending',
                 ':id' => (int)$id
