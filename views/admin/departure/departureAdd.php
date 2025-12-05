@@ -51,8 +51,8 @@
             <label class="form-label">Ghi chú</label>
             <textarea name="note" class="form-control" rows="3"></textarea>
         </div>
-
+        <a href="<?= BASE_URL ?>?mode=admin&action=versionDetail&id=<?= $data_version['version_id'] ?>&tab=info" class="btn btn-secondary">Hủy</a>
         <button class="btn btn-success">Lưu chuyến đi</button>
-        <a href="<?= BASE_URL ?>?mode=admin&action=versionDetail&id=<?= $version_id ?>&tab=departure" class="btn btn-secondary">Hủy</a>
+
     </form>
 </div>

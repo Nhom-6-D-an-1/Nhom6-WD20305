@@ -66,7 +66,7 @@ class ScheduleModel
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
     // Itinerary
-    public function getScheduleItinerary($departure_id)
+    public function getScheduleItinerary($version_id)
     {
         $sql = "SELECT 
                     day_number,
@@ -75,12 +75,12 @@ class ScheduleModel
                     place,
                     activity
                 FROM tour_itinerary
-                WHERE departure_id = :departure_id
+                WHERE version_id = :version_id
                 ORDER BY day_number, start_time
             ";
 
         $stmt = $this->conn->prepare($sql);
-        $stmt->bindParam('departure_id', $departure_id, PDO::PARAM_INT);
+        $stmt->bindParam('version_id', $version_id, PDO::PARAM_INT);
         $stmt->execute();
         $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 

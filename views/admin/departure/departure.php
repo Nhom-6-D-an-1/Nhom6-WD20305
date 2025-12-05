@@ -1,11 +1,7 @@
 <div class="container mt-4">
 
     <div class="d-flex justify-content-between mb-3">
-        <h3>Danh sách Chuyến đi</h3>
-        <a href="<?= BASE_URL ?>?mode=admin&action=departureAdd&version_id=<?= $data_version['version_id'] ?>"
-            class="btn btn-success btn-sm">
-            Thêm chuyến đi
-        </a>
+        <h3>Danh sách chuyến đi</h3>
     </div>
 
     <table class="table table-bordered table-hover align-middle">

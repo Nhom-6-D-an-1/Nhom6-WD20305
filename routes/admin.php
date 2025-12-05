@@ -70,6 +70,7 @@ match ($action) {
 
     // Departure
     'viewDeparture'      => (new DepartureController())->viewDeparture(),
+    'departureAdd'      => (new DepartureController())->departureAdd(),
 
 
 
