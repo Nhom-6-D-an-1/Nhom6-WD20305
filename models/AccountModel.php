@@ -63,7 +63,7 @@ class AccountModel extends BaseModel
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    // 🔥 Thêm hàm kiểm tra username trùng nhưng bỏ qua user hiện tại
+    //  Thêm hàm kiểm tra username trùng nhưng bỏ qua user hiện tại
     public function checkDuplicateUsername($username, $id)
     {
         $sql = "SELECT user_id FROM users 

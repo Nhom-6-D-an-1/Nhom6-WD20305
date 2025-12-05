@@ -67,8 +67,13 @@ $tab = $_GET['tab'] ?? 'info';
                     </tr>
                 </tbody>
             </table>
-
-            <a href="<?= BASE_URL ?>?mode=admin&action=editVersion&id=<?= $data_version['version_id'] ?>" class="btn btn-warning">Sửa phiên bản</a>
+            <div class="d-flex justify-content-between mb-3">
+                <a href="<?= BASE_URL ?>?mode=admin&action=editVersion&id=<?= $data_version['version_id'] ?>" class="btn btn-warning">Sửa phiên bản</a>
+                <a href="<?= BASE_URL ?>?mode=admin&action=departureAdd&id=<?= $data_version['version_id'] ?>"
+                    class="btn btn-success btn-sm">
+                    Thêm chuyến đi
+                </a>
+            </div>
         </div>
 
         <!-- TAB 2: LỊCH TRÌNH -->

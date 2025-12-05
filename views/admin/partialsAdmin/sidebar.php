@@ -22,6 +22,11 @@
                 </a>
             </li>
             <li class="nav-item mb-2">
+                <a class="nav-link <?= ($view ?? '') === 'admin/departure/departure'  ? 'active' : '' ?>" href="<?= BASE_URL ?>?mode=admin&action=viewDeparture">
+                    Quản lý lịch khởi hành
+                </a>
+            </li>
+            <li class="nav-item mb-2">
                 <a class="nav-link <?= ($view ?? '') === 'admin/booking/booking' || ($view ?? '') === 'admin/booking/showBooking' || ($view ?? '') === 'admin/booking/editBooking' || ($view ?? '') === 'admin/booking/addBooking' ? 'active' : '' ?>" href="<?= BASE_URL ?>?mode=admin&action=viewsbooking">
                     Quản lý booking
                 </a>
