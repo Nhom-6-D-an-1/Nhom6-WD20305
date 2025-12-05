@@ -1,88 +1,38 @@
-<div class="col-md-12 p-4">
-
-    <!-- HEADER
-    <div class="d-flex justify-content-between align-items-center mb-4 pb-3 border-bottom">
-        <div class="flex-grow-1 me-3">
-            <input type="text" class="form-control form-control-lg" placeholder="🔍  Tìm kiếm">
-        </div>
-        <div class="fw-semibold">Xin chào Admin</div>
-    </div> -->
-
-    <h3 class="mb-4">Quản lý tour</h3>
-
-    <!-- BỘ LỌC -->
-    <div class="card p-3 mb-4">
-        <div class="d-flex align-items-center gap-3">
-
-            <input type="text" class="form-control" style="max-width: 200px;" placeholder="Tìm tour">
-
-            <select class="form-select" style="max-width: 160px;">
-                <option value="">Loại tour</option>
-            </select>
-
-            <select class="form-select" style="max-width: 160px;">
-                <option value="">Trạng thái</option>
-            </select>
-
-            <button class="btn btn-dark">Tìm kiếm</button>
-
-            <a href="?mode=admin&action=addtour" class="btn btn-primary">Thêm tour</a>
-        </div>
+<div class="container mt-4">
+    <div class="d-flex justify-content-between mb-3">
+        <h3 class="mb-3">Danh sách Tour</h3>
+        <a href="<?= BASE_URL ?>?mode=admin&action=createTour" class="btn btn-success"> Tạo tour mới</a>
     </div>
-
-    <!-- DANH SÁCH TOUR -->
-    <div class="card p-3">
-        <table class="table table-hover align-middle">
-            <thead class="table-light">
+    <table class="table table-bordered table-striped">
+        <thead class="table-light">
+            <tr>
+                <th>#</th>
+                <th>Tên Tour</th>
+                <th>Mã Tour</th>
+                <th>Phiên bản hiện tại</th>
+                <th>Hành động</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($data as $key => $value): ?>
                 <tr>
-                    <th>Tên tour</th>
-                    <th>Danh mục tour</th>
-                    <th>Ngày khởi hành</th>
-                    <th>Trạng thái</th>
-                    <th>Giá tour</th>
-                    <th>HDV phân công</th>
-                    <th class="text-center">Hành động</th>
+                    <td><?= $key + 1 ?></td>
+                    <td><?= $value['tour_name'] ?></td>
+                    <td><?= $value['tour_code'] ?></td>
+                    <td><?= $value['version_code'] ?> - <?= $value['season'] ?></td>
+                    <td>
+                        <a href="<?= BASE_URL ?>?mode=admin&action=tourDetail&id=<?= $value['tour_id'] ?>" class="btn btn-primary btn-sm">Chi tiết</a>
+                        <a href="<?= BASE_URL ?>?mode=admin&action=editTour&id=<?= $value['tour_id'] ?>" class="btn btn-warning btn-sm">Chỉnh sửa</a>
+                        <a href="<?= BASE_URL ?>?mode=admin&action=deleteTour&id=<?= $value['tour_id'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('Bạn có muốn xóa tour không?')">Xóa</a>
+                    </td>
                 </tr>
-            </thead>
-
-            <tbody>
-                <?php if (!empty($tours)) : ?>
-                    <?php foreach ($tours as $t) : ?>
-                        <tr>
-                            <td><?= $t['tour_name'] ?></td>
-                            <td><?= $t['category_name'] ?></td>
-
-                            <td>
-                                <?= $t['start_date'] ? date("d/m/Y H:i", strtotime($t['start_date'])) : '—' ?>
-                            </td>
-
-                            <td>
-                                <?php if ($t["start_date"] >= date("Y-m-d")) : ?>
-                                    <span class="badge bg-success">Hoạt động</span>
-                                <?php else : ?>
-                                    <span class="badge bg-secondary">Tạm dừng</span>
-                                <?php endif; ?>
-                            </td>
-
-                            <td><?= $t['price'] ? number_format($t['price']) . " đ" : '—' ?></td>
-
-                            <td><?= $t['guide_name'] ?: '—' ?></td>
-
-                            <td class="text-center">
-                                <a href="<?= BASE_URL ?>?mode=admin&action=viewtour&id=<?= $t['tour_id'] ?>" class="btn btn-sm btn-info text-white">Xem</a>
-                                <a href="<?= BASE_URL ?>?mode=admin&action=edittour&id=<?= $t['tour_id'] ?>" class="btn btn-sm btn-warning text-white">Sửa</a>
-                                <a onclick="return confirm('Bạn có chắc muốn xoá tour này?')" href="<?= BASE_URL ?>?mode=admin&action=deletetour&id=<?= $t['tour_id'] ?>" class="btn btn-sm btn-danger">Xoá</a>
-                            </td>
-                        </tr>
-                    <?php endforeach; ?>
-                <?php else : ?>
-                    <tr>
-                        <td colspan="7" class="text-center text-muted">Không có tour nào</td>
-                    </tr>
-                <?php endif; ?>
-            </tbody>
-
-        </table>
-    </div>
-
+            <?php endforeach; ?>
+        </tbody>
+    </table>
 </div>
+<?php
+if (!empty($_SESSION['flash_error'])) {
+    echo '<div class="alert alert-danger">' . $_SESSION['flash_error'] . '</div>';
+    unset($_SESSION['flash_error']);
+}
+?>
