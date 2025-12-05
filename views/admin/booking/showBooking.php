@@ -38,7 +38,7 @@
                             <p><?= htmlspecialchars($booking['customer_name'] ?? '') ?></p>
                         </div>
                         <div class="col-md-6">
-                            <label class="fw-bold">Số điện thoại:</label>
+                            <label class="fw-bold">Liên Hệ:</label>
                             <p><?= htmlspecialchars($booking['customer_contact'] ?? '') ?></p>
                         </div>
                     </div>
@@ -120,9 +120,9 @@
 
                     <div class="d-grid gap-2">
                         <a href="<?= BASE_URL ?>?mode=admin&action=suabooking&id=<?= $booking['booking_id'] ?>" class="btn btn-warning">Chỉnh sửa</a>
-                        <a href="<?= BASE_URL ?>?mode=admin&action=deletebooking&id=<?= $booking['booking_id'] ?>" 
+                        <!-- <a href="<?= BASE_URL ?>?mode=admin&action=deletebooking&id=<?= $booking['booking_id'] ?>" 
                            onclick="return confirm('Bạn có chắc muốn xóa booking này?')"
-                           class="btn btn-danger">Xóa</a>
+                           class="btn btn-danger">Xóa</a> -->
                         <a href="<?= BASE_URL ?>?mode=admin&action=viewsbooking" class="btn btn-secondary">Quay lại</a>
                     </div>
                 </div>

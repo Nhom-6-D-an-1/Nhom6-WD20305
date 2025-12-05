@@ -12,8 +12,7 @@ class BookingModel extends BaseModel
     // Lấy tất cả booking
     public function getAllBooking()
     {
-        $sql = "SELECT * FROM `booking`
-            ORDER BY created_at DESC";
+        $sql = "SELECT * FROM booking ORDER BY booking_id ASC;";
         $stmt = $this->conn->query($sql);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
@@ -28,8 +27,7 @@ class BookingModel extends BaseModel
                 customer_contact,
 
                 total_amount,
-                status,
-                created_at
+                status
             FROM `booking`
             WHERE booking_id = :id";
         $stmt = $this->conn->prepare($sql);
@@ -47,11 +45,10 @@ class BookingModel extends BaseModel
                 customer_name,
                 customer_contact,
                 total_amount,
-                status,
-                created_at
+                status
             FROM `booking`
             WHERE status = :status
-            ORDER BY created_at DESC";
+            ORDER BY booking_id DESC";
         $stmt = $this->conn->prepare($sql);
         $stmt->bindParam(':status', $status);
         $stmt->execute();
@@ -71,11 +68,16 @@ class BookingModel extends BaseModel
     // Lấy danh sách departure kèm tour để chọn khi tạo booking
     public function getDepartures()
     {
-        $sql = "SELECT d.departure_id, d.start_date, tv.version_name, t.tour_name, tv.price
-            FROM departure d
-            LEFT JOIN tour_version tv ON d.version_id = tv.version_id
-            LEFT JOIN tour t ON tv.tour_id = t.tour_id
-            ORDER BY d.start_date ASC";
+        $sql = "SELECT 
+                    d.departure_id, 
+                    d.start_date, 
+                    tv.version_name, 
+                    t.tour_name, 
+                    tv.price
+                FROM departure d
+                LEFT JOIN tour_version tv ON d.version_id = tv.version_id
+                LEFT JOIN tour t ON tv.tour_id = t.tour_id
+                ORDER BY d.start_date ASC";
         $stmt = $this->conn->query($sql);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
@@ -91,6 +93,7 @@ class BookingModel extends BaseModel
             total_amount = :total_amount,
             status = :status
             WHERE booking_id = :id";
+
         $data['id'] = $id;
         $stmt = $this->conn->prepare($sql);
         return $stmt->execute($data);
@@ -106,7 +109,6 @@ class BookingModel extends BaseModel
                 b.customer_contact,
                 b.total_amount,
                 b.status,
-                b.created_at,
                 d.start_date,
                 tv.version_name,
                 tv.price,
@@ -119,6 +121,7 @@ class BookingModel extends BaseModel
             LEFT JOIN tour t ON tv.tour_id = t.tour_id
             LEFT JOIN tour_category tc ON t.category_id = tc.category_id
             WHERE b.booking_id = :id";
+
         $stmt = $this->conn->prepare($sql);
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
         $stmt->execute();

@@ -89,8 +89,11 @@ class GuideController
     {
         $customers = new CustomersModel();
         $guide_id = $_SESSION['user']['user_id'];
-        $allCustomersData = $customers->getAllCustomers($guide_id);
+        $selectedDepartureId = $_GET['departure_id'] ?? 0;
+
+        $allCustomersData = $customers->getAllCustomers($guide_id, $selectedDepartureId);
         $assignedTours = $customers->getAssignedTours($guide_id);
+
         $title = "Danh sách khách";
         $view = 'guide/customers/customers';
         require_once PATH_VIEW_MAIN;
@@ -174,25 +177,12 @@ public function viewDiary()
         header("Location: " . BASE_URL . "?mode=guide&action=viewdiary");
         exit();
     }
-    // public function viewCheckin()
-    // {
-    //     $checkinModel = new CheckinModel();
-    //     $checkinData = $checkinModel->getAllCheckin();
-    //     $customers = new CustomersModel();
-    //     $guide_id = $_SESSION['user']['user_id'];
-    //     $assignedTours = $customers->getAssignedTours($guide_id);
-    //     $title = "Check-in, điểm danh";
-    //     $view = 'guide/checkin/checkin';
-    //     require_once PATH_VIEW_MAIN;
-    // }
     public function viewCheckin()
     {
-        // 1. Tái sử dụng CustomersModel để lấy danh sách tour được phân công (Phương án B)
         $customers = new CustomersModel();
         $guide_id = $_SESSION['user']['user_id'];
         $assignedTours = $customers->getAssignedTours($guide_id);
         
-        // 2. Khởi tạo CheckinModel
         $checkinModel = new CheckinModel(); 
         
         $selectedDepartureId = $_GET['departure_id'] ?? null;
@@ -272,7 +262,7 @@ public function viewDiary()
             $list_tour = $tour->getAllTour();
             $filter_tour_id = isset($_GET['departure_id']) && $_GET['departure_id'] != '' 
                                 ? $_GET['departure_id'] 
-                                : null; // CMT: đổi từ tour_id sang departure_id để đồng bộ với View
+                                : null;
             if ($filter_tour_id) {
                 $data_guest = $guest->getGuideByTour($filter_tour_id);
                 $data = $request->getAllRequest($filter_tour_id);
