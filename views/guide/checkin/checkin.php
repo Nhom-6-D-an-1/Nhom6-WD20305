@@ -42,7 +42,7 @@
                 </div>
             </form>
         <?php } else if($selectedDepartureId) { ?>
-            <span class="text-danger">Không có lịch trình/chặng để điểm danh.</span>
+            <span class="text-danger">Không có lịch trình để điểm danh.</span>
         <?php } ?>
     </div>
     
@@ -92,11 +92,11 @@
                     <?php } ?>
                 <?php } else if ($selectedDepartureId) { ?>
                     <tr>
-                        <td colspan="3" class="text-center py-4">Vui lòng chọn một Chặng để điểm danh.</td>
+                        <td colspan="3" class="text-center py-4 text-danger">Vui lòng chọn một chặng.</td>
                     </tr>
                 <?php } else { ?>
                     <tr>
-                        <td colspan="3" class="text-center py-4">Vui lòng chọn một Tour để xem danh sách khách và điểm danh.</td>
+                        <td colspan="3" class="text-center py-4 text-danger">Vui lòng chọn một tour.</td>
                     </tr>
                 <?php } ?>
             </tbody>

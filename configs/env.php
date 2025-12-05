@@ -1,6 +1,6 @@
 <?php
 
-define('BASE_URL',         'http://localhost/duan1/'); // Thêm đường dẫn tới thư mục dự án
+define('BASE_URL',         'http://localhost/Du_an_1//Nhom6-WD20305/'); // Thêm đường dẫn tới thư mục dự án
 
 define('PATH_ROOT',         __DIR__ . '/../');
 
@@ -15,6 +15,8 @@ define('PATH_ASSETS_UPLOADS',   PATH_ROOT . 'assets/uploads/');
 define('PATH_CONTROLLER',       PATH_ROOT . 'controllers/');
 
 define('PATH_MODEL',            PATH_ROOT . 'models/');
+// // Đổi múi giờ thành UTC+7
+date_default_timezone_set('Asia/Ho_Chi_Minh');
 
 define('DB_HOST',     'localhost');
 define('DB_PORT',     '3306');

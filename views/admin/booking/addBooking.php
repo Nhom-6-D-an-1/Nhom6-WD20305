@@ -23,6 +23,14 @@
         </div>
 
         <div class="mb-3">
+            <label class="form-label">Loại khách:</label>
+            <select name="customer_type" class="form-select">
+                <option value="le">Khách lẻ</option>
+                <option value="doan">Khách đoàn</option>
+            </select>
+        </div>
+
+        <div class="mb-3">
             <label class="form-label">SĐT:</label>
             <input type="text" name="customer_contact" class="form-control" placeholder="090xxxxxxx" required>
         </div>

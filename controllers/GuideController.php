@@ -89,8 +89,11 @@ class GuideController
     {
         $customers = new CustomersModel();
         $guide_id = $_SESSION['user']['user_id'];
-        $allCustomersData = $customers->getAllCustomers($guide_id);
+        $selectedDepartureId = $_GET['departure_id'] ?? 0;
+
+        $allCustomersData = $customers->getAllCustomers($guide_id, $selectedDepartureId);
         $assignedTours = $customers->getAssignedTours($guide_id);
+
         $title = "Danh sách khách";
         $view = 'guide/customers/customers';
         require_once PATH_VIEW_MAIN;
@@ -174,20 +177,8 @@ class GuideController
         header("Location: " . BASE_URL . "?mode=guide&action=viewdiary");
         exit();
     }
-    // public function viewCheckin()
-    // {
-    //     $checkinModel = new CheckinModel();
-    //     $checkinData = $checkinModel->getAllCheckin();
-    //     $customers = new CustomersModel();
-    //     $guide_id = $_SESSION['user']['user_id'];
-    //     $assignedTours = $customers->getAssignedTours($guide_id);
-    //     $title = "Check-in, điểm danh";
-    //     $view = 'guide/checkin/checkin';
-    //     require_once PATH_VIEW_MAIN;
-    // }
     public function viewCheckin()
     {
-        // 1. Tái sử dụng CustomersModel để lấy danh sách tour được phân công (Phương án B)
         $customers = new CustomersModel();
         $guide_id = $_SESSION['user']['user_id'];
         $assignedTours = $customers->getAssignedTours($guide_id);

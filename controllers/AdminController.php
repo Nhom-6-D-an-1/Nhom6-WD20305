@@ -106,6 +106,7 @@ class AdminController
                 ':departure_id' => !empty($_POST['departure_id']) ? (int)$_POST['departure_id'] : null,
                 ':customer_name' => trim($_POST['customer_name'] ?? ''),
                 ':customer_contact' => trim($_POST['customer_contact'] ?? ''),
+                ':customer_type' => $_POST['customer_type'] ?? 'le',
                 ':total_amount' => (float)($_POST['total_amount'] ?? 0),
                 ':status' => $_POST['status'] ?? 'pending',
                 ':id' => (int)$id
