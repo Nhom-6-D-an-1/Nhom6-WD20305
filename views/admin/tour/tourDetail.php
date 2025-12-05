@@ -66,7 +66,7 @@ $tab = $_GET['tab'] ?? 'info';
                             <td><?= $value['version_code'] ?> - <?= $value['season'] ?></td>
                             <td><?= number_format($value['price'], 0, '', '.') ?> VNĐ</td>
                             <td><?= $value['valid_from'] ?> - <?= $value['valid_to'] ?></td>
-                            <td><span class="badge bg-success"><?= $value['status'] ?></span></td>
+                            <td><span class="<?= $value['status'] == 'active' ? 'badge bg-success' : 'badge bg-danger' ?>"><?= $value['status'] == 'active' ? 'Đang hoạt động' : 'Tạm dừng' ?></span></td>
                             <td>
                                 <a href="<?= BASE_URL ?>?mode=admin&action=versionDetail&id=<?= $value['version_id'] ?>" class="btn btn-primary btn-sm">Chi tiết</a>
                             </td>

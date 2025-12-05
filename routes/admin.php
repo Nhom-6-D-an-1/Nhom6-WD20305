@@ -68,7 +68,8 @@ match ($action) {
     'addImage'      => (new TourController())->addImage(),
     'deleteImage'      => (new TourController())->deleteImage(),
 
-
+    // Departure
+    'viewDeparture'      => (new DepartureController())->viewDeparture(),
 
 
 

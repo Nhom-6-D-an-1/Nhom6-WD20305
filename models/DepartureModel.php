@@ -9,6 +9,14 @@ class DepartureModel
         $this->conn = connectDB();
     }
 
+    public function create($data)
+    {
+        $sql = "INSERT INTO departure (version_id, start_date, end_date, total_seats, available_seats, actual_price, pickup_location, pickup_time, note, status, guide_id)
+                VALUES (:version_id,:start_date,:end_date,:total_seats,:available_seats,:actual_price,:pickup_location,:pickup_time,:note,:status,:guide_id)";
+        $stmt = $this->conn->prepare($sql);
+        return $stmt->execute($data);
+    }
+
     public function getByTourId($tour_id)
     {
         $sql = "
