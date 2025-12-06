@@ -52,6 +52,17 @@ match ($action) {
     'viewGuideDetail'         => (new AdminController())->viewGuideDetail(),
     'viewEditGuide'         => (new AdminController())->viewEditGuide(),
 
+    // Booking FIT/GIT mới — QUAN TRỌNG
+    'createType'    => (new AdminController())->createType(),
+    'createFit'     => (new AdminController())->createFit(),
+    'createGit'     => (new AdminController())->createGit(),
+
+    'storeFit'      => (new AdminController())->storeFit(),
+    'storeGit'      => (new AdminController())->storeGit(),
+
+    'guestList'     => (new AdminController())->guestList(),
+
+
 
     // ===============   TOUR CONTROLLER   ===============
     'viewstour'   => (new TourController())->viewTour(),

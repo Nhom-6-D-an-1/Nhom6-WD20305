@@ -58,12 +58,23 @@ class BookingModel extends BaseModel
     // Thêm booking
     public function addBooking($data)
     {
-        $sql = "INSERT INTO `booking` 
-            (departure_id, customer_name, customer_contact,customer_type, total_amount, status, created_at)
-            VALUES (:departure_id, :customer_name, :customer_contact,:customer_type, :total_amount, :status, :created_at)";
+        $sql = "INSERT INTO booking 
+            (departure_id, customer_name, customer_contact, customer_type, total_amount, status, created_at)
+            VALUES (:departure_id, :customer_name, :customer_contact, :customer_type, :total_amount, :status, :created_at)";
+
         $stmt = $this->conn->prepare($sql);
-        return $stmt->execute($data);
+
+        return $stmt->execute([
+            ':departure_id'    => $data['departure_id'],
+            ':customer_name'   => $data['customer_name'],
+            ':customer_contact'=> $data['customer_contact'],
+            ':customer_type'   => $data['customer_type'],
+            ':total_amount'    => $data['total_amount'],
+            ':status'          => $data['status'],
+            ':created_at'      => date("Y-m-d H:i:s"),
+        ]);
     }
+
 
     // Lấy danh sách departure kèm tour để chọn khi tạo booking
     public function getDepartures()
@@ -99,34 +110,64 @@ class BookingModel extends BaseModel
         return $stmt->execute($data);
     }
 
+    public function getDeparturePrice($departure_id)
+    {
+        $sql = "SELECT price FROM tour_version tv
+                JOIN departure d ON d.version_id = tv.version_id
+                WHERE d.departure_id = :id";
+
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([':id' => $departure_id]);
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        return $row['price'] ?? 0;
+    }
+
+
     // Lấy chi tiết booking kèm thông tin tour
     public function getBookingWithDetails($id)
     {
+        // 1. Lấy thông tin booking + departure + version + tour + category
         $sql = "SELECT 
-                b.booking_id,
-                b.departure_id,
-                b.customer_name,
-                b.customer_contact,
-                b.total_amount,
-                b.status,
-                d.start_date,
-                tv.version_name,
-                tv.price,
-                t.tour_name,
-                t.description,
-                tc.category_name
-            FROM `booking` b
-            LEFT JOIN departure d ON b.departure_id = d.departure_id
-            LEFT JOIN tour_version tv ON d.version_id = tv.version_id
-            LEFT JOIN tour t ON tv.tour_id = t.tour_id
-            LEFT JOIN tour_category tc ON t.category_id = tc.category_id
-            WHERE b.booking_id = :id";
+                    b.booking_id,
+                    b.departure_id,
+                    b.customer_name,
+                    b.customer_contact,
+                    b.total_amount,
+                    b.status,
+                    b.customer_type,   -- 👈 THÊM DÒNG NÀY
+                    d.start_date,
+                    tv.version_name,
+                    tv.price,
+                    t.tour_name,
+                    t.description,
+                    tc.category_name
+                FROM booking b
+                LEFT JOIN departure d ON b.departure_id = d.departure_id
+                LEFT JOIN tour_version tv ON d.version_id = tv.version_id
+                LEFT JOIN tour t ON tv.tour_id = t.tour_id
+                LEFT JOIN tour_category tc ON t.category_id = tc.category_id
+                WHERE b.booking_id = :id";
 
         $stmt = $this->conn->prepare($sql);
-        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
-        $stmt->execute();
-        return $stmt->fetch(PDO::FETCH_ASSOC);
+        $stmt->execute([':id' => $id]);
+        $booking = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if (!$booking) {
+            return null;
+        }
+
+        // 2. Lấy danh sách khách thuộc booking
+        require_once PATH_MODEL . "GuestModel.php";
+        $guestModel = new GuestModel();
+        $guests = $guestModel->getGuestsByBooking($id);
+
+        // 3. Thêm danh sách khách vào mảng booking
+        $booking['guests'] = $guests;
+
+        return $booking;
     }
+
 
     // Xóa booking
     public function deleteBooking($id)

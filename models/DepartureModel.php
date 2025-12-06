@@ -9,6 +9,15 @@ class DepartureModel
         $this->conn = connectDB();
     }
 
+    public function getOne($id)
+    {
+        $sql = "SELECT * FROM departure WHERE departure_id = :id";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
     public function create($data)
     {
         $sql = "INSERT INTO departure (version_id, start_date, end_date, total_seats, available_seats, actual_price, pickup_location, pickup_time, note, status, guide_id)
