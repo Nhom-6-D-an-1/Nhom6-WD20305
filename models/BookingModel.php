@@ -19,7 +19,7 @@ class BookingModel extends BaseModel
 
     // Lấy booking theo ID
     public function getBookingById($id)
-    { 
+    {
         $sql = "SELECT 
                 booking_id,
                 departure_id,
@@ -135,5 +135,14 @@ class BookingModel extends BaseModel
         $stmt = $this->conn->prepare($sql);
         $stmt->bindParam(':id', $id, PDO::PARAM_INT);
         return $stmt->execute();
+    }
+
+    // Lấy tất cả booking của chuyến đi
+    public function getAllBookingInDeparture($departure_id)
+    {
+        $sql = "SELECT * FROM `booking` WHERE departure_id = :id ORDER BY created_at ASC";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute(['id' => $departure_id]);
+        return $stmt->fetchAll();
     }
 }

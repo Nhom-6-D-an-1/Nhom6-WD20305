@@ -20,7 +20,7 @@
         </div>
 
         <div class="mb-3">
-            <label class="form-label">Giá gốc</label>
+            <label class="form-label">Giá</label>
             <input type="number" class="form-control" name="price">
         </div>
 
