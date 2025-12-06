@@ -35,7 +35,7 @@
                         <td><?= $value['pickup_location'] ?> <br>
                             <small class="text-muted"><?= $value['pickup_time'] ?></small>
                         </td>
-                        <td><?= $value['guide_name'] ?? '<span class="text-muted">Chưa phân công</span>' ?></td>
+                        <td><?= $value['full_name'] ?? '<span class="text-muted">Chưa phân công</span>' ?></td>
                         <td>
                             <?php if ($value['status'] == 'open'): ?>
                                 <span class="badge bg-success">Mở bán</span>

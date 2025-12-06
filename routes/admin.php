@@ -73,6 +73,9 @@ match ($action) {
     'departureAdd'      => (new DepartureController())->departureAdd(),
     'departureEdit'      => (new DepartureController())->departureEdit(),
     'departureDetail'      => (new DepartureController())->departureDetail(),
+    'deleteStaff'      => (new DepartureController())->deleteStaff(),
+    'addService'      => (new DepartureController())->addService(),
+    'deleteService'      => (new DepartureController())->deleteService(),
 
 
 

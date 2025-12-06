@@ -59,9 +59,6 @@ $tab = $_GET['tab'] ?? 'info';
         <!-- BOOKINGS -->
         <?php if ($tab == 'bookings'): ?>
             <h5>Danh sách booking</h5>
-            <?php
-            // $bookings = (new BookingModel())->getByDeparture($data_departure['departure_id']); // bạn cần implement getByDeparture
-            ?>
             <table class="table table-bordered">
                 <thead>
                     <tr>
@@ -73,13 +70,23 @@ $tab = $_GET['tab'] ?? 'info';
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($bookings as $b): ?>
+                    <?php foreach ($data_booking as $key => $value): ?>
                         <tr>
-                            <td><?= $b['booking_id'] ?></td>
-                            <td><?= htmlspecialchars($b['customer_name']) ?> <br><small><?= $b['customer_contact'] ?></small></td>
-                            <td><?= $b['total_guests'] ?></td>
-                            <td><?= $b['status'] ?? '' ?></td>
-                            <td><?= number_format($b['total_amount'] ?? 0, 0, '', '.') ?> VNĐ</td>
+                            <td><?= $key + 1 ?></td>
+                            <td><?= htmlspecialchars($value['customer_name']) ?> <br><small><?= $value['customer_contact'] ?></small></td>
+                            <td><?= $value['total_guests'] ?></td>
+                            <td>
+                                <?php if ($value['status'] == 'completed'): ?>
+                                    <span class="badge bg-success">Đã thanh toán</span>
+                                <?php elseif ($value['status'] == 'deposit'): ?>
+                                    <span class="badge bg-danger">Đã hủy</span>
+                                <?php elseif ($value['status'] == 'pending'): ?>
+                                    <span class="badge bg-secondary">Chờ xác nhận</span>
+                                <?php else: ?>
+                                    <span class="badge bg-info">Đã cọc</span>
+                                <?php endif; ?>
+                            </td>
+                            <td><?= number_format($value['total_amount'] ?? 0, 0, '', '.') ?> VNĐ</td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>
@@ -93,6 +100,7 @@ $tab = $_GET['tab'] ?? 'info';
             <table class="table table-bordered mt-3">
                 <thead>
                     <tr>
+                        <th>#</th>
                         <th>Họ tên</th>
                         <th>Giới tính</th>
                         <th>Năm sinh</th>
@@ -103,20 +111,21 @@ $tab = $_GET['tab'] ?? 'info';
                 </thead>
 
                 <tbody>
-                    <?php foreach ($guest_list as $g): ?>
+                    <?php foreach ($data_guest as $key => $value): ?>
                         <tr>
-                            <td><?= $g['full_name'] ?></td>
-                            <td><?= $g['gender'] ?></td>
-                            <td><?= $g['birth_year'] ?></td>
-                            <td><?= $g['phone'] ?></td>
+                            <td><?= $key + 1 ?></td>
+                            <td><?= $value['full_name'] ?></td>
+                            <td><?= $value['gender'] ?></td>
+                            <td><?= $value['birth_year'] ?></td>
+                            <td><?= $value['phone'] ?></td>
                             <td>
-                                <?= $g['customer_name'] ?><br>
-                                <small><?= $g['customer_contact'] ?></small>
+                                <?= $value['customer_name'] ?><br>
+                                <small><?= $value['customer_contact'] ?></small>
                             </td>
                             <td>
-                                <?= $g['description'] ?: '—' ?><br>
-                                <?php if ($g['medical_condition']): ?>
-                                    <small class="text-danger"><?= $g['medical_condition'] ?></small>
+                                <?= $value['description'] ?: '—' ?><br>
+                                <?php if ($value['medical_condition']): ?>
+                                    <small class="text-danger"><?= $value['medical_condition'] ?></small>
                                 <?php endif; ?>
                             </td>
                         </tr>
@@ -141,14 +150,14 @@ $tab = $_GET['tab'] ?? 'info';
             <?php endif; ?>
 
             <div class="card p-3 mb-4">
-                <form method="POST" action="<?= BASE_URL ?>?mode=admin&action=addStaff">
-                    <input type="hidden" name="departure_id" value="<?= $data_departure['departure_id'] ?>">
+                <form method="POST" action="<?= BASE_URL ?>?mode=admin&action=departureDetail&id=<?= $_GET['id'] ?>">
+                    <input type="hidden" name="departure_id" value="<?= $_GET['id'] ?>">
                     <div class="row">
                         <div class="col-md-4">
                             <label>Hướng dẫn viên</label>
                             <select name="guide_id" class="form-select" required>
-                                <?php foreach ($s as $v): ?>
-                                    <option value="<?= $g['guide_id'] ?>"><?= htmlspecialchars($g['name']) ?> (<?= $g['languages'] ?>)</option>
+                                <?php foreach ($data_guide as $value): ?>
+                                    <option value="<?= $value['guide_id'] ?>"><?= $value['full_name'] ?> (<?= $value['languages'] ?>)</option>
                                 <?php endforeach; ?>
                             </select>
                         </div>
@@ -168,22 +177,24 @@ $tab = $_GET['tab'] ?? 'info';
             <table class="table table-bordered">
                 <thead>
                     <tr>
+                        <th>#</th>
                         <th>Họ tên</th>
                         <th>Vai trò</th>
                         <th>Ghi chú</th>
                         <th>Thời gian</th>
-                        <th></th>
+                        <th>Hành động</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($staff_assigns as $s): ?>
+                    <?php foreach ($data_assignment as $key => $value): ?>
                         <tr>
-                            <td><?= htmlspecialchars($s['name']) ?></td>
-                            <td><?= htmlspecialchars($s['role_in_tour']) ?></td>
-                            <td><?= htmlspecialchars($s['notes']) ?></td>
-                            <td><?= $s['assigned_at'] ?></td>
+                            <td><?= $key + 1 ?></td>
+                            <td><?= $value['full_name'] ?></td>
+                            <td><?= $value['role_in_tour'] ?></td>
+                            <td><?= $value['notes'] ?></td>
+                            <td><?= $value['assigned_at'] ?></td>
                             <td>
-                                <a href="<?= BASE_URL ?>?mode=admin&action=deleteStaff&id=<?= $s['assignment_id'] ?>&departure_id=<?= $data_departure['departure_id'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('Xóa?')">Xóa</a>
+                                <a href="<?= BASE_URL ?>?mode=admin&action=deleteStaff&id=<?= $value['assignment_id'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('Xóa?')">Xóa</a>
                             </td>
                         </tr>
                     <?php endforeach; ?>
@@ -213,8 +224,8 @@ $tab = $_GET['tab'] ?? 'info';
                         <div class="col-md-4">
                             <label>Dịch vụ</label>
                             <select name="service_id" class="form-select" required>
-                                <?php foreach ($services as $svc): ?>
-                                    <option value="<?= $svc['service_id'] ?>"><?= htmlspecialchars($svc['name']) ?></option>
+                                <?php foreach ($data_service as $value): ?>
+                                    <option value="<?= $value['service_id'] ?>"><?= $value['name'] ?></option>
                                 <?php endforeach; ?>
                             </select>
                         </div>
@@ -244,24 +255,26 @@ $tab = $_GET['tab'] ?? 'info';
             <table class="table table-bordered">
                 <thead>
                     <tr>
+                        <th>#</th>
                         <th>Dịch vụ</th>
                         <th>Nhà cung cấp</th>
                         <th>Giá</th>
                         <th>Số lượng</th>
                         <th>Ghi chú</th>
-                        <th></th>
+                        <th>Hành động</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($service_assigns as $sa): ?>
+                    <?php foreach ($data_service_assignment as $key => $value): ?>
                         <tr>
-                            <td><?= htmlspecialchars($sa['service_name']) ?></td>
-                            <td><?= htmlspecialchars($sa['supplier']) ?></td>
-                            <td><?= number_format($sa['price'], 0, '', '.') ?></td>
-                            <td><?= $sa['quantity'] ?></td>
-                            <td><?= htmlspecialchars($sa['notes']) ?></td>
+                            <td><?= $key + 1 ?></td>
+                            <td><?= $value['service_name'] ?></td>
+                            <td><?= $value['supplier'] ?></td>
+                            <td><?= number_format($value['price'], 0, '', '.') ?></td>
+                            <td><?= $value['quantity'] ?></td>
+                            <td><?= $value['notes'] ?></td>
                             <td>
-                                <a href="<?= BASE_URL ?>?mode=admin&action=deleteService&id=<?= $sa['sa_id'] ?>&departure_id=<?= $data_departure['departure_id'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('Xóa?')">Xóa</a>
+                                <a href="<?= BASE_URL ?>?mode=admin&action=deleteService&id=<?= $value['sa_id'] ?>" class="btn btn-danger btn-sm" onclick="return confirm('Xóa?')">Xóa</a>
                             </td>
                         </tr>
                     <?php endforeach; ?>
@@ -287,7 +300,6 @@ $tab = $_GET['tab'] ?? 'info';
 
             <!-- Bảng chi tiết booking -->
             <h6>Chi tiết booking</h6>
-            <?php $bookings = (new BookingModel())->getByDeparture($data_departure['departure_id']); ?>
             <table class="table table-bordered">
                 <thead>
                     <tr>
@@ -299,13 +311,22 @@ $tab = $_GET['tab'] ?? 'info';
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($bookings as $b): ?>
+                    <?php foreach ($data_booking as $key => $value): ?>
                         <tr>
-                            <td><?= $b['booking_id'] ?></td>
-                            <td><?= htmlspecialchars($b['customer_name']) ?></td>
-                            <td><?= $b['total_guests'] ?></td>
-                            <td><?= number_format($b['total_amount'] ?? 0, 0, '', '.') ?></td>
-                            <td><?= $b['status'] ?? '' ?></td>
+                            <td><?= $value['booking_id'] ?></td>
+                            <td><?= htmlspecialchars($value['customer_name']) ?></td>
+                            <td><?= $value['total_guests'] ?></td>
+                            <td><?= number_format($value['total_amount'] ?? 0, 0, '', '.') ?></td>
+                            <td><?php if ($value['status'] == 'completed'): ?>
+                                    <span class="badge bg-success">Đã thanh toán</span>
+                                <?php elseif ($value['status'] == 'deposit'): ?>
+                                    <span class="badge bg-danger">Đã hủy</span>
+                                <?php elseif ($value['status'] == 'pending'): ?>
+                                    <span class="badge bg-secondary">Chờ xác nhận</span>
+                                <?php else: ?>
+                                    <span class="badge bg-info">Đã cọc</span>
+                                <?php endif; ?>
+                            </td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>
