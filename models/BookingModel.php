@@ -25,7 +25,6 @@ class BookingModel extends BaseModel
                 departure_id,
                 customer_name,
                 customer_contact,
-
                 total_amount,
                 status
             FROM `booking`
@@ -59,21 +58,23 @@ class BookingModel extends BaseModel
     public function addBooking($data)
     {
         $sql = "INSERT INTO booking 
-            (departure_id, customer_name, customer_contact, customer_type, total_amount, status, created_at)
-            VALUES (:departure_id, :customer_name, :customer_contact, :customer_type, :total_amount, :status, :created_at)";
+        (departure_id, customer_name, customer_contact, customer_type, total_amount, status, created_at)
+        VALUES (:departure_id, :customer_name, :customer_contact, :customer_type, :total_amount, :status, :created_at)";
 
         $stmt = $this->conn->prepare($sql);
 
-        return $stmt->execute([
+        $stmt->execute([
             ':departure_id'    => $data['departure_id'],
             ':customer_name'   => $data['customer_name'],
-            ':customer_contact'=> $data['customer_contact'],
+            ':customer_contact' => $data['customer_contact'],
             ':customer_type'   => $data['customer_type'],
             ':total_amount'    => $data['total_amount'],
             ':status'          => $data['status'],
             ':created_at'      => date("Y-m-d H:i:s"),
         ]);
+        return $this->conn->lastInsertId();
     }
+
 
 
     // Lấy danh sách departure kèm tour để chọn khi tạo booking
@@ -135,7 +136,7 @@ class BookingModel extends BaseModel
                     b.customer_contact,
                     b.total_amount,
                     b.status,
-                    b.customer_type,   -- 👈 THÊM DÒNG NÀY
+                    b.customer_type, 
                     d.start_date,
                     tv.version_name,
                     tv.price,
