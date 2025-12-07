@@ -99,40 +99,40 @@ class GuideController
         require_once PATH_VIEW_MAIN;
     }
 
-public function viewDiary()
-{
-    $diary = new DiaryModel();
-    $customers = new CustomersModel();
-    $guide_id = $_SESSION['user']['user_id'];
-    $assignedTours = $customers->getAssignedTours($guide_id);
+    public function viewDiary()
+    {
+        $diary = new DiaryModel();
+        $customers = new CustomersModel();
+        $guide_id = $_SESSION['user']['user_id'];
+        $assignedTours = $customers->getAssignedTours($guide_id);
 
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $departure_id = $_POST['departure_id'] ?? null;
-        $note = trim($_POST['note']);
-        $date = $_POST['date'] ?? date('Y-m-d H:i:s');
-        $imagePath = null;
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $departure_id = $_POST['departure_id'] ?? null;
+            $note = trim($_POST['note']);
+            $date = $_POST['date'] ?? date('Y-m-d H:i:s');
+            $imagePath = null;
 
-        // Upload file
-        if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
-            $imagePath = uploadFile($_FILES['image'], 'diary/'); // helper trả về path relative
+            // Upload file
+            if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
+                $imagePath = uploadFile($_FILES['image'], 'diary/'); // helper trả về path relative
+            }
+
+            if ($departure_id && $note) {
+                $diary->addDiary($departure_id, $guide_id, $note, $imagePath, $date);
+                // Reload để tránh resubmit
+                header("Location: " . BASE_URL . "?mode=guide&action=viewdiary&departure_id=$departure_id");
+                exit();
+            }
         }
 
-        if ($departure_id && $note) {
-            $diary->addDiary($departure_id, $guide_id, $note, $imagePath, $date);
-            // Reload để tránh resubmit
-            header("Location: " . BASE_URL . "?mode=guide&action=viewdiary&departure_id=$departure_id");
-            exit();
-        }
+        // Lấy nhật ký theo tour đã chọn
+        $selectedTour = $_GET['departure_id'] ?? 0;
+        $diaryData = $diary->getAllDiaryByGuide($guide_id, $selectedTour);
+
+        $title = "Nhật ký tour";
+        $view = 'guide/diary/diary';
+        require_once PATH_VIEW_MAIN;
     }
-
-    // Lấy nhật ký theo tour đã chọn
-    $selectedTour = $_GET['departure_id'] ?? 0;
-    $diaryData = $diary->getAllDiaryByGuide($guide_id, $selectedTour);
-
-    $title = "Nhật ký tour";
-    $view = 'guide/diary/diary';
-    require_once PATH_VIEW_MAIN;
-}
 
 
     // DIARY - Thêm diary mới
@@ -170,11 +170,14 @@ public function viewDiary()
             exit();
         }
 
-        $diary_id = $_GET['id'];
+        // $diary_id = $_GET['id'];
+        $diary_id = (int)$_GET['id'];
+        $departure_id = isset($_GET['departure_id']) ? (int)$_GET['departure_id'] : 0;
+
         $diary = new DiaryModel();
         $diary->deleteDiary($diary_id);
 
-        header("Location: " . BASE_URL . "?mode=guide&action=viewdiary");
+        header("Location: " . BASE_URL . "?mode=guide&action=viewdiary&departure_id=" . $departure_id);
         exit();
     }
     public function viewCheckin()
@@ -182,13 +185,14 @@ public function viewDiary()
         $customers = new CustomersModel();
         $guide_id = $_SESSION['user']['user_id'];
         $assignedTours = $customers->getAssignedTours($guide_id);
-        
-        $checkinModel = new CheckinModel(); 
-        
+
+        // 2. Khởi tạo CheckinModel
+        $checkinModel = new CheckinModel();
+
         $selectedDepartureId = $_GET['departure_id'] ?? null;
         $selectedStage = $_GET['stage'] ?? null;
-        $statusDisplay = []; 
-        $stages = []; 
+        $statusDisplay = [];
+        $stages = [];
 
         // Xử lý CẬP NHẬT trạng thái check-in (Hành động POST)
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'update_checkin') {
@@ -199,10 +203,10 @@ public function viewDiary()
 
             if ($guest_id && $departure_id && $stage_description && $status) {
                 $checkinModel->updateCheckinStatus(
-                    $guest_id, 
-                    $departure_id, 
+                    $guest_id,
+                    $departure_id,
                     $guide_id, // recorded_by_user_id
-                    $stage_description, 
+                    $stage_description,
                     $status
                 );
                 // Sau khi cập nhật, reload lại trang
@@ -224,15 +228,15 @@ public function viewDiary()
             // Lấy danh sách khách và trạng thái điểm danh
             if ($selectedStage) {
                 $checkinData = $checkinModel->getGuestsAndCheckinStatus($selectedDepartureId, $selectedStage);
-                $statusDisplay = array_map(function($item) use ($checkinModel) {
+                $statusDisplay = array_map(function ($item) use ($checkinModel) {
                     $item['display_status'] = $checkinModel->getStatusDisplay($item['status']);
                     return $item;
                 }, $checkinData);
             }
         }
-        
+
         $title = "Check in, điểm danh";
-        $view = 'guide/checkin/checkin'; 
+        $view = 'guide/checkin/checkin';
         require_once PATH_VIEW_MAIN;
     }
     public function viewRequest()
@@ -242,7 +246,7 @@ public function viewDiary()
         $assignedTours = $customers->getAssignedTours($guide_id);
         $request = new GuestSpecialRequest();
         $guest = new Guest();
-        $tour = new Tour();
+        $tour = new TourModel();
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $guest_id = $_POST['guest_id'];
             $description = trim($_POST['description']);
@@ -260,9 +264,9 @@ public function viewDiary()
             exit();
         } else {
             $list_tour = $tour->getAllTour();
-            $filter_tour_id = isset($_GET['departure_id']) && $_GET['departure_id'] != '' 
-                                ? $_GET['departure_id'] 
-                                : null;
+            $filter_tour_id = isset($_GET['departure_id']) && $_GET['departure_id'] != ''
+                ? $_GET['departure_id']
+                : null; // CMT: đổi từ tour_id sang departure_id để đồng bộ với View
             if ($filter_tour_id) {
                 $data_guest = $guest->getGuideByTour($filter_tour_id);
                 $data = $request->getAllRequest($filter_tour_id);

@@ -1,13 +1,16 @@
 <?php
 
-class ScheduleModel{
+class ScheduleModel
+{
     private $conn;
-    public function __construct() {
+    public function __construct()
+    {
         $db = new BaseModel();
         $this->conn = $db->getConnection();
     }
     // Schedule
-    public function getAllScheduleByGuide($guide_id) {
+    public function getAllScheduleByGuide($guide_id)
+    {
         $sql = "SELECT 
                     departure.departure_id,
                     departure.start_date,
@@ -33,7 +36,8 @@ class ScheduleModel{
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
     // Info
-    public function getScheduleInfo($departure_id) {
+    public function getScheduleInfo($departure_id)
+    {
         $sql = "SELECT 
                     d.departure_id,
                     tv.version_name,
@@ -92,7 +96,8 @@ class ScheduleModel{
         return $itinerary; // Trả về mảng [day_number => [các hoạt động]]
     }
     // Customers
-    public function getScheduleCustomers($departure_id) {
+    public function getScheduleCustomers($departure_id)
+    {
         $sql = "SELECT 
                     guest.guest_id,
                     guest.full_name,
@@ -112,7 +117,8 @@ class ScheduleModel{
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
     // Check-in
-    public function getScheduleCheckin($departure_id) {
+    public function getScheduleCheckin($departure_id)
+    {
         $sql = "SELECT 
                     d.start_date,
                     d.max_guests,

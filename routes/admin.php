@@ -40,7 +40,6 @@ match ($action) {
     'xoadanhmuc'         => (new AdminController())->deleteDanhmuc(),
 
     // ========== ACCOUNT ==========
-    'viewsaccount'    => (new AdminController())->viewAccount(),
 
     'viewsaccount'         => (new AdminController())->viewAccount(),
     'addaccount'        => (new AdminController())->addAccount(),
@@ -55,18 +54,23 @@ match ($action) {
 
 
     // ===============   TOUR CONTROLLER   ===============
-    'viewstour'   => (new TourController())->index(),
-    'addtour'     => (new TourController())->create(),
-    'storetour'   => (new TourController())->store(),
-    'edittour'    => (new TourController())->edit(),
-    'updatetour'  => (new TourController())->update(),
-    'deletetour'  => (new TourController())->delete(),
-    // ===============   TOUR DETAIL + GUESTS   ===============
-    'viewtourdetail' => (new TourController())->detail(),
-    'guestlist'      => (new TourController())->guestList(),      // ?departure_id=11
-    // 'addguest'       => (new TourController())->addGuestForm(),   // ?departure_id=11
-    // 'storeguest'     => (new TourController())->storeGuest(),     // POST
+    'viewstour'   => (new TourController())->viewTour(),
+    'createTour'    => (new TourController())->createTour(),
+    'tourDetail'     => (new TourController())->tourDetail(),
+    'editTour'   => (new TourController())->editTour(),
+    'deleteTour'   => (new TourController())->deleteTour(),
+    'createVersion'  => (new TourController())->createVersion(),
+    'versionDetail'  => (new TourController())->versionDetail(),
+    'editVersion'  => (new TourController())->editVersion(),
+    'itineraryAdd' => (new TourController())->itineraryAdd(),
+    'itineraryEdit'      => (new TourController())->itineraryEdit(),
+    'deleteItinerary'      => (new TourController())->deleteItinerary(),
+    'addImage'      => (new TourController())->addImage(),
+    'deleteImage'      => (new TourController())->deleteImage(),
 
+    // Departure
+    'viewDeparture'      => (new DepartureController())->viewDeparture(),
+    'departureAdd'      => (new DepartureController())->departureAdd(),
 
 
     // Logout 

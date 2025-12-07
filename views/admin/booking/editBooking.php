@@ -34,6 +34,14 @@
         </div>
 
         <div class="mb-3">
+            <label class="form-label">Loại khách:</label>
+                <select name="customer_type" class="form-select">
+                    <option value="le" <?= ($booking['customer_type'] ?? '') === 'le' ? 'selected' : '' ?>>Khách lẻ</option>
+                    <option value="doan" <?= ($booking['customer_type'] ?? '') === 'doan' ? 'selected' : '' ?>>Khách đoàn</option>
+                </select>
+        </div>
+
+        <div class="mb-3">
             <label class="form-label">Tổng tiền:</label>
             <input type="number" step="0.01" name="total_amount" class="form-control" placeholder="Nhập tổng tiền" 
                    value="<?= htmlspecialchars((string)($booking['total_amount'] ?? 0)) ?>">

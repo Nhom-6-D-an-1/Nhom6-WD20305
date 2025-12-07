@@ -83,7 +83,12 @@
                                         </td>
                                         <td class="text-center py-4 diary-action">
                                             <?php if (isset($diary['log_id'])) { ?>
-                                                <a href="<?php echo BASE_URL; ?>?mode=guide&action=deleteDiary&id=<?php echo $diary['log_id']; ?>"
+                                                <!-- <a href="<?php echo BASE_URL; ?>?mode=guide&action=deleteDiary&id=<?php echo $diary['log_id']; ?>"
+                                                    class="btn btn-danger btn-sm"
+                                                    onclick="return confirm('Bạn có chắc muốn xoá nhật ký này?')">
+                                                    Xoá
+                                                </a> -->
+                                                <a href="<?php echo BASE_URL; ?>?mode=guide&action=deleteDiary&id=<?php echo $diary['log_id']; ?>&departure_id=<?php echo (int)($_GET['departure_id'] ?? 0); ?>"
                                                     class="btn btn-danger btn-sm"
                                                     onclick="return confirm('Bạn có chắc muốn xoá nhật ký này?')">
                                                     Xoá

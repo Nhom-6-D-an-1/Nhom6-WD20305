@@ -4,6 +4,6 @@
     </div>
 
     <div class="mt-0 mx-5">
-        <p class="mb-0">Xin chào </p>
+        <p class="mb-0">Xin chào <?= $userName ?> </p>
     </div>
 </header>
