@@ -170,11 +170,14 @@ class GuideController
             exit();
         }
 
-        $diary_id = $_GET['id'];
+        // $diary_id = $_GET['id'];
+        $diary_id = (int)$_GET['id'];
+        $departure_id = isset($_GET['departure_id']) ? (int)$_GET['departure_id'] : 0;
+
         $diary = new DiaryModel();
         $diary->deleteDiary($diary_id);
 
-        header("Location: " . BASE_URL . "?mode=guide&action=viewdiary");
+        header("Location: " . BASE_URL . "?mode=guide&action=viewdiary&departure_id=" . $departure_id);
         exit();
     }
     public function viewCheckin()
