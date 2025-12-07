@@ -22,6 +22,16 @@ class AuthController
         }
 
         $_SESSION['user'] = $user;
+        if ($user['role'] == 'guide') {
+            require_once './models/TourGuideModel.php';
+            $guideModel = new TourGuideModel();
+            $guideInfo = $guideModel->getByUserId($user['user_id']);
+
+            if ($guideInfo) {
+                $_SESSION['user']['guide_id'] = $guideInfo['guide_id'];
+            }
+        }
+
 
         if ($user['role'] == 'admin') {
             header("Location: " . BASE_URL . "?mode=admin");

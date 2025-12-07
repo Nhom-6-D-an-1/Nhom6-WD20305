@@ -26,11 +26,11 @@
                     Check-in, điểm danh
                 </a>
             </li>
-            <li class="nav-item mb-2">
+            <!-- <li class="nav-item mb-2">
                 <a class="nav-link <?= ($view ?? '') === 'guide/request/request' ? 'active' : '' ?>" href="<?= BASE_URL ?>?mode=guide&action=viewrequest">
                     Yêu cầu đặc biệt
                 </a>
-            </li>
+            </li> -->
             <!-- <li class="nav-item mb-2"> -->
             <!-- <a class="nav-link <?= ($view ?? '') === 'guide/report/report' ? 'active' : '' ?>" href="<?= BASE_URL ?>?mode=guide&action=viewreport"> -->
             <!-- Báo cáo sự cố -->

@@ -7,7 +7,7 @@ class GuideController
     {
         $schedule = new ScheduleModel();
         $customers = new CustomersModel();
-        $guide_id = $_SESSION['user']['user_id'];
+        $guide_id = $_SESSION['user']['guide_id'];
         $assignedTours = $customers->getAssignedTours($guide_id);
         $scheduleData = $schedule->getAllScheduleByGuide($guide_id);
         $title = "Lịch làm việc";
@@ -88,7 +88,7 @@ class GuideController
     public function viewCustomers()
     {
         $customers = new CustomersModel();
-        $guide_id = $_SESSION['user']['user_id'];
+        $guide_id = $_SESSION['user']['guide_id'];
         $selectedDepartureId = $_GET['departure_id'] ?? 0;
 
         $allCustomersData = $customers->getAllCustomers($guide_id, $selectedDepartureId);
@@ -103,7 +103,7 @@ class GuideController
     {
         $diary = new DiaryModel();
         $customers = new CustomersModel();
-        $guide_id = $_SESSION['user']['user_id'];
+        $guide_id = $_SESSION['user']['guide_id'];
         $assignedTours = $customers->getAssignedTours($guide_id);
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -140,7 +140,7 @@ class GuideController
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $departure_id = $_POST['departure_id'];
-            $guide_id = $_SESSION['user']['user_id'];
+            $guide_id = $_SESSION['user']['guide_id'];
             $date = $_POST['date'];
             $note = trim($_POST['note']);
             $imagePath = null;
@@ -158,7 +158,7 @@ class GuideController
         }
 
         $customers = new CustomersModel();
-        $assignedTours = $customers->getAssignedTours($_SESSION['user']['user_id']);
+        $assignedTours = $customers->getAssignedTours($_SESSION['user']['guide_id']);
     }
 
 
@@ -183,7 +183,7 @@ class GuideController
     public function viewCheckin()
     {
         $customers = new CustomersModel();
-        $guide_id = $_SESSION['user']['user_id'];
+        $guide_id = $_SESSION['user']['guide_id'];
         $assignedTours = $customers->getAssignedTours($guide_id);
 
         // 2. Khởi tạo CheckinModel
@@ -242,7 +242,7 @@ class GuideController
     public function viewRequest()
     {
         $customers = new CustomersModel();
-        $guide_id = $_SESSION['user']['user_id'];
+        $guide_id = $_SESSION['user']['guide_id'];
         $assignedTours = $customers->getAssignedTours($guide_id);
         $request = new GuestSpecialRequest();
         $guest = new Guest();
