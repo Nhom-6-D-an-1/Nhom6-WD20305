@@ -9,6 +9,16 @@ class DepartureModel
         $this->conn = connectDB();
     }
 
+    public function getOne($id)
+    {
+        $sql = "SELECT * FROM departure WHERE departure_id = :id";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+
     public function getAllDepartures()
     {
         $sql = "SELECT d.*,u.full_name, v.version_name, t.tour_name
