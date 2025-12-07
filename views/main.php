@@ -20,6 +20,7 @@
 
     <?php
     $mode = $_SESSION['user']['role'] ?? 'auth';
+    $userName = $_SESSION['user']['full_name'] ?? 'Người dùng';
     if ($mode == 'admin') {
         require_once PATH_VIEW . "admin/partialsAdmin/header.php";
         require_once PATH_VIEW . "admin/partialsAdmin/sidebar.php";
