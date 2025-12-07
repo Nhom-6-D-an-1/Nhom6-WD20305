@@ -87,7 +87,7 @@ class DepartureController
         $revenue = $departure->getRevenue($id);
         $booking = new BookingModel();
         $data_booking = $booking->getAllBookingInDeparture($id);
-        $guest = new Guest();
+        $guest = new GuestModel();
         $data_guest = $guest->getGuestsByDeparture($id);
         $data_assignment = $assignment->getByDeparture($id);
         $data_guide = $assignment->getAllGuides();

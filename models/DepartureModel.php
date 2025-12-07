@@ -112,14 +112,12 @@ class DepartureModel
     // Tổng tiền đã thêm từ booking
     public function getRevenue($departure_id)
     {
-        $sql = "
-        SELECT 
+        $sql = "SELECT 
             COUNT(*) AS booking_count,
             SUM(total_guests) AS total_guests,
-            SUM(paid_amount) AS revenue
+            SUM(total_amount) AS revenue
         FROM booking
-        WHERE departure_id = :id
-    ";
+        WHERE departure_id = :id AND status = 'completed'";
 
         $stmt = $this->conn->prepare($sql);
         $stmt->execute(['id' => $departure_id]);
