@@ -1,66 +1,83 @@
-<div class="p-4">
-          <h3>Báo cáo từ 01/11/2025 → 30/11/2025</h3>
+<h2 class="mb-4 fw-bold">Dashboard tổng hợp</h2>
 
-          <!-- Thống kê -->
-          <div class="row mb-4">
-            <div class="col-md-4">
-              <div class="card-stat">
-                <h5>Tổng doanh thu</h5>
-                <p>1.248.500.000 đ <span class="badge badge-up">▲ 28%</span></p>
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div class="card-stat">
-                <h5>Tổng booking</h5>
-                <p>178 booking <span class="badge badge-up">▲ 15%</span></p>
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div class="card-stat">
-                <h5>Tour hoạt động</h5>
-                <p>24 tour</p>
-              </div>
-            </div>
-          </div>
-
-          <!-- Bảng lợi nhuận -->
-          <h4>Lợi nhuận theo tour (11/2025)</h4>
-          <table class="table table-bordered table-hover">
-            <thead class="table-dark">
-              <tr>
-                <th>Tên tour</th>
-                <th>Doanh thu</th>
-                <th>Chi phí</th>
-                <th>Lợi nhuận</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Tour Sapa 3N2Đ</td>
-                <td>250.000.000đ</td>
-                <td>150.000.000đ</td>
-                <td>100.000.000đ</td>
-              </tr>
-              <tr>
-                <td>Tour Phú Quốc 3N2Đ</td>
-                <td>300.000.000đ</td>
-                <td>180.000.000đ</td>
-                <td>120.000.000đ</td>
-              </tr>
-              <tr>
-                <td>Tour Đà Lạt 2N1Đ</td>
-                <td>180.000.000đ</td>
-                <td>110.000.000đ</td>
-                <td>70.000.000đ</td>
-              </tr>
-              <tr>
-                <td>Tour Hà Giang 4N3Đ</td>
-                <td>140.000.000đ</td>
-                <td>95.000.000đ</td>
-                <td>45.000.000đ</td>
-              </tr>
-            </tbody>
-          </table>
-
-          <p class="mt-3"><strong>Tỷ lệ chuyển đổi booking:</strong> 75% (178/238 liên hệ)</p>
+<!-- THỐNG KÊ TỔNG QUAN -->
+<div class="row g-3 mb-4">
+    <div class="col-md-3">
+        <div class="card shadow-sm p-3">
+            <h6 class="text-muted">Tổng doanh thu</h6>
+            <h4 class="fw-bold text-success"><?= number_format($revenue) ?> đ</h4>
         </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card shadow-sm p-3">
+            <h6 class="text-muted">Tổng chi phí</h6>
+            <h4 class="fw-bold text-danger"><?= number_format($expense) ?> đ</h4>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card shadow-sm p-3">
+            <h6 class="text-muted">Lợi nhuận</h6>
+            <?php 
+                $profitColor = $profit >= 0 ? "text-primary" : "text-danger fw-bold";
+            ?>
+            <h4 class="fw-bold <?= $profitColor ?>"><?= number_format($profit) ?> đ</h4>
+        </div>
+    </div>
+
+    <div class="col-md-3">
+        <div class="card shadow-sm p-3">
+            <h6 class="text-muted">Số tour tổ chức</h6>
+            <h4 class="fw-bold"><?= $tours ?></h4>
+        </div>
+    </div>
+</div>
+
+
+<!-- LỢI NHUẬN THEO TOUR -->
+<h4 class="fw-bold mb-3">Lợi nhuận theo tour</h4>
+
+<table class="table table-bordered table-striped align-middle">
+    <thead class="table-dark">
+        <tr>
+            <th style="width: 30%">Tour</th>
+            <th style="width: 20%; text-align:right;">Doanh thu</th>
+            <th style="width: 20%; text-align:right;">Chi phí</th>
+            <th style="width: 20%; text-align:right;">Lợi nhuận</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        <?php if (empty($tourProfit)): ?>
+            <tr>
+                <td colspan="4" class="text-center text-muted py-3">
+                    Không có dữ liệu trong khoảng thời gian đã chọn.
+                </td>
+            </tr>
+        <?php else: ?>
+
+            <?php foreach ($tourProfit as $row): 
+                $profitColor = $row["profit"] >= 0 ? "text-success" : "text-danger fw-bold";
+            ?>
+            <tr>
+                <td><?= $row["tour_name"] ?></td>
+
+                <td style="text-align:right;">
+                    <?= number_format($row["revenue"]) ?> đ
+                </td>
+
+                <td style="text-align:right;">
+                    <?= number_format($row["cost"]) ?> đ
+                </td>
+
+                <td style="text-align:right;" class="<?= $profitColor ?>">
+                    <?= number_format($row["profit"]) ?> đ
+                </td>
+            </tr>
+            <?php endforeach; ?>
+
+        <?php endif; ?>
+
+    </tbody>
+</table>

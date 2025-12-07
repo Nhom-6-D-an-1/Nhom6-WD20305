@@ -7,6 +7,8 @@
     <table class="table table-bordered table-hover align-middle">
         <thead class="table-light">
             <tr>
+                <th>#</th>
+                <th>Tên chuyến đi</th>
                 <th>Ngày đi</th>
                 <th>Ngày về</th>
                 <th>Số chỗ</th>
@@ -21,43 +23,39 @@
 
         <tbody>
             <?php if (!empty($data_departure)): ?>
-                <?php foreach ($data_departure as $dep): ?>
+                <?php foreach ($data_departure as $key => $value): ?>
                     <tr>
-                        <td><?= $dep['start_date'] ?></td>
-                        <td><?= $dep['end_date'] ?></td>
-
-                        <td><?= $dep['total_seats'] ?></td>
-                        <td><?= $dep['available_seats'] ?></td>
-
-                        <td><?= number_format($dep['actual_price'], 0, '', '.') ?> VNĐ</td>
-
-                        <td><?= $dep['pickup_location'] ?> <br>
-                            <small class="text-muted"><?= $dep['pickup_time'] ?></small>
+                        <td><?= $key + 1 ?></td>
+                        <td><?= $value['tour_name'] ?></td>
+                        <td><?= $value['start_date'] ?></td>
+                        <td><?= $value['end_date'] ?></td>
+                        <td><?= $value['max_guests'] ?></td>
+                        <td><?= (int)$value['max_guests'] -  (int)$value['current_guests'] ?></td>
+                        <td><?= number_format($value['actual_price'], 0, '', '.') ?> VNĐ</td>
+                        <td><?= $value['pickup_location'] ?> <br>
+                            <small class="text-muted"><?= $value['pickup_time'] ?></small>
                         </td>
-
-                        <td><?= $dep['guide_name'] ?? '<span class="text-muted">Chưa phân công</span>' ?></td>
-
+                        <td><?= $value['full_name'] ?? '<span class="text-muted">Chưa phân công</span>' ?></td>
                         <td>
-                            <?php if ($dep['status'] == 'open'): ?>
+                            <?php if ($value['status'] == 'open'): ?>
                                 <span class="badge bg-success">Mở bán</span>
-                            <?php elseif ($dep['status'] == 'full'): ?>
+                            <?php elseif ($value['status'] == 'full'): ?>
                                 <span class="badge bg-danger">Full</span>
-                            <?php elseif ($dep['status'] == 'closed'): ?>
+                            <?php elseif ($value['status'] == 'closed'): ?>
                                 <span class="badge bg-secondary">Đóng</span>
                             <?php else: ?>
                                 <span class="badge bg-info">Hoàn thành</span>
                             <?php endif; ?>
                         </td>
-
                         <td>
-                            <a href="<?= BASE_URL ?>?mode=admin&action=departureEdit&id=<?= $dep['departure_id'] ?>"
+                            <a href="<?= BASE_URL ?>?mode=admin&action=departureEdit&id=<?= $value['departure_id'] ?>"
                                 class="btn btn-warning btn-sm">
                                 Sửa
                             </a>
 
-                            <a href="<?= BASE_URL ?>?mode=admin&action=assignGuide&id=<?= $dep['departure_id'] ?>"
+                            <a href="<?= BASE_URL ?>?mode=admin&action=departureDetail&id=<?= $value['departure_id'] ?>"
                                 class="btn btn-primary btn-sm">
-                                HDV
+                                Chi tiết
                             </a>
                         </td>
                     </tr>
