@@ -21,8 +21,8 @@ class ReportModel extends BaseModel {
                 FROM tour_finance 
                 WHERE type = 'expense'";
         return $this->queryOne($sql)['expense'] ?? 0;
+        // expense là phần chi phí trong tour finance
     }
-
 
 
     /* ===============================

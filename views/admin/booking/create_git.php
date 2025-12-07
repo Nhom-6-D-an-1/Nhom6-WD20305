@@ -27,7 +27,9 @@
             <label>SĐT</label>
             <input name="phone" class="form-control" required>
         </div>
-
+        <div class="col-md-6 mb-3"><label>CCCD</label>
+            <input name="cccd" class="form-control">
+        </div>
         <div class="mb-3">
             <label>Yêu cầu đặc biệt</label>
             <textarea name="special_request" class="form-control"></textarea>
