@@ -88,6 +88,23 @@
                             </div>
                         </div>
 
+                    <div class="cert-row row g-2 align-items-end mt-3">
+                        <div class="col-md-4">
+                            <label class="small text-muted">Ảnh chứng chỉ</label>
+                            <input type="file" class="form-control form-control-sm" name="certificate_image">
+                        </div>
+
+                        <div class="col-md-4">
+                            <?php if (!empty($data_Guide['certificate_image'])): ?>
+                                <img src="<?= BASE_ASSETS_UPLOADS . $data_Guide['certificate_image'] ?>" 
+                                    class="img-thumbnail mt-2"
+                                    style="max-width: 150px; height: auto;">
+                                <input type="hidden" name="old_certificate_image" value="<?= $data_Guide['certificate_image'] ?>">
+                            <?php endif; ?>
+                        </div>
+                    </div>
+
+
                         <div class="mt-4 text-end">
                             <a href="<?= BASE_URL ?>?mode=admin&action=viewGuideDetail&id=<?= $data_Guide['user_id']  ?>" class="btn btn-light me-2">Hủy bỏ</a>
                             <button type="submit" class="btn btn-primary px-4"><i class="fas fa-save"></i> Lưu thay đổi</button>

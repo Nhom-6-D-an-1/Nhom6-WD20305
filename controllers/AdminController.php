@@ -64,7 +64,6 @@ class AdminController
     }
 
 
-
     // Xử lý thêm booking
     public function addBooking()
     {
@@ -798,37 +797,72 @@ class AdminController
     public function viewEditGuide()
     {
         $tourGuide = new TourGuideModel();
+        $userModel = new AccountModel(); // dùng để update bảng users
+
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $id = $_GET['id'] ?? '';
-            $data_Guide = $tourGuide->getOneGuide($id);
-            $avatar = $data_Guide['avatar'];
-            if ($_FILES['avatar'] && $_FILES['avatar']['error'] == UPLOAD_ERR_OK) {
-                $avatar = uploadFile($_FILES['avatar'], "guide/");
-            }
-            $full_name = $_POST['full_name'];
-            $birthday = $_POST['birthday'];
-            $phone = $_POST['phone'];
-            $email = $_POST['email'];
-            $_POST['avatar'] = $avatar;
-            $gender = $_POST['gender'] ?? $data_Guide['gender'];
-            $languages = $_POST['languages'] ?? $data_Guide['languages'];
-            $rating = $_POST['rating'];
-            $experience_years = $_POST['experience_years'];
-            $certificates = $_POST['certificates'];
-            $health = $_POST['health'];
-            $notes = $_POST['notes'] ?? $data_Guide['notes'];
-            $tourGuide->updateGuide($full_name, $birthday, $phone, $email, $avatar, $gender, $languages, $rating, $experience_years, $certificates, $health, $notes, $id);
-            header("Location: " . BASE_URL . "?mode=admin&action=viewGuideDetail&id=" . $data_Guide['user_id']);
-            exit();
-        } else {
 
             $id = $_GET['id'] ?? '';
             $data_Guide = $tourGuide->getOneGuide($id);
-            $title = "Chỉnh sửa thông tin nhân sự";
-            $view = 'admin/resources/editGuide';
-            require_once PATH_VIEW_MAIN;
+
+            // ===== XỬ LÝ AVATAR =====
+            $avatar = $data_Guide['avatar'];
+            if (!empty($_FILES['avatar']['name']) && $_FILES['avatar']['error'] == UPLOAD_ERR_OK) {
+                $avatar = uploadFile($_FILES['avatar'], "guide/");
+            }
+
+            // ===== XỬ LÝ ẢNH CHỨNG CHỈ =====
+            $certificate_image = $data_Guide['certificate_image'] ?? null;
+            if (!empty($_FILES['certificate_image']['name']) && $_FILES['certificate_image']['error'] == UPLOAD_ERR_OK) {
+                $certificate_image = uploadFile($_FILES['certificate_image'], "guide/certificates/");
+            }
+
+            // ===== LẤY DỮ LIỆU FORM =====
+            $full_name        = $_POST['full_name'];  // thuộc bảng users
+            $birthday         = $_POST['birthday'];
+            $phone            = $_POST['phone'];
+            $email            = $_POST['email'];
+            $gender           = $_POST['gender'];
+            $languages        = $_POST['languages'];
+            $rating           = $_POST['rating'];
+            $experience_years = $_POST['experience_years'];
+            $certificates     = $_POST['certificates'];
+            $health           = $_POST['health'];
+            $notes            = $_POST['notes'] ?? $data_Guide['notes'];
+
+            // ===== 1) UPDATE TÊN USER TRONG BẢNG users =====
+            $userModel->updateUserName($id, $full_name);
+
+            // ===== 2) UPDATE THÔNG TIN HƯỚNG DẪN VIÊN TRONG BẢNG tour_guide =====
+            $tourGuide->updateGuideFull([
+                "birthday"          => $birthday,
+                "phone"             => $phone,
+                "email"             => $email,
+                "avatar"            => $avatar,
+                "gender"            => $gender,
+                "languages"         => $languages,
+                "rating"            => $rating,
+                "experience_years"  => $experience_years,
+                "certificates"      => $certificates,
+                "certificate_image" => $certificate_image,
+                "health"            => $health,
+                "notes"             => $notes,
+                "user_id"           => $id
+            ]);
+
+            header("Location: " . BASE_URL . "?mode=admin&action=viewGuideDetail&id=" . $id);
+            exit();
         }
+
+        // ===== HIỂN THỊ FORM =====
+        $id = $_GET['id'] ?? '';
+        $data_Guide = $tourGuide->getOneGuide($id);
+
+        $title = "Chỉnh sửa thông tin nhân sự";
+        $view = 'admin/resources/editGuide';
+        require_once PATH_VIEW_MAIN;
     }
+
+
 
     public function viewDashboard()
     {
