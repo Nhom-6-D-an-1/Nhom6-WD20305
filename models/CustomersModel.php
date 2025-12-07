@@ -1,13 +1,16 @@
 <?php
 
-class CustomersModel{
+class CustomersModel
+{
     private $conn;
-    public function __construct() {
+    public function __construct()
+    {
         $db = new BaseModel();
         $this->conn = $db->getConnection();
     }
-public function getAllCustomers($guide_id, $departure_id = 0) {
-    $sql = "SELECT 
+    public function getAllCustomers($guide_id, $departure_id = 0)
+    {
+        $sql = "SELECT 
                 g.guest_id,
                 g.full_name AS guest_name,
                 b.customer_contact,
@@ -25,26 +28,27 @@ public function getAllCustomers($guide_id, $departure_id = 0) {
                 GROUP BY booking_id
             ) gc ON gc.booking_id = b.booking_id
             LEFT JOIN guest_special_request gsr ON gsr.guest_id = g.guest_id
-            WHERE a.user_id = :guide_id";
+            WHERE a.guide_id = :guide_id";
 
-    if ($departure_id > 0) {
-        $sql .= " AND d.departure_id = :departure_id";
-    }
+        if ($departure_id > 0) {
+            $sql .= " AND d.departure_id = :departure_id";
+        }
 
-    $sql .= " GROUP BY g.guest_id, g.full_name, b.customer_contact, b.customer_name
+        $sql .= " GROUP BY g.guest_id, g.full_name, b.customer_contact, b.customer_name
               ORDER BY b.customer_name ASC, g.full_name ASC";
 
-    $stmt = $this->conn->prepare($sql);
-    $stmt->bindParam(':guide_id', $guide_id, PDO::PARAM_INT);
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindParam(':guide_id', $guide_id, PDO::PARAM_INT);
 
-    if ($departure_id > 0) {
-        $stmt->bindParam(':departure_id', $departure_id, PDO::PARAM_INT);
+        if ($departure_id > 0) {
+            $stmt->bindParam(':departure_id', $departure_id, PDO::PARAM_INT);
+        }
+
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-
-    $stmt->execute();
-    return $stmt->fetchAll(PDO::FETCH_ASSOC);
-}
-    public function getAssignedTours($guide_id) {
+    public function getAssignedTours($guide_id)
+    {
         $sql = "SELECT DISTINCT
                 d.departure_id,
                 t.tour_name,
@@ -54,7 +58,7 @@ public function getAllCustomers($guide_id, $departure_id = 0) {
             JOIN departure d ON a.departure_id = d.departure_id
             JOIN tour_version tv ON d.version_id = tv.version_id
             JOIN tour t ON tv.tour_id = t.tour_id
-            WHERE a.user_id = :guide_id
+            WHERE a.guide_id = :guide_id
             ORDER BY d.start_date ASC
         ";
         $stmt = $this->conn->prepare($sql);
