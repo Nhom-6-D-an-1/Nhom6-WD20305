@@ -18,6 +18,7 @@
                         <th class="py-3">STT</th>
                         <th class="ps-4 py-3">Tên khách</th>
                         <th class="py-3">Liên hệ</th>
+                        <th class="py-3">Thuộc nhóm của</th>
                         <th class="text-center px-5">Giới tính</th>
                         <th class="py-3">Yêu cầu đặc biệt</th>
                     </tr>
@@ -28,6 +29,7 @@
                             <td class="ps-4"><?= $key + 1 ?></td>
                             <td class="fw-semibold"><?= $customer['full_name'] ?></td>
                             <td><?= $customer['phone'] ?? 'Chưa có bên DB' ?></td>
+                            <td><?= $customer['customer_name'] ?? 'Chưa có bên DB' ?></td>
                             <td class="text-center"><?= $customer['gender'] ?? 'Chưa có bên DB' ?></td>
                             <td><?= $customer['special_request'] ?? 'Chưa có bên DB' ?></td>
                         </tr>

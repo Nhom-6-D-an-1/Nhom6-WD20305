@@ -103,6 +103,7 @@ class ScheduleModel
                     guest.full_name,
                     guest.phone,
                     guest.gender,
+                    booking.customer_name,
                     guest_special_request.description AS special_request
                 FROM guest
                 JOIN booking ON guest.booking_id = booking.booking_id
