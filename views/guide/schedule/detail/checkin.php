@@ -22,7 +22,7 @@
                 </div>
                 <div class="progress mb-4" style="height: 12px;">
                     <?php $progressBar = $checkinData['checked_in'] / $checkinData['max_guests'] ?>
-                    <div class="thanh-progress progress-bar bg-success" style="width: <?= $progressBar ?>%;"></div>
+                    <div class="thanh-progress progress-bar bg-success" style="width: <?= $progressBar * 100 ?>%;"></div>
                 </div>
                 <a href="<?= BASE_URL ?>?mode=guide&action=viewcheckin" class="btn btn-primary px-5 btn-lg">Bắt đầu check-in ngay</a>
             </div>

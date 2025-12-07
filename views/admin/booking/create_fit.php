@@ -33,15 +33,15 @@
             <textarea name="special_request" class="form-control"></textarea>
         </div>
 
-        <!-- ⭐ THÊM TỔNG TIỀN ⭐ -->
+
         <div class="mb-3">
             <label>Tổng tiền</label>
-            <input type="number" class="form-control" 
-                   name="total_amount" 
-                   placeholder="Nhập tổng tiền hoặc để trống để tự lấy giá tour">
+            <input type="number" class="form-control"
+                name="total_amount"
+                placeholder="Nhập tổng tiền hoặc để trống để tự lấy giá tour">
         </div>
 
-        <!-- ⭐ THÊM TRẠNG THÁI ⭐ -->
+
         <div class="mb-3">
             <label>Trạng thái</label>
             <select name="status" class="form-select">
