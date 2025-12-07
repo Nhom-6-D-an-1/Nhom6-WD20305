@@ -28,10 +28,10 @@
                         <tr>
                             <td class="ps-4"><?= $key + 1 ?></td>
                             <td class="fw-semibold"><?= $customer['full_name'] ?></td>
-                            <td><?= $customer['phone'] ?? 'Chưa có bên DB' ?></td>
-                            <td><?= $customer['customer_name'] ?? 'Chưa có bên DB' ?></td>
-                            <td class="text-center"><?= $customer['gender'] ?? 'Chưa có bên DB' ?></td>
-                            <td><?= $customer['special_request'] ?? 'Chưa có bên DB' ?></td>
+                            <td><?= $customer['phone'] ?? '---' ?></td>
+                            <td><?= $customer['customer_name'] ?? '---' ?></td>
+                            <td class="text-center"><?= $customer['gender'] ?? '---' ?></td>
+                            <td><?= $customer['special_request'] ?? '---' ?></td>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>
