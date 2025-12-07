@@ -3,123 +3,166 @@
 <head>
     <meta charset="UTF-8">
     <title>Đăng nhập hệ thống</title>
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 
     <style>
         body {
             height: 100vh;
             margin: 0;
+            display: flex;
             font-family: 'Inter', sans-serif;
         }
 
+        /* ===== LEFT PANEL ===== */
         .left-panel {
-            background: linear-gradient(180deg, #1b245a 0%, #382a7d 100%);
+            width: 50%;
+            overflow: hidden;
+        }
+
+        .left-panel img {
+            width: 95%;
+            height: 100vh;
+            object-fit: cover;
+            object-position: top center; /* Không bị lẹm đầu/chân */
+        }
+
+        /* ===== RIGHT PANEL ===== */
+        .right-panel {
+            width: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
             padding: 40px;
-            color: white;
         }
 
-        .left-panel img {
-            max-width: 80%;
-        }
-
+        /* Login box */
         .login-box {
-            max-width: 400px;
-            margin: auto;
-            padding: 40px;
-        }
-
-        .form-control {
-            height: 50px;
-            border-radius: 8px;
-        }
-
-        .btn-login {
-            height: 50px;
-            border-radius: 8px;
-            background-color: #1b245a;
-            color: white;
-            font-weight: 500;
             width: 100%;
+            max-width: 380px;
         }
 
-        .btn-login:hover {
-            background-color: #0f163f;
+        .login-title {
+            font-weight: 700;
+            font-size: 22px;
         }
 
-        .input-icon {
+        .login-subtitle {
+            color: gray;
+            font-size: 14px;
+            margin-bottom: 25px;
+        }
+
+        /* Input wrapper */
+        .input-with-icon {
+            position: relative;
+        }
+
+        .input-with-icon .input-icon {
             position: absolute;
             left: 12px;
             top: 50%;
             transform: translateY(-50%);
-            opacity: 0.6;
+            color: #8a8a8a;
         }
 
         .input-with-icon input {
-            padding-left: 40px;
+            height: 48px;
+            padding-left: 42px;
+            border-radius: 10px;
+            background: #eef3ff;
+            border: 1px solid #d6d6d6;
+            font-size: 15px;
         }
 
+        .input-with-icon input:focus {
+            border-color: #1b245a;
+            background: #fff;
+        }
+
+        /* Button */
+        .btn-login {
+            width: 100%;
+            height: 50px;
+            border-radius: 10px;
+            background: #1b245a;
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+            border: none;
+            transition: 0.3s;
+        }
+
+        .btn-login:hover {
+            background: #0f163f;
+        }
+
+        /* Error message */
         .error-msg {
             color: red;
+            font-size: 14px;
             margin-bottom: 10px;
         }
 
-        .img-fluid {
-            height: 100%;
+        /* Responsive */
+        @media (max-width: 768px) {
+            .left-panel {
+                display: none;
+            }
+            .right-panel {
+                width: 100%;
+            }
+        }
+
+        .text-center .login-title {
+            font-size: 28px;
         }
     </style>
 </head>
 
 <body>
 
-<div class="row h-100 g-0">
+<div class="left-panel">
+    <img src="<?= BASE_URL ?>assets/images/anh2.png" alt="Login Background">
+</div>
 
-    <!-- LEFT SIDE -->
-    <div class="col-12 col-md-6 left-panel">
-        <img class="img-fluid" src="<?php BASE_URL ?>assets/images/anh.png" alt="Handshake Image">
-    </div>
+<div class="right-panel">
 
-    <!-- RIGHT SIDE -->
-    <div class="col-12 col-md-6 d-flex align-items-center">
+    <div class="login-box">
 
-        <div class="login-box">
+        <h4 class="text-center login-title">HỆ THỐNG QUẢN LÝ TOUR</h4>
+        <p class="text-center login-subtitle">Đăng nhập để tiếp tục</p>
 
-            <h4 class="fw-bold text-center mb-1">HỆ THỐNG QUẢN LÝ TOUR</h4>
-            <p class="text-center text-muted mb-4">Đăng nhập để tiếp tục</p>
+        <?php if (!empty($_GET['error'])): ?>
+            <p class="error-msg text-center"><?= $_GET['error']; ?></p>
+        <?php endif; ?>
 
-            <?php if (!empty($_GET['error'])): ?>
-                <p class="error-msg"><?= $_GET['error']; ?></p>
-            <?php endif; ?>
+        <form method="POST" action="?mode=auth&action=login">
 
-            <form method="POST" action="?mode=auth&action=login">
+            <!-- USERNAME -->
+            <div class="mb-3 input-with-icon">
+                <i class="bi bi-person input-icon"></i>
+                <input type="text" name="username" class="form-control" placeholder="Tên đăng nhập" required>
+            </div>
 
-                <div class="mb-3 position-relative input-with-icon">
-                    <i class="input-icon bi bi-envelope"></i>
-                    <input type="text" name="username" class="form-control" placeholder="example@gmail.com" required>
-                </div>
+            <!-- PASSWORD -->
+            <div class="mb-3 input-with-icon">
+                <i class="bi bi-lock input-icon"></i>
+                <input type="password" name="password" class="form-control" placeholder="Mật khẩu" required>
+            </div>
 
-                <div class="mb-3 position-relative input-with-icon">
-                    <i class="input-icon bi bi-lock"></i>
-                    <input type="password" name="password" class="form-control" placeholder="••••••••" required>
-                </div>
+            <div class="text-end mb-3">
+                <a href="#" class="text-muted small">Quên mật khẩu?</a>
+            </div>
 
-                <div class="text-end mb-3">
-                    <a href="#" class="text-muted small">Quên mật khẩu?</a>
-                </div>
+            <button type="submit" class="btn btn-login">Đăng nhập</button>
 
-                <button type="submit" class="btn btn-login">Đăng nhập</button>
-
-            </form>
-
-        </div>
+        </form>
 
     </div>
 
 </div>
 
-<!-- icons -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 </body>
 </html>

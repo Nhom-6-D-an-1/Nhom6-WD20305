@@ -44,4 +44,27 @@ class TourGuideModel
             ':id' => $id,
         ]);
     }
+
+    public function updateGuideFull($data)
+    {
+        $sql = "UPDATE tour_guide SET 
+                    birthday = :birthday,
+                    phone = :phone,
+                    email = :email,
+                    avatar = :avatar,
+                    gender = :gender,
+                    languages = :languages,
+                    rating = :rating,
+                    experience_years = :experience_years,
+                    certificates = :certificates,
+                    certificate_image = :certificate_image,
+                    health = :health,
+                    notes = :notes
+                WHERE user_id = :user_id";
+
+        $stmt = $this->conn->prepare($sql);
+        return $stmt->execute($data);
+    }
+
+
 }
