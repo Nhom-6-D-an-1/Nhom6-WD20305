@@ -15,7 +15,7 @@ $tab = $_GET['tab'] ?? 'info';
             </p>
         </div>
         <a href="<?= BASE_URL ?>?mode=admin&action=viewDeparture"
-           class="btn btn-outline-secondary">
+            class="btn btn-outline-secondary">
             Quay lại
         </a>
     </div>
@@ -28,37 +28,37 @@ $tab = $_GET['tab'] ?? 'info';
             <ul class="nav nav-tabs mb-3">
                 <li class="nav-item">
                     <a class="nav-link <?= $tab == 'info' ? 'active' : '' ?>"
-                       href="?mode=admin&action=departureDetail&id=<?= $data_departure['departure_id'] ?>&tab=info">
+                        href="?mode=admin&action=departureDetail&id=<?= $data_departure['departure_id'] ?>&tab=info">
                         Thông tin
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link <?= $tab == 'bookings' ? 'active' : '' ?>"
-                       href="?mode=admin&action=departureDetail&id=<?= $data_departure['departure_id'] ?>&tab=bookings">
+                        href="?mode=admin&action=departureDetail&id=<?= $data_departure['departure_id'] ?>&tab=bookings">
                         Booking
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link <?= $tab == 'guests' ? 'active' : '' ?>"
-                       href="?mode=admin&action=departureDetail&id=<?= $data_departure['departure_id'] ?>&tab=guests">
+                        href="?mode=admin&action=departureDetail&id=<?= $data_departure['departure_id'] ?>&tab=guests">
                         Khách
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link <?= $tab == 'staff' ? 'active' : '' ?>"
-                       href="?mode=admin&action=departureDetail&id=<?= $data_departure['departure_id'] ?>&tab=staff">
+                        href="?mode=admin&action=departureDetail&id=<?= $data_departure['departure_id'] ?>&tab=staff">
                         Phân bổ nhân sự
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link <?= $tab == 'services' ? 'active' : '' ?>"
-                       href="?mode=admin&action=departureDetail&id=<?= $data_departure['departure_id'] ?>&tab=services">
+                        href="?mode=admin&action=departureDetail&id=<?= $data_departure['departure_id'] ?>&tab=services">
                         Phân bổ dịch vụ
                     </a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link <?= $tab == 'revenue' ? 'active' : '' ?>"
-                       href="?mode=admin&action=departureDetail&id=<?= $data_departure['departure_id'] ?>&tab=revenue">
+                        href="?mode=admin&action=departureDetail&id=<?= $data_departure['departure_id'] ?>&tab=revenue">
                         Doanh thu
                     </a>
                 </li>
@@ -73,36 +73,36 @@ $tab = $_GET['tab'] ?? 'info';
 
                     <table class="table table-bordered align-middle">
                         <tbody>
-                        <tr>
-                            <th style="width: 200px;">Tour</th>
-                            <td><?= htmlspecialchars($data_departure['tour_name'] ?? '', ENT_QUOTES, 'UTF-8') ?></td>
-                        </tr>
-                        <tr>
-                            <th>Phiên bản</th>
-                            <td><?= htmlspecialchars($data_departure['version_name'] ?? '', ENT_QUOTES, 'UTF-8') ?></td>
-                        </tr>
-                        <tr>
-                            <th>Ngày đi - Ngày về</th>
-                            <td><?= $data_departure['start_date'] ?> → <?= $data_departure['end_date'] ?></td>
-                        </tr>
-                        <tr>
-                            <th>Số chỗ</th>
-                            <td><?= (int)$data_departure['max_guests'] ?></td>
-                        </tr>
-                        <tr>
-                            <th>Trạng thái</th>
-                            <td>
-                                <?php if ($data_departure['status'] == 'open'): ?>
-                                    <span class="badge bg-success">Mở bán</span>
-                                <?php elseif ($data_departure['status'] == 'full'): ?>
-                                    <span class="badge bg-danger">Full</span>
-                                <?php elseif ($data_departure['status'] == 'closed'): ?>
-                                    <span class="badge bg-secondary">Đóng</span>
-                                <?php else: ?>
-                                    <span class="badge bg-info">Hoàn thành</span>
-                                <?php endif; ?>
-                            </td>
-                        </tr>
+                            <tr>
+                                <th style="width: 200px;">Tour</th>
+                                <td><?= htmlspecialchars($data_departure['tour_name'] ?? '', ENT_QUOTES, 'UTF-8') ?></td>
+                            </tr>
+                            <tr>
+                                <th>Phiên bản</th>
+                                <td><?= htmlspecialchars($data_departure['version_name'] ?? '', ENT_QUOTES, 'UTF-8') ?></td>
+                            </tr>
+                            <tr>
+                                <th>Ngày đi - Ngày về</th>
+                                <td><?= $data_departure['start_date'] ?> → <?= $data_departure['end_date'] ?></td>
+                            </tr>
+                            <tr>
+                                <th>Số chỗ</th>
+                                <td><?= (int)$data_departure['max_guests'] ?></td>
+                            </tr>
+                            <tr>
+                                <th>Trạng thái</th>
+                                <td>
+                                    <?php if ($data_departure['status'] == 'open'): ?>
+                                        <span class="badge bg-success">Mở bán</span>
+                                    <?php elseif ($data_departure['status'] == 'full'): ?>
+                                        <span class="badge bg-danger">Full</span>
+                                    <?php elseif ($data_departure['status'] == 'closed'): ?>
+                                        <span class="badge bg-secondary">Đóng</span>
+                                    <?php else: ?>
+                                        <span class="badge bg-info">Hoàn thành</span>
+                                    <?php endif; ?>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                 <?php endif; ?>
@@ -113,40 +113,40 @@ $tab = $_GET['tab'] ?? 'info';
 
                     <table class="table table-hover table-bordered align-middle">
                         <thead class="table-dark">
-                        <tr>
-                            <th>#</th>
-                            <th>Người đặt</th>
-                            <th>Số khách</th>
-                            <th>Trạng thái</th>
-                            <th>Thanh toán</th>
-                        </tr>
+                            <tr>
+                                <th>#</th>
+                                <th>Người đặt</th>
+                                <th>Số khách</th>
+                                <th>Trạng thái</th>
+                                <th>Thanh toán</th>
+                            </tr>
                         </thead>
                         <tbody>
-                        <?php foreach ($data_booking as $key => $value): ?>
-                            <tr>
-                                <td><?= $key + 1 ?></td>
-                                <td>
-                                    <?= htmlspecialchars($value['customer_name'] ?? '', ENT_QUOTES, 'UTF-8') ?>
-                                    <br>
-                                    <small class="text-muted">
-                                        <?= htmlspecialchars($value['customer_contact'] ?? '', ENT_QUOTES, 'UTF-8') ?>
-                                    </small>
-                                </td>
-                                <td><?= (int)($value['total_guests'] ?? 0) ?></td>
-                                <td>
-                                    <?php if ($value['status'] == 'completed'): ?>
-                                        <span class="badge bg-success">Đã thanh toán</span>
-                                    <?php elseif ($value['status'] == 'deposit'): ?>
-                                        <span class="badge bg-info">Đã cọc</span>
-                                    <?php elseif ($value['status'] == 'pending'): ?>
-                                        <span class="badge bg-secondary">Chờ xác nhận</span>
-                                    <?php else: ?>
-                                        <span class="badge bg-danger">Đã hủy</span>
-                                    <?php endif; ?>
-                                </td>
-                                <td><?= number_format($value['total_amount'] ?? 0, 0, '', '.') ?> VNĐ</td>
-                            </tr>
-                        <?php endforeach; ?>
+                            <?php foreach ($data_booking as $key => $value): ?>
+                                <tr>
+                                    <td><?= $key + 1 ?></td>
+                                    <td>
+                                        <?= htmlspecialchars($value['customer_name'] ?? '', ENT_QUOTES, 'UTF-8') ?>
+                                        <br>
+                                        <small class="text-muted">
+                                            <?= htmlspecialchars($value['customer_contact'] ?? '', ENT_QUOTES, 'UTF-8') ?>
+                                        </small>
+                                    </td>
+                                    <td><?= (int)($value['total_guests'] ?? 0) ?></td>
+                                    <td>
+                                        <?php if ($value['status'] == 'completed'): ?>
+                                            <span class="badge bg-success">Đã thanh toán</span>
+                                        <?php elseif ($value['status'] == 'deposit'): ?>
+                                            <span class="badge bg-info">Đã cọc</span>
+                                        <?php elseif ($value['status'] == 'pending'): ?>
+                                            <span class="badge bg-secondary">Chờ xác nhận</span>
+                                        <?php else: ?>
+                                            <span class="badge bg-danger">Đã hủy</span>
+                                        <?php endif; ?>
+                                    </td>
+                                    <td><?= number_format($value['total_amount'] ?? 0, 0, '', '.') ?> VNĐ</td>
+                                </tr>
+                            <?php endforeach; ?>
                         </tbody>
                     </table>
                 <?php endif; ?>
@@ -157,42 +157,42 @@ $tab = $_GET['tab'] ?? 'info';
 
                     <table class="table table-hover table-bordered align-middle mt-3">
                         <thead class="table-dark">
-                        <tr>
-                            <th>#</th>
-                            <th>Họ tên</th>
-                            <th>Giới tính</th>
-                            <th>Năm sinh</th>
-                            <th>SĐT</th>
-                            <th>Thuộc booking</th>
-                            <th>Yêu cầu đặc biệt</th>
-                        </tr>
+                            <tr>
+                                <th>#</th>
+                                <th>Họ tên</th>
+                                <th>Giới tính</th>
+                                <th>Năm sinh</th>
+                                <th>SĐT</th>
+                                <th>Thuộc booking</th>
+                                <th>Yêu cầu đặc biệt</th>
+                            </tr>
                         </thead>
 
                         <tbody>
-                        <?php foreach ($data_guest as $key => $value): ?>
-                            <tr>
-                                <td><?= $key + 1 ?></td>
-                                <td><?= htmlspecialchars($value['full_name'] ?? '', ENT_QUOTES, 'UTF-8') ?></td>
-                                <td><?= htmlspecialchars($value['gender'] ?? '', ENT_QUOTES, 'UTF-8') ?></td>
-                                <td><?= htmlspecialchars($value['birth_year'] ?? '', ENT_QUOTES, 'UTF-8') ?></td>
-                                <td><?= htmlspecialchars($value['phone'] ?? '', ENT_QUOTES, 'UTF-8') ?></td>
-                                <td>
-                                    <?= htmlspecialchars($value['customer_name'] ?? '', ENT_QUOTES, 'UTF-8') ?><br>
-                                    <small class="text-muted">
-                                        <?= htmlspecialchars($value['customer_contact'] ?? '', ENT_QUOTES, 'UTF-8') ?>
-                                    </small>
-                                </td>
-                                <td>
-                                    <?= !empty($value['description']) ? htmlspecialchars($value['description'], ENT_QUOTES, 'UTF-8') : '—' ?>
-                                    <br>
-                                    <?php if (!empty($value['medical_condition'])): ?>
-                                        <small class="text-danger">
-                                            <?= htmlspecialchars($value['medical_condition'], ENT_QUOTES, 'UTF-8') ?>
+                            <?php foreach ($data_guest as $key => $value): ?>
+                                <tr>
+                                    <td><?= $key + 1 ?></td>
+                                    <td><?= htmlspecialchars($value['full_name'] ?? '', ENT_QUOTES, 'UTF-8') ?></td>
+                                    <td><?= htmlspecialchars($value['gender'] ?? '', ENT_QUOTES, 'UTF-8') ?></td>
+                                    <td><?= htmlspecialchars($value['birth_year'] ?? '', ENT_QUOTES, 'UTF-8') ?></td>
+                                    <td><?= htmlspecialchars($value['phone'] ?? '', ENT_QUOTES, 'UTF-8') ?></td>
+                                    <td>
+                                        <?= htmlspecialchars($value['customer_name'] ?? '', ENT_QUOTES, 'UTF-8') ?><br>
+                                        <small class="text-muted">
+                                            <?= htmlspecialchars($value['customer_contact'] ?? '', ENT_QUOTES, 'UTF-8') ?>
                                         </small>
-                                    <?php endif; ?>
-                                </td>
-                            </tr>
-                        <?php endforeach; ?>
+                                    </td>
+                                    <td>
+                                        <?= !empty($value['description']) ? htmlspecialchars($value['description'], ENT_QUOTES, 'UTF-8') : '—' ?>
+                                        <br>
+                                        <?php if (!empty($value['medical_condition'])): ?>
+                                            <small class="text-danger">
+                                                <?= htmlspecialchars($value['medical_condition'], ENT_QUOTES, 'UTF-8') ?>
+                                            </small>
+                                        <?php endif; ?>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
                         </tbody>
                     </table>
                 <?php endif; ?>
@@ -205,19 +205,21 @@ $tab = $_GET['tab'] ?? 'info';
 
                     <?php if (!empty($_SESSION['flash_error'])): ?>
                         <div class="alert alert-danger">
-                            <?= $_SESSION['flash_error']; unset($_SESSION['flash_error']); ?>
+                            <?= $_SESSION['flash_error'];
+                            unset($_SESSION['flash_error']); ?>
                         </div>
                     <?php endif; ?>
 
                     <?php if (!empty($_SESSION['flash_success'])): ?>
                         <div class="alert alert-success">
-                            <?= $_SESSION['flash_success']; unset($_SESSION['flash_success']); ?>
+                            <?= $_SESSION['flash_success'];
+                            unset($_SESSION['flash_success']); ?>
                         </div>
                     <?php endif; ?>
 
                     <div class="card p-3 mb-4">
                         <form method="POST"
-                              action="<?= BASE_URL ?>?mode=admin&action=departureDetail&id=<?= (int)$_GET['id'] ?>&tab=staff">
+                            action="<?= BASE_URL ?>?mode=admin&action=departureDetail&id=<?= (int)$_GET['id'] ?>&tab=staff">
                             <input type="hidden" name="departure_id" value="<?= (int)$_GET['id'] ?>">
 
                             <div class="row g-3">
@@ -250,32 +252,32 @@ $tab = $_GET['tab'] ?? 'info';
 
                     <table class="table table-hover table-bordered align-middle">
                         <thead class="table-dark">
-                        <tr>
-                            <th>#</th>
-                            <th>Họ tên</th>
-                            <th>Vai trò</th>
-                            <th>Ghi chú</th>
-                            <th>Thời gian</th>
-                            <th>Hành động</th>
-                        </tr>
+                            <tr>
+                                <th>#</th>
+                                <th>Họ tên</th>
+                                <th>Vai trò</th>
+                                <th>Ghi chú</th>
+                                <th>Thời gian</th>
+                                <th>Hành động</th>
+                            </tr>
                         </thead>
                         <tbody>
-                        <?php foreach ($data_assignment as $key => $value): ?>
-                            <tr>
-                                <td><?= $key + 1 ?></td>
-                                <td><?= htmlspecialchars($value['full_name'] ?? '', ENT_QUOTES, 'UTF-8') ?></td>
-                                <td><?= htmlspecialchars($value['role_in_tour'] ?? '', ENT_QUOTES, 'UTF-8') ?></td>
-                                <td><?= htmlspecialchars($value['notes'] ?? '', ENT_QUOTES, 'UTF-8') ?></td>
-                                <td><?= $value['assigned_at'] ?></td>
-                                <td>
-                                    <a href="<?= BASE_URL ?>?mode=admin&action=deleteStaff&id=<?= $value['assignment_id'] ?>"
-                                       class="btn btn-danger btn-sm"
-                                       onclick="return confirm('Xóa nhân sự này khỏi chuyến đi?')">
-                                        Xóa
-                                    </a>
-                                </td>
-                            </tr>
-                        <?php endforeach; ?>
+                            <?php foreach ($data_assignment as $key => $value): ?>
+                                <tr>
+                                    <td><?= $key + 1 ?></td>
+                                    <td><?= htmlspecialchars($value['full_name'] ?? '', ENT_QUOTES, 'UTF-8') ?></td>
+                                    <td><?= htmlspecialchars($value['role_in_tour'] ?? '', ENT_QUOTES, 'UTF-8') ?></td>
+                                    <td><?= htmlspecialchars($value['notes'] ?? '', ENT_QUOTES, 'UTF-8') ?></td>
+                                    <td><?= $value['assigned_at'] ?></td>
+                                    <td>
+                                        <a href="<?= BASE_URL ?>?mode=admin&action=deleteStaff&id=<?= $value['assignment_id'] ?>"
+                                            class="btn btn-danger btn-sm"
+                                            onclick="return confirm('Xóa nhân sự này khỏi chuyến đi?')">
+                                            Xóa
+                                        </a>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
                         </tbody>
                     </table>
                 <?php endif; ?>
@@ -288,13 +290,15 @@ $tab = $_GET['tab'] ?? 'info';
 
                     <?php if (!empty($_SESSION['flash_error'])): ?>
                         <div class="alert alert-danger">
-                            <?= $_SESSION['flash_error']; unset($_SESSION['flash_error']); ?>
+                            <?= $_SESSION['flash_error'];
+                            unset($_SESSION['flash_error']); ?>
                         </div>
                     <?php endif; ?>
 
                     <?php if (!empty($_SESSION['flash_success'])): ?>
                         <div class="alert alert-success">
-                            <?= $_SESSION['flash_success']; unset($_SESSION['flash_success']); ?>
+                            <?= $_SESSION['flash_success'];
+                            unset($_SESSION['flash_success']); ?>
                         </div>
                     <?php endif; ?>
 
@@ -340,36 +344,42 @@ $tab = $_GET['tab'] ?? 'info';
 
                     <table class="table table-hover table-bordered align-middle">
                         <thead class="table-dark">
-                        <tr>
-                            <th>#</th>
-                            <th>Dịch vụ</th>
-                            <th>Nhà cung cấp</th>
-                            <th>Giá</th>
-                            <th>Số lượng</th>
-                            <th>Ghi chú</th>
-                            <th>Hành động</th>
-                        </tr>
+                            <tr>
+                                <th>#</th>
+                                <th>Dịch vụ</th>
+                                <th>Nhà cung cấp</th>
+                                <th>Giá</th>
+                                <th>Số lượng</th>
+                                <th>Ghi chú</th>
+                                <th>Hành động</th>
+                            </tr>
                         </thead>
                         <tbody>
-                        <?php foreach ($data_service_assignment as $key => $value): ?>
-                            <tr>
-                                <td><?= $key + 1 ?></td>
-                                <td><?= htmlspecialchars($value['service_name'] ?? '', ENT_QUOTES, 'UTF-8') ?></td>
-                                <td><?= htmlspecialchars($value['supplier'] ?? '', ENT_QUOTES, 'UTF-8') ?></td>
-                                <td><?= number_format($value['price'] ?? 0, 0, '', '.') ?></td>
-                                <td><?= (int)($value['quantity'] ?? 0) ?></td>
-                                <td><?= htmlspecialchars($value['notes'] ?? '', ENT_QUOTES, 'UTF-8') ?></td>
-                                <td>
-                                    <a href="<?= BASE_URL ?>?mode=admin&action=deleteService&id=<?= $value['sa_id'] ?>"
-                                       class="btn btn-danger btn-sm"
-                                       onclick="return confirm('Xóa dịch vụ này?')">
-                                        Xóa
-                                    </a>
-                                </td>
-                            </tr>
-                        <?php endforeach; ?>
+                            <?php foreach ($data_service_assignment as $key => $value): ?>
+                                <tr>
+                                    <td><?= $key + 1 ?></td>
+                                    <td><?= htmlspecialchars($value['service_name'] ?? '', ENT_QUOTES, 'UTF-8') ?></td>
+                                    <td><?= htmlspecialchars($value['supplier'] ?? '', ENT_QUOTES, 'UTF-8') ?></td>
+                                    <td><?= number_format($value['price'] ?? 0, 0, '', '.') ?></td>
+                                    <td><?= (int)($value['quantity'] ?? 0) ?></td>
+                                    <td><?= htmlspecialchars($value['notes'] ?? '', ENT_QUOTES, 'UTF-8') ?></td>
+                                    <td>
+                                        <a href="<?= BASE_URL ?>?mode=admin&action=deleteService&id=<?= $value['sa_id'] ?>"
+                                            class="btn btn-danger btn-sm"
+                                            onclick="return confirm('Xóa dịch vụ này?')">
+                                            Xóa
+                                        </a>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
                         </tbody>
                     </table>
+                    <div class="mt-3">
+                        <h5><b>Tổng chi phí dịch vụ:</b>
+                            <?= number_format($total_service_cost, 0, '', '.') ?> đ
+                        </h5>
+                    </div>
+
                 <?php endif; ?>
 
                 <!-- REVENUE TAB -->
@@ -400,34 +410,34 @@ $tab = $_GET['tab'] ?? 'info';
                     <h6 class="fw-semibold mb-2">Chi tiết booking</h6>
                     <table class="table table-hover table-bordered align-middle">
                         <thead class="table-dark">
-                        <tr>
-                            <th>#</th>
-                            <th>Người đặt</th>
-                            <th>Số khách</th>
-                            <th>Số tiền</th>
-                            <th>Trạng thái</th>
-                        </tr>
+                            <tr>
+                                <th>#</th>
+                                <th>Người đặt</th>
+                                <th>Số khách</th>
+                                <th>Số tiền</th>
+                                <th>Trạng thái</th>
+                            </tr>
                         </thead>
                         <tbody>
-                        <?php foreach ($data_booking as $key => $value): ?>
-                            <tr>
-                                <td><?= $value['booking_id'] ?></td>
-                                <td><?= htmlspecialchars($value['customer_name'] ?? '', ENT_QUOTES, 'UTF-8') ?></td>
-                                <td><?= (int)($value['total_guests'] ?? 0) ?></td>
-                                <td><?= number_format($value['total_amount'] ?? 0, 0, '', '.') ?></td>
-                                <td>
-                                    <?php if ($value['status'] == 'completed'): ?>
-                                        <span class="badge bg-success">Đã thanh toán</span>
-                                    <?php elseif ($value['status'] == 'deposit'): ?>
-                                        <span class="badge bg-info">Đã cọc</span>
-                                    <?php elseif ($value['status'] == 'pending'): ?>
-                                        <span class="badge bg-secondary">Chờ xác nhận</span>
-                                    <?php else: ?>
-                                        <span class="badge bg-danger">Đã hủy</span>
-                                    <?php endif; ?>
-                                </td>
-                            </tr>
-                        <?php endforeach; ?>
+                            <?php foreach ($data_booking as $key => $value): ?>
+                                <tr>
+                                    <td><?= $value['booking_id'] ?></td>
+                                    <td><?= htmlspecialchars($value['customer_name'] ?? '', ENT_QUOTES, 'UTF-8') ?></td>
+                                    <td><?= (int)($value['total_guests'] ?? 0) ?></td>
+                                    <td><?= number_format($value['total_amount'] ?? 0, 0, '', '.') ?></td>
+                                    <td>
+                                        <?php if ($value['status'] == 'completed'): ?>
+                                            <span class="badge bg-success">Đã thanh toán</span>
+                                        <?php elseif ($value['status'] == 'deposit'): ?>
+                                            <span class="badge bg-info">Đã cọc</span>
+                                        <?php elseif ($value['status'] == 'pending'): ?>
+                                            <span class="badge bg-secondary">Chờ xác nhận</span>
+                                        <?php else: ?>
+                                            <span class="badge bg-danger">Đã hủy</span>
+                                        <?php endif; ?>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
                         </tbody>
                     </table>
 

@@ -93,6 +93,7 @@ class DepartureController
         $data_guide = $assignment->getAllGuides();
         $service_assignment = new ServiceAssignmentModel();
         $data_service_assignment = $service_assignment->listByDeparture($id);
+        $total_service_cost = $service_assignment->getTotalCostByDeparture($id);
         $service = new ServiceModel();
         $data_service = $service->getAll();
         $title = "Chi tiết chuyến đi";

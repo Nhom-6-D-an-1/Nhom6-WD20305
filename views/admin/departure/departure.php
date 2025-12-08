@@ -28,7 +28,7 @@
                             <tr>
                                 <td><?= $key + 1 ?></td>
 
-                                <td><?= $value['tour_name'] ?></td>
+                                <td><?= $value['tour_name'] ?> - <?= $value['version_name'] ?></td>
 
                                 <td><?= $value['start_date'] ?></td>
 
@@ -49,7 +49,7 @@
                                 </td>
 
                                 <td>
-                                    <?= $value['full_name'] 
+                                    <?= $value['full_name']
                                         ? '<span class="text-success fw-semibold">' . $value['full_name'] . '</span>'
                                         : '<span class="text-muted">Chưa phân công</span>'
                                     ?>
@@ -69,13 +69,17 @@
 
                                 <td class="text-center">
                                     <a href="<?= BASE_URL ?>?mode=admin&action=departureEdit&id=<?= $value['departure_id'] ?>"
-                                       class="btn btn-warning btn-sm mb-1 w-100">
+                                        class="btn btn-warning btn-sm">
                                         Sửa
                                     </a>
 
                                     <a href="<?= BASE_URL ?>?mode=admin&action=departureDetail&id=<?= $value['departure_id'] ?>"
-                                       class="btn btn-primary btn-sm w-100">
+                                        class="btn btn-primary btn-sm">
                                         Chi tiết
+                                    </a>
+                                    <a href="<?= BASE_URL ?>?mode=admin&action=createType&id=<?= $value['departure_id'] ?>"
+                                        class="btn btn-success btn-sm mt-1">
+                                        Thêm booking
                                     </a>
                                 </td>
 
