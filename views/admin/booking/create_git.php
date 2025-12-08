@@ -1,30 +1,34 @@
-<div class="container mt-4">
-    <h3>Booking khách đoàn</h3>
+<div class="container-fluid px-4">
 
-    <form method="POST" action="<?= BASE_URL ?>?mode=admin&action=storeGit">
+    <!-- HEADER -->
+    <div class="d-flex justify-content-between align-items-center mt-4 mb-3">
+        <h3 class="fw-bold mb-0">Booking khách đoàn</h3>
 
-        <input type="hidden" name="departure_id" value="<?= $_GET['departure_id'] ?>">
+        <a href="<?= BASE_URL ?>?mode=admin&action=viewsbooking" 
+           class="btn btn-outline-secondary">
+            Quay lại
+        </a>
+    </div>
 
+    <!-- CARD FORM -->
+    <div class="card shadow-sm">
+        <div class="card-body">
+
+            <form method="POST" action="<?= BASE_URL ?>?mode=admin&action=storeGroup">
+
+                <!-- ẨN departure -->
+                <input type="hidden" name="departure_id" 
+                       value="<?= htmlspecialchars($_GET['departure_id'] ?? '', ENT_QUOTES, 'UTF-8') ?>">
+
+                <!-- THÔNG TIN NGƯỜI ĐẠI DIỆN -->
+                <h5 class="fw-semibold text-primary mb-3">Thông tin người đại diện đoàn</h5>
+
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">Họ tên</label>
+                    <input name="contact_name" class="form-control" required>
+                </div>
         <div class="mb-3">
-            <label>Họ tên</label>
-            <input name="full_name" class="form-control" required>
-        </div>
-
-        <div class="mb-3">
-            <label>Giới tính</label>
-            <select name="gender" class="form-select">
-                <option>Nam</option>
-                <option>Nữ</option>
-            </select>
-        </div>
-
-        <div class="mb-3">
-            <label>Năm sinh</label>
-            <input type="date" name="birth_year" class="form-control" required>
-        </div>
-
-        <div class="mb-3">
-            <label>SĐT</label>
+            <label>Số điện thoại</label>
             <input name="phone" class="form-control" required>
         </div>
         <div class="col-md-6 mb-3"><label>CCCD</label>
@@ -35,26 +39,14 @@
             <textarea name="special_request" class="form-control"></textarea>
         </div>
 
+   
+                <!-- BUTTON -->
+                <div class="mt-4">
+                    <button class="btn btn-success px-4">Tiếp tục</button>
+                </div>
 
-        <div class="mb-3">
-            <label>Tổng tiền</label>
-            <input type="number" class="form-control"
-                name="total_amount"
-                placeholder="Nhập tổng tiền hoặc để trống để tự lấy giá tour">
+            </form>
+
         </div>
-
-
-        <div class="mb-3">
-            <label>Trạng thái</label>
-            <select name="status" class="form-select">
-                <option value="pending">pending</option>
-                <option value="deposit">deposit</option>
-                <option value="completed">completed</option>
-                <option value="cancelled">cancelled</option>
-            </select>
-        </div>
-
-        <button class="btn btn-success">Tạo booking</button>
-
-    </form>
+    </div>
 </div>
