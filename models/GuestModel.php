@@ -28,8 +28,8 @@ class GuestModel
     // 3. Thêm khách FIT/GIT
     public function addGuest($data)
     {
-        $sql = "INSERT INTO guest (booking_id, full_name, gender, birth_year, phone)
-                VALUES (:booking_id, :full_name, :gender, :birth_year, :phone)";
+        $sql = "INSERT INTO guest (booking_id, full_name, gender, birth_year, phone, cccd)
+        VALUES (:booking_id, :full_name, :gender, :birth_year, :phone, :cccd)";
 
         $stmt = $this->conn->prepare($sql);
         $stmt->execute([
@@ -37,7 +37,8 @@ class GuestModel
             ':full_name'  => $data['full_name'],
             ':gender'     => $data['gender'],
             ':birth_year' => $data['birth_year'],
-            ':phone'      => $data['phone']
+            ':phone'      => $data['phone'],
+            ':cccd'      => $data['cccd'] ?? ""
         ]);
 
         return $this->conn->lastInsertId();

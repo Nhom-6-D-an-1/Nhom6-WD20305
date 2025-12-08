@@ -124,8 +124,9 @@
 <body>
 
 <div class="left-panel">
-    <img src="<?= BASE_URL ?>assets/images/login-bg.png" alt="Login Background">
+    <img src="<?= BASE_URL ?>assets/images/anh2.png" alt="Login Background">
 </div>
+
 <div class="right-panel">
 
     <div class="login-box">

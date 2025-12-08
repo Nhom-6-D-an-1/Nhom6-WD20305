@@ -114,4 +114,15 @@ class AccountModel extends BaseModel
         $stmt = $this->conn->prepare($sql);
         return $stmt->execute($params);
     }
+
+    public function updateUserName($id, $full_name)
+    {
+        $sql = "UPDATE users SET full_name = :full_name WHERE user_id = :id";
+        $stmt = $this->conn->prepare($sql);
+        return $stmt->execute([
+            ':full_name' => $full_name,
+            ':id' => $id
+        ]);
+    }
+
 }

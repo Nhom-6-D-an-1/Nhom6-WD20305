@@ -97,16 +97,18 @@ class BookingModel extends BaseModel
     // Cập nhật booking
     public function updateBooking($id, $data)
     {
-        $sql = "UPDATE `booking` SET 
-            departure_id = :departure_id,
-            customer_name = :customer_name,
+        $sql = "UPDATE booking SET 
+            departure_id     = :departure_id,
+            customer_name    = :customer_name,
             customer_contact = :customer_contact,
-            customer_type = :customer_type,
-            total_amount = :total_amount,
-            status = :status
-            WHERE booking_id = :id";
+            customer_type    = :customer_type,
+            total_amount     = :total_amount,
+            status           = :status,
+            total_guests     = :total_guests
+        WHERE booking_id = :id";
 
         $data['id'] = $id;
+
         $stmt = $this->conn->prepare($sql);
         return $stmt->execute($data);
     }

@@ -59,6 +59,9 @@ match ($action) {
 
     'storeFit'      => (new AdminController())->storeFit(),
     'storeGit'      => (new AdminController())->storeGit(),
+    'addGitGuests'      => (new AdminController())->addGitGuests(),
+    'storeGitGuest'      => (new AdminController())->storeGitGuest(),
+    'finishGit'      => (new AdminController())->finishGit(),
 
     'guestList'     => (new AdminController())->guestList(),
 

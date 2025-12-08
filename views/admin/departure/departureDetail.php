@@ -105,6 +105,7 @@ $tab = $_GET['tab'] ?? 'info';
                         <th>Giới tính</th>
                         <th>Năm sinh</th>
                         <th>SĐT</th>
+                        <th>CCCD</th>
                         <th>Thuộc booking</th>
                         <th>Yêu cầu đặc biệt</th>
                     </tr>
@@ -118,6 +119,7 @@ $tab = $_GET['tab'] ?? 'info';
                             <td><?= $value['gender'] ?></td>
                             <td><?= $value['birth_year'] ?></td>
                             <td><?= $value['phone'] ?></td>
+                            <td><?= $value['cccd'] ?></td>
                             <td>
                                 <?= $value['customer_name'] ?><br>
                                 <small><?= $value['customer_contact'] ?></small>
