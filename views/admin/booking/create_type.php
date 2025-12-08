@@ -36,7 +36,7 @@
         </div>
 
         <div class="mt-4">
-            <a href="<?= BASE_URL ?>?mode=admin&action=viewAddBooking" class="btn btn-secondary">
+            <a href="<?= BASE_URL ?>?mode=admin&action=views_add_booking" class="btn btn-secondary">
                 Quay lại chọn lịch trình
             </a>
         </div>

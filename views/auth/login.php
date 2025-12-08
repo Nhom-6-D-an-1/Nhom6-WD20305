@@ -143,13 +143,13 @@
             <!-- USERNAME -->
             <div class="mb-3 input-with-icon">
                 <i class="bi bi-person input-icon"></i>
-                <input type="text" name="username" class="form-control" placeholder="Tên đăng nhập" required>
+                <input type="text" name="username" class="form-control" placeholder="Tên đăng nhập" >
             </div>
 
             <!-- PASSWORD -->
             <div class="mb-3 input-with-icon">
                 <i class="bi bi-lock input-icon"></i>
-                <input type="password" name="password" class="form-control" placeholder="Mật khẩu" required>
+                <input type="password" name="password" class="form-control" placeholder="Mật khẩu" >
             </div>
 
             <div class="text-end mb-3">
