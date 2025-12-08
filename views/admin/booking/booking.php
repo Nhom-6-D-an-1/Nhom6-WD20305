@@ -15,7 +15,7 @@
     </div>
     <div class="col-md-3 d-flex gap-2">
       <button class="btn btn-primary">Tìm kiếm</button>
-      <a href="<?= BASE_URL ?>?mode=admin&action=views_add_booking"><button class="btn btn-success">Thêm booking</button></a>
+
     </div>
   </div>
 
@@ -44,12 +44,12 @@
             <td><?php echo number_format((float)($booking['total_amount'] ?? 0), 0, ',', '.'); ?> ₫</td>
             <td>
               <?php
-                $status = $booking['status'] ?? '';
-                $badgeClass = 'bg-secondary';
-                if ($status === 'deposit') $badgeClass = 'bg-info';
-                elseif ($status === 'pending') $badgeClass = 'bg-warning';
-                elseif ($status === 'completed') $badgeClass = 'bg-success';
-                elseif ($status === 'cancelled') $badgeClass = 'bg-danger';
+              $status = $booking['status'] ?? '';
+              $badgeClass = 'bg-secondary';
+              if ($status === 'deposit') $badgeClass = 'bg-info';
+              elseif ($status === 'pending') $badgeClass = 'bg-warning';
+              elseif ($status === 'completed') $badgeClass = 'bg-success';
+              elseif ($status === 'cancelled') $badgeClass = 'bg-danger';
               ?>
               <span class="badge <?php echo $badgeClass; ?>">
                 <?php echo htmlspecialchars($status); ?>
@@ -59,7 +59,7 @@
             <td>
               <a href="<?= BASE_URL ?>?mode=admin&action=showbooking&id=<?= urlencode($booking['booking_id']) ?>" class="btn btn-sm btn-info">Chi tiết</a>
               <a href="<?= BASE_URL ?>?mode=admin&action=suabooking&id=<?= urlencode($booking['booking_id']) ?>" class="btn btn-sm btn-warning">Sửa</a>
-              <a href="<?= BASE_URL ?>?mode=admin&action=deletebooking&id=<?= urlencode($booking['booking_id']) ?>" class="btn btn-sm btn-danger" onclick="return confirm('Bạn có chắc muốn xóa booking #<?= htmlspecialchars($booking['booking_id'] ?? '') ?>?');">Xóa</a>
+              <!-- <a href="<?= BASE_URL ?>?mode=admin&action=deletebooking&id=<?= urlencode($booking['booking_id']) ?>" class="btn btn-sm btn-danger" onclick="return confirm('Bạn có chắc muốn xóa booking #<?= htmlspecialchars($booking['booking_id'] ?? '') ?>?');">Xóa</a> -->
             </td>
           </tr>
         <?php endforeach; ?>
@@ -71,4 +71,3 @@
     </tbody>
   </table>
 </div>
-

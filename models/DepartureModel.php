@@ -123,4 +123,28 @@ class DepartureModel
         $stmt->execute(['id' => $departure_id]);
         return $stmt->fetch();
     }
+
+    public function updateCurrentGuests($departure_id)
+    {
+        $sql = "UPDATE departure 
+        SET current_guests = (
+            SELECT IFNULL(SUM(total_guests), 0)
+            FROM booking 
+            WHERE departure_id = :id AND status != 'cancelled'
+        )
+        WHERE departure_id = :id";
+
+        $stmt = $this->conn->prepare($sql);
+        return $stmt->execute(['id' => $departure_id]);
+    }
+
+    public function updateStatus($departure_id, $status)
+    {
+        $sql = "UPDATE departure SET status = :status WHERE departure_id = :id";
+        $stmt = $this->conn->prepare($sql);
+        return $stmt->execute([
+            'status' => $status,
+            'id' => $departure_id
+        ]);
+    }
 }

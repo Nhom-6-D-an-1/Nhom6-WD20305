@@ -27,17 +27,19 @@
                     <label class="form-label fw-semibold">Họ tên</label>
                     <input name="contact_name" class="form-control" required>
                 </div>
+        <div class="mb-3">
+            <label>Số điện thoại</label>
+            <input name="phone" class="form-control" required>
+        </div>
+        <div class="col-md-6 mb-3"><label>CCCD</label>
+            <input name="cccd" class="form-control">
+        </div>
+        <div class="mb-3">
+            <label>Yêu cầu đặc biệt</label>
+            <textarea name="special_request" class="form-control"></textarea>
+        </div>
 
-                <div class="mb-3">
-                    <label class="form-label fw-semibold">Số điện thoại</label>
-                    <input name="contact_phone" class="form-control" required>
-                </div>
-
-                <div class="mb-3">
-                    <label class="form-label fw-semibold">Yêu cầu chung của đoàn</label>
-                    <textarea name="group_request" class="form-control" rows="3"></textarea>
-                </div>
-
+   
                 <!-- BUTTON -->
                 <div class="mt-4">
                     <button class="btn btn-success px-4">Tiếp tục</button>

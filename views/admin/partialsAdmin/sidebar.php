@@ -17,17 +17,17 @@
                 </a>
             </li>
             <li class="nav-item mb-2">
-                <a class="nav-link <?= ($view ?? '') === 'admin/tour/tour' || ($view ?? '') === 'admin/tour/edit' || ($view ?? '') === 'admin/tour/show' || ($view ?? '') === 'admin/tour/create' ? 'active' : '' ?>" href="<?= BASE_URL ?>?mode=admin&action=viewstour">
+                <a class="nav-link <?= ($view ?? '') === 'admin/tour/tour' || ($view ?? '') === 'admin/departure/departureAdd' || ($view ?? '') === 'admin/tour/editTour' || ($view ?? '') === 'admin/tour/createTour' || ($view ?? '') === 'admin/tour/createVersion' || ($view ?? '') === 'admin/tour/editVersion' || ($view ?? '') === 'admin/tour/itineraryAdd' || ($view ?? '') === 'admin/tour/itineraryEdit' || ($view ?? '') === 'admin/tour/versionDetail' || ($view ?? '') === 'admin/tour/tourDetail' ? 'active' : '' ?>" href="<?= BASE_URL ?>?mode=admin&action=viewstour">
                     Quản lý tour
                 </a>
             </li>
             <li class="nav-item mb-2">
-                <a class="nav-link <?= ($view ?? '') === 'admin/departure/departure'  ? 'active' : '' ?>" href="<?= BASE_URL ?>?mode=admin&action=viewDeparture">
+                <a class="nav-link <?= ($view ?? '') === 'admin/departure/departure' || ($view ?? '') === 'admin/departure/departureDetail' || ($view ?? '') === 'admin/departure/departureEdit'  ? 'active' : '' ?>" href="<?= BASE_URL ?>?mode=admin&action=viewDeparture">
                     Quản lý lịch khởi hành
                 </a>
             </li>
             <li class="nav-item mb-2">
-                <a class="nav-link <?= ($view ?? '') === 'admin/booking/booking' || ($view ?? '') === 'admin/booking/showBooking' || ($view ?? '') === 'admin/booking/editBooking' || ($view ?? '') === 'admin/booking/addBooking' ? 'active' : '' ?>" href="<?= BASE_URL ?>?mode=admin&action=viewsbooking">
+                <a class="nav-link <?= ($view ?? '') === 'admin/booking/booking' || ($view ?? '') === 'admin/booking/showBooking' || ($view ?? '') === 'admin/booking/editBooking' || ($view ?? '') === 'admin/booking/addBooking' || ($view ?? '') === 'admin/booking/create_fit' || ($view ?? '') === 'admin/booking/create_git' || ($view ?? '') === 'admin/booking/create_type' || ($view ?? '') === 'admin/booking/guest_list' ? 'active' : '' ?>" href="<?= BASE_URL ?>?mode=admin&action=viewsbooking">
                     Quản lý booking
                 </a>
             </li>

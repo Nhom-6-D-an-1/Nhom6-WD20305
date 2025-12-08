@@ -34,24 +34,23 @@
                         </select>
                     </div>
                 </div>
-
-                <div class="row">
-                    <div class="col-md-6 mb-3">
+        <div class="mb-3">
+            <label>SĐT</label>
+            <input name="phone" class="form-control" required>
+        </div>
+              <div class="col-md-6 mb-3">
                         <label class="form-label fw-semibold">Ngày sinh</label>
                         <input type="date" name="birth_year" class="form-control" required>
                     </div>
+        <div class=" mb-3"><label>CCCD</label>
+            <input name="cccd" class="form-control">
+        </div>
+        <div class="mb-3">
+            <label>Yêu cầu đặc biệt</label>
+            <textarea name="special_request" class="form-control"></textarea>
+        </div>
 
-                    <div class="col-md-6 mb-3">
-                        <label class="form-label fw-semibold">Số điện thoại</label>
-                        <input name="phone" class="form-control" required>
-                    </div>
-                </div>
-
-                <div class="mb-3">
-                    <label class="form-label fw-semibold">Yêu cầu đặc biệt</label>
-                    <textarea name="special_request" class="form-control" rows="3"></textarea>
-                </div>
-
+                
                 <!-- THANH TOÁN -->
                 <h5 class="fw-semibold text-primary mt-4 mb-3">Thanh toán</h5>
 

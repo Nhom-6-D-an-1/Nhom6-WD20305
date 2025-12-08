@@ -8,26 +8,26 @@
             <div class="d-flex justify-content-between mb-3">
 
                 <!-- Bộ lọc trạng thái -->
-                <form method="GET" action="" class="d-flex">
+                <!-- <form method="GET" action="" class="d-flex">
                     <input type="hidden" name="mode" value="admin">
                     <input type="hidden" name="action" value="viewsdanhmuc">
 
                     <select name="status" class="form-select me-2" style="width:180px;">
                         <option value="">Trạng thái</option>
-                        <option value="1" <?= isset($_GET['status']) && $_GET['status']=='1' ? 'selected' : '' ?>>
+                        <option value="1" <?= isset($_GET['status']) && $_GET['status'] == '1' ? 'selected' : '' ?>>
                             Đang hoạt động
                         </option>
-                        <option value="0" <?= isset($_GET['status']) && $_GET['status']=='0' ? 'selected' : '' ?>>
+                        <option value="0" <?= isset($_GET['status']) && $_GET['status'] == '0' ? 'selected' : '' ?>>
                             Tạm ẩn
                         </option>
                     </select>
 
                     <button class="btn btn-primary">Tìm kiếm</button>
-                </form>
+                </form> -->
 
                 <!-- Nút thêm -->
                 <a href="?mode=admin&action=adddanhmuc" class="btn btn-success">
-                    + Thêm loại tour
+                    Thêm danh mục tour
                 </a>
             </div>
 
@@ -45,7 +45,7 @@
 
                 <tbody>
                     <?php if (!empty($categories)): ?>
-                        <?php foreach($categories as $index => $item): ?>
+                        <?php foreach ($categories as $index => $item): ?>
                             <tr>
                                 <td><?= $index + 1 ?></td>
 
@@ -62,15 +62,15 @@
                                 </td>
 
                                 <td>
-                                    <a href="?mode=admin&action=xemchitietdanhmuc&id=<?= $item['category_id'] ?>" 
-                                       class="btn btn-info btn-sm">Xem</a>
+                                    <a href="?mode=admin&action=xemchitietdanhmuc&id=<?= $item['category_id'] ?>"
+                                        class="btn btn-info btn-sm">Xem</a>
 
-                                    <a href="?mode=admin&action=suadanhmuc&id=<?= $item['category_id'] ?>" 
-                                       class="btn btn-primary btn-sm">Sửa</a>
+                                    <a href="?mode=admin&action=suadanhmuc&id=<?= $item['category_id'] ?>"
+                                        class="btn btn-primary btn-sm">Sửa</a>
 
                                     <a href="?mode=admin&action=xoadanhmuc&id=<?= $item['category_id'] ?>"
-                                       onclick="return confirm('Bạn có chắc muốn xóa danh mục này?')"
-                                       class="btn btn-danger btn-sm">Xóa</a>
+                                        onclick="return confirm('Bạn có chắc muốn xóa danh mục này?')"
+                                        class="btn btn-danger btn-sm">Xóa</a>
                                 </td>
                             </tr>
                         <?php endforeach; ?>

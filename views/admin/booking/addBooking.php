@@ -40,14 +40,15 @@
 
                 <!-- BUTTONS -->
                 <div class="mt-4 d-flex gap-3">
+                  <a href="<?= BASE_URL ?>?mode=admin&action=viewDeparture" 
+                       class="btn btn-secondary px-4">
+                        Huỷ
+                    </a>
                     <button type="submit" class="btn btn-primary px-4">
                         Tiếp tục
                     </button>
 
-                    <a href="<?= BASE_URL ?>?mode=admin&action=viewsbooking" 
-                       class="btn btn-secondary px-4">
-                        Huỷ
-                    </a>
+                    
                 </div>
 
             </form>
@@ -57,8 +58,8 @@
 </div>
 
 <script>
-function updatePrice(selectElement) {
-    const selectedOption = selectElement.options[selectElement.selectedIndex];
-    const price = selectedOption.getAttribute('data-price');
-}
+    function updatePrice(selectElement) {
+        const selectedOption = selectElement.options[selectElement.selectedIndex];
+        const price = selectedOption.getAttribute('data-price');
+    }
 </script>
