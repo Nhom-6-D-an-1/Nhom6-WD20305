@@ -44,16 +44,12 @@
             <td><?php echo number_format((float)($booking['total_amount'] ?? 0), 0, ',', '.'); ?> ₫</td>
             <td>
               <?php
+
               $status = $booking['status'] ?? '';
-              $badgeClass = 'bg-secondary';
-              if ($status === 'deposit') $badgeClass = 'bg-info';
-              elseif ($status === 'pending') $badgeClass = 'bg-warning';
-              elseif ($status === 'completed') $badgeClass = 'bg-success';
-              elseif ($status === 'cancelled') $badgeClass = 'bg-danger';
+              $statusText = ($status === 'completed') ? 'Đã thanh toán' : 'Chưa thanh toán';
+              $statusColor = ($status === 'completed') ? 'bg-success' : 'bg-secondary';
               ?>
-              <span class="badge <?php echo $badgeClass; ?>">
-                <?php echo htmlspecialchars($status); ?>
-              </span>
+              <p><span class="badge <?= $statusColor ?>"><?= $statusText ?></span></p>
             </td>
             <td><?php echo !empty($booking['created_at']) ? date('d/m/Y H:i', strtotime($booking['created_at'])) : ''; ?></td>
             <td>

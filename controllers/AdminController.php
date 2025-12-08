@@ -110,9 +110,9 @@ class AdminController
 
     public function createType()
     {
-        $departure_id = $_GET['departure_id'] ?? null;
+        $departure_id = $_GET['id'] ?? null;
         if (!$departure_id) {
-            header("Location: ?mode=admin&action=viewsbooking");
+            header("Location: ?mode=admin&action=viewDeparture");
             exit;
         }
 
@@ -123,7 +123,7 @@ class AdminController
 
     public function createFit()
     {
-        $departure_id = $_GET['departure_id'] ?? null;
+        $departure_id = $_GET['id'] ?? null;
         if (!$departure_id) {
             header("Location: ?mode=admin&action=viewsbooking");
             exit;
@@ -137,7 +137,7 @@ class AdminController
 
     public function createGit()
     {
-        $departure_id = $_GET['departure_id'] ?? null;
+        $departure_id = $_GET['id'] ?? null;
         if (!$departure_id) {
             header("Location: ?mode=admin&action=viewsbooking");
             exit;
@@ -151,7 +151,7 @@ class AdminController
     public function storeFit()
     {
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-            header("Location: ?mode=admin&action=viewsbooking");
+            header("Location: ?mode=admin&action=viewDeparture");
             exit;
         }
 
@@ -160,17 +160,17 @@ class AdminController
         $departure = new DepartureModel();
         $info = $departure->getOneDeparture($departure_id);
 
-        if ($info['current_guests'] >= $info['max_guests']) {
-            $_SESSION['flash_error'] = "Chuyến đi đã đủ số lượng khách, không thể đặt thêm.";
-            header("Location: " . BASE_URL . "?mode=admin&action=viewsbooking");
-            exit;
-        }
+        // if ($info['current_guests'] >= $info['max_guests']) {
+        //     $_SESSION['flash_error'] = "Chuyến đi đã đủ số lượng khách, không thể đặt thêm.";
+        //     header("Location: " . BASE_URL . "?mode=admin&action=viewDeparture");
+        //     exit;
+        // }
 
-        if ($info['status'] == 'completed') {
-            $_SESSION['flash_error'] = "Chuyến đi đã hoàn thành, không thể đặt thêm khách.";
-            header("Location: " . BASE_URL . "?mode=admin&action=viewsbooking");
-            exit;
-        }
+        // if ($info['status'] == 'completed') {
+        //     $_SESSION['flash_error'] = "Chuyến đi đã hoàn thành, không thể đặt thêm khách.";
+        //     header("Location: " . BASE_URL . "?mode=admin&action=viewDeparture");
+        //     exit;
+        // }
 
 
         $bookingModel = new BookingModel();
@@ -250,7 +250,7 @@ class AdminController
     public function storeGit()
     {
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-            header("Location: ?mode=admin&action=viewsbooking");
+            header("Location: ?mode=admin&action=viewDeparture");
             exit;
         }
 
@@ -306,7 +306,7 @@ class AdminController
     public function addGitGuests()
     {
         if (!isset($_SESSION['git_booking_id'])) {
-            header("Location: ?mode=admin&action=viewsbooking");
+            header("Location: ?mode=admin&action=viewDeparture");
             exit;
         }
 
@@ -868,21 +868,24 @@ class AdminController
     {
         $report = new ReportModel();
 
-        $revenue = $report->totalRevenue();
-        $expense = $report->totalExpense();
+        $tourSummary = $report->summaryByTour();
+
+        // Tính tổng doanh thu
+        $totalRevenue = array_sum(array_column($tourSummary, 'revenue'));
+
+        // Tính tổng chi phí
+        $totalCost = array_sum(array_column($tourSummary, 'cost'));
 
         $data = [
-            "title"    => "Dashboard Báo Cáo",
-            "revenue"  => $revenue,
-            "expense"  => $expense,
-            "profit"   => $revenue - $expense,
-            "tours"    => $report->totalTours(),
-            "guests"   => $report->totalGuests(),
-            "tourProfit" => $report->profitByTour(),
+            "title"       => "Dashboard Báo Cáo",
+            "revenue"     => $totalRevenue,
+            "expense"     => $totalCost,
+            "profit"      => $totalRevenue - $totalCost,
+            "tours"       => count($tourSummary),
+            "tourProfit"  => $tourSummary
         ];
 
         extract($data);
-
         $view = "admin/dashboard/dashboard";
         require_once PATH_VIEW_MAIN;
     }

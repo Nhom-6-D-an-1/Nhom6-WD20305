@@ -184,7 +184,10 @@ class BookingModel extends BaseModel
     // Lấy tất cả booking của chuyến đi
     public function getAllBookingInDeparture($departure_id)
     {
-        $sql = "SELECT * FROM `booking` WHERE departure_id = :id ORDER BY created_at ASC";
+        $sql = "SELECT b.*, v.version_name FROM `booking` b 
+        LEFT JOIN departure d ON b.departure_id = d.departure_id
+        LEFT JOIN tour_version v ON d.version_id = v.version_id
+        WHERE d.departure_id = :id ORDER BY created_at ASC";
         $stmt = $this->conn->prepare($sql);
         $stmt->execute(['id' => $departure_id]);
         return $stmt->fetchAll();
