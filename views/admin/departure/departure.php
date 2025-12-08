@@ -57,6 +57,10 @@
                                 class="btn btn-primary btn-sm">
                                 Chi tiết
                             </a>
+                            <a href="<?= BASE_URL ?>?mode=admin&action=views_add_booking"
+                                class="btn btn-success btn-sm mt-1">
+                                Thêm booking
+                            </a>
                         </td>
                     </tr>
                 <?php endforeach; ?>
