@@ -70,8 +70,7 @@ class ScheduleModel
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
     // Itinerary
-    public function getScheduleItinerary($version_id)
-    {
+    public function getScheduleItinerary($version_id) {
         $sql = "SELECT 
                 day_number,
                 start_time,
@@ -84,7 +83,7 @@ class ScheduleModel
             ";
 
         $stmt = $this->conn->prepare($sql);
-        $stmt->bindParam('version_id', $version_id, PDO::PARAM_INT);
+        $stmt->bindParam(':version_id', $version_id, PDO::PARAM_INT);
         $stmt->execute();
         $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
@@ -104,17 +103,17 @@ class ScheduleModel
     public function getScheduleCustomers($departure_id)
     {
         $sql = "SELECT 
-                g.guest_id,
-                g.full_name,
-                b.booking_id,
-                gc.status AS checkin_status
-            FROM guest g
-            JOIN booking b ON g.booking_id = b.booking_id
-            LEFT JOIN guest_checkin gc 
-                ON g.guest_id = gc.guest_id
-                AND gc.departure_id = :departure_id
-            WHERE b.departure_id = :departure_id
-            ORDER BY g.full_name ASC
+                    guest.guest_id,
+                    guest.full_name,
+                    guest.phone,
+                    guest.gender,
+                    booking.customer_name,
+                    guest_special_request.description AS special_request
+                FROM guest
+                JOIN booking ON guest.booking_id = booking.booking_id
+                LEFT JOIN guest_special_request ON guest.guest_id = guest_special_request.guest_id
+                WHERE booking.departure_id = :departure_id
+                ORDER BY guest.full_name ASC
         ";
 
         $stmt = $this->conn->prepare($sql);

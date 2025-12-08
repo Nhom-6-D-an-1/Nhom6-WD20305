@@ -89,7 +89,6 @@ match ($action) {
     'deleteService'      => (new DepartureController())->deleteService(),
 
 
-
     // Logout 
     'logout' => (new AuthController())->logout(),
     default            => (new AdminController())->viewDashboard(),

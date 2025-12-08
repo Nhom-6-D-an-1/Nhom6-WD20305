@@ -55,7 +55,7 @@ class GuestModel
         return $stmt->execute([
             ':guest_id'          => $data['guest_id'],
             ':description'       => $data['description'] ?? '',
-            ':medical_condition' => $data['medical_condition'] ?? '',  
+            ':medical_condition' => $data['medical_condition'] ?? '',
         ]);
     }
 
@@ -90,5 +90,20 @@ class GuestModel
 
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-}
 
+    // Danh sách khách theo chuyến đi
+    public function getGuestsByDeparture($departure_id)
+    {
+        $sql = "SELECT g.*, b.customer_name, b.customer_contact,
+                   sr.description, sr.medical_condition
+            FROM guest g
+            JOIN booking b ON g.booking_id = b.booking_id
+            LEFT JOIN guest_special_request sr ON sr.guest_id = g.guest_id
+            WHERE b.departure_id = :id
+            ORDER BY g.guest_id ASC";
+
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute(['id' => $departure_id]);
+        return $stmt->fetchAll();
+    }
+}

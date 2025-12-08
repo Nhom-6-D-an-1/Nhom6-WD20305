@@ -67,4 +67,14 @@ class TourGuideModel
     }
 
 
+    // Thêm để lấy user_id
+    public function getByUserId($user_id)
+    {
+        $sql = "SELECT * FROM tour_guide WHERE user_id = :user_id LIMIT 1";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
 }
