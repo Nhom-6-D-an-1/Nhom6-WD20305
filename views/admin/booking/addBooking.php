@@ -17,12 +17,11 @@
 
                 <?php if (!empty($departures) && is_array($departures)): ?>
                     <?php foreach ($departures as $d): ?>
-                        <option 
+                        <option
                             value="<?= htmlspecialchars((string)($d['departure_id'] ?? '')) ?>"
-                            data-price="<?= htmlspecialchars((string)($d['price'] ?? 0)) ?>"
-                        >
+                            data-price="<?= htmlspecialchars((string)($d['price'] ?? 0)) ?>">
                             <?= htmlspecialchars($d['version_name'] ?? '') ?> -
-                            <?= htmlspecialchars($d['tour_name'] ?? '') ?> 
+                            <?= htmlspecialchars($d['tour_name'] ?? '') ?>
                             (<?= !empty($d['start_date']) ? date('d/m/Y', strtotime($d['start_date'])) : 'N/A' ?>)
                         </option>
                     <?php endforeach; ?>
@@ -32,16 +31,16 @@
         </div>
 
         <div class="mt-4 d-flex gap-3">
+            <a href="<?= BASE_URL ?>?mode=admin&action=viewDeparture" class="btn btn-secondary">Huỷ</a>
             <button type="submit" class="btn btn-primary">Tiếp tục</button>
-            <a href="<?= BASE_URL ?>?mode=admin&action=viewsbooking" class="btn btn-secondary">Huỷ</a>
         </div>
 
     </form>
 </div>
 
 <script>
-function updatePrice(selectElement) {
-    const selectedOption = selectElement.options[selectElement.selectedIndex];
-    const price = selectedOption.getAttribute('data-price');
-}
+    function updatePrice(selectElement) {
+        const selectedOption = selectElement.options[selectElement.selectedIndex];
+        const price = selectedOption.getAttribute('data-price');
+    }
 </script>
