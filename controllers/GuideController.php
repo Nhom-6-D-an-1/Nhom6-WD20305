@@ -99,67 +99,83 @@ class GuideController
         require_once PATH_VIEW_MAIN;
     }
 
-    public function viewDiary()
-    {
-        $diary = new DiaryModel();
-        $customers = new CustomersModel();
-        $guide_id = $_SESSION['user']['guide_id'];
-        $assignedTours = $customers->getAssignedTours($guide_id);
+public function viewDiary()
+{
+    $diary = new DiaryModel();
+    $customers = new CustomersModel();
+    $guide_id = $_SESSION['user']['guide_id'];
+    $assignedTours = $customers->getAssignedTours($guide_id);
 
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $departure_id = $_POST['departure_id'] ?? null;
-            $note = trim($_POST['note']);
-            $date = $_POST['date'] ?? date('Y-m-d H:i:s');
-            $imagePath = null;
+    // NEW: Lấy danh sách ngày trong lịch trình nếu đã chọn tour
+    $itineraryDays = [];
+    $selectedDepartureId = $_GET['departure_id'] ?? 0;
+    if ($selectedDepartureId > 0) {
+        $itineraryDays = $diary->getItineraryDays($selectedDepartureId);
+    }
 
-            // Upload file
-            if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
-                $imagePath = uploadFile($_FILES['image'], 'diary/'); // helper trả về path relative
-            }
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $departure_id = $_POST['departure_id'] ?? null;
+        $note = trim($_POST['note'] ?? '');
+        $itinerary_id = !empty($_POST['itinerary_id']) ? (int)$_POST['itinerary_id'] : null;   
+        $handling_method = trim($_POST['handling_method'] ?? '');                                
+        $customer_feedback = trim($_POST['customer_feedback'] ?? '');                             
+        $imagePath = null;
 
-            if ($departure_id && $note) {
-                $diary->addDiary($departure_id, $guide_id, $note, $imagePath, $date);
-                // Reload để tránh resubmit
-                header("Location: " . BASE_URL . "?mode=guide&action=viewdiary&departure_id=$departure_id");
-                exit();
-            }
+        if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
+            $imagePath = uploadFile($_FILES['image'], 'diary/');
         }
 
-        // Lấy nhật ký theo tour đã chọn
-        $selectedTour = $_GET['departure_id'] ?? 0;
-        $diaryData = $diary->getAllDiaryByGuide($guide_id, $selectedTour);
-
-        $title = "Nhật ký tour";
-        $view = 'guide/diary/diary';
-        require_once PATH_VIEW_MAIN;
+        if ($departure_id && $note) {
+            $diary->addDiary(
+                $departure_id,
+                $guide_id,
+                $note,
+                $itinerary_id,
+                $handling_method,
+                $customer_feedback,
+                $imagePath
+            );
+            header("Location: " . BASE_URL . "?mode=guide&action=viewdiary&departure_id=$departure_id");
+            exit();
+        }
     }
+
+    $selectedTour = $_GET['departure_id'] ?? 0;
+    $diaryData = $diary->getAllDiaryByGuide($guide_id, $selectedTour);
+
+    $title = "Nhật ký tour";
+    $view = 'guide/diary/diary';
+    
+    // NEW: Truyền thêm biến $itineraryDays vào view
+    require_once PATH_VIEW_MAIN;
+}
 
 
     // DIARY - Thêm diary mới
-    public function addDiary()
-    {
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $departure_id = $_POST['departure_id'];
-            $guide_id = $_SESSION['user']['guide_id'];
-            $date = $_POST['date'];
-            $note = trim($_POST['note']);
-            $imagePath = null;
+    // public function addDiary()
+    // {
+    //     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    //         $departure_id = $_POST['departure_id'];
+    //         $guide_id = $_SESSION['user']['guide_id'];
+    //         $date = $_POST['date'];
+    //         $note = trim($_POST['note']);
+    //         $imagePath = null;
 
-            // Upload ảnh nếu có
-            if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
-                $imagePath = uploadFile($_FILES['image'], 'diary/');
-            }
+    //         // Upload ảnh nếu có
+    //         if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
+    //             $imagePath = uploadFile($_FILES['image'], 'diary/');
+    //         }
 
-            $diary = new DiaryModel();
-            $diary->addDiary($departure_id, $guide_id, $note, $imagePath);
+    //         $diary = new DiaryModel();
+    //         $diary->addDiary($departure_id, $guide_id, $note, $imagePath);
 
-            header("Location: " . BASE_URL . "?mode=guide&action=viewdiary");
-            exit();
-        }
+    //         header("Location: " . BASE_URL . "?mode=guide&action=viewdiary");
+    //         exit();
+    //     }
 
-        $customers = new CustomersModel();
-        $assignedTours = $customers->getAssignedTours($_SESSION['user']['guide_id']);
-    }
+    //     $customers = new CustomersModel();
+    //     $assignedTours = $customers->getAssignedTours($_SESSION['user']['guide_id']);
+    // }
 
 
     // DIARY - Xóa diary
