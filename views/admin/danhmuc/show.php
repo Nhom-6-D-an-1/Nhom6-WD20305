@@ -1,5 +1,5 @@
 <div class="container-fluid px-4">
-    <h3 class="mt-4 mb-4">Chi tiết danh mục tour: <?= $category['category_name'] ?></h3>
+    <h3 class="fw-bold mt-4 mb-4">Chi tiết danh mục tour: <?= $category['category_name'] ?></h3>
 
     <div class="card">
         <div class="card-body">

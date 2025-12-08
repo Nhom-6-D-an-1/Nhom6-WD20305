@@ -1,44 +1,89 @@
-<div class="p-4">
-  <h3>Quản lý nhân sự</h3>
+<div class="container-fluid px-4">
 
-  <!-- Bộ lọc và nút thêm -->
-  <!-- <div class="d-flex justify-content-between mb-3"> -->
-  <!-- <input type="text" class="form-control w-25" placeholder="Tìm HDV..."> -->
-  <!-- <button class="btn btn-success">Thêm HDV</button> -->
-  <!-- </div> -->
+    <!-- HEADER -->
+    <div class="d-flex justify-content-between align-items-center mt-4 mb-3">
+        <h3 >Quản lý nhân sự (Hướng dẫn viên)</h3>
+    </div>
 
-  <!-- Bảng nhân sự -->
-  <table class="table table-bordered table-hover">
-    <thead class="table">
-      <tr>
-        <th>STT</th>
-        <th>Họ tên</th>
-        <th>Ảnh</th>
-        <th>Chứng chỉ</th>
-        <th>Ngôn ngữ</th>
-        <th>Đánh giá</th>
-        <th>Hành động</th>
-      </tr>
-    </thead>
-    <tbody>
-      <?php foreach ($data_tourGuide as $key => $value) : ?>
-        <tr>
-          <td><?= $key + 1 ?></td>
-          <td><?= $value['full_name'] ?></td>
-          <td>
-            <?php if ($value['avatar']) : ?>
-              <img src="<?= BASE_ASSETS_UPLOADS . $value['avatar'] ?>" alt="Ảnh" width="100">
-            <?php endif; ?>
-          </td>
-          <td><?= $value['certificates'] ?></td>
-          <td><?= $value['languages'] ?></td>
-          <td><?= $value['rating'] ?>/5</td>
-          <td class="table-actions">
-            <a href="<?= BASE_URL ?>?mode=admin&action=viewGuideDetail&id=<?= $value['user_id']  ?>" class="btn btn-sm btn-info">Chi Tiết</a>
-            <!-- <button class="btn btn-sm btn-danger">Xoá</button> -->
-          </td>
-        </tr>
-      <?php endforeach; ?>
-    </tbody>
-  </table>
+    <!-- CARD CHÍNH -->
+    <div class="card shadow-sm">
+        <div class="card-body">
+
+            <!-- BẢNG NHÂN SỰ -->
+            <table class="table table-hover table-bordered align-middle">
+                <thead class="table-dark">
+                    <tr>
+                        <th style="width: 70px;">STT</th>
+                        <th>Họ tên</th>
+                        <th style="width: 120px;">Ảnh</th>
+                        <th>Chứng chỉ</th>
+                        <th>Ngôn ngữ</th>
+                        <th style="width: 120px;">Đánh giá</th>
+                        <th style="width: 150px;">Hành động</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                <?php foreach ($data_tourGuide as $key => $value): ?>
+                    <tr>
+                        <td><?= $key + 1 ?></td>
+
+                        <!-- TÊN HDV -->
+                        <td class="fw-semibold">
+                            <?= htmlspecialchars($value['full_name'] ?? '', ENT_QUOTES, 'UTF-8') ?>
+                        </td>
+
+                        <!-- ẢNH ĐẠI DIỆN -->
+                        <td>
+                            <?php if (!empty($value['avatar'])): ?>
+                                <img src="<?= BASE_ASSETS_UPLOADS . $value['avatar'] ?>"
+                                     alt="Avatar"
+                                     class="img-fluid rounded"
+                                     style="width: 90px; height: 90px; object-fit: cover;">
+                            <?php else: ?>
+                                <span class="text-muted">Không có ảnh</span>
+                            <?php endif; ?>
+                        </td>
+
+                        <!-- CHỨNG CHỈ -->
+                        <td>
+                            <?php if (!empty($value['certificates'])): ?>
+                                <span class="badge bg-primary">
+                                    <?= htmlspecialchars($value['certificates'] ?? '', ENT_QUOTES, 'UTF-8') ?>
+                                </span>
+                            <?php else: ?>
+                                <span class="text-muted">—</span>
+                            <?php endif; ?>
+                        </td>
+
+                        <!-- NGÔN NGỮ -->
+                        <td>
+                            <?php if (!empty($value['languages'])): ?>
+                                <span class="badge bg-success">
+                                    <?= htmlspecialchars($value['languages'] ?? '', ENT_QUOTES, 'UTF-8') ?>
+                                </span>
+                            <?php else: ?>
+                                <span class="text-muted">—</span>
+                            <?php endif; ?>
+                        </td>
+
+                        <!-- ĐÁNH GIÁ -->
+                        <td>
+                            ⭐ <?= (float)$value['rating'] ?>/5
+                        </td>
+
+                        <!-- ACTION -->
+                        <td>
+                            <a href="<?= BASE_URL ?>?mode=admin&action=viewGuideDetail&id=<?= $value['user_id'] ?>"
+                               class="btn btn-info btn-sm w-100">
+                                Chi tiết
+                            </a>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
 </div>

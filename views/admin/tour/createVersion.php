@@ -1,47 +1,84 @@
-<div class="container mt-4">
-    <h3>Tạo Phiên Bản Tour</h3>
-    <p class="text-muted">Thuộc tour: <?= $data['tour_name'] ?></p>
+<div class="container-fluid px-4">
 
-    <form class="mt-3" method="post">
-        <input type="hidden" name="tour_id" value="<?= $data['tour_id'] ?>">
-        <div class="mb-3">
-            <label class="form-label">Tên phiên bản</label>
-            <input type="text" class="form-control" name="version_name" placeholder="V1.2 - Summer 2025">
-        </div>
+    <h3 class="mt-4 mb-1 fw-bold">Tạo Phiên Bản Tour</h3>
+    <p class="text-muted mb-4">Thuộc tour: <strong><?= $data['tour_name'] ?></strong></p>
 
-        <div class="mb-3">
-            <label class="form-label">Mã phiên bản</label>
-            <input type="text" class="form-control" name="version_code" placeholder="HG-001-V12">
-        </div>
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
 
-        <div class="mb-3">
-            <label class="form-label">Mùa</label>
-            <input type="text" class="form-control" name="season">
-        </div>
+            <!-- Tiêu đề nhỏ -->
+            <h5 class="fw-semibold text-primary mb-3">Thông tin phiên bản</h5>
 
-        <div class="mb-3">
-            <label class="form-label">Giá</label>
-            <input type="number" class="form-control" name="price">
-        </div>
+            <form method="post">
 
-        <div class="mb-3">
-            <label class="form-label">Ngày áp dụng</label>
-            <div class="row">
-                <div class="col">
-                    <input type="date" class="form-control" name="valid_from">
+                <input type="hidden" name="tour_id" value="<?= $data['tour_id'] ?>">
+
+                <div class="row g-4">
+
+                    <!-- Cột trái -->
+                    <div class="col-md-6">
+
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">Tên phiên bản</label>
+                            <input type="text" class="form-control form-control-lg"
+                                   name="version_name" placeholder="VD: V1.2 - Hè 2025">
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">Mã phiên bản</label>
+                            <input type="text" class="form-control"
+                                   name="version_code" placeholder="VD: HG-001-V12">
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">Mùa</label>
+                            <input type="text" class="form-control" name="season" placeholder="Xuân / Hè / Thu / Đông">
+                        </div>
+
+                    </div>
+
+                    <!-- Cột phải -->
+                    <div class="col-md-6">
+
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">Giá (VND)</label>
+                            <input type="number" class="form-control" name="price" placeholder="Nhập giá...">
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">Ngày áp dụng</label>
+                            <div class="d-flex gap-3">
+                                <input type="date" class="form-control" name="valid_from">
+                                <input type="date" class="form-control" name="valid_to">
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="col">
-                    <input type="date" class="form-control" name="valid_to">
+
+                <hr class="my-4">
+
+                <!-- Phần chính sách -->
+                <h5 class="fw-semibold text-primary mb-3">Chính sách áp dụng</h5>
+
+                <div class="mb-3">
+                    <textarea class="form-control" rows="5" name="policies"
+                              placeholder="Nhập chính sách cho phiên bản tour..."></textarea>
                 </div>
-            </div>
-        </div>
 
-        <div class="mb-3">
-            <label class="form-label">Chính sách</label>
-            <textarea class="form-control" rows="4" name="policies"></textarea>
-        </div>
-        <a href="<?= BASE_URL ?>?mode=admin&action=tourDetail&tab=versions&id=<?= $data['tour_id'] ?>" class="btn btn-secondary">Quay lại</a>
-        <button class="btn btn-primary">Tạo phiên bản</button>
+                <!-- Nút hành động -->
+                <div class="d-flex justify-content-end mt-4">
+                    <a href="<?= BASE_URL ?>?mode=admin&action=tourDetail&tab=versions&id=<?= $data['tour_id'] ?>" 
+                       class="btn btn-secondary btn-lg me-2">
+                        Quay lại
+                    </a>
 
-    </form>
+                    <button class="btn btn-primary btn-lg px-4">
+                        Tạo phiên bản
+                    </button>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
 </div>
