@@ -12,7 +12,7 @@ class TourVersionModel
     // Lấy tất cả phiên bản của tour
     public function getAllVersionByTourId($tour_id)
     {
-        $sql = "SELECT * FROM tour_version WHERE tour_id = :tour_id";
+        $sql = "SELECT v.*, i.image_url FROM tour_version v LEFT JOIN tour_image i ON v.version_id = i.version_id WHERE tour_id = :tour_id";
         $stmt = $this->conn->prepare($sql);
         $stmt->execute(['tour_id' => $tour_id]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);

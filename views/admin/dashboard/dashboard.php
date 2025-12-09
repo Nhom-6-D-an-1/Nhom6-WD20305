@@ -19,8 +19,8 @@
     <div class="col-md-3">
         <div class="card shadow-sm p-3">
             <h6 class="text-muted">Lợi nhuận</h6>
-            <?php 
-                $profitColor = $profit >= 0 ? "text-primary" : "text-danger fw-bold";
+            <?php
+            $profitColor = $profit >= 0 ? "text-primary" : "text-danger fw-bold";
             ?>
             <h4 class="fw-bold <?= $profitColor ?>"><?= number_format($profit) ?> đ</h4>
         </div>
@@ -28,7 +28,7 @@
 
     <div class="col-md-3">
         <div class="card shadow-sm p-3">
-            <h6 class="text-muted">Số tour tổ chức</h6>
+            <h6 class="text-muted">Số tour hoàn thành</h6>
             <h4 class="fw-bold"><?= $tours ?></h4>
         </div>
     </div>
@@ -57,24 +57,27 @@
             </tr>
         <?php else: ?>
 
-            <?php foreach ($tourProfit as $row): 
+            <?php foreach ($tourProfit as $row):
                 $profitColor = $row["profit"] >= 0 ? "text-success" : "text-danger fw-bold";
             ?>
-            <tr>
-                <td><?= $row["tour_name"] ?></td>
+                <tr>
+                    <td><?= $row["departure_name"] ?> (<?= $row["tour_name"] ?>
+                        - <?= $row["version_name"] ?>)<br>
+                        <small><?= $row["start_date"] ?> → <?= $row["end_date"] ?></small>
+                    </td>
 
-                <td style="text-align:right;">
-                    <?= number_format($row["revenue"]) ?> đ
-                </td>
+                    <td style="text-align:right;">
+                        <?= number_format($row["revenue"]) ?> đ
+                    </td>
 
-                <td style="text-align:right;">
-                    <?= number_format($row["cost"]) ?> đ
-                </td>
+                    <td style="text-align:right;">
+                        <?= number_format($row["cost"]) ?> đ
+                    </td>
 
-                <td style="text-align:right;" class="<?= $profitColor ?>">
-                    <?= number_format($row["profit"]) ?> đ
-                </td>
-            </tr>
+                    <td style="text-align:right;" class="<?= $profitColor ?>">
+                        <?= number_format($row["profit"]) ?> đ
+                    </td>
+                </tr>
             <?php endforeach; ?>
 
         <?php endif; ?>

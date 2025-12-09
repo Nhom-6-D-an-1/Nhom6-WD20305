@@ -49,4 +49,17 @@ class ServiceAssignmentModel
         $stmt->execute(['id' => $sa_id]);
         return $stmt->fetch();
     }
+
+    public function getTotalCostByDeparture($departure_id)
+    {
+        $sql = "
+        SELECT SUM(price * quantity) AS total_cost
+        FROM service_assignment
+        WHERE departure_id = :id
+    ";
+
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute(['id' => $departure_id]);
+        return $stmt->fetchColumn() ?? 0;
+    }
 }

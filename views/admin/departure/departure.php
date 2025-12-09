@@ -1,74 +1,108 @@
-<div class="container mt-4">
+<div class="container-fluid px-4">
 
-    <div class="d-flex justify-content-between mb-3">
-        <h3>Danh sách chuyến đi</h3>
+    <h3 class="mt-4 mb-3 ">Danh sách chuyến đi</h3>
+
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+
+            <table class="table table-hover table-bordered align-middle">
+                <thead class="table-dark">
+                    <tr>
+                        <th>#</th>
+                        <th>Tên chuyến đi</th>
+                        <th>Ngày đi</th>
+                        <th>Ngày về</th>
+                        <th>Số chỗ</th>
+                        <th>Còn trống</th>
+                        <th>Giá bán</th>
+                        <th>Điểm đón</th>
+                        <th>HDV</th>
+                        <th>Trạng thái</th>
+                        <th width="150">Hành động</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <?php if (!empty($data_departure)): ?>
+                        <?php foreach ($data_departure as $key => $value): ?>
+                            <tr>
+                                <td><?= $key + 1 ?></td>
+
+                                <td>
+                                    <?= $value['departure_name'] ?><br>
+                                    <span class="text-muted small" style="font-size: 12px;"><?= $value['tour_name'] ?> - <?= $value['version_name'] ?></span>
+                                </td>
+
+                                <td><?= $value['start_date'] ?></td>
+
+                                <td><?= $value['end_date'] ?></td>
+
+                                <td><?= $value['max_guests'] ?></td>
+
+                                <td class=" fw-bold">
+                                    <?= (int)$value['max_guests'] - (int)$value['current_guests'] ?>
+                                </td>
+
+                                <td><?= number_format($value['actual_price'], 0, ',', '.') ?> VNĐ</td>
+
+                                <td>
+                                    <?= htmlspecialchars($value['pickup_location'] ?? '') ?>
+                                    <br>
+                                    <small class="text-muted"><?= $value['pickup_time'] ?></small>
+                                </td>
+
+                                <td>
+                                    <?= $value['full_name']
+                                        ? '<span class="text-success fw-semibold">' . $value['full_name'] . '</span>'
+                                        : '<span class="text-muted">Chưa phân công</span>'
+                                    ?>
+                                </td>
+
+                                <td>
+                                    <?php if ($value['status'] == 'open'): ?>
+                                        <span class="badge bg-primary">Mở bán</span>
+                                    <?php elseif ($value['status'] == 'running'): ?>
+                                        <span class="badge bg-success">Đang chạy</span>
+                                    <?php elseif ($value['status'] == 'completed'): ?>
+                                        <span class="badge bg-secondary">Hoàn thành</span>
+                                    <?php endif; ?>
+                                </td>
+
+                                <td class="text-center">
+                                    <a href="<?= BASE_URL ?>?mode=admin&action=departureEdit&id=<?= $value['departure_id'] ?>"
+                                        class="btn btn-warning btn-sm">
+                                        Sửa
+                                    </a>
+
+                                    <a href="<?= BASE_URL ?>?mode=admin&action=departureDetail&id=<?= $value['departure_id'] ?>"
+                                        class="btn btn-primary btn-sm">
+                                        Chi tiết
+                                    </a>
+                                    <a href="<?= BASE_URL ?>?mode=admin&action=createType&id=<?= $value['departure_id'] ?>"
+                                        class="btn btn-success btn-sm mt-1">
+                                        Thêm booking
+                                    </a>
+                                    <!-- <?php if ((int)$value['current_guests'] < (int)$value['max_guests']): ?>
+                                        <a href="<?= BASE_URL ?>?mode=admin&action=createType&id=<?= $value['departure_id'] ?>"
+                                            class="btn btn-success btn-sm mt-1">
+                                            Thêm booking
+                                        </a>
+                                    <?php else: ?>
+                                        <a class="btn btn-danger btn-sm mt-1" style="width:105px;">Đã đủ khách</a>
+                                    <?php endif; ?> -->
+                                </td>
+
+                            </tr>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <tr>
+                            <td colspan="11" class="text-center text-muted">Chưa có chuyến đi nào</td>
+                        </tr>
+                    <?php endif; ?>
+                </tbody>
+            </table>
+
+        </div>
     </div>
 
-    <table class="table table-bordered table-hover align-middle">
-        <thead class="table-light">
-            <tr>
-                <th>#</th>
-                <th>Tên chuyến đi</th>
-                <th>Ngày đi</th>
-                <th>Ngày về</th>
-                <th>Số chỗ</th>
-                <th>Còn trống</th>
-                <th>Giá bán</th>
-                <th>Điểm đón</th>
-                <th>HDV</th>
-                <th>Trạng thái</th>
-                <th width="140">Hành động</th>
-            </tr>
-        </thead>
-
-        <tbody>
-            <?php if (!empty($data_departure)): ?>
-                <?php foreach ($data_departure as $key => $value): ?>
-                    <tr>
-                        <td><?= $key + 1 ?></td>
-                        <td><?= $value['tour_name'] ?></td>
-                        <td><?= $value['start_date'] ?></td>
-                        <td><?= $value['end_date'] ?></td>
-                        <td><?= $value['max_guests'] ?></td>
-                        <td><?= (int)$value['max_guests'] -  (int)$value['current_guests'] ?></td>
-                        <td><?= number_format($value['actual_price'], 0, '', '.') ?> VNĐ</td>
-                        <td><?= $value['pickup_location'] ?> <br>
-                            <small class="text-muted"><?= $value['pickup_time'] ?></small>
-                        </td>
-                        <td><?= $value['full_name'] ?? '<span class="text-muted">Chưa phân công</span>' ?></td>
-                        <td>
-                            <?php if ($value['status'] == 'open'): ?>
-                                <span class="badge bg-success">Mở bán</span>
-                            <?php elseif ($value['status'] == 'full'): ?>
-                                <span class="badge bg-danger">Full</span>
-                            <?php elseif ($value['status'] == 'closed'): ?>
-                                <span class="badge bg-secondary">Đóng</span>
-                            <?php else: ?>
-                                <span class="badge bg-info">Hoàn thành</span>
-                            <?php endif; ?>
-                        </td>
-                        <td>
-                            <a href="<?= BASE_URL ?>?mode=admin&action=departureEdit&id=<?= $value['departure_id'] ?>"
-                                class="btn btn-warning btn-sm">
-                                Sửa
-                            </a>
-
-                            <a href="<?= BASE_URL ?>?mode=admin&action=departureDetail&id=<?= $value['departure_id'] ?>"
-                                class="btn btn-primary btn-sm">
-                                Chi tiết
-                            </a>
-                            <a href="<?= BASE_URL ?>?mode=admin&action=views_add_booking"
-                                class="btn btn-success btn-sm mt-1">
-                                Thêm booking
-                            </a>
-                        </td>
-                    </tr>
-                <?php endforeach; ?>
-            <?php else: ?>
-                <tr>
-                    <td colspan="9" class="text-center text-muted">Chưa có chuyến đi</td>
-                </tr>
-            <?php endif; ?>
-        </tbody>
-    </table>
 </div>

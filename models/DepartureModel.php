@@ -58,10 +58,10 @@ class DepartureModel
     public function createDeparture($data)
     {
         $sql = "INSERT INTO departure 
-                (version_id, start_date, end_date, max_guests, current_guests,
+                (version_id, departure_name, start_date, end_date, max_guests, current_guests,
                  actual_price, pickup_location, pickup_time, note, status)
                 VALUES 
-                (:version_id, :start_date, :end_date, :max_guests, :current_guests,
+                (:version_id, :departure_name, :start_date, :end_date, :max_guests, :current_guests,
                  :actual_price, :pickup_location, :pickup_time, :note, :status)";
 
         $stmt = $this->conn->prepare($sql);
@@ -72,6 +72,7 @@ class DepartureModel
     public function updateDeparture($id, $data)
     {
         $sql = "UPDATE departure SET 
+                departure_name = :departure_name,
                 start_date = :start_date,
                 end_date = :end_date,
                 max_guests = :max_guests,
@@ -146,5 +147,32 @@ class DepartureModel
             'status' => $status,
             'id' => $departure_id
         ]);
+    }
+    public function autoUpdateStatus()
+    {
+        $today = today();
+
+        // 1. Tour đã kết thúc → completed
+        $sql1 = "UPDATE departure 
+             SET status = 'completed'
+             WHERE end_date < ?";
+        $stmt1 = $this->conn->prepare($sql1);
+        $stmt1->execute([$today]);
+
+        // 2. Tour đang diễn ra → running
+        $sql2 = "UPDATE departure 
+             SET status = 'running'
+             WHERE start_date <= ?
+             AND end_date >= ?";
+        $stmt2 = $this->conn->prepare($sql2);
+        $stmt2->execute([$today, $today]);
+
+        // 3. Tour chưa diễn ra → open (trừ full & closed)
+        $sql3 = "UPDATE departure 
+             SET status = 'open'
+             WHERE start_date > ?
+             AND status NOT IN ('full','closed')";
+        $stmt3 = $this->conn->prepare($sql3);
+        $stmt3->execute([$today]);
     }
 }

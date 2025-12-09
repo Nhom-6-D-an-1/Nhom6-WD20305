@@ -5,12 +5,28 @@ class AdminController
     public function viewBooking()
     {
         $bookingModel = new BookingModel();
-        $bookings = $bookingModel->getAllBooking();
+        $departureModel = new DepartureModel();
+
+        // Lấy danh sách chuyến đi cho dropdown
+        $departures = $departureModel->getAllDepartures();
+
+        // Lấy filter
+        $departure_id = $_GET['departure_id'] ?? null;
+        $from_date    = $_GET['from_date'] ?? null;
+        $to_date      = $_GET['to_date'] ?? null;
+
+        // Nếu có filter thì lọc
+        if ($departure_id || $from_date || $to_date) {
+            $bookings = $bookingModel->filterBooking($departure_id, $from_date, $to_date);
+        } else {
+            $bookings = $bookingModel->getAllBooking();
+        }
 
         $title = "Quản lý booking";
         $view = 'admin/booking/booking';
         require_once PATH_VIEW_MAIN;
     }
+
     public function viewAddBooking()
     {
         // Load departures for selection
@@ -43,7 +59,6 @@ class AdminController
             exit;
         }
 
-        // 🔥 Quan trọng: Lấy khách theo booking_id thật của booking
         $booking_id = $booking['booking_id'];
         $guests = $guestModel->getGuestsByBooking($booking_id);
 
@@ -110,9 +125,9 @@ class AdminController
 
     public function createType()
     {
-        $departure_id = $_GET['departure_id'] ?? null;
+        $departure_id = $_GET['id'] ?? null;
         if (!$departure_id) {
-            header("Location: ?mode=admin&action=viewsbooking");
+            header("Location: ?mode=admin&action=viewDeparture");
             exit;
         }
 
@@ -123,7 +138,7 @@ class AdminController
 
     public function createFit()
     {
-        $departure_id = $_GET['departure_id'] ?? null;
+        $departure_id = $_GET['id'] ?? null;
         if (!$departure_id) {
             header("Location: ?mode=admin&action=viewsbooking");
             exit;
@@ -137,7 +152,7 @@ class AdminController
 
     public function createGit()
     {
-        $departure_id = $_GET['departure_id'] ?? null;
+        $departure_id = $_GET['id'] ?? null;
         if (!$departure_id) {
             header("Location: ?mode=admin&action=viewsbooking");
             exit;
@@ -151,49 +166,43 @@ class AdminController
     public function storeFit()
     {
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-            header("Location: ?mode=admin&action=viewsbooking");
+            header("Location: ?mode=admin&action=viewDeparture");
             exit;
         }
 
         $departure_id = $_POST['departure_id'];
-
         $departure = new DepartureModel();
         $info = $departure->getOneDeparture($departure_id);
 
-        if ($info['current_guests'] >= $info['max_guests']) {
-            $_SESSION['flash_error'] = "Chuyến đi đã đủ số lượng khách, không thể đặt thêm.";
-            header("Location: " . BASE_URL . "?mode=admin&action=viewsbooking");
-            exit;
-        }
-
-        if ($info['status'] == 'completed') {
-            $_SESSION['flash_error'] = "Chuyến đi đã hoàn thành, không thể đặt thêm khách.";
-            header("Location: " . BASE_URL . "?mode=admin&action=viewsbooking");
-            exit;
-        }
-
-
+        // Lấy số khách hiện tại
         $bookingModel = new BookingModel();
-        $guestModel   = new GuestModel();
+        $current = $bookingModel->countGuestsInDeparture($departure_id);
+        $max = $info['max_guests'];
 
-        // Lấy dữ liệu gửi từ form
+        // Kiểm tra full TRƯỚC khi thêm booking
+        if ($current >= $max) {
+            $_SESSION['flash_error'] = "Chuyến đi đã đủ số lượng khách, không thể đặt thêm.";
+            header("Location: " . BASE_URL . "?mode=admin&action=viewDeparture");
+            exit;
+        }
 
+        // Dữ liệu
         $full_name    = $_POST['full_name'];
         $gender       = $_POST['gender'];
         $birth_year   = $_POST['birth_year'];
         $phone        = $_POST['phone'];
-        $cccd        = $_POST['cccd'];
+        $cccd         = $_POST['cccd'];
         $special      = $_POST['special_request'] ?? null;
         $total_amount = $_POST['total_amount'] ?? null;
         $status       = $_POST['status'] ?? 'pending';
 
-        // Nếu total_amount rỗng → tự lấy giá tour
+        // Nếu không nhập tiền → lấy giá tour mặc định
         if (empty($total_amount)) {
             $price = $bookingModel->getDeparturePrice($departure_id);
             $total_amount = $price ?? 0;
         }
 
-        // 1. Thêm booking
+        // Tạo booking
         $booking_id = $bookingModel->addBooking([
             'departure_id'     => $departure_id,
             'customer_name'    => $full_name,
@@ -203,77 +212,95 @@ class AdminController
             'status'           => $status,
         ]);
 
-        // 2. Thêm khách lẻ (guest)
+        // Thêm khách
+        $guestModel = new GuestModel();
         $guest_id = $guestModel->addGuest([
             'booking_id' => $booking_id,
             'full_name'  => $full_name,
             'gender'     => $gender,
             'birth_year' => $birth_year,
             'phone'      => $phone,
-            'cccd'      => $cccd,
+            'cccd'       => $cccd,
         ]);
 
-        // 3. Nếu có yêu cầu đặc biệt thì thêm
+        // Yêu cầu đặc biệt
         if (!empty($special)) {
             $guestModel->addSpecialRequest([
-                'guest_id'    => $guest_id,
-                'description' => $special,
+                'guest_id' => $guest_id,
+                'description' => $special
             ]);
         }
 
+        // Cập nhật tổng khách
         $bookingModel->updateBooking($booking_id, [
-            'departure_id'     => $departure_id,
-            'customer_name'    => $full_name,
+            'departure_id' => $departure_id,
+            'customer_name' => $full_name,
             'customer_contact' => $phone,
-            'customer_type'    => 'le',
-            'total_amount'     => $total_amount,
-            'status'           => $status,
-            'total_guests'     => 1
+            'customer_type' => 'le',
+            'total_amount' => $total_amount,
+            'status' => $status,
+            'total_guests' => 1
         ]);
 
-        $departure = new DepartureModel();
         $departure->updateCurrentGuests($departure_id);
 
-        // Kiểm tra lại số khách sau khi cập nhật
-        $info = $departure->getOneDeparture($departure_id);
-
-        if ($info['current_guests'] >= $info['max_guests']) {
+        // Nếu đủ khách → chuyển trạng thái full
+        $current = $bookingModel->countGuestsInDeparture($departure_id);
+        if ($current >= $max) {
             $departure->updateStatus($departure_id, 'full');
         }
 
-        // Chuyển hướng sang trang chi tiết booking
         header("Location: " . BASE_URL . "?mode=admin&action=showbooking&id=" . $booking_id);
         exit;
     }
 
 
+
     public function storeGit()
     {
         if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-            header("Location: ?mode=admin&action=viewsbooking");
+            header("Location: ?mode=admin&action=viewDeparture");
             exit;
         }
 
-        $bookingModel = new BookingModel();
-
-        // Lấy dữ liệu từ form
         $departure_id = $_POST['departure_id'];
+
+        $departure = new DepartureModel();
+        $info = $departure->getOneDeparture($departure_id);
+
+        if (!$info) {
+            $_SESSION['flash_error'] = "Chuyến đi không tồn tại.";
+            header("Location: ?mode=admin&action=viewDeparture");
+            exit;
+        }
+
+        $max = $info['max_guests'];
+
+        $bookingModel = new BookingModel();
+        $current = $bookingModel->countGuestsInDeparture($departure_id);
+
+        // Không còn chỗ
+        if ($current >= $max) {
+            $_SESSION['flash_error'] = "Chuyến đi đã đủ khách, không thể thêm booking đoàn.";
+            header("Location: " . BASE_URL . "?mode=admin&action=viewDeparture");
+            exit;
+        }
+
+        // ===============================
+        // 1) Tạo booking đoàn
+        // ===============================
         $full_name    = $_POST['full_name'];
         $gender       = $_POST['gender'];
         $birth_year   = $_POST['birth_year'];
         $phone        = $_POST['phone'];
-        $cccd        = $_POST['cccd'];
+        $cccd         = $_POST['cccd'];
         $special      = $_POST['special_request'] ?? null;
-        $total_amount = $_POST['total_amount'] ?? null;
         $status       = $_POST['status'] ?? 'pending';
 
-        // Nếu người dùng không nhập giá → tự lấy giá phiên bản tour
-        if (empty($total_amount)) {
-            $price = $bookingModel->getDeparturePrice($departure_id);
-            $total_amount = $price ?? 0;
-        }
+        // Nếu không nhập giá → lấy giá tour
+        $price = $bookingModel->getDeparturePrice($departure_id);
+        $total_amount = $price ?? 0;
 
-        // Tạo booking GIT
         $booking_id = $bookingModel->addBooking([
             'departure_id'     => $departure_id,
             'customer_name'    => $full_name,
@@ -283,11 +310,12 @@ class AdminController
             'status'           => $status,
         ]);
 
-        // Lưu thông tin khách trưởng đoàn vào session lưu tạm
+        // ===============================
+        // 2) Lưu trưởng đoàn vào session
+        // ===============================
         $_SESSION['git_booking_id'] = $booking_id;
         $_SESSION['git_guests'] = [];
 
-        // Lưu trưởng đoàn vào danh sách khách luôn
         $_SESSION['git_guests'][] = [
             'full_name' => $full_name,
             'gender' => $gender,
@@ -298,30 +326,40 @@ class AdminController
             'medical_condition' => null
         ];
 
-        // Chuyển sang trang thêm khách đoàn
         header("Location: " . BASE_URL . "?mode=admin&action=addGitGuests");
         exit;
     }
 
-    public function addGitGuests()
-    {
-        if (!isset($_SESSION['git_booking_id'])) {
-            header("Location: ?mode=admin&action=viewsbooking");
-            exit;
-        }
-
-        $guest_list = $_SESSION['git_guests'] ?? [];
-
-        $title = "Thêm khách đoàn";
-        $view = "admin/booking/create_git_guests";
-
-        require_once PATH_VIEW_MAIN;
-    }
 
     public function storeGitGuest()
     {
+        if (!isset($_SESSION['git_booking_id'])) {
+            header("Location: ?mode=admin&action=viewDeparture");
+            exit;
+        }
 
-        // Lưu khách mới vào session
+        $booking_id = $_SESSION['git_booking_id'];
+        $bookingModel = new BookingModel();
+        $booking = $bookingModel->getBookingById($booking_id);
+
+        $departure_id = $booking['departure_id'];
+
+        $departure = new DepartureModel();
+        $info = $departure->getOneDeparture($departure_id);
+
+        $max = $info['max_guests'];
+
+        $current = $bookingModel->countGuestsInDeparture($departure_id);
+        $currentSession = count($_SESSION['git_guests']);
+
+        // Nếu thêm 1 khách nữa mà vượt → cấm
+        if (($current + $currentSession + 1) > $max) {
+            $_SESSION['flash_error'] = "Không thể thêm khách vì vượt quá số chỗ còn lại!";
+            header("Location: " . BASE_URL . "?mode=admin&action=addGitGuests");
+            exit;
+        }
+
+        // Lưu khách vào session
         $_SESSION['git_guests'][] = [
             'full_name' => $_POST['full_name'],
             'gender' => $_POST['gender'],
@@ -332,20 +370,74 @@ class AdminController
             'medical_condition' => $_POST['medical_condition'] ?? ''
         ];
 
-        // Quay lại trang thêm khách
         header("Location: " . BASE_URL . "?mode=admin&action=addGitGuests");
         exit;
     }
 
+    public function deleteGitGuest()
+    {
+        if (!isset($_SESSION['git_guests'])) {
+            header("Location: ?mode=admin&action=addGitGuests");
+            exit;
+        }
+
+        $index = $_GET['index'] ?? null;
+
+        if ($index !== null && isset($_SESSION['git_guests'][$index])) {
+
+            // Xóa đúng khách
+            unset($_SESSION['git_guests'][$index]);
+
+            // Sắp xếp lại key của mảng để không bị nhảy index
+            $_SESSION['git_guests'] = array_values($_SESSION['git_guests']);
+
+            $_SESSION['flash_success'] = "Đã xóa khách thành công.";
+        }
+
+        header("Location: ?mode=admin&action=addGitGuests");
+        exit;
+    }
+
+
     public function finishGit()
     {
+        if (!isset($_SESSION['git_booking_id'])) {
+            header("Location: ?mode=admin&action=viewDeparture");
+            exit;
+        }
 
         $booking_id = $_SESSION['git_booking_id'];
         $guests = $_SESSION['git_guests'];
 
-        $guestModel = new GuestModel();
         $bookingModel = new BookingModel();
-        $data_departure  = $bookingModel->getBookingById($booking_id);
+        $guestModel = new GuestModel();
+
+        $booking = $bookingModel->getBookingById($booking_id);
+        $departure_id = $booking['departure_id'];
+
+        $departure = new DepartureModel();
+        $info = $departure->getOneDeparture($departure_id);
+
+        $max = $info['max_guests'];
+        $current = $bookingModel->countGuestsInDeparture($departure_id);
+
+        // Tổng số khách sau khi thêm
+        $totalAfterAdd = $current + count($guests);
+
+        //  Nếu vượt → rollback booking
+        if ($totalAfterAdd > $max) {
+
+            // Xóa booking rỗng
+            $bookingModel->deleteBooking($booking_id);
+
+            $_SESSION['flash_error'] = "Số lượng khách vượt quá số chỗ. Booking đã bị hủy!";
+            header("Location: " . BASE_URL . "?mode=admin&action=viewDeparture");
+            exit;
+        }
+
+        // ===========================
+        // Thêm từng khách vào DB
+        // ===========================
         foreach ($guests as $g) {
             $guest_id = $guestModel->addGuest([
                 'booking_id' => $booking_id,
@@ -356,7 +448,6 @@ class AdminController
                 'cccd' => $g['cccd'],
             ]);
 
-            // Nếu có yêu cầu đặc biệt
             if (!empty($g['special_request']) || !empty($g['medical_condition'])) {
                 $guestModel->addSpecialRequest([
                     'guest_id' => $guest_id,
@@ -366,28 +457,22 @@ class AdminController
             }
         }
 
-        $total_guests = count($guests);
-        $price = $bookingModel->getDeparturePrice($data_departure['departure_id']);
-        $total_amount = $price * $total_guests;
+        // Cập nhật booking
+        $price = $bookingModel->getDeparturePrice($departure_id);
+        $total_amount = $price * count($guests);
 
         $bookingModel->updateBooking($booking_id, [
-            'departure_id' => $data_departure['departure_id'],
-            'customer_name' => $data_departure['customer_name'],
-            'customer_contact' => $data_departure['customer_contact'],
+            'departure_id' => $departure_id,
+            'customer_name' => $booking['customer_name'],
+            'customer_contact' => $booking['customer_contact'],
             'customer_type' => 'doan',
             'total_amount' => $total_amount,
             'status' => 'completed',
-            'total_guests' => $total_guests
+            'total_guests' => count($guests)
         ]);
 
-        $departure = new DepartureModel();
-        $departure->updateCurrentGuests($data_departure['departure_id']);
-
-        // kiểm tra xem full chưa
-        $info = $departure->getOneDeparture($data_departure['departure_id']);
-        if ($info['current_guests'] >= $info['max_guests']) {
-            $departure->updateStatus($data_departure['departure_id'], 'full');
-        }
+        // Cập nhật số khách chuyến đi
+        $departure->updateCurrentGuests($departure_id);
 
         // Dọn session
         unset($_SESSION['git_booking_id']);
@@ -397,6 +482,21 @@ class AdminController
         exit;
     }
 
+
+    public function addGitGuests()
+    {
+        if (!isset($_SESSION['git_booking_id'])) {
+            header("Location: ?mode=admin&action=viewDeparture");
+            exit;
+        }
+
+        $guest_list = $_SESSION['git_guests'] ?? [];
+
+        $title = "Thêm khách đoàn";
+        $view = "admin/booking/create_git_guests";
+
+        require_once PATH_VIEW_MAIN;
+    }
 
     public function storeGuest()
     {
@@ -455,6 +555,56 @@ class AdminController
         $title = "Danh sách khách đoàn";
         $view = "admin/booking/guest_list";
         require_once PATH_VIEW_MAIN;
+    }
+
+    public function deleteGuest()
+    {
+        $guest_id = $_GET['id'] ?? null;
+
+        if (!$guest_id) {
+            $_SESSION['flash_error'] = "ID khách không hợp lệ.";
+            header("Location: " . BASE_URL . "?mode=admin&action=viewsbooking");
+            exit;
+        }
+
+        $guestModel = new GuestModel();
+        $bookingModel = new BookingModel();
+        $departureModel = new DepartureModel();
+
+        // Lấy booking_id của khách
+        $guest = $guestModel->getGuestById($guest_id);
+
+        if (!$guest) {
+            $_SESSION['flash_error'] = "Khách không tồn tại.";
+            header("Location: " . BASE_URL . "?mode=admin&action=viewsbooking");
+            exit;
+        }
+
+        $booking_id = $guest['booking_id'];
+
+        // Lấy thông tin booking để lấy departure_id
+        $booking = $bookingModel->getBookingById($booking_id);
+        $departure_id = $booking['departure_id'];
+
+        // Xóa khách
+        $guestModel->deleteGuest($guest_id);
+
+        // Cập nhật lại số khách của chuyến
+        $departureModel->updateCurrentGuests($departure_id);
+
+        // Lấy lại thông tin chuyến
+        $info = $departureModel->getOneDeparture($departure_id);
+
+        // Nếu chuyến đang full mà giờ còn chỗ → mở lại bán
+        if ($info['current_guests'] < $info['max_guests'] && $info['status'] == 'full') {
+            $departureModel->updateStatus($departure_id, 'open');
+        }
+
+        $_SESSION['flash_success'] = "Xóa khách thành công!";
+
+        // Quay lại trang chi tiết booking
+        header("Location: " . BASE_URL . "?mode=admin&action=departureDetail&tab=guests&id=" . $departure_id);
+        exit;
     }
 
 
@@ -525,20 +675,36 @@ class AdminController
     public function deleteBooking()
     {
         $id = $_GET['id'] ?? null;
+
         if ($id) {
             $bookingModel = new BookingModel();
+
+            // Lấy departure_id trước khi xóa
+            $booking = $bookingModel->getBookingById($id);
+            $departure_id = $booking['departure_id'] ?? null;
+
+            // Xóa booking
             $ok = $bookingModel->deleteBooking((int)$id);
-            if ($ok) {
-                $_SESSION['flash_success'] = "Xóa booking thành công.";
-            } else {
-                $_SESSION['flash_error'] = "Xóa booking thất bại. Vui lòng kiểm tra ràng buộc dữ liệu.";
+
+            if ($ok && $departure_id) {
+                // Cập nhật lại số khách thật
+                $departureModel = new DepartureModel();
+                $departureModel->updateCurrentGuests($departure_id);
+
+                // Reset trạng thái từ full nếu đã có chỗ trống
+                $info = $departureModel->getOneDeparture($departure_id);
+                if ($info['current_guests'] < $info['max_guests']) {
+                    $departureModel->updateStatus($departure_id, 'open');
+                }
             }
-        } else {
-            $_SESSION['flash_error'] = "ID booking không hợp lệ.";
+
+            $_SESSION['flash_success'] = "Xóa booking thành công.";
         }
+
         header('Location: ' . BASE_URL . '?mode=admin&action=viewsbooking');
         exit;
     }
+
 
 
     //DANH MỤC TOUR
@@ -866,23 +1032,29 @@ class AdminController
 
     public function viewDashboard()
     {
+        $departure = new DepartureModel();
+        $departure->autoUpdateStatus();
+
         $report = new ReportModel();
 
-        $revenue = $report->totalRevenue();
-        $expense = $report->totalExpense();
+        $departureSummary = $report->summaryByDeparture();
+
+        // Tính tổng doanh thu
+        $totalRevenue = array_sum(array_column($departureSummary, 'revenue'));
+
+        // Tính tổng chi phí
+        $totalCost = array_sum(array_column($departureSummary, 'cost'));
 
         $data = [
-            "title"    => "Dashboard Báo Cáo",
-            "revenue"  => $revenue,
-            "expense"  => $expense,
-            "profit"   => $revenue - $expense,
-            "tours"    => $report->totalTours(),
-            "guests"   => $report->totalGuests(),
-            "tourProfit" => $report->profitByTour(),
+            "title"       => "Dashboard Báo Cáo",
+            "revenue"     => $totalRevenue,
+            "expense"     => $totalCost,
+            "profit"      => $totalRevenue - $totalCost,
+            "tours"       => count($departureSummary),
+            "tourProfit"  => $departureSummary
         ];
 
         extract($data);
-
         $view = "admin/dashboard/dashboard";
         require_once PATH_VIEW_MAIN;
     }
