@@ -5,6 +5,8 @@ class GuideController
     // SCHEDULE
     public function viewSchedule()
     {
+        $departure = new DepartureModel();
+        $departure->autoUpdateStatus();
         $schedule = new ScheduleModel();
         $customers = new CustomersModel();
         $guide_id = $_SESSION['user']['guide_id'];
@@ -99,56 +101,56 @@ class GuideController
         require_once PATH_VIEW_MAIN;
     }
 
-public function viewDiary()
-{
-    $diary = new DiaryModel();
-    $customers = new CustomersModel();
-    $guide_id = $_SESSION['user']['guide_id'];
-    $assignedTours = $customers->getAssignedTours($guide_id);
+    public function viewDiary()
+    {
+        $diary = new DiaryModel();
+        $customers = new CustomersModel();
+        $guide_id = $_SESSION['user']['guide_id'];
+        $assignedTours = $customers->getAssignedTours($guide_id);
 
-    // NEW: Lấy danh sách ngày trong lịch trình nếu đã chọn tour
-    $itineraryDays = [];
-    $selectedDepartureId = $_GET['departure_id'] ?? 0;
-    if ($selectedDepartureId > 0) {
-        $itineraryDays = $diary->getItineraryDays($selectedDepartureId);
-    }
-
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $departure_id = $_POST['departure_id'] ?? null;
-        $note = trim($_POST['note'] ?? '');
-        $itinerary_id = !empty($_POST['itinerary_id']) ? (int)$_POST['itinerary_id'] : null;   
-        $handling_method = trim($_POST['handling_method'] ?? '');                                
-        $customer_feedback = trim($_POST['customer_feedback'] ?? '');                             
-        $imagePath = null;
-
-        if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
-            $imagePath = uploadFile($_FILES['image'], 'diary/');
+        // NEW: Lấy danh sách ngày trong lịch trình nếu đã chọn tour
+        $itineraryDays = [];
+        $selectedDepartureId = $_GET['departure_id'] ?? 0;
+        if ($selectedDepartureId > 0) {
+            $itineraryDays = $diary->getItineraryDays($selectedDepartureId);
         }
 
-        if ($departure_id && $note) {
-            $diary->addDiary(
-                $departure_id,
-                $guide_id,
-                $note,
-                $itinerary_id,
-                $handling_method,
-                $customer_feedback,
-                $imagePath
-            );
-            header("Location: " . BASE_URL . "?mode=guide&action=viewdiary&departure_id=$departure_id");
-            exit();
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $departure_id = $_POST['departure_id'] ?? null;
+            $note = trim($_POST['note'] ?? '');
+            $itinerary_id = !empty($_POST['itinerary_id']) ? (int)$_POST['itinerary_id'] : null;
+            $handling_method = trim($_POST['handling_method'] ?? '');
+            $customer_feedback = trim($_POST['customer_feedback'] ?? '');
+            $imagePath = null;
+
+            if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
+                $imagePath = uploadFile($_FILES['image'], 'diary/');
+            }
+
+            if ($departure_id && $note) {
+                $diary->addDiary(
+                    $departure_id,
+                    $guide_id,
+                    $note,
+                    $itinerary_id,
+                    $handling_method,
+                    $customer_feedback,
+                    $imagePath
+                );
+                header("Location: " . BASE_URL . "?mode=guide&action=viewdiary&departure_id=$departure_id");
+                exit();
+            }
         }
+
+        $selectedTour = $_GET['departure_id'] ?? 0;
+        $diaryData = $diary->getAllDiaryByGuide($guide_id, $selectedTour);
+
+        $title = "Nhật ký tour";
+        $view = 'guide/diary/diary';
+
+        // NEW: Truyền thêm biến $itineraryDays vào view
+        require_once PATH_VIEW_MAIN;
     }
-
-    $selectedTour = $_GET['departure_id'] ?? 0;
-    $diaryData = $diary->getAllDiaryByGuide($guide_id, $selectedTour);
-
-    $title = "Nhật ký tour";
-    $view = 'guide/diary/diary';
-    
-    // NEW: Truyền thêm biến $itineraryDays vào view
-    require_once PATH_VIEW_MAIN;
-}
 
 
     // DIARY - Thêm diary mới

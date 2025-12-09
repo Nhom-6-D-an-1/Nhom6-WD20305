@@ -15,17 +15,22 @@
             <form method="POST">
 
                 <!-- DATE FIELDS -->
-                <div class="row">
+                <div class="md-4">
+                    <label class="form-label fw-semibold">Tên chuyến đi</label>
+                    <input type="text" name="departure_name" class="form-control" value="<?= $data_departure['departure_name'] ?>" required>
+
+                </div>
+                <div class="row mt-3">
                     <div class="col-md-6 mb-3">
                         <label class="form-label fw-semibold">Ngày khởi hành</label>
                         <input type="date" name="start_date" class="form-control"
-                               value="<?= $data_departure['start_date'] ?>" required>
+                            value="<?= $data_departure['start_date'] ?>" required>
                     </div>
 
                     <div class="col-md-6 mb-3">
                         <label class="form-label fw-semibold">Ngày kết thúc</label>
                         <input type="date" name="end_date" class="form-control"
-                               value="<?= $data_departure['end_date'] ?>" required>
+                            value="<?= $data_departure['end_date'] ?>" required>
                     </div>
                 </div>
 
@@ -34,19 +39,19 @@
                     <div class="col-md-4 mb-3">
                         <label class="form-label fw-semibold">Số khách tối đa</label>
                         <input type="number" name="max_guests" class="form-control"
-                               value="<?= $data_departure['max_guests'] ?>" required>
+                            value="<?= $data_departure['max_guests'] ?>" required>
                     </div>
 
                     <div class="col-md-4 mb-3">
                         <label class="form-label fw-semibold">Giá bán</label>
                         <input type="number" name="actual_price" class="form-control"
-                               value="<?= $data_departure['actual_price'] ?>" required>
+                            value="<?= $data_departure['actual_price'] ?>" required>
                     </div>
 
                     <div class="col-md-4 mb-3">
                         <label class="form-label fw-semibold">Giờ đón</label>
                         <input type="time" name="pickup_time" class="form-control"
-                               value="<?= $data_departure['pickup_time'] ?>">
+                            value="<?= $data_departure['pickup_time'] ?>">
                     </div>
                 </div>
 
@@ -54,7 +59,7 @@
                 <div class="mb-3">
                     <label class="form-label fw-semibold">Địa điểm đón</label>
                     <input type="text" name="pickup_location" class="form-control"
-                           value="<?= $data_departure['pickup_location'] ?>">
+                        value="<?= $data_departure['pickup_location'] ?>">
                 </div>
 
                 <!-- NOTE -->
@@ -64,15 +69,15 @@
                 </div>
 
                 <!-- STATUS -->
-                <div class="mb-3">
+                <!-- <div class="mb-3">
                     <label class="form-label fw-semibold">Trạng thái</label>
                     <select name="status" class="form-select">
-                        <option value="open"      <?= $data_departure['status'] == 'open' ? 'selected' : '' ?>>Mở bán</option>
-                        <option value="full"      <?= $data_departure['status'] == 'full' ? 'selected' : '' ?>>Full</option>
-                        <option value="closed"    <?= $data_departure['status'] == 'closed' ? 'selected' : '' ?>>Đóng</option>
+                        <option value="open" <?= $data_departure['status'] == 'open' ? 'selected' : '' ?>>Mở bán</option>
+                        <option value="full" <?= $data_departure['status'] == 'full' ? 'selected' : '' ?>>Full</option>
+                        <option value="closed" <?= $data_departure['status'] == 'closed' ? 'selected' : '' ?>>Đóng</option>
                         <option value="completed" <?= $data_departure['status'] == 'completed' ? 'selected' : '' ?>>Hoàn thành</option>
                     </select>
-                </div>
+                </div> -->
 
                 <!-- BUTTONS -->
                 <div class="mt-3">

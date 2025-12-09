@@ -107,4 +107,19 @@ class GuestModel
         $stmt->execute(['id' => $departure_id]);
         return $stmt->fetchAll();
     }
+
+    public function getGuestById($guest_id)
+    {
+        $sql = "SELECT * FROM guest WHERE guest_id = :id";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute(['id' => $guest_id]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function deleteGuest($guest_id)
+    {
+        $sql = "DELETE FROM guest WHERE guest_id = :id";
+        $stmt = $this->conn->prepare($sql);
+        return $stmt->execute(['id' => $guest_id]);
+    }
 }

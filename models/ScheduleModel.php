@@ -17,6 +17,7 @@ class ScheduleModel
                 d.end_date,
                 d.max_guests,
                 d.version_id,
+                d.status,
                 tv.version_name,
                 tv.price,
                 t.tour_name,
@@ -46,6 +47,7 @@ class ScheduleModel
                 d.start_date,
                 d.end_date,
                 d.max_guests,
+                d.status,
                 COUNT(g.guest_id) AS current_guests,
                 COALESCE(u.full_name, 'Chưa có HDV') AS guide_name
             FROM departure d
@@ -70,7 +72,8 @@ class ScheduleModel
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
     // Itinerary
-    public function getScheduleItinerary($version_id) {
+    public function getScheduleItinerary($version_id)
+    {
         $sql = "SELECT 
                 day_number,
                 start_time,

@@ -11,7 +11,10 @@
             <form method="POST">
 
                 <div class="row g-4">
-
+                    <div class="mt-4">
+                        <label class="form-label fw-semibold">Tên chuyến đi</label>
+                        <input type="text" name="departure_name" class="form-control" required>
+                    </div>
                     <!-- Cột trái -->
                     <div class="col-md-6">
 
@@ -66,7 +69,7 @@
                 <!-- Nút hành động -->
                 <div class="d-flex justify-content-end mt-4">
                     <a href="<?= BASE_URL ?>?mode=admin&action=versionDetail&id=<?= $data_version['version_id'] ?>&tab=info"
-                       class="btn btn-secondary btn-lg me-2">
+                        class="btn btn-secondary btn-lg me-2">
                         Hủy
                     </a>
 

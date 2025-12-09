@@ -52,7 +52,7 @@ match ($action) {
     'viewGuideDetail'         => (new AdminController())->viewGuideDetail(),
     'viewEditGuide'         => (new AdminController())->viewEditGuide(),
 
-    // Booking FIT/GIT mới — QUAN TRỌNG
+
     'createType'    => (new AdminController())->createType(),
     'createFit'     => (new AdminController())->createFit(),
     'createGit'     => (new AdminController())->createGit(),
@@ -61,7 +61,9 @@ match ($action) {
     'storeGit'      => (new AdminController())->storeGit(),
     'addGitGuests'      => (new AdminController())->addGitGuests(),
     'storeGitGuest'      => (new AdminController())->storeGitGuest(),
+    'deleteGitGuest'      => (new AdminController())->deleteGitGuest(),
     'finishGit'      => (new AdminController())->finishGit(),
+    'deleteGuest'      => (new AdminController())->deleteGuest(),
 
     'guestList'     => (new AdminController())->guestList(),
 

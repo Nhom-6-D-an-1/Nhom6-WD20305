@@ -3,28 +3,49 @@
   <h3>Quản lý booking</h3>
 
   <!-- Bộ lọc -->
-  <div class="row mb-3">
-    <div class="col-md-3">
-      <select class="form-select">
-        <option selected disabled>Trạng thái</option>
-        <option>deposit</option>
-        <option>pending</option>
-        <option>completed</option>
-        <option>cancelled</option>
-      </select>
-    </div>
-    <div class="col-md-3 d-flex gap-2">
-      <button class="btn btn-primary">Tìm kiếm</button>
+  <form method="GET" action="">
+    <input type="hidden" name="mode" value="admin">
+    <input type="hidden" name="action" value="viewsbooking">
+
+    <div class="row mb-3">
+
+      <!-- Tìm theo tên chuyến đi -->
+      <div class="col-md-4">
+        <select name="departure_id" class="form-select">
+          <option value="">-- Chọn chuyến đi --</option>
+
+          <?php foreach ($departures as $d): ?>
+            <option value="<?= $d['departure_id'] ?>">
+              <?= $d['departure_name'] ?> (<?= date('d/m', strtotime($d['start_date'])) ?>)
+            </option>
+          <?php endforeach; ?>
+        </select>
+      </div>
+
+      <!-- Tìm theo ngày bắt đầu -->
+      <div class="col-md-3">
+        <input type="date" name="from_date" class="form-control">
+      </div>
+
+      <!-- Tìm theo ngày kết thúc -->
+      <div class="col-md-3">
+        <input type="date" name="to_date" class="form-control">
+      </div>
+
+      <div class="col-md-2 d-flex gap-2">
+        <button class="btn btn-primary">Tìm kiếm</button>
+      </div>
 
     </div>
-  </div>
+  </form>
+
 
   <!-- Bảng booking -->
   <table class="table table-bordered table-hover">
     <thead class="table-dark">
       <tr>
-        <th>Mã booking</th>
-        <th>Mã lịch trình</th>
+        <th>#</th>
+        <th>Tên chuyến đi</th>
         <th>Tên khách hàng</th>
         <th>Liên hệ</th>
         <th>Tổng tiền</th>
@@ -35,10 +56,12 @@
     </thead>
     <tbody>
       <?php if (!empty($bookings) && is_array($bookings)): ?>
-        <?php foreach ($bookings as $booking): ?>
+        <?php foreach ($bookings as $key => $booking): ?>
           <tr>
-            <td><?php echo htmlspecialchars($booking['booking_id'] ?? ''); ?></td>
-            <td><?php echo htmlspecialchars($booking['departure_id'] ?? ''); ?></td>
+            <td><?= $key + 1  ?></td>
+            <td><?= $booking['departure_name'] ?><br>
+              <span class="text-muted small" style="font-size: 12px;"><?= $booking['tour_name'] ?> - <?= $booking['version_name'] ?></span>
+            </td>
             <td><?php echo htmlspecialchars($booking['customer_name'] ?? ''); ?></td>
             <td><?php echo htmlspecialchars($booking['customer_contact'] ?? ''); ?></td>
             <td><?php echo number_format((float)($booking['total_amount'] ?? 0), 0, ',', '.'); ?> ₫</td>

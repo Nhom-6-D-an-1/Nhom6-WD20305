@@ -3,15 +3,15 @@
 
   <!-- Bộ lọc -->
   <div class="row mb-3">
-    <div class="col-md-3">
+    <!-- <div class="col-md-3">
       <select class="form-select">
         <option selected disabled>Vai trò</option>
         <option>admin</option>
         <option>guide</option>
       </select>
-    </div>
+    </div> -->
     <div class="col-md-3 d-flex gap-2">
-      <button class="btn btn-primary">Tìm kiếm</button>
+      <!-- <button class="btn btn-primary">Tìm kiếm</button> -->
       <a href="<?= BASE_URL ?>?mode=admin&action=addaccount"><button class="btn btn-success">Thêm tài khoản</button></a>
     </div>
   </div>
@@ -20,7 +20,7 @@
   <table class="table table-bordered table-hover">
     <thead class="table-dark">
       <tr>
-        <th>Mã tài khoản</th>
+        <th>#</th>
         <th>Tên</th>
         <th>Tên đăng nhập</th>
         <th>Vai trò</th>
@@ -30,9 +30,9 @@
     </thead>
     <tbody>
       <?php if (!empty($accounts) && is_array($accounts)): ?>
-        <?php foreach ($accounts as $account): ?>
+        <?php foreach ($accounts as $key => $account): ?>
           <tr>
-            <td><?php echo htmlspecialchars($account['user_id'] ?? ''); ?></td>
+            <td><?php echo $key + 1 ?></td>
             <td><?php echo htmlspecialchars($account['full_name'] ?? ''); ?></td>
             <td><?php echo htmlspecialchars($account['username'] ?? ''); ?></td>
             <td><?php echo htmlspecialchars($account['role'] ?? ''); ?></td>

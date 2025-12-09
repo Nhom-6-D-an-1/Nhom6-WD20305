@@ -12,7 +12,18 @@ class BookingModel extends BaseModel
     // Lấy tất cả booking
     public function getAllBooking()
     {
-        $sql = "SELECT * FROM booking ORDER BY booking_id ASC;";
+        $sql = "SELECT 
+            b.*,
+            d.start_date,
+            d.end_date,
+            d.departure_name,
+            v.version_name,
+            t.tour_name
+        FROM booking b
+        JOIN departure d ON b.departure_id = d.departure_id
+        JOIN tour_version v ON d.version_id = v.version_id
+        JOIN tour t ON v.tour_id = t.tour_id
+        ORDER BY b.booking_id DESC";
         $stmt = $this->conn->query($sql);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
@@ -34,6 +45,76 @@ class BookingModel extends BaseModel
         $stmt->execute();
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
+
+    // Lấy booking theo tour 
+    public function getBookingByTour($tour_id)
+    {
+        $sql = "
+        SELECT 
+            b.*,
+            d.start_date,
+            d.end_date,
+            d.departure_name,
+            v.version_name,
+            t.tour_name
+        FROM booking b
+        JOIN departure d ON b.departure_id = d.departure_id
+        JOIN tour_version v ON d.version_id = v.version_id
+        JOIN tour t ON v.tour_id = t.tour_id
+        WHERE t.tour_id = :tour_id
+        ORDER BY b.booking_id DESC
+    ";
+
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute(['tour_id' => $tour_id]);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    // Hàm lọc
+    public function filterBooking($departure_id, $from_date, $to_date)
+    {
+        $sql = "
+        SELECT 
+            b.*, 
+            d.departure_name,
+            d.start_date,
+            v.version_name,
+            t.tour_name
+        FROM booking b
+        JOIN departure d ON b.departure_id = d.departure_id
+        JOIN tour_version v ON d.version_id = v.version_id
+        JOIN tour t ON v.tour_id = t.tour_id
+        WHERE 1
+    ";
+
+        $params = [];
+
+        // Lọc theo chuyến đi
+        if (!empty($departure_id)) {
+            $sql .= " AND d.departure_id = :departure_id";
+            $params['departure_id'] = $departure_id;
+        }
+
+        // Lọc theo ngày bắt đầu
+        if (!empty($from_date)) {
+            $sql .= " AND DATE(b.created_at) >= :from_date";
+            $params['from_date'] = $from_date;
+        }
+
+        // Lọc theo ngày kết thúc
+        if (!empty($to_date)) {
+            $sql .= " AND DATE(b.created_at) <= :to_date";
+            $params['to_date'] = $to_date;
+        }
+
+        $sql .= " ORDER BY b.booking_id DESC";
+
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute($params);
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
 
     // Lấy booking theo trạng thái
     public function getBookingByStatus($status)
@@ -191,5 +272,17 @@ class BookingModel extends BaseModel
         $stmt = $this->conn->prepare($sql);
         $stmt->execute(['id' => $departure_id]);
         return $stmt->fetchAll();
+    }
+    // Đếm số khách thực tế
+    public function countGuestsInDeparture($departure_id)
+    {
+        $sql = "
+        SELECT IFNULL(SUM(total_guests), 0)
+        FROM booking
+        WHERE departure_id = :id AND status != 'cancelled'
+    ";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute(['id' => $departure_id]);
+        return (int)$stmt->fetchColumn();
     }
 }

@@ -67,6 +67,7 @@
                 <th>CCCD</th>
                 <th>Yêu cầu đặc biệt</th>
                 <th>Tình trạng y tế</th>
+                <th></th>
             </tr>
         </thead>
 
@@ -81,6 +82,11 @@
                     <td><?= $g['cccd'] ?></td>
                     <td><?= $g['special_request'] ?: '—' ?></td>
                     <td><?= $g['medical_condition'] ?: '—' ?></td>
+                    <td><a href="<?= BASE_URL ?>?mode=admin&action=deleteGitGuest&index=<?= $index ?>"
+                            onclick="return confirm('Xóa khách này?')"
+                            class="btn btn-sm btn-danger">
+                            Xóa
+                        </a></td>
                 </tr>
             <?php endforeach; ?>
         </tbody>

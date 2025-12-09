@@ -9,8 +9,8 @@
             <p class="text-muted mb-0">Tour: <strong><?= $data['tour_name'] ?></strong></p>
         </div>
 
-        <a href="<?= BASE_URL ?>?mode=admin&action=viewstour" 
-           class="btn btn-outline-secondary">
+        <a href="<?= BASE_URL ?>?mode=admin&action=viewstour"
+            class="btn btn-outline-secondary">
             <i class="fas fa-arrow-left"></i> Quay lại
         </a>
     </div>
@@ -23,21 +23,21 @@
             <ul class="nav nav-tabs mb-3">
                 <li class="nav-item">
                     <button class="nav-link <?= $tab == 'info' ? 'active' : '' ?>"
-                            data-bs-toggle="tab" data-bs-target="#info">
+                        data-bs-toggle="tab" data-bs-target="#info">
                         Thông tin chung
                     </button>
                 </li>
 
                 <li class="nav-item">
                     <button class="nav-link <?= $tab == 'versions' ? 'active' : '' ?>"
-                            data-bs-toggle="tab" data-bs-target="#versions">
+                        data-bs-toggle="tab" data-bs-target="#versions">
                         Phiên bản tour
                     </button>
                 </li>
 
                 <li class="nav-item">
                     <button class="nav-link <?= $tab == 'history' ? 'active' : '' ?>"
-                            data-bs-toggle="tab" data-bs-target="#history">
+                        data-bs-toggle="tab" data-bs-target="#history">
                         Lịch sử phiên bản
                     </button>
                 </li>
@@ -65,8 +65,8 @@
 
                     <div class="d-flex justify-content-between mb-3">
                         <h5 class="fw-semibold text-primary">Các phiên bản</h5>
-                        <a href="<?= BASE_URL ?>?mode=admin&action=createVersion&id=<?= $data['tour_id'] ?>" 
-                           class="btn btn-success">
+                        <a href="<?= BASE_URL ?>?mode=admin&action=createVersion&id=<?= $data['tour_id'] ?>"
+                            class="btn btn-success">
                             + Tạo phiên bản mới
                         </a>
                     </div>
@@ -76,6 +76,7 @@
                             <tr>
                                 <th>#</th>
                                 <th>Phiên bản</th>
+                                <th>Hình ảnh</th>
                                 <th>Giá</th>
                                 <th>Ngày áp dụng</th>
                                 <th>Trạng thái</th>
@@ -89,6 +90,13 @@
                                     <td><?= $key + 1 ?></td>
 
                                     <td><?= $value['version_code'] ?> - <?= $value['season'] ?></td>
+
+                                    <td><?php if (!empty($value['image_url'])): ?>
+                                            <img src="<?= BASE_ASSETS_UPLOADS . $value['image_url'] ?>"
+                                                alt="Avatar"
+                                                width="100">
+                                        <?php endif; ?>
+                                    </td>
 
                                     <td><?= number_format($value['price'], 0, ',', '.') ?>đ</td>
 
@@ -104,8 +112,8 @@
                                     </td>
 
                                     <td>
-                                        <a href="<?= BASE_URL ?>?mode=admin&action=versionDetail&id=<?= $value['version_id'] ?>" 
-                                           class="btn btn-primary btn-sm">Chi tiết</a>
+                                        <a href="<?= BASE_URL ?>?mode=admin&action=versionDetail&id=<?= $value['version_id'] ?>"
+                                            class="btn btn-primary btn-sm">Chi tiết</a>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>

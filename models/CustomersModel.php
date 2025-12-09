@@ -53,6 +53,7 @@ class CustomersModel
                 d.departure_id,
                 t.tour_name,
                 d.start_date,
+                d.status,
                 d.end_date
             FROM assigned_staff a
             JOIN departure d ON a.departure_id = d.departure_id

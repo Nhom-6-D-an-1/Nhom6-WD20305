@@ -98,8 +98,10 @@ $tab = $_GET['tab'] ?? 'info';
                                         <span class="badge bg-danger">Full</span>
                                     <?php elseif ($data_departure['status'] == 'closed'): ?>
                                         <span class="badge bg-secondary">Đóng</span>
-                                    <?php else: ?>
-                                        <span class="badge bg-info">Hoàn thành</span>
+                                    <?php elseif ($data_departure['status'] == 'completed'): ?>
+                                        <span class="badge bg-secondary">Hoàn thành</span>
+                                    <?php else : ?>
+                                        <span class="badge bg-success">Đang chạy</span>
                                     <?php endif; ?>
                                 </td>
                             </tr>
@@ -165,6 +167,7 @@ $tab = $_GET['tab'] ?? 'info';
                                 <th>SĐT</th>
                                 <th>Thuộc booking</th>
                                 <th>Yêu cầu đặc biệt</th>
+                                <!-- <th>Hành động</th> -->
                             </tr>
                         </thead>
 
@@ -191,6 +194,12 @@ $tab = $_GET['tab'] ?? 'info';
                                             </small>
                                         <?php endif; ?>
                                     </td>
+                                    <!-- <td><a href="<?= BASE_URL ?>?mode=admin&action=deleteGuest&id=<?= $value['guest_id'] ?>"
+                                            onclick="return confirm('Có chắc muốn xóa khách này?')"
+                                            class="btn btn-danger btn-sm">
+                                            Xóa
+                                        </a>
+                                    </td> -->
                                 </tr>
                             <?php endforeach; ?>
                         </tbody>
@@ -375,7 +384,7 @@ $tab = $_GET['tab'] ?? 'info';
                         </tbody>
                     </table>
                     <div class="mt-3">
-                        <h5><b>Tổng chi phí dịch vụ:</b>
+                        <h5><b><?= $data_departure['status'] == 'completed' ? 'Tổng chi phí dịch vụ:' : 'Tổng chi phí dịch vụ dự kiến:' ?> </b>
                             <?= number_format($total_service_cost, 0, '', '.') ?> đ
                         </h5>
                     </div>
@@ -401,7 +410,7 @@ $tab = $_GET['tab'] ?? 'info';
                         </div>
                         <div class="col-md-4">
                             <div class="card p-3 mb-3">
-                                <b>Doanh thu:</b>
+                                <b><?= $data_departure['status'] == 'completed' ? 'Doanh thu:' : 'Doanh thu dự kiến:' ?> </b>
                                 <?= number_format($r['revenue'] ?? 0, 0, '', '.') ?> VNĐ
                             </div>
                         </div>
@@ -421,7 +430,7 @@ $tab = $_GET['tab'] ?? 'info';
                         <tbody>
                             <?php foreach ($data_booking as $key => $value): ?>
                                 <tr>
-                                    <td><?= $value['booking_id'] ?></td>
+                                    <td><?= $key + 1 ?></td>
                                     <td><?= htmlspecialchars($value['customer_name'] ?? '', ENT_QUOTES, 'UTF-8') ?></td>
                                     <td><?= (int)($value['total_guests'] ?? 0) ?></td>
                                     <td><?= number_format($value['total_amount'] ?? 0, 0, '', '.') ?></td>

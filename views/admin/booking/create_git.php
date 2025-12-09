@@ -62,10 +62,10 @@
                     <div class="col-md-6 mb-3">
                         <label class="form-label fw-semibold">Trạng thái</label>
                         <select name="status" class="form-select">
-                            <option value="pending">Chờ xác nhận</option>
-                            <option value="deposit">Đã đặt cọc</option>
+                            <option value="pending">Chưa thanh toán</option>
+                            <!-- <option value="deposit">Đã đặt cọc</option> -->
                             <option value="completed">Đã thanh toán</option>
-                            <option value="cancelled">Đã hủy</option>
+                            <!-- <option value="cancelled">Đã hủy</option> -->
                         </select>
                     </div>
                 </div>
