@@ -4,6 +4,7 @@ class DepartureController
     public function viewDeparture()
     {
         $departure = new DepartureModel();
+        $departure->autoUpdateStatus();
         $data_departure = $departure->getAllDepartures();
         $title = "Danh sách Chuyến đi";
         $view = "admin/departure/departure";
@@ -18,6 +19,7 @@ class DepartureController
             $departure = new DepartureModel();
             $data = [
                 'version_id' => $id,
+                'departure_name' => $_POST['departure_name'],
                 'start_date' => $_POST['start_date'],
                 'end_date' => $_POST['end_date'],
                 'max_guests' => trim($_POST['max_guests']),
@@ -46,6 +48,7 @@ class DepartureController
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             $data = [
+                'departure_name'      => $_POST['departure_name'],
                 'start_date'      => $_POST['start_date'],
                 'end_date'        => $_POST['end_date'],
                 'max_guests'      => trim($_POST['max_guests']),

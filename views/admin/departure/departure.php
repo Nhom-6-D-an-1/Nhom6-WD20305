@@ -28,7 +28,10 @@
                             <tr>
                                 <td><?= $key + 1 ?></td>
 
-                                <td><?= $value['tour_name'] ?> - <?= $value['version_name'] ?></td>
+                                <td>
+                                    <?= $value['departure_name'] ?><br>
+                                    <span class="text-muted small" style="font-size: 12px;"><?= $value['tour_name'] ?> - <?= $value['version_name'] ?></span>
+                                </td>
 
                                 <td><?= $value['start_date'] ?></td>
 
@@ -36,7 +39,7 @@
 
                                 <td><?= $value['max_guests'] ?></td>
 
-                                <td class="fw-bold">
+                                <td class=" fw-bold">
                                     <?= (int)$value['max_guests'] - (int)$value['current_guests'] ?>
                                 </td>
 
@@ -57,13 +60,11 @@
 
                                 <td>
                                     <?php if ($value['status'] == 'open'): ?>
-                                        <span class="badge bg-success">Mở bán</span>
-                                    <?php elseif ($value['status'] == 'full'): ?>
-                                        <span class="badge bg-danger">Full</span>
-                                    <?php elseif ($value['status'] == 'closed'): ?>
-                                        <span class="badge bg-secondary">Đóng</span>
-                                    <?php else: ?>
-                                        <span class="badge bg-info">Hoàn thành</span>
+                                        <span class="badge bg-primary">Mở bán</span>
+                                    <?php elseif ($value['status'] == 'running'): ?>
+                                        <span class="badge bg-success">Đang chạy</span>
+                                    <?php elseif ($value['status'] == 'completed'): ?>
+                                        <span class="badge bg-secondary">Hoàn thành</span>
                                     <?php endif; ?>
                                 </td>
 
@@ -81,6 +82,14 @@
                                         class="btn btn-success btn-sm mt-1">
                                         Thêm booking
                                     </a>
+                                    <!-- <?php if ((int)$value['current_guests'] < (int)$value['max_guests']): ?>
+                                        <a href="<?= BASE_URL ?>?mode=admin&action=createType&id=<?= $value['departure_id'] ?>"
+                                            class="btn btn-success btn-sm mt-1">
+                                            Thêm booking
+                                        </a>
+                                    <?php else: ?>
+                                        <a class="btn btn-danger btn-sm mt-1" style="width:105px;">Đã đủ khách</a>
+                                    <?php endif; ?> -->
                                 </td>
 
                             </tr>
