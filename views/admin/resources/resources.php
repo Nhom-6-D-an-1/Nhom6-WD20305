@@ -1,3 +1,116 @@
+<style>
+    /* ===========================================================
+   PAGE TITLE
+=========================================================== */
+    .fw-bold {
+        font-size: 32px;
+        font-weight: 800 !important;
+        margin-bottom: 24px;
+        color: #1f2937;
+    }
+
+    /* ===========================================================
+   WRAPPER CARD
+=========================================================== */
+    .card {
+        background: #ffffff;
+        border-radius: 14px;
+        padding: 22px;
+        border: 1px solid #f3f4f6;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+    }
+
+    /* ===========================================================
+   TABLE HEADER
+=========================================================== */
+    .table thead th {
+        background-color: transparent !important;
+        color: #6b7280 !important;
+        text-transform: uppercase;
+        font-size: 12.5px;
+        font-weight: 600;
+        border-bottom: 1px solid #e5e7eb !important;
+        text-align: center !important;
+        letter-spacing: .4px;
+        padding: 14px 10px !important;
+    }
+
+    /* ===========================================================
+   TABLE BODY
+=========================================================== */
+    .table tbody tr {
+        border-bottom: 1px solid #efefef;
+        transition: 0.15s ease;
+    }
+
+    .table tbody tr:hover {
+        background: #fafafa;
+    }
+
+    .table tbody td {
+        padding: 16px 12px !important;
+        font-size: 15px;
+        vertical-align: middle !important;
+    }
+
+    /* Căn giữa các cột số liệu */
+    .table tbody td:nth-child(1),
+    .table tbody td:nth-child(3),
+    .table tbody td:nth-child(4),
+    .table tbody td:nth-child(6),
+    .table tbody td:nth-child(5),
+    .table tbody td:nth-child(7) {
+        text-align: center !important;
+    }
+
+    /* Cột tên HDV căn trái */
+    .table tbody td:nth-child(2) {
+        text-align: center !important;
+        padding-left: 20px !important;
+    }
+
+    /* ===========================================================
+   BADGE STYLE (Pastel)
+=========================================================== */
+    .badge {
+        padding: 6px 12px !important;
+        border-radius: 10px !important;
+        font-size: 13px !important;
+        font-weight: 600 !important;
+    }
+
+    .bg-primary {
+        background: #dbeafe !important;
+        color: #1e40af !important;
+    }
+
+    .bg-success {
+        background: #d1fae5 !important;
+        color: #065f46 !important;
+    }
+
+    /* ===========================================================
+   BUTTON (Pastel)
+=========================================================== */
+    .btn-sm {
+        padding: 7px 14px !important;
+        border-radius: 10px !important;
+        font-size: 14px !important;
+        font-weight: 600 !important;
+        border: none !important;
+    }
+
+    /* Chi tiết – xanh pastel */
+    .btn-info {
+        background: #dbeafe !important;
+        color: #1e40af !important;
+    }
+
+    .btn-info:hover {
+        background: #bfdbfe !important;
+    }
+</style>
+
 <div class="container-fluid px-4">
 
     <!-- HEADER -->
@@ -5,21 +118,20 @@
         <h3 class="fw-bold">Quản lý nhân sự (Hướng dẫn viên)</h3>
     </div>
 
-    <!-- CARD CHÍNH -->
-    <div class="card shadow-sm">
+    <!-- CARD -->
+    <div class="card">
         <div class="card-body">
 
-            <!-- BẢNG NHÂN SỰ -->
-            <table class="table table-hover table-bordered align-middle">
-                <thead class="table-dark">
+            <table class="table table-hover align-middle">
+                <thead>
                     <tr>
-                        <th style="width: 70px;">#</th>
+                        <th style="width:70px;">#</th>
                         <th>Họ tên</th>
-                        <th style="width: 120px;">Ảnh</th>
+                        <th style="width:120px;">Ảnh</th>
                         <th>Chứng chỉ</th>
                         <th>Ngôn ngữ</th>
-                        <th style="width: 120px;">Đánh giá</th>
-                        <th style="width: 150px;">Hành động</th>
+                        <th style="width:120px;">Đánh giá</th>
+                        <th style="width:140px;">Hành động</th>
                     </tr>
                 </thead>
 
@@ -30,16 +142,15 @@
 
                             <!-- TÊN HDV -->
                             <td class="fw-semibold">
-                                <?= htmlspecialchars($value['full_name'] ?? '', ENT_QUOTES, 'UTF-8') ?>
+                                <?= htmlspecialchars($value['full_name'] ?? '') ?>
                             </td>
 
-                            <!-- ẢNH ĐẠI DIỆN -->
+                            <!-- ẢNH -->
                             <td>
                                 <?php if (!empty($value['avatar'])): ?>
                                     <img src="<?= BASE_ASSETS_UPLOADS . $value['avatar'] ?>"
-                                        alt="Avatar"
                                         class="img-fluid rounded"
-                                        style="width: 90px; height: 90px; object-fit: cover;">
+                                        style="width: 80px; height: 80px; object-fit: cover;">
                                 <?php else: ?>
                                     <span class="text-muted">Không có ảnh</span>
                                 <?php endif; ?>
@@ -49,7 +160,7 @@
                             <td>
                                 <?php if (!empty($value['certificates'])): ?>
                                     <span class="badge bg-primary">
-                                        <?= htmlspecialchars($value['certificates'] ?? '', ENT_QUOTES, 'UTF-8') ?>
+                                        <?= htmlspecialchars($value['certificates']) ?>
                                     </span>
                                 <?php else: ?>
                                     <span class="text-muted">—</span>
@@ -60,7 +171,7 @@
                             <td>
                                 <?php if (!empty($value['languages'])): ?>
                                     <span class="badge bg-success">
-                                        <?= htmlspecialchars($value['languages'] ?? '', ENT_QUOTES, 'UTF-8') ?>
+                                        <?= htmlspecialchars($value['languages']) ?>
                                     </span>
                                 <?php else: ?>
                                     <span class="text-muted">—</span>
@@ -69,19 +180,21 @@
 
                             <!-- ĐÁNH GIÁ -->
                             <td>
-                                ⭐ <?= (float)$value['rating'] ?>/5
+                                ⭐ <?= number_format((float)$value['rating'], 1) ?>/5
                             </td>
 
-                            <!-- ACTION -->
+                            <!-- NÚT -->
                             <td>
                                 <a href="<?= BASE_URL ?>?mode=admin&action=viewGuideDetail&id=<?= $value['user_id'] ?>"
                                     class="btn btn-info btn-sm w-100">
                                     Chi tiết
                                 </a>
                             </td>
+
                         </tr>
                     <?php endforeach; ?>
                 </tbody>
+
             </table>
 
         </div>

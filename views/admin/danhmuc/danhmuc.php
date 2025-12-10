@@ -1,148 +1,138 @@
 <style>
-    /* ============================================================================
-   WHITE ELEGANCE PREMIUM – Clean, Luxury & Minimal UI
-   Designed exclusively for Khiem
-   ============================================================================ */
-
-    /* GLOBAL -------------------------------------------------------------- */
-    body {
-        background: #f7f8fa;
-        font-family: "Inter", sans-serif;
-        color: #333;
-    }
-
-    /* PAGE TITLE ---------------------------------------------------------- */
+    /* -------------------------------------------------------
+   PAGE TITLE
+-------------------------------------------------------- */
     .page-title {
-        font-size: 2.2rem;
+        font-size: 32px;
         font-weight: 800;
-        margin-bottom: 28px;
-        color: #222;
-        letter-spacing: -0.5px;
-        position: relative;
+        margin-bottom: 24px;
+        color: #1f2937;
     }
 
-    .page-title::after {
-        content: "";
-        width: 60px;
-        height: 3px;
-        background: #d4af37;  /* Gold champagne */
-        border-radius: 3px;
-        position: absolute;
-        left: 0;
-        bottom: -8px;
-        opacity: 0.8;
-    }
-
-    /* CARD --------------------------------------------------------------- */
+    /* -------------------------------------------------------
+   CARD
+-------------------------------------------------------- */
     .card {
         background: #ffffff;
-        border-radius: 18px;
-        border: 1px solid #e6e6e6;
-        box-shadow: 0 6px 18px rgba(0,0,0,0.06);
-        padding: 0;
+        border-radius: 16px;
+        border: 1px solid #f1f1f3;
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
     }
 
-    .card-body {
-        padding: 26px 30px;
-    }
-
-    /* BUTTON ADD ---------------------------------------------------------- */
+    /* -------------------------------------------------------
+   BUTTON: ADD (Vàng pastel)
+-------------------------------------------------------- */
     .btn-success {
-        background: #d4af37;
-        border: none;
-        padding: 11px 24px;
-        border-radius: 10px;
-        color: #fff;
-        font-weight: 700;
-        letter-spacing: .4px;
-        transition: 0.25s ease;
+        background: #fff8da !important;
+        border: 1px solid #e3c76d !important;
+        padding: 10px 18px !important;
+        border-radius: 10px !important;
+        color: #806014 !important;
+        font-weight: 600 !important;
     }
 
     .btn-success:hover {
-        background: #bb9730;
-        transform: translateY(-2px);
+        background: #ffefb5 !important;
     }
 
-    /* TABLE HEADER --------------------------------------------------------- */
+    /* -------------------------------------------------------
+   TABLE HEADER
+-------------------------------------------------------- */
     .table thead th {
-        background: #fafafa;
-        color: #333 !important;
-        padding: 14px 12px;
-        border-bottom: 2px solid #eaeaea !important;
-        font-weight: 700;
-        font-size: 15.3px;
+        background-color: transparent !important;
+        color: #6b7280 !important;
+        text-transform: uppercase;
+        font-size: 12.8px;
+        font-weight: 600;
+        letter-spacing: .4px;
+        border-bottom: 1px solid #e5e7eb !important;
+        padding: 14px 10px !important;
+        text-align: center;
     }
 
-    /* TABLE BODY ----------------------------------------------------------- */
+    /* -------------------------------------------------------
+   TABLE BODY
+-------------------------------------------------------- */
     .table tbody tr {
-        background: #fff;
-        transition: 0.25s ease;
+        border-bottom: 1px solid #efefef;
     }
 
-    .table tbody tr:hover {
-        background: #f4f4f4;
-    }
-
-    .table td {
-        padding: 14px 12px !important;
+    .table tbody td {
+        padding: 16px 12px !important;
         font-size: 15px;
-        color: #444;
-        vertical-align: middle;
     }
 
-    /* BADGES -------------------------------------------------------------- */
+    /* Căn cột */
+    .table tbody td:nth-child(1),
+    .table tbody td:nth-child(3),
+    .table tbody td:nth-child(4) {
+        text-align: center;
+    }
+
+    .table tbody td:nth-child(2) {
+        text-align: center;
+    }
+
+    /* -------------------------------------------------------
+   BADGES (Pastel)
+-------------------------------------------------------- */
     .badge {
         padding: 7px 16px;
-        border-radius: 14px;
+        border-radius: 12px;
         font-size: 13.5px;
-        font-weight: 650;
+        font-weight: 600;
     }
 
     .bg-success {
-        background: #4caf50 !important;
-        color: white !important;
+        background: #d1fae5 !important;
+        color: #065f46 !important;
     }
 
     .bg-secondary {
-        background: #b9b9b9 !important;
-        color: #fff;
+        background: #e5e7eb !important;
+        color: #374151 !important;
     }
 
-    /* ACTION BUTTONS ------------------------------------------------------ */
+    /* -------------------------------------------------------
+   ACTION BUTTONS (Pastel)
+-------------------------------------------------------- */
     .btn-sm {
         padding: 7px 14px !important;
         border-radius: 10px !important;
-        font-weight: 600;
-        font-size: 13.5px;
+        font-size: 14px !important;
+        font-weight: 600 !important;
+        border: none !important;
     }
 
-    /* Xem – xanh navy sang trọng */
+    /* Xem – xanh pastel */
     .btn-info {
-        background: #1f4f9a !important;
-        border: none;
-        color: #fff !important;
+        background: #dbeafe !important;
+        color: #1e40af !important;
     }
+
     .btn-info:hover {
-        background: #183f7a !important;
+        background: #bfdbfe !important;
     }
 
-    /* Sửa – xanh pastel cực nhẹ */
+    /* Sửa – vàng pastel */
     .btn-primary {
-        background: #4c7cff !important;
-        border: none;
+        background: #fef3c7 !important;
+        color: #92400e !important;
     }
+
     .btn-primary:hover {
-        background: #3b64d4 !important;
+        background: #fde68a !important;
     }
 
-    /* Xóa – đỏ nhẹ */
+    /* Xóa – đỏ pastel */
     .btn-danger {
-        background: #e64b4b !important;
-    }
-    .btn-danger:hover {
-        background: #c93d3d !important;
+        background: #fee2e2 !important;
+        color: #b91c1c !important;
     }
 
+    .btn-danger:hover {
+        background: #fecaca !important;
+    }
 </style>
 
 <div class="container-fluid px-4">
@@ -159,7 +149,7 @@
                 </a>
             </div>
 
-            <!-- Bảng dữ liệu (Minimal Premium Style) -->
+            <!-- Bảng dữ liệu -->
             <div class="table-wrapper">
                 <table class="table table-hover align-middle">
                     <thead>
@@ -167,7 +157,7 @@
                             <th style="width:60px;">STT</th>
                             <th>Tên loại tour</th>
                             <th style="width:150px;">Trạng thái</th>
-                            <th style="width:200px;">Hành động</th>
+                            <th style="width:300px;">Hành động</th>
                         </tr>
                     </thead>
 
@@ -178,11 +168,11 @@
                                     <td><?= $index + 1 ?></td>
 
                                     <td class="fw-semibold">
-                                        <?= htmlspecialchars($item['category_name'] ?? '') ?>
+                                        <?= htmlspecialchars($item['category_name']) ?>
                                     </td>
 
                                     <td>
-                                        <?php if (($item['status'] ?? 0) == 1): ?>
+                                        <?php if ($item['status'] == 1): ?>
                                             <span class="badge bg-success">Đang hoạt động</span>
                                         <?php else: ?>
                                             <span class="badge bg-secondary">Tạm ẩn</span>
@@ -191,11 +181,12 @@
 
                                     <td>
                                         <a href="?mode=admin&action=xemchitietdanhmuc&id=<?= $item['category_id'] ?>"
-                                            class="btn btn-info btn-sm">Xem</a>
+                                            class="btn btn-info btn-sm">Chi tiết</a>
 
                                         <a href="?mode=admin&action=suadanhmuc&id=<?= $item['category_id'] ?>"
                                             class="btn btn-primary btn-sm">Sửa</a>
-                                            <a href="?mode=admin&action=xoadanhmuc&id=<?= $item['category_id'] ?>"
+
+                                        <a href="?mode=admin&action=xoadanhmuc&id=<?= $item['category_id'] ?>"
                                             onclick="return confirm('Bạn có chắc muốn xóa danh mục này?')"
                                             class="btn btn-danger btn-sm">Xóa</a>
                                     </td>
