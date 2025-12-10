@@ -2,7 +2,7 @@
 
     <!-- HEADER -->
     <div class="d-flex justify-content-between align-items-center mt-4 mb-3">
-        <h3>Quản lý nhân sự (Hướng dẫn viên)</h3>
+        <h3 class="fw-bold">Quản lý nhân sự (Hướng dẫn viên)</h3>
     </div>
 
     <!-- CARD CHÍNH -->

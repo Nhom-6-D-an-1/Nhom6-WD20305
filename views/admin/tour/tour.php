@@ -1,5 +1,5 @@
 <div class="container-fluid px-4">
-    <h3 class="mt-4 mb-4">Danh sách Tour</h3>
+    <h3 class="fw-bold mt-4 mb-4">Danh sách Tour</h3>
 
     <div class="card shadow-sm mb-4">
         <div class="card-body">

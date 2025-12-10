@@ -1,6 +1,6 @@
 <?php ?>
 <div class="p-4">
-  <h3>Quản lý booking</h3>
+  <h3 class="fw-bold">Quản lý booking</h3>
 
   <!-- Bộ lọc -->
   <form method="GET" action="">
