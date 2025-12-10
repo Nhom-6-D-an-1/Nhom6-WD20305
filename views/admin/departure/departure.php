@@ -1,6 +1,6 @@
 <div class="container-fluid px-4">
 
-    <h3 class="mt-4 mb-3 ">Danh sách chuyến đi</h3>
+    <h3 class="fw-bold mt-4 mb-3 ">Danh sách chuyến đi</h3>
 
     <div class="card shadow-sm mb-4">
         <div class="card-body">
@@ -28,10 +28,7 @@
                             <tr>
                                 <td><?= $key + 1 ?></td>
 
-                                <td>
-                                    <?= $value['departure_name'] ?><br>
-                                    <span class="text-muted small" style="font-size: 12px;"><?= $value['tour_name'] ?> - <?= $value['version_name'] ?></span>
-                                </td>
+                                <td><?= $value['tour_name'] ?></td>
 
                                 <td><?= $value['start_date'] ?></td>
 
@@ -39,7 +36,7 @@
 
                                 <td><?= $value['max_guests'] ?></td>
 
-                                <td class=" fw-bold">
+                                <td class="fw-bold">
                                     <?= (int)$value['max_guests'] - (int)$value['current_guests'] ?>
                                 </td>
 
@@ -52,7 +49,7 @@
                                 </td>
 
                                 <td>
-                                    <?= $value['full_name']
+                                    <?= $value['full_name'] 
                                         ? '<span class="text-success fw-semibold">' . $value['full_name'] . '</span>'
                                         : '<span class="text-muted">Chưa phân công</span>'
                                     ?>
@@ -60,36 +57,26 @@
 
                                 <td>
                                     <?php if ($value['status'] == 'open'): ?>
-                                        <span class="badge bg-primary">Mở bán</span>
-                                    <?php elseif ($value['status'] == 'running'): ?>
-                                        <span class="badge bg-success">Đang chạy</span>
-                                    <?php elseif ($value['status'] == 'completed'): ?>
-                                        <span class="badge bg-secondary">Hoàn thành</span>
+                                        <span class="badge bg-success">Mở bán</span>
+                                    <?php elseif ($value['status'] == 'full'): ?>
+                                        <span class="badge bg-danger">Full</span>
+                                    <?php elseif ($value['status'] == 'closed'): ?>
+                                        <span class="badge bg-secondary">Đóng</span>
+                                    <?php else: ?>
+                                        <span class="badge bg-info">Hoàn thành</span>
                                     <?php endif; ?>
                                 </td>
 
                                 <td class="text-center">
                                     <a href="<?= BASE_URL ?>?mode=admin&action=departureEdit&id=<?= $value['departure_id'] ?>"
-                                        class="btn btn-warning btn-sm">
+                                       class="btn btn-warning btn-sm mb-1 w-100">
                                         Sửa
                                     </a>
 
                                     <a href="<?= BASE_URL ?>?mode=admin&action=departureDetail&id=<?= $value['departure_id'] ?>"
-                                        class="btn btn-primary btn-sm">
+                                       class="btn btn-primary btn-sm w-100">
                                         Chi tiết
                                     </a>
-                                    <a href="<?= BASE_URL ?>?mode=admin&action=createType&id=<?= $value['departure_id'] ?>"
-                                        class="btn btn-success btn-sm mt-1">
-                                        Thêm booking
-                                    </a>
-                                    <!-- <?php if ((int)$value['current_guests'] < (int)$value['max_guests']): ?>
-                                        <a href="<?= BASE_URL ?>?mode=admin&action=createType&id=<?= $value['departure_id'] ?>"
-                                            class="btn btn-success btn-sm mt-1">
-                                            Thêm booking
-                                        </a>
-                                    <?php else: ?>
-                                        <a class="btn btn-danger btn-sm mt-1" style="width:105px;">Đã đủ khách</a>
-                                    <?php endif; ?> -->
                                 </td>
 
                             </tr>

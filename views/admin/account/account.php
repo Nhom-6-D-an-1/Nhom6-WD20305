@@ -1,5 +1,5 @@
 <div class="p-4">
-  <h3>Quản lý tài khoản</h3>
+  <h3 class="fw-bold">Quản lý tài khoản</h3>
 
   <!-- Bộ lọc -->
   <div class="row mb-3">
