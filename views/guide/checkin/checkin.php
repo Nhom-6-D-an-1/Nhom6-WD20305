@@ -35,9 +35,9 @@
                     <select class="form-select" name="stage" onchange="document.getElementById('stageFilterForm').submit()">
                         <option value="" hidden>--Chọn địa điểm/chặng--</option>
                         <?php foreach ($stages as $stage) { ?>
-                            <option value="<?php echo htmlspecialchars($stage); ?>"
-                                <?php echo ($selectedStage == $stage) ? 'selected' : ''; ?>>
-                                <?php echo htmlspecialchars($stage); ?>
+                            <option value="<?php echo htmlspecialchars($stage['stage_description']); ?>"
+                                <?php echo ($selectedStage == $stage['stage_description']) ? 'selected' : ''; ?>>
+                                <?php echo htmlspecialchars($stage['label']); ?>
                             </option>
                         <?php } ?>
                     </select>
@@ -58,6 +58,7 @@
                 <tr>
                     <th class="ps-4 py-3">Tên khách</th>
                     <th class="py-3">Trạng thái</th>
+                    <th class="py-3 ">Thời gian check-in</th>
                     <th class="py-3 ">Hành động</th>
                 </tr>
             </thead>
@@ -75,6 +76,13 @@
                                 ?>">
                                     <?php echo htmlspecialchars($guest['display_status']); ?>
                                 </span>
+                            </td>
+                            <td>
+                                <?php 
+                                    echo $guest['checkin_time'] 
+                                        ? date('H:i d/m', strtotime($guest['checkin_time'])) 
+                                        : '--';
+                                ?>
                             </td>
                             <td>
                                 <!-- <form method="post" class="d-flex gap-2 checkin-form"> -->

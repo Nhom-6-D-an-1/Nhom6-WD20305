@@ -21,12 +21,17 @@ class CheckinModel
     // Lấy danh sách các chặng check-in từ tour_itinerary
     public function getCheckinStages($departure_id)
     {
-        // ⚠ Chuyển đúng từ departure_id → version_id
+        // Chuyển đúng từ departure_id → version_id
         $version_id = $this->getVersionIdByDeparture($departure_id);
 
         if (!$version_id) return [];
 
         $sql = "SELECT 
+                    day_number,
+                    place,
+                    activity,
+                    start_time,
+                    end_time,
                     CONCAT('Ngày ', day_number, ': ', place, ' - ', activity) AS stage_description
                 FROM tour_itinerary
                 WHERE version_id = :version_id
@@ -35,8 +40,7 @@ class CheckinModel
         $stmt = $this->conn->prepare($sql);
         $stmt->bindParam(':version_id', $version_id, PDO::PARAM_INT);
         $stmt->execute();
-
-        return $stmt->fetchAll(PDO::FETCH_COLUMN);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     // Lấy check-in trạng thái của từng khách
