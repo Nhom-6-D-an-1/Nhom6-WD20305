@@ -1,7 +1,7 @@
     <div class="col-12">
     <h2>Check in, điểm danh</h2>
     <div class="dropdown d-flex gap-3 align-items-center">
-        <form method="get" id="tourFilterForm" class="d-flex align-items-center">
+        <!-- <form method="get" id="tourFilterForm" class="d-flex align-items-center">
             <input type="hidden" name="mode" value="guide">
             <input type="hidden" name="action" value="viewcheckin">
             <input type="hidden" name="stage" value="<?php echo htmlspecialchars($selectedStage ?? ''); ?>">
@@ -21,9 +21,11 @@
                     <?php } ?>
                 </select>
             </div>
-        </form>
+        </form> -->
 
-        <?php if (!empty($stages)) { ?>
+        <?php if (!empty($noRunningTour) && $noRunningTour): ?>
+            <div class="text-danger">Hôm nay bạn không có tour đang diễn ra để điểm danh.</div>
+        <?php elseif (!empty($stages)) : ?>
             <form method="get" id="stageFilterForm">
                 <input type="hidden" name="mode" value="guide">
                 <input type="hidden" name="action" value="viewcheckin">
@@ -41,17 +43,21 @@
                     </select>
                 </div>
             </form>
-        <?php } else if($selectedDepartureId) { ?>
+        <?php  else: ?>
             <span class="text-danger">Không có lịch trình để điểm danh.</span>
-        <?php } ?>
+        <?php endif; ?>
     </div>
     
     <div class="table-responsive mt-3">
+        <form method="post">
+        <input type="hidden" name="action" value="update_checkin_multi">
+        <input type="hidden" name="departure_id" value="<?php echo $selectedDepartureId; ?>">
+        <input type="hidden" name="stage_description" value="<?php echo htmlspecialchars($selectedStage); ?>">
         <table class="table table-hover align-middle mb-0 customer-table">
             <thead>
                 <tr>
                     <th class="ps-4 py-3">Tên khách</th>
-                    <th class="py-3">Trạng thái (<?php echo htmlspecialchars($selectedStage ?? 'Chưa chọn chặng'); ?>)</th>
+                    <th class="py-3">Trạng thái</th>
                     <th class="py-3 ">Hành động</th>
                 </tr>
             </thead>
@@ -71,22 +77,22 @@
                                 </span>
                             </td>
                             <td>
-                                <form method="post" class="d-flex gap-2 checkin-form">
-                                    <input type="hidden" name="action" value="update_checkin">
-                                    <input type="hidden" name="guest_id" value="<?php echo $guest['guest_id']; ?>">
+                                <!-- <form method="post" class="d-flex gap-2 checkin-form"> -->
+                                    <!-- <input type="hidden" name="action" value="update_checkin"> -->
+                                    <input type="hidden" name="guest_id[]" value="<?php echo $guest['guest_id']; ?>">
                                     <input type="hidden" name="departure_id" value="<?php echo htmlspecialchars($selectedDepartureId); ?>">
                                     <input type="hidden" name="stage_description" value="<?php echo htmlspecialchars($selectedStage); ?>">
                                     
                                     <div class="dropdown">
-                                        <select class="form-select status-select" name="status">
+                                        <select class="form-select status-select" name="status[]">
+                                            <option value="" disabled selected hidden>Chọn trạng thái</option>
+                                            
                                             <option value="present" <?php echo ($guest['status'] == 'present') ? 'selected' : ''; ?>>Có mặt</option>
                                             <option value="absent" <?php echo ($guest['status'] == 'absent') ? 'selected' : ''; ?>>Vắng mặt</option>
-                                            <option value="late" <?php echo ($guest['status'] == 'late') ? 'selected' : ''; ?>>Đến muộn</option>
-                                            <option value="" disabled selected hidden>Chọn trạng thái</option>
                                         </select>
                                     </div>
-                                    <button type="submit" class="btn btn-primary btn-sm">Cập nhật</button>
-                                </form>
+                                    <!-- <button type="submit" class="btn btn-primary btn-sm">Cập nhật</button> -->
+                                <!-- </form> -->
                             </td>
                         </tr>
                     <?php } ?>
@@ -101,5 +107,9 @@
                 <?php } ?>
             </tbody>
         </table>
+            <div class="text-end mt-3">
+                <button type="submit" class="btn btn-primary btn-lg px-4">Cập nhật tất cả</button>
+            </div>
+        </form>
     </div>
 </div>

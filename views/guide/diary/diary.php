@@ -1,7 +1,7 @@
 <div class="col-12">
     <h2>Nhật ký tour</h2>
 
-    <form method="get" id="tourFilterForm">
+    <!-- <form method="get" id="tourFilterForm">
         <input type="hidden" name="mode" value="guide">
         <input type="hidden" name="action" value="viewdiary">
         <div class="col-12 col-lg-6 mb-2">
@@ -18,14 +18,14 @@
                 <?php } ?>
             </select>
         </div>
-    </form>
+    </form> -->
 
     <!-- Form thêm nhật ký -->
     <div class="card shadow-sm border-0 mb-4 diary-card">
         <div class="card-body p-4">
             <div class="row g-3 align-items-center diary-form-row">
                 <form method="post" enctype="multipart/form-data" id="diaryForm" onsubmit="return validateSearchForm()">
-                    <input type="hidden" name="departure_id" value="<?= (int)($_GET['departure_id'] ?? 0) ?>">
+                    <input type="hidden" name="departure_id" value="<?= (int)($selectedDepartureId ?? 0) ?>">
                     <div class="row g-3 diary-form-row">
                         <!-- Nội dung nhật ký -->
                         <div class="col-12 col-lg-6">
@@ -87,9 +87,9 @@
                     </thead>
 
                     <tbody class="text-dark">
-                    <?php if(empty($_GET['departure_id'])): ?>
+                    <?php if (empty($selectedDepartureId)): ?>
                         <tr>
-                            <td colspan="7" class="text-center text-danger">Vui lòng chọn tour.</td>
+                            <td colspan="7" class="text-center text-danger">Hôm nay bạn không có tour đang diễn ra.</td>
                         </tr>
                     <?php else: ?>
                         <?php if (!empty($diaryData)) { ?>

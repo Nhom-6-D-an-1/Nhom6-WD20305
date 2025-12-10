@@ -1,8 +1,21 @@
 <?php
 $today = today();
 
-// Lọc dữ liệu dựa trên GET
 $filteredSchedule = array_filter($scheduleData, function ($tour) use ($today) {
+
+    $status = ($tour['end_date'] < $today) 
+        ? 'HoanTat' 
+        : (($tour['start_date'] > $today) ? 'SapToi' : 'DangDienRa');
+
+    // Lần đầu vào trang: không có filter => hiển thị Sắp tới + Đang diễn ra
+    if (
+        !isset($_GET['start_date']) &&
+        !isset($_GET['status']) &&
+        !isset($_GET['departure_id'])
+    ) {
+        return ($status == 'SapToi' || $status == 'DangDienRa');
+    }
+
     $match = true;
 
     // Lọc theo tour
@@ -17,7 +30,6 @@ $filteredSchedule = array_filter($scheduleData, function ($tour) use ($today) {
 
     // Lọc theo trạng thái
     if (!empty($_GET['status'])) {
-        $status = ($tour['end_date'] < $today) ? 'HoanTat' : (($tour['start_date'] > $today) ? 'SapToi' : 'DangDienRa');
         $match = $match && ($status == $_GET['status']);
     }
 
@@ -35,7 +47,7 @@ $filteredSchedule = array_filter($scheduleData, function ($tour) use ($today) {
                 <input type="hidden" name="mode" value="guide">
                 <input type="hidden" name="action" value="viewSchedule">
                 <!-- Chọn tour -->
-                <div class="col-lg-4 col-md-6">
+                <!-- <div class="col-lg-4 col-md-6">
                     <select class="form-select" name="departure_id">
                         <option value="0" hidden>--Chọn tour--</option>
                         <?php foreach ($assignedTours as $tour): ?>
@@ -45,15 +57,15 @@ $filteredSchedule = array_filter($scheduleData, function ($tour) use ($today) {
                             </option>
                         <?php endforeach; ?>
                     </select>
-                </div>
+                </div> -->
 
                 <!-- Ngày -->
-                <div class="col-lg-3 col-md-6">
+                <div class="col-lg-5 col-md-6">
                     <input type="date" class="form-control" name="start_date" value="<?= $_GET['start_date'] ?? '' ?>">
                 </div>
 
                 <!-- Trạng thái -->
-                <div class="col-lg-3 col-md-6">
+                <div class="col-lg-5 col-md-6">
                     <select class="form-select" name="status">
                         <option value="">Tất cả trạng thái</option>
                         <option value="SapToi" <?= (isset($_GET['status']) && $_GET['status'] == 'SapToi') ? 'selected' : '' ?>>Sắp tới</option>
