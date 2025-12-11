@@ -164,14 +164,14 @@ class DepartureController
         $extraCost = new ExtraCostModel();
 
         $extraCost->addCost([
-            'departure_id' => $_GET['departure_id'],
+            'departure_id' => $_POST['departure_id'],
             'cost_name' => $_POST['cost_name'],
             'amount' => $_POST['amount'],
             'note' => $_POST['note'] ?? ''
         ]);
 
         $_SESSION['flash_success'] = "Đã thêm chi phí phát sinh!";
-        header("Location: ?mode=admin&action=departureDetail&id=" . $_GET['departure_id'] . "&tab=services");
+        header("Location: ?mode=admin&action=departureDetail&id=" . $_POST['departure_id'] . "&tab=services");
         exit;
     }
 }
