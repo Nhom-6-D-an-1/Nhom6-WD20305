@@ -41,5 +41,5 @@ function today()
     if (FAKE_TIME_ENABLE) {
         return FAKE_TIME_VALUE; // luôn trả về ngày giả
     }
-    return date("Y-m-d");
+    return date("Y/m/d");
 }
