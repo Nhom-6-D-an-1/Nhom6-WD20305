@@ -228,8 +228,8 @@ $tab = $_GET['tab'] ?? 'info';
 
                     <div class="card p-3 mb-4">
                         <form method="POST"
-                            action="<?= BASE_URL ?>?mode=admin&action=departureDetail&id=<?= (int)$_GET['id'] ?>&tab=staff">
-                            <input type="hidden" name="departure_id" value="<?= (int)$_GET['id'] ?>">
+                            action="<?= BASE_URL ?>?mode=admin&action=addGuide&id=<?= $_GET['id'] ?>&tab=staff">
+                            <input type="hidden" name="departure_id" value="<?= $_GET['id'] ?>">
 
                             <div class="row g-3">
                                 <div class="col-md-4">
@@ -383,10 +383,66 @@ $tab = $_GET['tab'] ?? 'info';
                             <?php endforeach; ?>
                         </tbody>
                     </table>
-                    <div class="mt-3">
-                        <h5><b><?= $data_departure['status'] == 'completed' ? 'Tổng chi phí dịch vụ:' : 'Tổng chi phí dịch vụ dự kiến:' ?> </b>
+                    <div class="mt-3 mb-5">
+                        <h6><b><?= $data_departure['status'] == 'completed' ? 'Tổng chi phí dịch vụ:' : 'Tổng chi phí dịch vụ dự kiến:' ?> </b>
                             <?= number_format($total_service_cost, 0, '', '.') ?> đ
-                        </h5>
+                        </h6>
+                    </div>
+
+                    <h5 class="fw-semibold text-primary">Chi phí phát sinh</h5>
+
+                    <form action="?mode=admin&action=addExtraCost" method="POST" class="mb-3">
+                        <input type="hidden" name="departure_id" value="<?= $data_departure['departure_id'] ?>">
+
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label>Tên chi phí</label>
+                                <input type="text" name="cost_name" class="form-control" required>
+                            </div>
+
+                            <div class="col-md-3">
+                                <label>Số tiền</label>
+                                <input type="number" name="amount" class="form-control" required>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label>Ghi chú</label>
+                                <input type="text" name="note" class="form-control">
+                            </div>
+
+                            <div class="col-md-1 d-flex align-items-end">
+                                <button class="btn btn-success w-100">Thêm</button>
+                            </div>
+                        </div>
+                    </form>
+
+
+                    <h6 class="mt-4">Danh sách chi phí phát sinh</h6>
+
+                    <table class="table table-bordered">
+                        <thead class="table-dark">
+                            <tr>
+                                <th>#</th>
+                                <th>Tên chi phí</th>
+                                <th>Số tiền</th>
+                                <th>Ghi chú</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($data_extraCost as $key => $value): ?>
+                                <tr>
+                                    <td><?= $key + 1 ?></td>
+                                    <td><?= $value['cost_name'] ?></td>
+                                    <td><?= number_format($value['amount'], 0, ',', '.') ?> đ</td>
+                                    <td><?= $value['note'] ?></td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                    <div class="mt-3 mb-5">
+                        <h6><b><?= $data_departure['status'] == 'completed' ? 'Tổng chi phí phát sinh:' : 'Tổng chi phí phát sinh dự kiến:' ?> </b>
+                            <?= number_format($total_service_extraCost, 0, '', '.') ?> đ
+                        </h6>
                     </div>
 
                 <?php endif; ?>
@@ -452,7 +508,7 @@ $tab = $_GET['tab'] ?? 'info';
 
                 <?php endif; ?>
 
-            </div><!-- /.tab-content -->
+            </div>
 
         </div>
     </div>
