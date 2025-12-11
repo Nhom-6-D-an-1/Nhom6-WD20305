@@ -1032,72 +1032,30 @@ class AdminController
 
     public function viewDashboard()
     {
-        // --- UPDATE STATUS DEPARTURES ---
         $departure = new DepartureModel();
         $departure->autoUpdateStatus();
 
-        // --- REPORT MODEL ---
         $report = new ReportModel();
 
-        // Lấy năm từ người dùng nếu có, mặc định năm hiện tại
-        $year = $_GET["year"] ?? date("Y");
-
-        // --- SUMMARY THEO TỪNG CHUYẾN ĐI ---
         $departureSummary = $report->summaryByDeparture();
 
         // Tính tổng doanh thu
         $totalRevenue = array_sum(array_column($departureSummary, 'revenue'));
 
-        // Tính tổng chi phí (cost + ex_cost)
-        $totalCost = array_sum(array_map(
-            fn($d) => ($d["cost"] ?? 0) + ($d["ex_cost"] ?? 0),
-            $departureSummary
-        ));
+        // Tính tổng chi phí
+        $totalCost = array_sum(array_column($departureSummary, 'cost'));
 
-        // --- PHÂN TÍCH THÁNG / QUÝ / NĂM ---
-        $byMonth   = $report->revenueByMonth($year);
-        $byQuarter = $report->revenueByQuarter($year);
-        $byYear    = $report->revenueByYear();
-
-        // --- PACK DATA TRUYỀN SANG VIEW ---
         $data = [
-            "title"          => "Dashboard Báo Cáo",
-            "year"           => $year,
-
-            // Tổng quan
-            "revenue"        => $totalRevenue,
-            "expense"        => $totalCost,
-            "profit"         => $totalRevenue - $totalCost,
-            "tours"          => count($departureSummary),
-
-            // Chi tiết tour
-            "tourProfit"     => $departureSummary,
-
-            // Phân tích thống kê
-            "byMonth"        => $byMonth,
-            "byQuarter"      => $byQuarter,
-            "byYear"         => $byYear,
+            "title"       => "Dashboard Báo Cáo",
+            "revenue"     => $totalRevenue,
+            "expense"     => $totalCost,
+            "profit"      => $totalRevenue - $totalCost,
+            "tours"       => count($departureSummary),
+            "tourProfit"  => $departureSummary
         ];
 
         extract($data);
-
         $view = "admin/dashboard/dashboard";
         require_once PATH_VIEW_MAIN;
-    }
-
-    public function addExtraCost()
-    {
-        $extraCost = new ExtraCostModel();
-
-        $extraCost->addCost([
-            'departure_id' => $_GET['departure_id'],
-            'cost_name' => $_POST['cost_name'],
-            'amount' => $_POST['amount'],
-            'note' => $_POST['note'] ?? ''
-        ]);
-
-        $_SESSION['flash_success'] = "Đã thêm chi phí phát sinh!";
-        header("Location: ?mode=admin&action=departureDetail&id=" . $_GET['departure_id'] . "&tab=service");
-        exit;
     }
 }

@@ -111,7 +111,8 @@ class GuideController
     {
         $customers = new CustomersModel();
         $assigned = $customers->getAssignedTours($guide_id);
-        $today = date('Y-m-d');
+        // $today = date('Y-m-d');
+        $today = today(); // Sử $today để dùng được ngày giả
 
         foreach ($assigned as $tour) {
             if ($tour['start_date'] <= $today && $tour['end_date'] >= $today) {
@@ -121,111 +122,84 @@ class GuideController
         return null; // không có tour đang diễn ra
     }
 
-        public function viewDiary()
-        {
+    public function viewDiary()
+    {
 
-            $diary = new DiaryModel();
-            $customers = new CustomersModel();
-            $guide_id = $_SESSION['user']['guide_id'];
-            // Nếu chưa chọn tour → tự động chọn tour đang diễn ra
-            if (!isset($_GET['departure_id'])) {
-                $running = $this->getCurrentRunningTour($guide_id);
-                if ($running) {
-                    header("Location: " . BASE_URL . "?mode=guide&action=viewdiary&departure_id=" . $running['departure_id']);
-                    exit();
-                }
+        $diary = new DiaryModel();
+        $customers = new CustomersModel();
+        $guide_id = $_SESSION['user']['guide_id'];
+        // Nếu chưa chọn tour → tự động chọn tour đang diễn ra
+        if (!isset($_GET['departure_id'])) {
+            $running = $this->getCurrentRunningTour($guide_id);
+            if ($running) {
+                header("Location: " . BASE_URL . "?mode=guide&action=viewdiary&departure_id=" . $running['departure_id']);
+                exit();
             }
-            $assignedTours = $customers->getAssignedTours($guide_id);
+        }
+        $assignedTours = $customers->getAssignedTours($guide_id);
 
-            // Tự động tìm tour đang diễn ra
-            $currentTour = $this->getCurrentRunningTour($guide_id);
+        // Tự động tìm tour đang diễn ra
+        $currentTour = $this->getCurrentRunningTour($guide_id);
 
-            // Nếu không có tour đang diễn ra -> truyền biến báo lên view (không die)
-            if (!$currentTour) {
-                $selectedDepartureId = 0;
-                $itineraryDays = [];
-                $diaryData = [];
-                $todayDay = null;
-                $noRunningTour = true;
-            } else {
-                $selectedDepartureId = (int)$currentTour['departure_id'];
-                $today = date('Y-m-d');
-                // tính ngày thứ bao nhiêu (ngày 1 là ngày start_date)
-                $startDate = date('Y-m-d', strtotime($currentTour['start_date']));
-                $todayDay = (int)(floor((strtotime($today) - strtotime($startDate)) / 86400) + 1);
+        // Nếu không có tour đang diễn ra -> truyền biến báo lên view (không die)
+        if (!$currentTour) {
+            $selectedDepartureId = 0;
+            $itineraryDays = [];
+            $diaryData = [];
+            $todayDay = null;
+            $noRunningTour = true;
+        } else {
+            $selectedDepartureId = (int)$currentTour['departure_id'];
+            $today = date('Y-m-d');
+            // tính ngày thứ bao nhiêu (ngày 1 là ngày start_date)
+            $startDate = date('Y-m-d', strtotime($currentTour['start_date']));
+            $todayDay = (int)(floor((strtotime($today) - strtotime($startDate)) / 86400) + 1);
 
-                // Lấy tất cả ngày của lịch trình rồi lọc chỉ giữ ngày hôm nay
-                $allDays = $diary->getItineraryDays($selectedDepartureId); // trả về day_number, itinerary_id, place...
-                $itineraryDays = array_values(array_filter($allDays, function($d) use ($todayDay) {
-                    return isset($d['day_number']) && ((int)$d['day_number'] === (int)$todayDay);
-                }));
+            // Lấy tất cả ngày của lịch trình rồi lọc chỉ giữ ngày hôm nay
+            $allDays = $diary->getItineraryDays($selectedDepartureId); // trả về day_number, itinerary_id, place...
+            $itineraryDays = array_values(array_filter($allDays, function($d) use ($todayDay) {
+                return isset($d['day_number']) && ((int)$d['day_number'] === (int)$todayDay);
+            }));
 
-                // Lấy nhật ký (theo tour) rồi lọc chỉ lấy ngày hôm nay (nếu model trả về day_number)
-                $allDiary = $diary->getAllDiaryByGuide($guide_id, $selectedDepartureId);
-                $diaryData = $allDiary;
+            // Lấy nhật ký (theo tour) rồi lọc chỉ lấy ngày hôm nay (nếu model trả về day_number)
+            $allDiary = $diary->getAllDiaryByGuide($guide_id, $selectedDepartureId);
+            $diaryData = $allDiary;
 
-                $noRunningTour = false;
-            }
-
-            // Nếu POST (thêm nhật ký) — giữ nguyên luồng xử lý nhưng override departure_id bằng selectedDepartureId (bảo vệ)
-            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-                $departure_id = $selectedDepartureId; // bắt buộc phải là tour đang diễn ra
-                $note = trim($_POST['note'] ?? '');
-                $itinerary_id = !empty($_POST['itinerary_id']) ? (int)$_POST['itinerary_id'] : null;
-                $handling_method = trim($_POST['handling_method'] ?? '');
-                $customer_feedback = trim($_POST['customer_feedback'] ?? '');
-                $imagePath = null;
-
-                if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
-                    $imagePath = uploadFile($_FILES['image'], 'diary/');
-                }
-
-                if ($departure_id && $note) {
-                    $diary->addDiary(
-                        $departure_id,
-                        $guide_id,
-                        $note,
-                        $itinerary_id,
-                        $handling_method,
-                        $customer_feedback,
-                        $imagePath
-                    );
-                    header("Location: " . BASE_URL . "?mode=guide&action=viewdiary");
-                    exit();
-                }
-            }
-
-            $title = "Nhật ký tour";
-            $view = 'guide/diary/diary';
-            require_once PATH_VIEW_MAIN;
+            $noRunningTour = false;
         }
 
+        // Nếu POST (thêm nhật ký) — giữ nguyên luồng xử lý nhưng override departure_id bằng selectedDepartureId (bảo vệ)
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $departure_id = $selectedDepartureId; // bắt buộc phải là tour đang diễn ra
+            $note = trim($_POST['note'] ?? '');
+            $itinerary_id = !empty($_POST['itinerary_id']) ? (int)$_POST['itinerary_id'] : null;
+            $handling_method = trim($_POST['handling_method'] ?? '');
+            $customer_feedback = trim($_POST['customer_feedback'] ?? '');
+            $imagePath = null;
 
-    // DIARY - Thêm diary mới
-    // public function addDiary()
-    // {
-    //     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    //         $departure_id = $_POST['departure_id'];
-    //         $guide_id = $_SESSION['user']['guide_id'];
-    //         $date = $_POST['date'];
-    //         $note = trim($_POST['note']);
-    //         $imagePath = null;
+            if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
+                $imagePath = uploadFile($_FILES['image'], 'diary/');
+            }
 
-    //         // Upload ảnh nếu có
-    //         if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
-    //             $imagePath = uploadFile($_FILES['image'], 'diary/');
-    //         }
+            if ($departure_id && $note) {
+                $diary->addDiary(
+                    $departure_id,
+                    $guide_id,
+                    $note,
+                    $itinerary_id,
+                    $handling_method,
+                    $customer_feedback,
+                    $imagePath
+                );
+                header("Location: " . BASE_URL . "?mode=guide&action=viewdiary");
+                exit();
+            }
+        }
 
-    //         $diary = new DiaryModel();
-    //         $diary->addDiary($departure_id, $guide_id, $note, $imagePath);
-
-    //         header("Location: " . BASE_URL . "?mode=guide&action=viewdiary");
-    //         exit();
-    //     }
-
-    //     $customers = new CustomersModel();
-    //     $assignedTours = $customers->getAssignedTours($_SESSION['user']['guide_id']);
-    // }
+        $title = "Nhật ký tour";
+        $view = 'guide/diary/diary';
+        require_once PATH_VIEW_MAIN;
+    }
 
 
     // DIARY - Xóa diary
