@@ -74,7 +74,17 @@ class DepartureController
     {
         $id = $_GET['id'];
         $assignment = new AssignedStaffModel();
-
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $departure_id = $_POST['departure_id'];
+            $guide_id = $_POST['guide_id'];
+            $role = $_POST['role_in_tour'];
+            $notes = $_POST['notes'];
+            $res = $assignment->addGuideByDeparture($departure_id, $guide_id, $role, $notes);
+            if (!$res['ok']) $_SESSION['flash_error'] = $res['error'];
+            else $_SESSION['flash_success'] = "Phân công thành công.";
+            header("Location: " . BASE_URL . "?mode=admin&action=departureDetail&id=" . $departure_id . "&tab=staff");
+            exit;
+        }
         $departure = new DepartureModel();
         $data_departure = $departure->getOneDeparture($id);
         $revenue = $departure->getRevenue($id);
@@ -89,30 +99,9 @@ class DepartureController
         $total_service_cost = $service_assignment->getTotalCostByDeparture($id);
         $service = new ServiceModel();
         $data_service = $service->getAll();
-
-        $extraCost = new ExtraCostModel();
-        $data_extraCost = $extraCost->getByDeparture($id);
-        $total_service_extraCost = $extraCost->sumCost($id);
         $title = "Chi tiết chuyến đi";
         $view = "admin/departure/departureDetail";
         require_once PATH_VIEW_MAIN;
-    }
-
-    public function addGuide()
-    {
-        $id = $_GET['id'];
-        $assignment = new AssignedStaffModel();
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $departure_id = $_POST['departure_id'];
-            $guide_id = $_POST['guide_id'];
-            $role = $_POST['role_in_tour'];
-            $notes = $_POST['notes'];
-            $res = $assignment->addGuideByDeparture($departure_id, $guide_id, $role, $notes);
-            if (!$res['ok']) $_SESSION['flash_error'] = $res['error'];
-            else $_SESSION['flash_success'] = "Phân công thành công.";
-            header("Location: " . BASE_URL . "?mode=admin&action=departureDetail&id=" . $departure_id . "&tab=staff");
-            exit;
-        }
     }
 
     public function deleteStaff()
@@ -156,6 +145,22 @@ class DepartureController
         $service_assignment->delete($id);
         $_SESSION['flash_success'] = "Xóa phân công thành công.";
         header("Location: " . BASE_URL . "?mode=admin&action=departureDetail&id=" . $departure_id . "&tab=services");
+        exit;
+    }
+
+    public function addExtraCost()
+    {
+        $extraCost = new ExtraCostModel();
+
+        $extraCost->addCost([
+            'departure_id' => $_POST['departure_id'],
+            'cost_name' => $_POST['cost_name'],
+            'amount' => $_POST['amount'],
+            'note' => $_POST['note'] ?? ''
+        ]);
+
+        $_SESSION['flash_success'] = "Đã thêm chi phí phát sinh!";
+        header("Location: ?mode=admin&action=departureDetail&id=" . $_POST['departure_id'] . "&tab=services");
         exit;
     }
 }
