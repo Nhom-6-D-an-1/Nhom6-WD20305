@@ -36,7 +36,7 @@ class DepartureModel
 
         LEFT JOIN tour_guide g ON g.guide_id = a.guide_id
         LEFT JOIN users u ON u.user_id = g.user_id
-                ORDER BY d.start_date ASC";
+                ORDER BY d.start_date DESC";
         $stmt = $this->conn->prepare($sql);
         $stmt->execute();
         return $stmt->fetchAll();
