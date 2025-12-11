@@ -69,7 +69,7 @@ match ($action) {
 
 
 
-    // Tour
+    // ===============   TOUR CONTROLLER   ===============
     'viewstour'   => (new TourController())->viewTour(),
     'createTour'    => (new TourController())->createTour(),
     'tourDetail'     => (new TourController())->tourDetail(),
@@ -90,10 +90,8 @@ match ($action) {
     'departureEdit'      => (new DepartureController())->departureEdit(),
     'departureDetail'      => (new DepartureController())->departureDetail(),
     'deleteStaff'      => (new DepartureController())->deleteStaff(),
-    'addGuide'      => (new DepartureController())->addGuide(),
     'addService'      => (new DepartureController())->addService(),
     'deleteService'      => (new DepartureController())->deleteService(),
-    'addExtraCost'      => (new AdminController())->addExtraCost(),
 
 
     // Logout 
