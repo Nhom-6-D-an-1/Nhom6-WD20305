@@ -68,10 +68,7 @@
 
 <div class="col-12">
 
-    <h2 class="title-line">Nhật ký tour</h2>
-
-    <!-- FILTER TOUR -->
-    <form method="get" id="tourFilterForm">
+    <!-- <form method="get" id="tourFilterForm">
         <input type="hidden" name="mode" value="guide">
         <input type="hidden" name="action" value="viewdiary">
 
@@ -92,23 +89,51 @@
                 <?php endforeach; ?>
             </select>
         </div>
-    </form>
+    </form> -->
 
     <!-- FORM THÊM NHẬT KÝ -->
     <div class="card shadow-sm border-0 mb-4 diary-card">
-        <div class="card-body px-4 py-4">
-
-            <form method="post" enctype="multipart/form-data" id="diaryForm"
-                  onsubmit="return validateSearchForm()">
-                
-                <input type="hidden" name="departure_id"
-                       value="<?= (int)($_GET['departure_id'] ?? 0) ?>">
-
-                <div class="row g-3 diary-form-row">
-
-                    <div class="col-12 col-lg-6">
-                        <textarea name="note" class="form-control diary-input"
-                                  placeholder="Diễn biến nhật ký / sự cố..."></textarea>
+        <div class="card-body p-4">
+            <div class="row g-3 align-items-center diary-form-row">
+                <form method="post" enctype="multipart/form-data" id="diaryForm" onsubmit="return validateSearchForm()">
+                    <input type="hidden" name="departure_id" value="<?= (int)($selectedDepartureId ?? 0) ?>">
+                    <div class="row g-3 diary-form-row">
+                        <!-- Nội dung nhật ký -->
+                        <div class="col-12 col-lg-6">
+                            <textarea name="note" rows="2" class="form-control diary-input"
+                                placeholder="Diễn biến sự cố, nội dung nhật ký..." ></textarea>
+                        </div>
+                        <!-- Cách xử lý -->
+                        <div class="col-12 col-lg-3">
+                            <textarea name="handling_method" rows="2" class="form-control"
+                                placeholder="Cách xử lý..."></textarea>
+                        </div>
+                        <!-- Phản hồi khách hàng -->
+                        <div class="col-12 col-lg-3">
+                            <textarea name="customer_feedback" rows="2" class="form-control"
+                                placeholder="Phản hồi của khách hàng..."></textarea>
+                        </div>
+                        <!-- Ảnh -->
+                        <div class="col-12 col-lg-6">
+                            <input type="file" name="image" class="form-control diary-file">
+                        </div>
+                        <!-- Ngày xảy ra sự cố -->
+                        <div class="col-12 col-lg-4">
+                            <select name="itinerary_id" class="form-select">
+                                <option value="">-- Ngày xảy ra sự cố --</option>
+                                <?php foreach ($itineraryDays as $day): ?>
+                                    <option value="<?= $day['itinerary_id'] ?>">
+                                        Ngày <?= $day['day_number'] ?> - <?= htmlspecialchars($day['place']) ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                        <!-- Nút -->
+                        <div class="col-12 col-lg-2 text-end">
+                            <button type="submit" class="btn btn-primary diary-btn fw-semibold">
+                                Thêm nhật ký
+                            </button>
+                        </div>
                     </div>
 
                     <div class="col-12 col-lg-3">
@@ -169,10 +194,10 @@
                         </tr>
                     </thead>
 
-                    <tbody>
-                    <?php if(empty($_GET['departure_id'])): ?>
-                        <tr class="no-data-row">
-                            <td colspan="7" class="text-center">Vui lòng chọn tour.</td>
+                    <tbody class="text-dark">
+                    <?php if (empty($selectedDepartureId)): ?>
+                        <tr>
+                            <td colspan="7" class="text-center text-danger">Hôm nay bạn không có tour đang diễn ra.</td>
                         </tr>
                     <?php else: ?>
                         <?php if (!empty($diaryData)) { ?>
