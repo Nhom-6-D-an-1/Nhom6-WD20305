@@ -39,7 +39,7 @@
                                 <?php echo ($selectedStage == $stage['stage_description']) ? 'selected' : ''; ?>>
                                 <?php echo htmlspecialchars($stage['label']); ?>
                             </option>
-                        <?php } ?>
+                        <?php endforeach; ?>
                     </select>
                 </div>
             </form>
@@ -66,17 +66,22 @@
                 <?php if (!empty($statusDisplay) && $selectedDepartureId && $selectedStage) { ?>
                     <?php foreach ($statusDisplay as $guest) { ?>
                         <tr class="customer-row">
-                            <td class="ps-4 fw-semibold"><?php echo htmlspecialchars($guest['full_name']); ?></td>
-                            <td class="status-cell">
-                                <span class="<?php 
-                                    if ($guest['status'] == 'present') echo 'text-success'; 
-                                    else if ($guest['status'] == 'absent') echo 'text-danger'; 
-                                    else if ($guest['status'] == 'late') echo 'text-warning'; 
-                                    else echo 'text-secondary'; 
+
+                            <td class="ps-4 fw-semibold"><?= htmlspecialchars($guest['full_name']) ?></td>
+
+                            <td class="fw-semibold">
+                                <span class="<?=
+                                    match ($guest['status']) {
+                                        'present' => 'text-success',
+                                        'absent'  => 'text-danger',
+                                        'late'    => 'text-warning',
+                                        default   => 'text-secondary',
+                                    }
                                 ?>">
-                                    <?php echo htmlspecialchars($guest['display_status']); ?>
+                                    <?= htmlspecialchars($guest['display_status']) ?>
                                 </span>
                             </td>
+
                             <td>
                                 <?php 
                                     echo $guest['checkin_time'] 
@@ -102,6 +107,7 @@
                                     <!-- <button type="submit" class="btn btn-primary btn-sm">Cập nhật</button> -->
                                 <!-- </form> -->
                             </td>
+
                         </tr>
                     <?php } ?>
                 <?php } else if ($selectedDepartureId) { ?>
@@ -120,4 +126,5 @@
             </div>
         </form>
     </div>
+
 </div>

@@ -1,45 +1,79 @@
-<h3 class="fw-bold mb-4">Sửa tài khoản</h3>
+<div class="container-fluid px-4">
 
-<div class="form-section">
-    <form method="post" action="<?= BASE_URL ?>?mode=admin&action=updateaccount">
+    <!-- HEADER -->
+    <div class="d-flex justify-content-between align-items-center mt-4 mb-3">
+        <h3 class="fw-bold mb-0">Sửa tài khoản</h3>
+        <a href="<?= BASE_URL ?>?mode=admin&action=viewsaccount" class="btn btn-outline-secondary">
+            Quay lại
+        </a>
+    </div>
 
-        <input type="hidden" name="user_id" value="<?= htmlspecialchars($account['user_id'] ?? '') ?>">
+    <!-- CARD -->
+    <div class="card shadow-sm">
+        <div class="card-body">
 
-        <div class="mb-3">
-            <label class="form-label">Họ và tên:</label>
-            <input type="text" name="full_name" class="form-control" required value="<?= htmlspecialchars($account['full_name'] ?? '') ?>">
+            <form method="post" action="<?= BASE_URL ?>?mode=admin&action=updateaccount">
+
+                <input type="hidden" name="user_id"
+                       value="<?= htmlspecialchars($account['user_id'] ?? '') ?>">
+
+                <!-- THÔNG TIN CHUNG -->
+                <h5 class="fw-semibold text-primary mb-3">Thông tin người dùng</h5>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label fw-semibold">Họ và tên</label>
+                        <input type="text" name="full_name" class="form-control"
+                               required
+                               value="<?= htmlspecialchars($account['full_name'] ?? '') ?>">
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label fw-semibold">Tên đăng nhập</label>
+                        <input type="text" name="username" class="form-control"
+                               required
+                               value="<?= htmlspecialchars($account['username'] ?? '') ?>">
+                    </div>
+                </div>
+
+                <!-- MẬT KHẨU -->
+                <h5 class="fw-semibold text-primary mt-4 mb-3">Bảo mật</h5>
+
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">Mật khẩu mới</label>
+                    <input type="password" name="password"
+                           class="form-control"
+                           placeholder="Để trống nếu không đổi">
+                </div>
+
+                <!-- VAI TRÒ -->
+                <h5 class="fw-semibold text-primary mt-4 mb-3">Phân quyền</h5>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label fw-semibold">Vai trò</label>
+                        <select name="role" class="form-select">
+                            <option value="admin"
+                                <?= ($account['role'] ?? '') === 'admin' ? 'selected' : '' ?>>
+                                Quản trị viên
+                            </option>
+                            <option value="guide"
+                                <?= ($account['role'] ?? '') === 'guide' ? 'selected' : '' ?>>
+                                Hướng dẫn viên
+                            </option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- BUTTON -->
+                <div class="mt-4 d-flex gap-3">
+                    <button type="submit" class="btn btn-success px-4">Cập nhật</button>
+                    <a href="<?= BASE_URL ?>?mode=admin&action=viewsaccount"
+                       class="btn btn-secondary px-4">Hủy</a>
+                </div>
+
+            </form>
+
         </div>
-
-        <div class="mb-3">
-            <label class="form-label">Tên đăng nhập:</label>
-            <input type="text" name="username" class="form-control" required value="<?= htmlspecialchars($account['username'] ?? '') ?>">
-        </div>
-
-        <div class="mb-3">
-            <label class="form-label">Mật khẩu mới (để trống nếu không đổi):</label>
-            <input type="password" name="password" class="form-control" placeholder="Mật khẩu mới">
-        </div>
-
-        <div class="mb-3">
-            <label class="form-label">Vai trò:</label>
-            <select name="role" class="form-select">
-                <option value="admin" <?= ($account['role'] ?? '') === 'admin' ? 'selected' : '' ?>>admin</option>
-                <option value="guide" <?= ($account['role'] ?? '') === 'guide' ? 'selected' : '' ?>>guide</option>
-            </select>
-        </div>
-
-        <!-- <div class="mb-3">
-            <label class="form-label">Trạng thái:</label>
-            <select name="status" class="form-select">
-                <option value="1" <?= ($account['status'] ?? 1) == 1 ? 'selected' : '' ?>>Hoạt động</option>
-                <option value="0" <?= ($account['status'] ?? 1) == 0 ? 'selected' : '' ?>>Tạm ẩn</option>
-            </select>
-        </div> -->
-
-        <div class="mt-4 d-flex gap-3">
-            <button type="submit" class="btn btn-primary">Cập nhật</button>
-            <a href="<?= BASE_URL ?>?mode=admin&action=viewsaccount" class="btn btn-secondary">Huỷ</a>
-        </div>
-
-    </form>
+    </div>
 </div>
