@@ -93,7 +93,7 @@ match ($action) {
     'addGuide'      => (new DepartureController())->addGuide(),
     'addService'      => (new DepartureController())->addService(),
     'deleteService'      => (new DepartureController())->deleteService(),
-    'addExtraCost'      => (new AdminController())->addExtraCost(),
+    'addExtraCost'      => (new DepartureController())->addExtraCost(),
 
 
     // Logout 

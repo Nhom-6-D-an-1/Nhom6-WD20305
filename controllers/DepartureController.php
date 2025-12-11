@@ -158,4 +158,20 @@ class DepartureController
         header("Location: " . BASE_URL . "?mode=admin&action=departureDetail&id=" . $departure_id . "&tab=services");
         exit;
     }
+
+    public function addExtraCost()
+    {
+        $extraCost = new ExtraCostModel();
+
+        $extraCost->addCost([
+            'departure_id' => $_GET['departure_id'],
+            'cost_name' => $_POST['cost_name'],
+            'amount' => $_POST['amount'],
+            'note' => $_POST['note'] ?? ''
+        ]);
+
+        $_SESSION['flash_success'] = "Đã thêm chi phí phát sinh!";
+        header("Location: ?mode=admin&action=departureDetail&id=" . $_GET['departure_id'] . "&tab=services");
+        exit;
+    }
 }
