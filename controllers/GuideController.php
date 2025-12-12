@@ -157,7 +157,7 @@ class GuideController
 
             // Lấy tất cả ngày của lịch trình rồi lọc chỉ giữ ngày hôm nay
             $allDays = $diary->getItineraryDays($selectedDepartureId); // trả về day_number, itinerary_id, place...
-            $itineraryDays = array_values(array_filter($allDays, function($d) use ($todayDay) {
+            $itineraryDays = array_values(array_filter($allDays, function ($d) use ($todayDay) {
                 return isset($d['day_number']) && ((int)$d['day_number'] === (int)$todayDay);
             }));
 
@@ -220,119 +220,117 @@ class GuideController
         header("Location: " . BASE_URL . "?mode=guide&action=viewdiary&departure_id=" . $departure_id);
         exit();
     }
-public function viewCheckin()
-{
-    $customers = new CustomersModel();
-    $guide_id = $_SESSION['user']['guide_id'];
-    $assignedTours = $customers->getAssignedTours($guide_id);
 
-    if (!isset($_GET['departure_id'])) {
-        $running = $this->getCurrentRunningTour($guide_id);
-        if ($running) {
-            header("Location: " . BASE_URL . "?mode=guide&action=viewcheckin&departure_id=" . $running['departure_id']);
-            exit();
+    public function viewCheckin()
+    {
+        $customers = new CustomersModel();
+        $guide_id = $_SESSION['user']['guide_id'];
+        $assignedTours = $customers->getAssignedTours($guide_id);
+
+        // Nếu không truyền departure_id → tự chọn tour đang diễn ra
+        if (!isset($_GET['departure_id'])) {
+            $running = $this->getCurrentRunningTour($guide_id);
+            if ($running) {
+                header("Location: " . BASE_URL . "?mode=guide&action=viewcheckin&departure_id=" . $running['departure_id']);
+                exit();
+            }
         }
     }
-    
-    // Khởi tạo model
-    $checkinModel = new CheckinModel();
 
-    // Tự động lấy tour đang diễn ra
-    $currentTour = $this->getCurrentRunningTour($guide_id);
+        $checkinModel = new CheckinModel();
+        $currentTour = $this->getCurrentRunningTour($guide_id);
 
-    if (!$currentTour) {
-        $selectedDepartureId = 0;
-        $selectedStage = null;
-        $statusDisplay = [];
-        $stages = [];
-        $noRunningTour = true;
-    } else {
-        $selectedDepartureId = (int)$currentTour['departure_id'];
-        $today = date('Y-m-d');
-        $startDate = date('Y-m-d', strtotime($currentTour['start_date']));
-        $todayDay = (int)(floor((strtotime($today) - strtotime($startDate)) / 86400) + 1);
+        if (!$currentTour) {
+            // Không có tour đang diễn ra
+            $selectedDepartureId = 0;
+            $selectedStage = null;
+            $statusDisplay = [];
+            $stages = [];
+            $noRunningTour = true;
+        } else {
 
-        // Lấy tất cả chặng từ model
-        $allStages = $checkinModel->getCheckinStages($selectedDepartureId) ?? [];
+            // Lấy departure_id của tour đang chạy
+            $selectedDepartureId = (int)$currentTour['departure_id'];
 
-        if (!empty($allStages)) {
-            $filteredStages = array_filter($allStages, function($s) use ($todayDay) {
-                return isset($s['day_number']) && ((int)$s['day_number'] === (int)$todayDay);
+            // Dùng ngày giả hoặc ngày thật
+            $today = today();
+            $startDate = $currentTour['start_date'];
+
+            // Tính hôm nay là ngày thứ mấy của tour
+            $todayDay = (int)(floor((strtotime($today) - strtotime($startDate)) / 86400) + 1);
+
+            // Lấy toàn bộ chặng
+            $allStages = $checkinModel->getCheckinStages($selectedDepartureId) ?? [];
+
+            // Chỉ lấy chặng đúng ngày hôm nay
+            $stagesToday = array_filter($allStages, function ($s) use ($todayDay) {
+                return (int)$s['day_number'] === (int)$todayDay;
             });
 
-            $stagesToUse = !empty($filteredStages) ? $filteredStages : $allStages;
-
-            $stages = array_map(function($s) {
-                $time = '';
-                if (!empty($s['start_time'])) {
-                    $time = date('H:i', strtotime($s['start_time']));
-                    if (!empty($s['end_time'])) {
-                        $time .= ' - ' . date('H:i', strtotime($s['end_time']));
+            if (empty($stagesToday)) {
+                // Không có chặng của ngày hôm nay → không cho điểm danh
+                $stages = [];
+                $selectedStage = null;
+                $statusDisplay = [];
+            } else {
+                // Tạo dropdown hiển thị chặng
+                $stages = array_map(function ($s) {
+                    $time = '';
+                    if (!empty($s['start_time'])) {
+                        $time = date('H:i', strtotime($s['start_time']));
+                        if (!empty($s['end_time'])) {
+                            $time .= ' - ' . date('H:i', strtotime($s['end_time']));
+                        }
                     }
+                    return [
+                        'stage_description' => $s['stage_description'],
+                        'label' => $s['stage_description'] . ($time ? " ($time)" : "")
+                    ];
+                }, $stagesToday);
+
+                // Stage được chọn từ URL
+                $selectedStage = $_GET['stage'] ?? null;
+
+                // Lấy danh sách khách + trạng thái nếu đã chọn stage
+                if ($selectedStage) {
+                    $checkinData = $checkinModel->getGuestsAndCheckinStatus($selectedDepartureId, $selectedStage);
+                    $statusDisplay = array_map(function ($item) use ($checkinModel) {
+                        $item['display_status'] = $checkinModel->getStatusDisplay($item['status']);
+                        return $item;
+                    }, $checkinData);
+                } else {
+                    $statusDisplay = [];
                 }
-                return [
-                    'stage_description' => $s['stage_description'],
-                    'label' => $s['stage_description'] . ($time ? " ($time)" : "")
-                ];
-            }, $stagesToUse);
-
-            // Sau khi redirect, hoặc nếu đã có stage trong URL thì gán
-            $selectedStage = $_GET['stage'] ?? null;
-        } else {
-            $stages = [];
-            $selectedStage = null;
-        }
-
-        // Lấy danh sách khách + trạng thái
-        $statusDisplay = [];
-        if ($selectedStage) {
-            $checkinData = $checkinModel->getGuestsAndCheckinStatus($selectedDepartureId, $selectedStage);
-            $statusDisplay = array_map(function ($item) use ($checkinModel) {
-                $item['display_status'] = $checkinModel->getStatusDisplay($item['status']);
-                return $item;
-            }, $checkinData);
-        }
-        $noRunningTour = false;
-    }
-
-    // Xử lý POST update
-    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'update_checkin') {
-        $guest_id = $_POST['guest_id'] ?? null;
-        $departure_id = $_POST['departure_id'] ?? null;
-        $stage_description = $_POST['stage_description'] ?? null;
-        $status = $_POST['status'] ?? null;
-
-        if ($guest_id && $departure_id && $stage_description && $status) {
-            $checkinModel->updateCheckinStatus(
-                $guest_id,
-                $departure_id,
-                $guide_id,
-                $stage_description,
-                $status
-            );
-            header("Location: " . BASE_URL . "?mode=guide&action=viewcheckin&departure_id=" . $departure_id . "&stage=" . urlencode($stage_description));
-            exit();
-        }
-    }
-
-    if ($_SERVER['REQUEST_METHOD'] === 'POST' 
-        && isset($_POST['action']) 
-        && $_POST['action'] === 'update_checkin_multi') {
-
-        $departure_id = $_POST['departure_id'];
-        $stage = $_POST['stage_description'];
-
-        foreach ($_POST['guest_id'] as $index => $gid) {
-            $status = $_POST['status'][$index];
-            if ($status !== "") {
-                $checkinModel->updateCheckinStatus(
-                    $gid,
-                    $departure_id,
-                    $guide_id,
-                    $stage,
-                    $status
-                );
             }
+
+            $noRunningTour = false;
+        }
+
+        // Xử lý cập nhật hàng loạt
+        if (
+            $_SERVER['REQUEST_METHOD'] === 'POST'
+            && isset($_POST['action'])
+            && $_POST['action'] === 'update_checkin_multi'
+        ) {
+
+            $departure_id = $_POST['departure_id'];
+            $stage = $_POST['stage_description'];
+
+            foreach ($_POST['guest_id'] as $index => $gid) {
+                $status = $_POST['status'][$index];
+                if ($status !== "") {
+                    $checkinModel->updateCheckinStatus(
+                        $gid,
+                        $departure_id,
+                        $guide_id,
+                        $stage,
+                        $status
+                    );
+                }
+            }
+
+            header("Location: " . BASE_URL . "?mode=guide&action=viewcheckin&departure_id=" . $departure_id . "&stage=" . urlencode($stage));
+            exit();
         }
 
         header("Location: " . BASE_URL . "?mode=guide&action=viewcheckin&departure_id=" . $departure_id . "&stage=" . urlencode($stage));
