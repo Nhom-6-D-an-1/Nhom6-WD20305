@@ -42,6 +42,7 @@ class ScheduleModel
     {
         $sql = "SELECT 
                 d.departure_id,
+                d.version_id,
                 tv.version_name,
                 t.tour_name,
                 d.start_date,
