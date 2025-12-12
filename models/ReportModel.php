@@ -214,13 +214,7 @@
                 SELECT SUM(sa.price * sa.quantity)
                 FROM service_assignment sa
                 WHERE sa.departure_id = d.departure_id
-            ), 0) AS cost,
-
-            COALESCE((
-                SELECT SUM(ex.amount)
-                FROM extra_cost ex
-                WHERE ex.departure_id = d.departure_id
-            ), 0) AS ex_cost
+            ), 0) AS cost
 
         FROM departure d
         JOIN tour_version v ON d.version_id = v.version_id
@@ -232,57 +226,9 @@
             $data = $this->queryAll($sql);
 
             foreach ($data as &$row) {
-                $row['profit'] = $row['revenue'] - $row['cost'] - $row['ex_cost'];
+                $row['profit'] = $row['revenue'] - $row['cost'];
             }
 
             return $data;
-        }
-
-
-        // Doanh thu theo tháng
-        public function revenueByMonth($year)
-        {
-            $sql = "
-            SELECT MONTH(d.start_date) AS month,
-                   SUM(b.total_amount) AS revenue
-            FROM booking b
-            JOIN departure d ON b.departure_id = d.departure_id
-            WHERE YEAR(d.start_date) = ?
-            GROUP BY MONTH(d.start_date)
-            ORDER BY month;
-        ";
-            $stmt = $this->conn->prepare($sql);
-            $stmt->execute([$year]);
-            return $stmt->fetchAll();
-        }
-
-        // Doanh thu theo quý
-        public function revenueByQuarter($year)
-        {
-            $sql = "
-            SELECT QUARTER(d.start_date) AS quarter,
-                   SUM(b.total_amount) AS revenue
-            FROM booking b
-            JOIN departure d ON b.departure_id = d.departure_id
-            WHERE YEAR(d.start_date) = ?
-            GROUP BY QUARTER(d.start_date);
-        ";
-            $stmt = $this->conn->prepare($sql);
-            $stmt->execute([$year]);
-            return $stmt->fetchAll();
-        }
-
-        // Doanh thu theo năm
-        public function revenueByYear()
-        {
-            $sql = "
-            SELECT YEAR(d.start_date) AS year,
-                   SUM(b.total_amount) AS revenue
-            FROM booking b
-            JOIN departure d ON b.departure_id = d.departure_id
-            GROUP BY YEAR(d.start_date)
-            ORDER BY year;
-        ";
-            return $this->conn->query($sql)->fetchAll();
         }
     }

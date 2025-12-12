@@ -235,6 +235,7 @@ class GuideController
                 exit();
             }
         }
+    }
 
         $checkinModel = new CheckinModel();
         $currentTour = $this->getCurrentRunningTour($guide_id);
@@ -332,11 +333,14 @@ class GuideController
             exit();
         }
 
-        $title = "Check in, điểm danh";
-        $view = 'guide/checkin/checkin';
-        require_once PATH_VIEW_MAIN;
+        header("Location: " . BASE_URL . "?mode=guide&action=viewcheckin&departure_id=" . $departure_id . "&stage=" . urlencode($stage));
+        exit();
     }
 
+    $title = "Check in, điểm danh";
+    $view = 'guide/checkin/checkin';
+    require_once PATH_VIEW_MAIN;
+}
     public function viewRequest()
     {
         $customers = new CustomersModel();

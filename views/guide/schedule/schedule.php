@@ -249,7 +249,6 @@ $filteredSchedule = array_filter($scheduleData, function ($tour) use ($today) {
             </table>
         </div>
     </div>
-
 </div>
 
 <!-- VALIDATE -->
