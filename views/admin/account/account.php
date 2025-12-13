@@ -1,263 +1,169 @@
 <style>
-  /* ===========================================================
-   GLOBAL LAYOUT
-=========================================================== */
-  body {
-    background: #f5f6f8;
-    font-family: "Inter", sans-serif;
-    color: #333;
+  /* ================================
+   GLOBAL – MATCH "Danh mục tour"
+  ================================ */
+  :root {
+      --primary: #3b82f6;
+      --primary-soft: #e8f0ff;
+      --green-soft: #e6f9ee;
+      --green-text: #0e8f53;
+      --yellow-soft: #fff4d8;
+      --yellow-text: #b97500;
+      --red-soft: #ffe5e5;
+      --red-text: #d02f2f;
+      --gray-light: #6b7280;
+      --dark: #1f2937;
+      --radius: 14px;
+      --shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
   }
 
-  h3.fw-bold {
-    font-size: 32px;
-    font-weight: 800 !important;
-    margin-bottom: 24px;
-    color: #1f2937;
+  /* Page Title */
+  .page-title {
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--dark);
+      margin-bottom: 24px;
   }
 
-  /* ===========================================================
-   MAIN CARD WRAPPER
-=========================================================== */
-  .table-card,
-  .card {
-    background: #ffffff;
-    border-radius: 14px;
-    padding: 22px;
-    border: 1px solid #f3f4f6;
-    /* Apple thin border */
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
-    /* Soft Apple shadow */
+  /* Wrapper Card */
+  .table-wrapper {
+      background: #fff;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      border: 1px solid #eef0f3;
+      overflow: hidden;
   }
 
-  /* ===========================================================
-   ADD BUTTON (Gold Pastel)
-=========================================================== */
-  .btn-success {
-    background: #fff8da !important;
-    border: 1px solid #d6c278 !important;
-    padding: 10px 18px !important;
-    border-radius: 10px !important;
-    color: #7c5e10 !important;
-    font-weight: 600 !important;
+  /* Add button */
+  .btn-add {
+      background: var(--primary-soft);
+      color: var(--primary);
+      padding: 10px 20px;
+      border-radius: 12px;
+      font-weight: 600;
+      border: none;
+  }
+  .btn-add:hover {
+      background: #dce7ff;
   }
 
-  .btn-success:hover {
-    background: #ffefb5 !important;
-  }
-
-  /* ===========================================================
-   TABLE HEADER
-=========================================================== */
+  /* Table Head */
   .table thead th {
-    background-color: transparent !important;
-    color: #6b7280 !important;
-    font-weight: 600;
-    text-transform: uppercase;
-    font-size: 12.5px;
-    border-bottom: 1px solid #e5e7eb !important;
-    text-align: center !important;
-    padding: 14px 10px !important;
-    letter-spacing: .5px;
+      background: #f9fafb !important;
+      color: var(--gray-light);
+      font-size: 12.8px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: .5px;
+      padding: 14px 10px;
+      text-align: center;
+      border-bottom: 1px solid #eceef2;
   }
 
-  /* ===========================================================
-   TABLE BODY
-=========================================================== */
+  /* Table Rows */
   .table tbody tr {
-    border-bottom: 1px solid #efefef;
-    transition: 0.15s ease;
+      border-bottom: 1px solid #f0f1f5;
+      transition: 0.15s;
   }
-
   .table tbody tr:hover {
-    background: #fafafa;
+      background: #f8faff;
   }
 
   .table tbody td {
-    padding: 16px 12px !important;
-    font-size: 15px;
-    vertical-align: middle !important;
+      padding: 14px 12px;
+      font-size: 15px;
+      color: var(--dark);
+      text-align: center;
   }
 
-  /* ===== Body Alignment ===== */
-
-  /* Căn giữa các cột số liệu */
-  .table tbody td:nth-child(1),
-  .table tbody td:nth-child(4),
-  .table tbody td:nth-child(5),
-  .table tbody td:nth-child(6),
-  .table tbody td:nth-child(7),
-  .table tbody td:nth-child(8),
-  .table tbody td:nth-child(9) {
-    text-align: center !important;
-  }
-
-  /* Căn trái chữ: Tên, Username, Tour Name, Pickup, HDV */
-  .table tbody td:nth-child(2),
-  .table tbody td:nth-child(3) {
-    text-align: left !important;
-    padding-left: 100px !important;
-  }
-
-  .table tbody td:nth-child(2) {
-    padding-left: 200px !important;
-  }
-
-  .badge {
-    padding: 7px 16px !important;
-    border-radius: 12px !important;
-    font-size: 13px !important;
-    font-weight: 600 !important;
-    display: inline-block;
-  }
-
-  .bg-success {
-    background: #d1fae5 !important;
-    color: #047857 !important;
-  }
-
-  .bg-secondary {
-    background: #fee2e2 !important;
-    color: #b91c1c !important;
-  }
-
+  /* Buttons small */
   .btn-sm {
-    padding: 7px 14px !important;
-    border-radius: 10px !important;
-    font-weight: 600 !important;
-    font-size: 14px !important;
-    border: none !important;
+      padding: 7px 16px;
+      border-radius: 10px;
+      font-size: 14px !important;
+      font-weight: 600;
+      border: none;
+      transition: .2s;
   }
 
-  /* Chi tiết – Xanh pastel */
+  /* Chi tiết */
   .btn-info {
-    background: #dbeafe !important;
-    color: #1e40af !important;
+      background: #e5efff;
+      color: var(--primary);
   }
-
   .btn-info:hover {
-    background: #bfdbfe !important;
+      background: #d6e6ff;
   }
 
-  /* Sửa – Vàng pastel */
+  /* Sửa */
   .btn-warning {
-    background: #fef3c7 !important;
-    color: #92400e !important;
+      background: var(--yellow-soft);
+      color: var(--yellow-text);
   }
-
   .btn-warning:hover {
-    background: #fde68a !important;
+      background: #ffe8b5;
   }
 
-  /* Xóa – Đỏ pastel */
+  /* Xóa */
   .btn-danger {
-    background: #fee2e2 !important;
-    color: #b91c1c !important;
+      background: var(--red-soft);
+      color: var(--red-text);
   }
-
   .btn-danger:hover {
-    background: #fecaca !important;
+      background: #ffd4d4;
   }
 
-  /* ===========================================================
-   FORM INPUTS (Select, Input date)
-=========================================================== */
-  .form-select,
-  .form-control {
-    border-radius: 10px !important;
-    padding: 10px 14px !important;
-    border: 1px solid #dcdcdc !important;
-    font-size: 14px;
-  }
-
-  .form-select:focus,
-  .form-control:focus {
-    border-color: #c7c7c7 !important;
-    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.05) !important;
-  }
-
-  /* ===========================================================
-   FILTER BUTTON (Search)
-=========================================================== */
-  .btn-primary {
-    background: #dbeafe !important;
-    color: #1e40af !important;
-    border: none !important;
-    border-radius: 10px !important;
-    padding: 10px 16px !important;
-  }
-
-  .btn-primary:hover {
-    background: #bfdbfe !important;
-  }
-
-  /* ===========================================================
-   RESPONSIVE FIX
-=========================================================== */
-  @media (max-width: 768px) {
-    .table-card {
-      padding: 12px;
-    }
-
-    .btn-sm {
-      padding: 6px 10px !important;
-      font-size: 13px !important;
-    }
-  }
 </style>
-<div class="p-4">
-  <h3 class="fw-bold">Quản lý tài khoản</h3>
+<div class="container-fluid px-4">
 
-  <!-- Thanh hành động -->
-  <div class="row mb-3">
-    <div class="col-md-3">
-      <a href="<?= BASE_URL ?>?mode=admin&action=addaccount" class="btn btn-success">
-        + Thêm tài khoản
-      </a>
+    <h3 class="page-title mt-4">Quản lý tài khoản</h3>
+
+    <div class="d-flex justify-content-between mb-3">
+        <a href="?mode=admin&action=addaccount" class="btn-add">
+            + Thêm tài khoản
+        </a>
     </div>
-  </div>
-  <div class="table-card">
-    <!-- Bảng tài khoản -->
-    <table class="table table-hover align-middle">
-      <thead>
-        <tr>
-          <th>#</th>
-          <th>Tên</th>
-          <th>Tên đăng nhập</th>
-          <th>Vai trò</th>
-          <th>Hành động</th>
-        </tr>
-      </thead>
 
-      <tbody>
-        <?php if (!empty($accounts)): ?>
-          <?php foreach ($accounts as $key => $account): ?>
-            <tr>
-              <td><?= $key + 1 ?></td>
+    <div class="table-wrapper">
+        <table class="table table-hover align-middle">
+            <thead>
+                <tr>
+                    <th>STT</th>
+                    <th>Họ tên</th>
+                    <th>Tên đăng nhập</th>
+                    <th>Vai trò</th>
+                    <th>Hành động</th>
+                </tr>
+            </thead>
 
-              <td><?= htmlspecialchars($account['full_name']) ?></td>
+            <tbody>
+                <?php foreach ($accounts as $i => $acc): ?>
+                    <tr>
+                        <td><?= $i+1 ?></td>
 
-              <td><?= htmlspecialchars($account['username']) ?></td>
+                        <td class="fw-semibold"><?= htmlspecialchars($acc['full_name']) ?></td>
 
-              <td><?= htmlspecialchars($account['role']) ?></td>
+                        <td><?= htmlspecialchars($acc['username']) ?></td>
 
-              <td>
-                <a href="<?= BASE_URL ?>?mode=admin&action=editaccount&id=<?= $account['user_id'] ?>"
-                  class="btn btn-sm btn-info">Sửa</a>
+                        <td><?= htmlspecialchars($acc['role']) ?></td>
 
-                <a href="<?= BASE_URL ?>?mode=admin&action=deleteaccount&id=<?= $account['user_id'] ?>"
-                  onclick="return confirm('Bạn có chắc chắn muốn xóa tài khoản này?');"
-                  class="btn btn-sm btn-danger">
-                  Xóa
-                </a>
-              </td>
+                        <td>
+                            <a href="?mode=admin&action=editaccount&id=<?= $acc['user_id'] ?>"
+                               class="btn btn-info btn-sm">Chi tiết</a>
 
-            </tr>
-          <?php endforeach; ?>
-        <?php else: ?>
-          <tr>
-            <td colspan="5" class="text-center text-muted py-3">Không có tài khoản nào.</td>
-          </tr>
-        <?php endif; ?>
-      </tbody>
-    </table>
-  </div>
+                            <a href="?mode=admin&action=editaccount&id=<?= $acc['user_id'] ?>"
+                               class="btn btn-warning btn-sm">Sửa</a>
+
+                            <a href="?mode=admin&action=deleteaccount&id=<?= $acc['user_id'] ?>"
+                               onclick="return confirm('Xóa tài khoản này?')"
+                               class="btn btn-danger btn-sm">Xóa</a>
+                        </td>
+
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
