@@ -1,29 +1,103 @@
-<div class="col-12">
-    <h2>Nhật ký tour</h2>
+<?php
+// Biến cần có từ Controller:
+// $selectedDepartureId
+// $diaryData
+?>
+
+<style>
+    /* ===============================
+   PAGE TITLE
+=============================== */
+    .page-title {
+        font-size: 24px;
+        font-weight: 700;
+        color: #1f2937;
+        margin: 8px 0 18px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid #e5e7eb;
+    }
+
+    /* ===============================
+   CARD – APPLE STYLE
+=============================== */
+    .card {
+        background: #ffffff;
+        border-radius: 14px;
+        border: 1px solid #f3f4f6;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+    }
+
+    /* ===============================
+   TABLE
+=============================== */
+    .table thead th {
+        background: transparent !important;
+        color: #6b7280;
+        font-size: 12px;
+        font-weight: 600;
+        text-transform: uppercase;
+        border-bottom: 1px solid #e5e7eb !important;
+    }
+
+    .table tbody tr {
+        border-bottom: 1px solid #f1f1f1;
+        transition: background .2s ease;
+    }
+
+    .table tbody tr:hover {
+        background: #f8fbff;
+    }
+
+    .table tbody td {
+        font-size: 14px;
+        vertical-align: middle;
+    }
+
+    /* ===============================
+   BADGE DAY
+=============================== */
+    .badge-day {
+        background: #e0f2fe;
+        color: #0369a1;
+        padding: 6px 12px;
+        border-radius: 10px;
+        font-size: 13px;
+        font-weight: 600;
+    }
+
+    /* ===============================
+   IMAGE
+=============================== */
+    .diary-img {
+        width: 70px;
+        height: 50px;
+        object-fit: cover;
+        border-radius: 8px;
+        border: 1px solid #e5e7eb;
+    }
+
+    /* ===============================
+   EMPTY ROW
+=============================== */
+    .empty-row {
+        padding: 28px 0 !important;
+        font-size: 15px;
+        font-weight: 600;
+        color: #b91c1c;
+    }
+</style>
+
+<div class="container-fluid px-4">
+
+    <!-- TITLE -->
+    <div class="page-title">Nhật ký tour</div>
     <?php if (empty($selectedDepartureId)): ?>
         <div class="alert alert-danger text-center mt-3">
             Hôm nay bạn không có tour đang diễn ra.
         </div>
     <?php else : ?>
 
-        <!-- <form method="get" id="tourFilterForm">
-        <input type="hidden" name="mode" value="guide">
-        <input type="hidden" name="action" value="viewdiary">
-        <div class="col-12 col-lg-6 mb-2">
-            <select class="form-select" name="departure_id" onchange="document.getElementById('tourFilterForm').submit()">
-                <option value="0" hidden>--Chọn tour--</option>
-                <?php if (!empty($assignedTours)) { ?>
-                    <?php foreach ($assignedTours as $tour) { ?>
-                        <option value="<?php echo $tour['departure_id']; ?>"
-                            <?php echo (isset($_GET['departure_id']) && $_GET['departure_id'] == $tour['departure_id']) ? 'selected' : ''; ?>>
-                            <?php echo $tour['tour_name']; ?>
-                            (<?php echo date('d/m', strtotime($tour['start_date'])); ?> - <?php echo date('d/m', strtotime($tour['end_date'])); ?>)
-                        </option>
-                    <?php } ?>
-                <?php } ?>
-            </select>
-        </div>
-    </form> -->
+
 
         <!-- Form thêm nhật ký -->
         <div class="card shadow-sm border-0 mb-4 diary-card">
@@ -73,117 +147,112 @@
                 </div>
             </div>
         </div>
+        <!-- ===============================
+         DIARY LIST
+    =============================== -->
+        <div class="card">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
 
-        <!-- Danh sách các mục nhật ký -->
-        <div class="card shadow-sm border-0 diary-card">
-            <div class="card-body p-0">
-                <div class="table-responsive">
-                    <table class="table table-hover align-middle mb-0 diary-table">
-                        <thead class="bg-light text-secondary small text-uppercase fw-semibold">
+                    <thead>
+                        <tr>
+                            <th class="ps-4">Thời gian</th>
+                            <th class="text-center">Ngày</th>
+                            <th>Nội dung</th>
+                            <th>Cách xử lý</th>
+                            <th>Phản hồi</th>
+                            <th class="text-center">Hình ảnh</th>
+                            <th class="text-center">Hành động</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        <?php if (empty($selectedDepartureId)): ?>
+
                             <tr>
-                                <th class="ps-4 py-3">Thời gian</th>
-                                <th class="py-3 text-center">Ngày sự cố</th>
-                                <th class="py-3">Nội dung</th>
-                                <th class="py-3">Cách xử lý</th>
-                                <th class="py-3">Phản hồi của khách</th>
-                                <th class="py-3 text-center">Hình ảnh</th>
-                                <th class="py-3 text-center">Hành động</th>
+                                <td colspan="7" class="text-center empty-row">
+                                    Hôm nay bạn không có tour đang diễn ra
+                                </td>
                             </tr>
-                        </thead>
 
-                        <tbody class="text-dark">
-                            <?php if (empty($selectedDepartureId)): ?>
+                        <?php elseif (!empty($diaryData)): ?>
+
+                            <?php foreach ($diaryData as $diary): ?>
                                 <tr>
-                                    <td colspan="7" class="text-center text-danger">Hôm nay bạn không có tour đang diễn ra.</td>
+
+                                    <td class="ps-4 text-muted small">
+                                        <div><?= date('H:i', strtotime($diary['created_at'])) ?></div>
+                                        <div><?= date('d/m/Y', strtotime($diary['created_at'])) ?></div>
+                                    </td>
+
+                                    <td class="text-center">
+                                        <?php if (!empty($diary['day_number'])): ?>
+                                            <span class="badge-day">
+                                                Ngày <?= (int)$diary['day_number'] ?>
+                                            </span>
+                                        <?php else: ?>
+                                            --
+                                        <?php endif; ?>
+                                    </td>
+
+                                    <td><?= htmlspecialchars($diary['log_content']) ?></td>
+                                    <td><?= htmlspecialchars($diary['handling_method'] ?: '--') ?></td>
+                                    <td><?= htmlspecialchars($diary['customer_feedback'] ?: '--') ?></td>
+
+                                    <td class="text-center">
+                                        <?php if (!empty($diary['image'])): ?>
+                                            <img src="<?= BASE_ASSETS_UPLOADS . $diary['image'] ?>"
+                                                class="diary-img"
+                                                alt="Diary image">
+                                        <?php else: ?>
+                                            <span class="text-muted">Không có</span>
+                                        <?php endif; ?>
+                                    </td>
+
+                                    <td class="text-center">
+                                        <a href="<?= BASE_URL ?>?mode=guide&action=deleteDiary&id=<?= (int)$diary['log_id'] ?>&departure_id=<?= (int)($_GET['departure_id'] ?? 0) ?>"
+                                            class="btn btn-danger btn-sm"
+                                            onclick="return confirm('Bạn có chắc muốn xoá nhật ký này?')">
+                                            Xoá
+                                        </a>
+                                    </td>
+
                                 </tr>
-                            <?php else: ?>
-                                <?php if (!empty($diaryData)) { ?>
-                                    <?php foreach ($diaryData as $diary) { ?>
-                                        <?php if (empty($diary)) continue; ?>
+                            <?php endforeach; ?>
 
-                                        <tr class="diary-row">
+                        <?php else: ?>
 
-                                            <!-- Thời gian -->
-                                            <td class="ps-4 py-4 text-muted small">
-                                                <?php $diaryDate = $diary['created_at'] ?? null; ?>
-                                                <div><?= $diaryDate ? date('H:i', strtotime($diaryDate)) : '--:--' ?></div>
-                                                <div><?= $diaryDate ? date('d/m/Y', strtotime($diaryDate)) : '--/--/----' ?></div>
-                                            </td>
+                            <tr>
+                                <td colspan="7" class="text-center empty-row">
+                                    Chưa có nhật ký nào
+                                </td>
+                            </tr>
 
-                                            <!-- Ngày sự cố -->
-                                            <td class="text-center py-4">
-                                                <?php if (!empty($diary['day_number'])): ?>
-                                                    <span class="badge bg-primary">Ngày <?= $diary['day_number'] ?></span>
-                                                <?php else: ?>
-                                                    <span class="text-secondary small">--</span>
-                                                <?php endif; ?>
-                                            </td>
+                        <?php endif; ?>
 
-                                            <!-- Nội dung -->
-                                            <td class="py-4">
-                                                <?= htmlspecialchars($diary['log_content'] ?? 'Không có') ?>
-                                            </td>
+                    </tbody>
 
-                                            <!-- Cách xử lý -->
-                                            <td class="py-4 small">
-                                                <?= !empty($diary['handling_method'])
-                                                    ? htmlspecialchars($diary['handling_method'])
-                                                    : '<span class="text-secondary small">--</span>' ?>
-                                            </td>
-
-                                            <!-- Phản hồi khách -->
-                                            <td class="py-4 small">
-                                                <?= !empty($diary['customer_feedback'])
-                                                    ? htmlspecialchars($diary['customer_feedback'])
-                                                    : '<span class="text-secondary small">--</span>' ?>
-                                            </td>
-
-                                            <!-- Hình ảnh -->
-                                            <td class="text-center py-4">
-                                                <?php if (!empty($diary['image'])) { ?>
-                                                    <img src="<?= BASE_ASSETS_UPLOADS . $diary['image'] ?>"
-                                                        alt="Hình ảnh" class="rounded" width="80" height="80">
-                                                <?php } else { ?>
-                                                    <span class="text-secondary small">Không có</span>
-                                                <?php } ?>
-                                            </td>
-
-                                            <!-- Xóa -->
-                                            <td class="text-center py-4">
-                                                <a href="<?= BASE_URL ?>?mode=guide&action=deleteDiary&id=<?= $diary['log_id'] ?>&departure_id=<?= (int)($_GET['departure_id'] ?? 0) ?>"
-                                                    class="btn btn-danger btn-sm"
-                                                    onclick="return confirm('Bạn có chắc muốn xoá nhật ký này?')">
-                                                    Xoá
-                                                </a>
-                                            </td>
-                                        </tr>
-
-                                    <?php } ?>
-                                <?php } else { ?>
-                                    <tr>
-                                        <td colspan="7" class="text-center py-4 text-danger">Chưa có nhật ký nào</td>
-                                    </tr>
-                                <?php } ?>
-                            <?php endif; ?>
-                        </tbody>
-                    </table>
-                </div>
+                </table>
             </div>
         </div>
 </div>
 <?php endif; ?>
+<!-- ===============================
+     VALIDATE FORM
+=============================== -->
 <script>
     function validateSearchForm() {
-        const note = document.querySelector('#diaryForm textarea[name="note"]').value.trim();
-        const departureId = document.querySelector('#diaryForm input[name="departure_id"]').value;
+        const note = document.querySelector('#diaryForm textarea[name="note"]')?.value.trim();
+        const departureId = document.querySelector('#diaryForm input[name="departure_id"]')?.value;
 
-        if (departureId == "0" || departureId == "") {
+        if (!departureId || departureId == 0) {
             alert("Vui lòng chọn tour trước khi thêm nhật ký");
             return false;
         }
 
-        if (note === "") {
-            alert("Vui lòng nhập diễn biến nhật ký");
+        if (!note) {
+            alert("Vui lòng nhập nội dung nhật ký");
             return false;
         }
 

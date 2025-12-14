@@ -1,90 +1,191 @@
-<div class="col-12">
-    <h2>Yêu cầu đặc biệt</h2>
-    <form method="get" id="tourFilterForm">
+<style>
+/* ===============================
+   PAGE TITLE
+=============================== */
+.page-title {
+    font-size: 24px;
+    font-weight: 700;
+    color: #1f2937;
+    margin: 8px 0 18px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #e5e7eb;
+    letter-spacing: -0.3px;
+}
+
+/* ===============================
+   CARD – APPLE STYLE
+=============================== */
+.card {
+    background: #ffffff;
+    border-radius: 14px;
+    border: 1px solid #f3f4f6;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.04);
+}
+
+/* ===============================
+   FORM
+=============================== */
+.form-select {
+    border-radius: 10px !important;
+    padding: 10px 14px !important;
+    border: 1px solid #dcdcdc !important;
+    font-size: 14px;
+}
+
+/* ===============================
+   TABLE
+=============================== */
+.table thead th {
+    background: transparent !important;
+    color: #6b7280;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .4px;
+    border-bottom: 1px solid #e5e7eb !important;
+}
+
+.table tbody tr {
+    border-bottom: 1px solid #f1f1f1;
+    transition: background .2s ease;
+}
+
+.table tbody tr:hover {
+    background: #f8fbff;
+}
+
+.table tbody td {
+    font-size: 14px;
+    vertical-align: middle;
+}
+
+/* ===============================
+   EMPTY ROW
+=============================== */
+.empty-row {
+    padding: 28px 0 !important;
+    font-size: 15px;
+    font-weight: 600;
+    color: #b91c1c;
+}
+
+/* ===============================
+   BUTTON
+=============================== */
+.btn-delete {
+    border-radius: 8px;
+    font-weight: 600;
+}
+</style>
+
+<div class="container-fluid px-4">
+
+    <!-- TITLE -->
+    <div class="page-title">Yêu cầu đặc biệt</div>
+
+    <!-- ===============================
+         FILTER TOUR
+    =============================== -->
+    <form method="get" id="tourFilterForm" class="mb-4">
         <input type="hidden" name="mode" value="guide">
         <input type="hidden" name="action" value="viewrequest">
-        <div class="col-12 col-lg-6 mb-2">
-            <select class="form-select" name="departure_id" onchange="document.getElementById('tourFilterForm').submit()">
-                <option value="0" hidden>--Chọn tour--</option>
-                <?php if (!empty($assignedTours)) { ?>
-                    <?php foreach ($assignedTours as $tour) { ?>
-                        <option value="<?php echo $tour['departure_id']; ?>"
-                            <?php echo (isset($_GET['departure_id']) && $_GET['departure_id'] == $tour['departure_id']) ? 'selected' : ''; ?>>
-                            <?php echo $tour['tour_name']; ?>
-                            (<?php echo date('d/m', strtotime($tour['start_date'])); ?> - <?php echo date('d/m', strtotime($tour['end_date'])); ?>)
+
+        <div class="col-12 col-lg-6">
+            <select class="form-select"
+                    name="departure_id"
+                    onchange="document.getElementById('tourFilterForm').submit()">
+
+                <option value="0" hidden>-- Chọn tour --</option>
+
+                <?php if (!empty($assignedTours)): ?>
+                    <?php foreach ($assignedTours as $tour): ?>
+                        <option value="<?= $tour['departure_id'] ?>"
+                            <?= (isset($_GET['departure_id']) && $_GET['departure_id'] == $tour['departure_id']) ? 'selected' : '' ?>>
+                            <?= htmlspecialchars($tour['tour_name']) ?>
+                            (<?= date('d/m', strtotime($tour['start_date'])) ?>
+                            - <?= date('d/m', strtotime($tour['end_date'])) ?>)
                         </option>
-                    <?php } ?>
-                <?php } ?>
+                    <?php endforeach; ?>
+                <?php endif; ?>
+
             </select>
         </div>
     </form>
-    <!-- <form action="<?= BASE_URL ?>?mode=guide&action=viewrequest" method="post" class="border rounded-3 p-4 d-flex flex-wrap align-items-center gap-3 bg-white shadow-sm">
-        <div class="flex-grow-1">
-            <select name="guest_id" class="form-control custom-input py-2" <?= empty($data_guest) ? 'disabled' : '' ?>>
-                <option value="" disabled selected>
-                    <?= empty($data_guest) ? '-- Vui lòng chọn Tour trước --' : '-- Chọn khách hàng --' ?>
-                </option>
-                <?php foreach ($data_guest as $value): ?>
-                    <option value="<?= $value['guest_id'] ?>"><?= $value['full_name'] ?></option>
-                <?php endforeach ?>
-            </select>
-        </div>
 
-        <div class="flex-grow-1" style="position: relative;">
-            <input type="text" name="description" class="form-control custom-input py-2" placeholder="Yêu cầu">
-            <span class="text-danger" style="position: absolute; top: 100%; left: 0; width: 100%; font-size: 13px; margin-top: 2px; white-space: nowrap;">
-                <?php if (isset($_SESSION['flash_error'])): ?>
-                    <?= $_SESSION['flash_error'];
-                    unset($_SESSION['flash_error']) ?> <?php endif ?></span>
-        </div>
+    <!-- ===============================
+         TABLE
+    =============================== -->
+    <div class="card">
 
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
 
+                <thead>
+                    <tr>
+                        <th style="width:70px;">#</th>
+                        <th>Tên khách</th>
+                        <th>Yêu cầu</th>
+                        <th>Bệnh lý</th>
+                        <th class="text-center">Hành động</th>
+                    </tr>
+                </thead>
 
-        <div class="flex-grow-1">
-            <input type="text" name="medical_condition" class="form-control custom-input py-2" placeholder="Bệnh lý (nếu có)">
-        </div>
+                <tbody>
 
-        <div>
-            <button class="btn btn-primary px-4 py-2 fw-medium">Thêm yêu cầu</button>
-        </div>
+                    <?php if (empty($_GET['departure_id'])): ?>
 
-    </form> -->
-</div>
-<div class="table-responsive">
-    <table class="table table-hover align-middle mb-0 customer-table">
-        <thead>
-            <tr>
-                <th class="ps-4 py-3 col-2">STT</th>
-                <th class="py-3 col-3">Tên khách hàng</th>
-                <th class="py-3 col-4">Yêu cầu</th>
-                <th class="py-3 col-2 ">Bệnh lý</th>
-                <th class="py-3 col-2 ">Hành động</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php if(empty($_GET['departure_id'])): ?>
-                <tr>
-                    <td colspan="6" class="text-center text-danger">Vui lòng chọn tour.</td>
-                </tr>
-            <?php else: ?>
-                <?php if (!empty($data)) { ?>
-                    <?php foreach ($data as $key => $value): ?>
-                        <tr class="customer-row">
-                            <td class="ps-4 fw-semibold"><?= $key + 1 ?></td>
-                            <td><?= $value['full_name'] ?></td>
-                            <td><?= $value['description'] ?></td>
-                            <td><?= $value['medical_condition'] ?? 'Không có' ?></td>
-                            <td>
-                                <a href="<?= BASE_URL ?>?mode=guide&action=deleteRequest&id=<?= $value['request_id'] ?>" class="btn btn-danger" onclick=" return confirm('Bạn có muốn xóa yêu cầu không?')">Xóa</a>
+                        <tr>
+                            <td colspan="5" class="text-center empty-row">
+                                Vui lòng chọn tour
                             </td>
                         </tr>
-                    <?php endforeach; ?>
-                <?php } else { ?>
-                    <tr>
-                        <td colspan="4" class="text-center py-4 text-danger">Không có yêu cầu nào.</td>
-                    </tr>
-                <?php } ?>
-            <?php endif; ?>
-        </tbody>
-    </table>
+
+                    <?php else: ?>
+
+                        <?php if (!empty($data)): ?>
+                            <?php foreach ($data as $key => $value): ?>
+                                <tr>
+                                    <td><?= $key + 1 ?></td>
+
+                                    <td class="fw-semibold">
+                                        <?= htmlspecialchars($value['full_name']) ?>
+                                    </td>
+
+                                    <td>
+                                        <?= htmlspecialchars($value['description']) ?>
+                                    </td>
+
+                                    <td>
+                                        <?= htmlspecialchars($value['medical_condition'] ?? 'Không có') ?>
+                                    </td>
+
+                                    <td class="text-center">
+                                        <a href="<?= BASE_URL ?>?mode=guide&action=deleteRequest&id=<?= $value['request_id'] ?>"
+                                           class="btn btn-danger btn-sm btn-delete"
+                                           onclick="return confirm('Bạn có muốn xoá yêu cầu này không?')">
+                                            Xoá
+                                        </a>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+
+                        <?php else: ?>
+
+                            <tr>
+                                <td colspan="5" class="text-center empty-row">
+                                    Không có yêu cầu nào
+                                </td>
+                            </tr>
+
+                        <?php endif; ?>
+
+                    <?php endif; ?>
+
+                </tbody>
+
+            </table>
+        </div>
+
+    </div>
+
 </div>

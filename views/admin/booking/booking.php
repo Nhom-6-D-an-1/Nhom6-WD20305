@@ -1,170 +1,176 @@
 <style>
-  /* ===============================
+/* ===============================
    WRAPPER
 =============================== */
-  .p-4 {
-    padding: 24px !important;
-  }
+.container-fluid {
+  padding: 24px;
+}
 
-  /* ===============================
-   PAGE TITLE STYLE
+
+.page-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: #1f2937;
+  margin: 8px 0 22px;
+  letter-spacing: -0.3px;
+}
+
+
+/* ===============================
+   FILTER BOX
 =============================== */
-  .fw-bold h3 {
-    font-size: 32px;
-    font-weight: 800 !important;
-    margin-bottom: 24px;
-  }
+.filter-box {
+  margin-bottom: 18px;
+}
 
-  /* ===============================
-   TABLE BOX STYLE
+.filter-box .form-select,
+.filter-box .form-control {
+  border-radius: 10px !important;
+  padding: 10px 14px !important;
+  border: 1px solid #dcdcdc !important;
+  font-size: 14px;
+}
+
+.btn-filter {
+  background: #dbeafe;
+  color: #1e40af;
+  border: none;
+  border-radius: 10px;
+  font-weight: 600;
+  padding: 10px;
+}
+
+.btn-filter:hover {
+  background: #bfdbfe;
+}
+
+/* ===============================
+   TABLE CARD
 =============================== */
+.table-card {
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 22px;
+  border: 1px solid #f3f4f6;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+}
 
-
-  .table-card {
-    background: #ffffff;
-    border-radius: 14px;
-    padding: 22px;
-    border: 1px solid #f3f4f6;
-    /* Apple soft border */
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
-    /* soft shadow kiểu Apple */
-  }
-
-  .table thead th {
-    background-color: transparent !important;
-    color: #6b7280 !important;
-    /* xám Apple */
-    font-weight: 600;
-    text-transform: uppercase;
-    font-size: 12.5px;
-    border-bottom: 1px solid #e5e7eb !important;
-    text-align: center;
-    padding: 14px 10px !important;
-    letter-spacing: .5px;
-  }
-
-  .table tbody tr {
-    border-bottom: 1px solid #efefef;
-  }
-
-  .table tbody tr td {
-    padding: 18px 12px !important;
-    font-size: 15px;
-    color: #333;
-  }
-
-  /* Căn giữa các cột số liệu và trạng thái */
-  .table tbody td:nth-child(1),
-  .table tbody td:nth-child(4),
-  .table tbody td:nth-child(5),
-  .table tbody td:nth-child(6),
-  .table tbody td:nth-child(7),
-  .table tbody td:nth-child(8) {
-    text-align: center;
-  }
-
-  /* Cột tên chuyến đi căn trái */
-  .table tbody td:nth-child(2),
-  .table tbody td:nth-child(3) {
-    text-align: left;
-  }
-
-  /* ===============================
-   BADGE STATUS (pastel)
+/* ===============================
+   TABLE HEADER
 =============================== */
-  .badge {
-    padding: 7px 16px !important;
-    border-radius: 12px !important;
-    font-size: 13px !important;
-    font-weight: 600 !important;
-  }
+.table thead th {
+  background: transparent !important;
+  color: #6b7280 !important;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 12.5px;
+  border-bottom: 1px solid #e5e7eb !important;
+  text-align: center;
+  padding: 14px 10px !important;
+  letter-spacing: .5px;
+}
 
-  .bg-success {
-    background: #d1fae5 !important;
-    color: #047857 !important;
-  }
-
-  .bg-secondary {
-    background: #fee2e2 !important;
-    color: #b91c1c !important;
-  }
-
-  /* ===============================
-   BUTTONS (pastel)
+/* ===============================
+   TABLE BODY
 =============================== */
-  .btn-sm {
-    padding: 7px 14px !important;
-    border-radius: 10px !important;
-    font-size: 14px !important;
-    font-weight: 600 !important;
-    border: none !important;
-  }
+.table tbody tr {
+  border-bottom: 1px solid #efefef;
+  transition: .15s ease;
+}
 
-  /* Chi tiết – xanh nhạt */
-  .btn-info {
-    background: #dbeafe !important;
-    color: #1e40af !important;
-  }
+.table tbody tr:hover {
+  background: #f9fafb;
+}
 
-  .btn-info:hover {
-    background: #bfdbfe !important;
-  }
+.table tbody td {
+  padding: 18px 12px !important;
+  font-size: 15px;
+  color: #333;
+  vertical-align: middle;
+}
 
-  /* Sửa – vàng pastel */
-  .btn-warning {
-    background: #fef3c7 !important;
-    color: #92400e !important;
-  }
+/* Align columns */
+.table tbody td:nth-child(1),
+.table tbody td:nth-child(4),
+.table tbody td:nth-child(5),
+.table tbody td:nth-child(6),
+.table tbody td:nth-child(7),
+.table tbody td:nth-child(8) {
+  text-align: center;
+}
 
-  .btn-warning:hover {
-    background: #fde68a !important;
-  }
+.table tbody td:nth-child(2),
+.table tbody td:nth-child(3) {
+  text-align: left;
+}
 
-  /* Xóa – đỏ pastel (nếu dùng) */
-  .btn-danger {
-    background: #fee2e2 !important;
-    color: #b91c1c !important;
-  }
-
-  .btn-danger:hover {
-    background: #fecaca !important;
-  }
-
-  /* ===============================
-   FILTER FORM STYLE
+/* ===============================
+   BADGE STATUS
 =============================== */
-  .form-select,
-  .form-control {
-    border-radius: 10px !important;
-    padding: 10px 14px !important;
-    border: 1px solid #dcdcdc !important;
-  }
+.badge {
+  padding: 7px 16px;
+  border-radius: 12px;
+  font-size: 13px;
+  font-weight: 600;
+}
 
-  .btn-primary {
-    background: #dbeafe !important;
-    color: #1e40af !important;
-    border: none !important;
-  }
+.bg-success {
+  background: #d1fae5 !important;
+  color: #047857 !important;
+}
 
-  .btn-primary:hover {
-    background: #bfdbfe !important;
-  }
+.bg-secondary {
+  background: #fee2e2 !important;
+  color: #b91c1c !important;
+}
+
+/* ===============================
+   BUTTONS
+=============================== */
+.btn-sm {
+  padding: 7px 14px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  border: none;
+}
+
+.btn-info {
+  background: #dbeafe;
+  color: #1e40af;
+}
+
+.btn-info:hover {
+  background: #bfdbfe;
+}
+
+.btn-warning {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.btn-warning:hover {
+  background: #fde68a;
+}
 </style>
-<div class="container-fluid px-4">
-  <h3 class="fw-bold">Quản lý booking</h3>
 
-  <!-- Bộ lọc -->
-  <form method="GET" action="">
+<div class="container-fluid">
+
+  <!-- TITLE -->
+  <div class="page-title">Quản lý booking</div>
+
+  <!-- FILTER -->
+  <form method="GET" action="" class="filter-box">
     <input type="hidden" name="mode" value="admin">
     <input type="hidden" name="action" value="viewsbooking">
 
-    <div class="row mb-3 g-2">
-
+    <div class="row g-2">
       <div class="col-md-4">
         <select name="departure_id" class="form-select">
           <option value="">-- Chọn chuyến đi --</option>
           <?php foreach ($departures as $d): ?>
-            <option value="<?= $d['departure_id'] ?>">
+            <option value="<?= $d['departure_id'] ?>"
+              <?= ($_GET['departure_id'] ?? '') == $d['departure_id'] ? 'selected' : '' ?>>
               <?= $d['departure_name'] ?> (<?= date('d/m', strtotime($d['start_date'])) ?>)
             </option>
           <?php endforeach; ?>
@@ -172,28 +178,27 @@
       </div>
 
       <div class="col-md-3">
-        <input type="date" name="from_date" class="form-control">
+        <input type="date" name="from_date" value="<?= $_GET['from_date'] ?? '' ?>" class="form-control">
       </div>
 
       <div class="col-md-3">
-        <input type="date" name="to_date" class="form-control">
+        <input type="date" name="to_date" value="<?= $_GET['to_date'] ?? '' ?>" class="form-control">
       </div>
 
       <div class="col-md-2">
-        <button class="btn btn-primary w-100 mt-1">Tìm kiếm</button>
+        <button class="btn btn-filter w-100">Tìm kiếm</button>
       </div>
-
     </div>
   </form>
 
+  <!-- TABLE -->
   <div class="table-card">
-    <!-- Bảng booking -->
     <table class="table table-hover align-middle">
       <thead>
         <tr>
           <th>#</th>
           <th>Tên chuyến đi</th>
-          <th>Tên khách hàng</th>
+          <th>Khách hàng</th>
           <th>Liên hệ</th>
           <th>Tổng tiền</th>
           <th>Trạng thái</th>
@@ -210,7 +215,9 @@
 
               <td>
                 <strong><?= $booking['departure_name'] ?></strong><br>
-                <span class="text-muted small"><?= $booking['tour_name'] ?> - <?= $booking['version_name'] ?></span>
+                <span class="text-muted small">
+                  <?= $booking['tour_name'] ?> – <?= $booking['version_name'] ?>
+                </span>
               </td>
 
               <td><?= htmlspecialchars($booking['customer_name']) ?></td>
@@ -229,17 +236,22 @@
               <td><?= date('d/m/Y H:i', strtotime($booking['created_at'])) ?></td>
 
               <td>
-                <a href="<?= BASE_URL ?>?mode=admin&action=showbooking&id=<?= $booking['booking_id'] ?>" class="btn btn-sm btn-info">Chi tiết</a>
-                <a href="<?= BASE_URL ?>?mode=admin&action=suabooking&id=<?= $booking['booking_id'] ?>" class="btn btn-sm btn-warning">Sửa</a>
+                <a href="<?= BASE_URL ?>?mode=admin&action=showbooking&id=<?= $booking['booking_id'] ?>"
+                   class="btn btn-sm btn-info">Chi tiết</a>
+                <a href="<?= BASE_URL ?>?mode=admin&action=suabooking&id=<?= $booking['booking_id'] ?>"
+                   class="btn btn-sm btn-warning">Sửa</a>
               </td>
             </tr>
           <?php endforeach; ?>
         <?php else: ?>
           <tr>
-            <td colspan="8" class="text-center text-muted">Không có dữ liệu booking</td>
+            <td colspan="8" class="text-center text-muted">
+              Không có dữ liệu booking
+            </td>
           </tr>
         <?php endif; ?>
       </tbody>
     </table>
   </div>
+
 </div>

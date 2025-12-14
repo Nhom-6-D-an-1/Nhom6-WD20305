@@ -124,7 +124,6 @@ class GuideController
 
     public function viewDiary()
     {
-
         $diary = new DiaryModel();
         $customers = new CustomersModel();
         $guide_id = $_SESSION['user']['guide_id'];
@@ -236,6 +235,7 @@ class GuideController
             }
         }
 
+
         $checkinModel = new CheckinModel();
         $currentTour = $this->getCurrentRunningTour($guide_id);
 
@@ -332,64 +332,64 @@ class GuideController
             exit();
         }
 
+
         $title = "Check in, điểm danh";
         $view = 'guide/checkin/checkin';
         require_once PATH_VIEW_MAIN;
     }
+    //     public function viewRequest()
+    //     {
+    //         $customers = new CustomersModel();
+    //         $guide_id = $_SESSION['user']['guide_id'];
+    //         $assignedTours = $customers->getAssignedTours($guide_id);
+    //         $request = new GuestSpecialRequest();
+    //         $guest = new Guest();
+    //         $tour = new TourModel();
+    //         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    //             $guest_id = $_POST['guest_id'];
+    //             $description = trim($_POST['description']);
+    //             $medical_condition = trim($_POST['medical_condition'] ?? "");
+    //             $current_tour_id = $_POST['current_tour_id'] ?? '';
+    //             if ($description == '') {
+    //                 $_SESSION['flash_error'] = "Yêu cầu không được để trống!";
+    //             } else {
+    //                 $request->insertRequest($guest_id, $description, $medical_condition);
+    //             }
+    //             $redirectUrl = BASE_URL . "?mode=guide&action=viewrequest";
+    //             if ($current_tour_id) $redirectUrl .= "&tour_id=" . $current_tour_id;
 
-    public function viewRequest()
-    {
-        $customers = new CustomersModel();
-        $guide_id = $_SESSION['user']['guide_id'];
-        $assignedTours = $customers->getAssignedTours($guide_id);
-        $request = new GuestSpecialRequest();
-        $guest = new Guest();
-        $tour = new TourModel();
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $guest_id = $_POST['guest_id'];
-            $description = trim($_POST['description']);
-            $medical_condition = trim($_POST['medical_condition'] ?? "");
-            $current_tour_id = $_POST['current_tour_id'] ?? '';
-            if ($description == '') {
-                $_SESSION['flash_error'] = "Yêu cầu không được để trống!";
-            } else {
-                $request->insertRequest($guest_id, $description, $medical_condition);
-            }
-            $redirectUrl = BASE_URL . "?mode=guide&action=viewrequest";
-            if ($current_tour_id) $redirectUrl .= "&tour_id=" . $current_tour_id;
-
-            header("Location: " . $redirectUrl);
-            exit();
-        } else {
-            $list_tour = $tour->getAllTour();
-            $filter_tour_id = isset($_GET['departure_id']) && $_GET['departure_id'] != ''
-                ? $_GET['departure_id']
-                : null; // CMT: đổi từ tour_id sang departure_id để đồng bộ với View
-            if ($filter_tour_id) {
-                $data_guest = $guest->getGuideByTour($filter_tour_id);
-                $data = $request->getAllRequest($filter_tour_id);
-            } else {
-                $data_guest = [];
-                $data = [];
-            }
+    //             header("Location: " . $redirectUrl);
+    //             exit();
+    //         } else {
+    //             $list_tour = $tour->getAllTour();
+    //             $filter_tour_id = isset($_GET['departure_id']) && $_GET['departure_id'] != ''
+    //                 ? $_GET['departure_id']
+    //                 : null; // CMT: đổi từ tour_id sang departure_id để đồng bộ với View
+    //             if ($filter_tour_id) {
+    //                 $data_guest = $guest->getGuideByTour($filter_tour_id);
+    //                 $data = $request->getAllRequest($filter_tour_id);
+    //             } else {
+    //                 $data_guest = [];
+    //                 $data = [];
+    //             }
 
 
-            $title = "Yêu cầu đặc biệt";
-            $view = 'guide/request/request';
-            require_once PATH_VIEW_MAIN;
-        }
-    }
+    //             $title = "Yêu cầu đặc biệt";
+    //             $view = 'guide/request/request';
+    //             require_once PATH_VIEW_MAIN;
+    //         }
+    //     }
 
-    public function deleteRequest()
-    {
-        if (!isset($_GET['id'])) {
-            header("Location: " . BASE_URL . "?mode=guide&action=viewrequest");
-            exit();
-        }
-        $request = new GuestSpecialRequest();
-        $id = $_GET['id'];
-        $request->deleteRequest($id);
-        header("Location: " . BASE_URL . "?mode=guide&action=viewrequest");
-        exit();
-    }
+    //     public function deleteRequest()
+    //     {
+    //         if (!isset($_GET['id'])) {
+    //             header("Location: " . BASE_URL . "?mode=guide&action=viewrequest");
+    //             exit();
+    //         }
+    //         $request = new GuestSpecialRequest();
+    //         $id = $_GET['id'];
+    //         $request->deleteRequest($id);
+    //         header("Location: " . BASE_URL . "?mode=guide&action=viewrequest");
+    //         exit();
+    //     }
 }
