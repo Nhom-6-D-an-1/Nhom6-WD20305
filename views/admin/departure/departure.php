@@ -272,10 +272,10 @@
             <!-- Thanh hành động -->
             <div class="d-flex justify-content-between mb-3">
                 <div></div>
-                <a href="<?= BASE_URL ?>?mode=admin&action=createDeparture"
+                <!-- <a href="<?= BASE_URL ?>?mode=admin&action=createDeparture"
                     class="btn btn-success">
                     + Tạo chuyến đi mới
-                </a>
+                </a> -->
             </div>
 
             <!-- Bảng chuyến đi -->

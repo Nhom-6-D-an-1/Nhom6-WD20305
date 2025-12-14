@@ -1,13 +1,16 @@
+<?php
+$errors = $_SESSION['errors'] ?? [];
+$old    = $_SESSION['old'] ?? [];
+?>
+
 <style>
-    /* FORM CARD */
     .form-card {
         border-radius: 16px;
         background: #ffffff;
         border: 1px solid #eef0f3;
-        box-shadow: 0 4px 14px rgba(0,0,0,0.06);
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
     }
 
-    /* INPUT */
     .input-custom {
         height: 46px;
         border-radius: 12px;
@@ -19,41 +22,39 @@
     .input-custom:focus {
         border-color: #3b82f6;
         background: #fff;
-        box-shadow: 0 0 0 3px rgba(59,130,246,0.15);
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
     }
 
-    /* LABEL */
     .form-label {
         font-weight: 600;
         color: #374151;
     }
 
-    /* BUTTON LƯU (Primary pastel) */
     .btn-save {
-        background: #e8f0ff !important;
-        color: #2563eb !important;
-        border: none !important;
-        padding: 10px 26px !important;
-        border-radius: 12px !important;
+        background: #e8f0ff;
+        color: #2563eb;
+        border: none;
+        padding: 10px 26px;
+        border-radius: 12px;
         font-weight: 600;
     }
+
     .btn-save:hover {
-        background: #d6e6ff !important;
+        background: #d6e6ff;
     }
 
-    /* BUTTON HỦY */
     .btn-cancel {
-        background: #f3f4f6 !important;
-        color: #374151 !important;
-        border: none !important;
-        padding: 10px 26px !important;
-        border-radius: 12px !important;
+        background: #f3f4f6;
+        color: #374151;
+        border: none;
+        padding: 10px 26px;
+        border-radius: 12px;
         font-weight: 600;
     }
-    .btn-cancel:hover {
-        background: #e5e7eb !important;
-    }
 
+    .btn-cancel:hover {
+        background: #e5e7eb;
+    }
 </style>
 
 <div class="container mt-4">
@@ -63,31 +64,70 @@
         <h3 class="fw-bold mb-1">Thêm tài khoản</h3>
         <p class="text-muted mb-4">Điền đầy đủ thông tin bên dưới để tạo tài khoản mới</p>
 
-        <form action="<?= BASE_URL ?>?mode=admin&action=storeaccount" method="POST">
+        <form method="post" action="<?= BASE_URL ?>?mode=admin&action=storeaccount">
 
+            <!-- Họ tên -->
             <div class="mb-3">
                 <label class="form-label">Họ và tên</label>
-                <input type="text" name="full_name" class="form-control input-custom" required>
+                <input type="text"
+                    name="full_name"
+                    class="form-control input-custom <?= isset($errors['full_name']) ? 'is-invalid' : '' ?>"
+                    value="<?= htmlspecialchars($old['full_name'] ?? '') ?>">
+
+                <?php if (isset($errors['full_name'])): ?>
+                    <div class="invalid-feedback d-block">
+                        <?= $errors['full_name'] ?>
+                    </div>
+                <?php endif; ?>
             </div>
 
+            <!-- Username -->
             <div class="mb-3">
                 <label class="form-label">Tên đăng nhập</label>
-                <input type="text" name="user_name" class="form-control input-custom" required>
+                <input type="text"
+                    name="user_name"
+                    class="form-control input-custom <?= isset($errors['user_name']) ? 'is-invalid' : '' ?>"
+                    value="<?= htmlspecialchars($old['user_name'] ?? '') ?>">
+
+                <?php if (isset($errors['user_name'])): ?>
+                    <div class="invalid-feedback d-block">
+                        <?= $errors['user_name'] ?>
+                    </div>
+                <?php endif; ?>
             </div>
 
+            <!-- Password -->
             <div class="mb-3">
                 <label class="form-label">Mật khẩu</label>
-                <input type="password" name="password" class="form-control input-custom" required>
+                <input type="password"
+                    name="password"
+                    class="form-control input-custom <?= isset($errors['password']) ? 'is-invalid' : '' ?>">
+
+                <?php if (isset($errors['password'])): ?>
+                    <div class="invalid-feedback d-block">
+                        <?= $errors['password'] ?>
+                    </div>
+                <?php endif; ?>
             </div>
 
+            <!-- Role -->
             <div class="mb-3">
                 <label class="form-label">Vai trò</label>
-                <select name="role" class="form-select input-custom" required>
-                    <option value="admin">Admin</option>
-                    <option value="guide">Hướng dẫn viên</option>
+                <select name="role"
+                    class="form-select input-custom <?= isset($errors['role']) ? 'is-invalid' : '' ?>">
+                    <option value="">-- Chọn vai trò --</option>
+                    <option value="admin" <?= ($old['role'] ?? '') === 'admin' ? 'selected' : '' ?>>Admin</option>
+                    <option value="guide" <?= ($old['role'] ?? '') === 'guide' ? 'selected' : '' ?>>Hướng dẫn viên</option>
                 </select>
+
+                <?php if (isset($errors['role'])): ?>
+                    <div class="invalid-feedback d-block">
+                        <?= $errors['role'] ?>
+                    </div>
+                <?php endif; ?>
             </div>
 
+            <!-- Buttons -->
             <div class="d-flex gap-2 mt-4">
                 <button class="btn-save">Lưu</button>
                 <a href="<?= BASE_URL ?>?mode=admin&action=viewsaccount" class="btn-cancel">Hủy</a>
@@ -99,3 +139,4 @@
 
 </div>
 
+<?php unset($_SESSION['errors'], $_SESSION['old']); ?>

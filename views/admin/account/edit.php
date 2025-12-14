@@ -1,3 +1,8 @@
+<?php
+$errors = $_SESSION['errors'] ?? [];
+$old    = $_SESSION['old'] ?? [];
+?>
+
 <style>
     .form-card {
         border-radius: 14px;
@@ -14,7 +19,7 @@
 
     .input-custom:focus {
         border-color: #0d6efd;
-        box-shadow: 0 0 0 0.15rem rgba(13,110,253,0.2);
+        box-shadow: 0 0 0 0.15rem rgba(13, 110, 253, 0.2);
     }
 
     .btn-primary {
@@ -41,56 +46,85 @@
             <form action="<?= BASE_URL ?>?mode=admin&action=updateaccount" method="POST">
 
                 <input type="hidden" name="user_id"
-                       value="<?= htmlspecialchars($account['user_id']) ?>">
+                    value="<?= htmlspecialchars($account['user_id']) ?>">
 
                 <!-- Họ tên -->
                 <div class="mb-3">
                     <label class="form-label fw-semibold">Họ và tên</label>
-                    <input type="text" name="full_name"
-                           class="form-control input-custom"
-                           value="<?= htmlspecialchars($account['full_name']) ?>"
-                           required>
+                    <input type="text"
+                        name="full_name"
+                        class="form-control input-custom <?= isset($errors['full_name']) ? 'is-invalid' : '' ?>"
+                        value="<?= htmlspecialchars($old['full_name'] ?? $account['full_name']) ?>">
+
+                    <?php if (isset($errors['full_name'])): ?>
+                        <div class="invalid-feedback d-block">
+                            <?= $errors['full_name'] ?>
+                        </div>
+                    <?php endif; ?>
                 </div>
 
-                <!-- Tên đăng nhập -->
+                <!-- Username -->
                 <div class="mb-3">
                     <label class="form-label fw-semibold">Tên đăng nhập</label>
-                    <input type="text" name="username"
-                           class="form-control input-custom"
-                           value="<?= htmlspecialchars($account['username']) ?>"
-                           required>
+                    <input type="text"
+                        name="username"
+                        class="form-control input-custom <?= isset($errors['username']) ? 'is-invalid' : '' ?>"
+                        value="<?= htmlspecialchars($old['username'] ?? $account['username']) ?>">
+
+                    <?php if (isset($errors['username'])): ?>
+                        <div class="invalid-feedback d-block">
+                            <?= $errors['username'] ?>
+                        </div>
+                    <?php endif; ?>
                 </div>
 
-                <!-- Mật khẩu -->
+                <!-- Password -->
                 <div class="mb-3">
                     <label class="form-label fw-semibold">Mật khẩu mới</label>
-                    <input type="password" name="password"
-                           class="form-control input-custom"
-                           placeholder="Để trống nếu không muốn thay đổi">
+                    <input type="password"
+                        name="password"
+                        class="form-control input-custom <?= isset($errors['password']) ? 'is-invalid' : '' ?>"
+                        placeholder="Để trống nếu không muốn thay đổi">
+
+                    <?php if (isset($errors['password'])): ?>
+                        <div class="invalid-feedback d-block">
+                            <?= $errors['password'] ?>
+                        </div>
+                    <?php endif; ?>
                 </div>
 
-                <!-- Vai trò -->
+                <!-- Role -->
                 <div class="mb-3">
                     <label class="form-label fw-semibold">Vai trò</label>
-                    <select name="role" class="form-select input-custom" required>
-                        <option value="admin" <?= $account['role'] == 'admin' ? 'selected' : '' ?>>
+                    <select name="role"
+                        class="form-select input-custom <?= isset($errors['role']) ? 'is-invalid' : '' ?>">
+                        <option value="admin"
+                            <?= (($old['role'] ?? $account['role']) === 'admin') ? 'selected' : '' ?>>
                             Admin
                         </option>
-                        <option value="guide" <?= $account['role'] == 'guide' ? 'selected' : '' ?>>
+                        <option value="guide"
+                            <?= (($old['role'] ?? $account['role']) === 'guide') ? 'selected' : '' ?>>
                             Hướng dẫn viên
                         </option>
                     </select>
+
+                    <?php if (isset($errors['role'])): ?>
+                        <div class="invalid-feedback d-block">
+                            <?= $errors['role'] ?>
+                        </div>
+                    <?php endif; ?>
                 </div>
 
                 <!-- Buttons -->
                 <div class="d-flex gap-2 mt-4">
                     <button class="btn btn-primary px-4">Cập nhật</button>
                     <a href="<?= BASE_URL ?>?mode=admin&action=viewsaccount"
-                       class="btn btn-outline-secondary px-4">Hủy</a>
+                        class="btn btn-outline-secondary px-4">Hủy</a>
                 </div>
 
             </form>
         </div>
-
-    </form>
+    </div>
 </div>
+
+<?php unset($_SESSION['errors'], $_SESSION['old']); ?>
