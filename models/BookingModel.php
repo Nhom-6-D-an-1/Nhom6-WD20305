@@ -221,6 +221,7 @@ class BookingModel extends BaseModel
                     b.status,
                     b.created_at,
                     b.customer_type, 
+                    b.created_at, 
                     d.start_date,
                     tv.version_name,
                     tv.price,

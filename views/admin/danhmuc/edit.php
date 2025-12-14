@@ -1,3 +1,85 @@
+<style>
+    /* ================================
+    PAGE TITLE
+    ================================ */
+    .fw-bold {
+        font-size: 26px;
+        font-weight: 700;
+        color: #1f2937;
+    }
+
+    /* ================================
+    CARD
+    ================================ */
+    .card {
+        background: #ffffff;
+        border-radius: 16px;
+        border: 1px solid #eef0f3;
+        box-shadow: 0 4px 14px rgba(0,0,0,0.06);
+    }
+
+    /* ================================
+    LABEL
+    ================================ */
+    .form-label {
+        font-weight: 600;
+        color: #374151;
+        margin-bottom: 6px;
+    }
+
+    /* ================================
+    INPUT + SELECT STYLE
+    ================================ */
+    .form-control,
+    .form-select {
+        border-radius: 14px !important;
+        padding: 11px 14px !important;
+        background: #f9fafb !important;
+        border: 1px solid #dce1e8 !important;
+        font-size: 15px;
+        transition: .2s ease;
+    }
+
+    .form-control:focus,
+    .form-select:focus {
+        background: #ffffff !important;
+        border-color: #3b82f6 !important;
+        box-shadow: 0 0 0 3px rgba(59,130,246,0.15) !important;
+    }
+
+    /* ================================
+    BUTTONS – PREMIUM
+    ================================ */
+
+    /* Cập nhật */
+    .btn-primary {
+        background: #e5efff !important;
+        color: #2563eb !important;
+        border: none !important;
+        padding: 10px 22px !important;
+        border-radius: 12px !important;
+        font-weight: 600 !important;
+    }
+
+    .btn-primary:hover {
+        background: #d6e6ff !important;
+    }
+
+    /* Hủy */
+    .btn-secondary {
+        background: #f3f4f6 !important;
+        color: #374151 !important;
+        padding: 10px 20px !important;
+        border-radius: 12px !important;
+        font-weight: 600 !important;
+        border: none !important;
+    }
+
+    .btn-secondary:hover {
+        background: #e5e7eb !important;
+    }
+
+</style>
 <div class="container-fluid px-4">
     <h3 class="fw-bold mt-4 mb-4">Sửa danh mục tour: <?= $category['category_name'] ?></h3>
 
