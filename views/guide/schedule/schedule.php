@@ -108,17 +108,17 @@
 
     /* STATUS BADGE */
     .badge-sap-toi {
-        background: #dbeafe;
-        color: #1e40af;
+        background: #fff5da !important;
+        color: #b45309 !important;
     }
 
     .badge-dang-dien-ra {
-        background: #fef3c7;
-        color: #92400e;
+        background: #d1fae5 !important;
+        color: #047857 !important;
     }
 
     .badge-hoan-tat {
-        background: #d1fae5;
+        background: #dfeaff !important;
         color: #065f46;
     }
 
@@ -211,7 +211,7 @@ $filteredSchedule = array_filter($scheduleData, function ($tour) use ($today) {
 
                 <thead>
                     <tr>
-                        <th class="ps-4">Mã tour</th>
+                        <th class="ps-4">#</th>
                         <th>Tên tour</th>
                         <th>Khởi hành</th>
                         <th>Số khách</th>
@@ -228,7 +228,7 @@ $filteredSchedule = array_filter($scheduleData, function ($tour) use ($today) {
                             </td>
                         </tr>
                     <?php else: ?>
-                        <?php foreach ($filteredSchedule as $tour): ?>
+                        <?php foreach ($filteredSchedule as $key => $tour): ?>
 
                             <?php
                             if ($tour['end_date'] < $today) {
@@ -244,8 +244,15 @@ $filteredSchedule = array_filter($scheduleData, function ($tour) use ($today) {
                             ?>
 
                             <tr>
-                                <td class="ps-4"><?= $tour['departure_id'] ?></td>
-                                <td class="fw-semibold"><?= htmlspecialchars($tour['tour_name']) ?></td>
+                                <td class="ps-4"><?= $key + 1 ?></td>
+                                <td>
+                                    <div class="fw-semibold">
+                                        <?= htmlspecialchars($tour['departure_name']) ?>
+                                    </div>
+                                    <div class="text-muted small">
+                                        <?= htmlspecialchars($tour['tour_name']) ?> – <?= htmlspecialchars($tour['version_name']) ?>
+                                    </div>
+                                </td>
                                 <td><?= date('d/m/Y', strtotime($tour['start_date'])) ?></td>
                                 <td><?= $tour['max_guests'] ?> khách</td>
                                 <td>

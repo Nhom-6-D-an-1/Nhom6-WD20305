@@ -14,6 +14,7 @@ class ScheduleModel
     {
         $sql = "SELECT 
                 d.departure_id,
+                d.departure_name,   
                 d.start_date,
                 d.end_date,
                 d.max_guests,
