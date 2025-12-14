@@ -243,8 +243,10 @@
 
     /* Thêm booking – xanh dương pastel */
     .btn-action-add {
-        background: #eef4ff !important;
-        color: #2563eb !important;
+        background: #d1fae5 !important;
+
+        color: #047857 !important;
+
     }
 
     .btn-action-add:hover {
@@ -334,8 +336,12 @@
                                     <a href="<?= BASE_URL ?>?mode=admin&action=departureEdit&id=<?= $value['departure_id'] ?>"
                                         class="btn btn-action-edit">Sửa</a>
 
-                                    <a href="<?= BASE_URL ?>?mode=admin&action=createType&id=<?= $value['departure_id'] ?>"
-                                        class="btn btn-action-add">booking</a>
+                                    <?php if ($value['status'] === 'open'): ?>
+                                        <a href="<?= BASE_URL ?>?mode=admin&action=createType&id=<?= $value['departure_id'] ?>"
+                                            class="btn btn-action-add">Booking</a>
+                                    <?php else: ?>
+                                        <span class="text-muted small">Đã khóa</span>
+                                    <?php endif; ?>
 
                                 </div>
                             </td>
