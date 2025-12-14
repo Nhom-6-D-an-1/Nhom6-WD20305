@@ -4,8 +4,9 @@ class CheckinModel
 {
     private $conn;
 
-    public function __construct() {
-        $db = new BaseModel(); 
+    public function __construct()
+    {
+        $db = new BaseModel();
         $this->conn = $db->getConnection();
     }
 

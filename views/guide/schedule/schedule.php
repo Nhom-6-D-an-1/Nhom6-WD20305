@@ -116,7 +116,12 @@ $filteredSchedule = array_filter($scheduleData, function ($tour) use ($today) {
         return in_array($status, ['SapToi', 'DangDienRa']);
     }
 
-    $match = true;
+    .badge-status {
+        padding: 6px 12px;
+        border-radius: 10px;
+        font-weight: 600;
+        font-size: 13px;
+    }
 
     if (!empty($_GET['start_date'])) {
         $match = $match && ($tour['start_date'] == $_GET['start_date']);
@@ -125,10 +130,10 @@ $filteredSchedule = array_filter($scheduleData, function ($tour) use ($today) {
     if (!empty($_GET['status'])) {
         $match = $match && ($status == $_GET['status']);
     }
+</style>
 
-    return $match;
-});
-?>
+
+<!-- ====================== PAGE CONTENT ====================== -->
 
 <div class="col-12">
 
@@ -236,9 +241,9 @@ $filteredSchedule = array_filter($scheduleData, function ($tour) use ($today) {
             </table>
         </div>
     </div>
-
 </div>
 
+<!-- VALIDATE -->
 <script>
 function validateSearchForm() {
     const startDate = document.querySelector('input[name="start_date"]').value;

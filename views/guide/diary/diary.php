@@ -23,38 +23,13 @@
 }
 
 /* ===============================
-   FORM
+   FILTER
 =============================== */
-.form-control,
 .form-select {
     border-radius: 10px !important;
     padding: 10px 14px !important;
     border: 1px solid #dcdcdc !important;
     font-size: 14px;
-}
-
-textarea {
-    resize: none;
-}
-
-/* ===============================
-   BUTTON
-=============================== */
-.btn-add {
-    background: #dbeafe;
-    color: #1e40af;
-    border-radius: 10px;
-    font-weight: 700;
-    padding: 10px 22px;
-}
-
-.btn-add:hover {
-    background: #bfdbfe;
-}
-
-.btn-delete {
-    border-radius: 8px;
-    font-weight: 600;
 }
 
 /* ===============================
@@ -87,23 +62,13 @@ textarea {
 /* ===============================
    BADGE
 =============================== */
-.badge-day {
+.badge-group {
     background: #dbeafe;
     color: #1e40af;
     padding: 6px 12px;
     border-radius: 10px;
     font-size: 13px;
     font-weight: 600;
-}
-
-/* ===============================
-   IMAGE
-=============================== */
-.diary-img {
-    width: 80px;
-    height: 80px;
-    object-fit: cover;
-    border-radius: 10px;
 }
 
 /* ===============================
@@ -120,69 +85,12 @@ textarea {
 <div class="container-fluid px-4">
 
     <!-- TITLE -->
-    <div class="page-title">Nhật ký tour</div>
+    <div class="page-title">Danh sách khách</div>
 
     <!-- ===============================
-         ADD DIARY FORM
+         FILTER
     =============================== -->
-    <div class="card mb-4">
-        <div class="card-body">
-
-            <form method="post"
-                  enctype="multipart/form-data"
-                  id="diaryForm"
-                  onsubmit="return validateSearchForm()">
-
-                <input type="hidden" name="departure_id"
-                       value="<?= (int)($selectedDepartureId ?? 0) ?>">
-
-                <div class="row g-3">
-
-                    <div class="col-lg-6">
-                        <textarea name="note"
-                                  class="form-control"
-                                  rows="2"
-                                  placeholder="Diễn biến sự cố, nội dung nhật ký..."></textarea>
-                    </div>
-
-                    <div class="col-lg-3">
-                        <textarea name="handling_method"
-                                  class="form-control"
-                                  rows="2"
-                                  placeholder="Cách xử lý..."></textarea>
-                    </div>
-
-                    <div class="col-lg-3">
-                        <textarea name="customer_feedback"
-                                  class="form-control"
-                                  rows="2"
-                                  placeholder="Phản hồi khách hàng..."></textarea>
-                    </div>
-
-                    <div class="col-lg-6">
-                        <input type="file" name="image" class="form-control">
-                    </div>
-
-                    <div class="col-lg-4">
-                        <select name="itinerary_id" class="form-select">
-                            <option value="">-- Ngày xảy ra sự cố --</option>
-                            <?php foreach ($itineraryDays as $day): ?>
-                                <option value="<?= $day['itinerary_id'] ?>">
-                                    Ngày <?= $day['day_number'] ?> – <?= htmlspecialchars($day['place']) ?>
-                                </option>
-                            <?php endforeach; ?>
-                        </select>
-                    </div>
-
-                    <div class="col-lg-2 text-end">
-                        <button type="submit" class="btn btn-add w-100">
-                            + Thêm nhật ký
-                        </button>
-                    </div>
-
-                </div>
-            </form>
-
+    <form method="get" id="tourFilterForm" class="mb-4">
         </div>
     </div>
 
@@ -274,6 +182,17 @@ textarea {
 
             </table>
         </div>
+</div>
+<?php endif; ?>
+<script>
+    function validateSearchForm() {
+        const note = document.querySelector('#diaryForm textarea[name="note"]').value.trim();
+        const departureId = document.querySelector('#diaryForm input[name="departure_id"]').value;
+
+        if (departureId == "0" || departureId == "") {
+            alert("Vui lòng chọn tour trước khi thêm nhật ký");
+            return false;
+        }
 
     </div>
 

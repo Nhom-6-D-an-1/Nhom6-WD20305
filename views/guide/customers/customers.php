@@ -1,3 +1,4 @@
+
 <style>
 /* ===============================
    PAGE TITLE
@@ -93,14 +94,9 @@
     <form method="get" id="tourFilterForm" class="mb-4">
         <input type="hidden" name="mode" value="guide">
         <input type="hidden" name="action" value="viewcustomers">
-
-        <div class="col-12 col-lg-6">
-            <select class="form-select"
-                    name="departure_id"
-                    onchange="document.getElementById('tourFilterForm').submit()">
-
-                <option value="0" hidden>-- Chọn tour --</option>
-
+        <div class="col-12 col-lg-6 mb-2">
+            <select class="form-select" name="departure_id" onchange="document.getElementById('tourFilterForm').submit()">
+                <option value="0" hidden>--Chọn tour--</option>
                 <?php foreach ($assignedTours as $tour): ?>
                     <option value="<?= $tour['departure_id'] ?>"
                         <?= (!empty($_GET['departure_id']) && $_GET['departure_id'] == $tour['departure_id']) ? 'selected' : '' ?>>
@@ -183,5 +179,4 @@
         </div>
 
     </div>
-
 </div>

@@ -180,7 +180,6 @@
                                             <?= htmlspecialchars($guest['display_status']) ?>
                                         </span>
                                     </td>
-
                                     <td>
                                         <?= $guest['checkin_time']
                                             ? date('H:i d/m', strtotime($guest['checkin_time']))
@@ -203,7 +202,6 @@
                                             </option>
                                         </select>
                                     </td>
-
                                 </tr>
                             <?php endforeach; ?>
 

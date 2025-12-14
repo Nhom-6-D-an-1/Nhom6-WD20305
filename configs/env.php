@@ -28,10 +28,10 @@ define('DB_OPTIONS', [
     PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
 ]);
 
-define('FAKE_TIME_ENABLE', false);
+define('FAKE_TIME_ENABLE', true);
 
 // Giá trị fake time (YYYY-MM-DD)
-define('FAKE_TIME_VALUE', '2025-11-20');
+define('FAKE_TIME_VALUE', '2025-12-10');
 
 /**
  * Hàm lấy ngày hiện tại, nhưng hỗ trợ FAKE TIME
@@ -41,5 +41,5 @@ function today()
     if (FAKE_TIME_ENABLE) {
         return FAKE_TIME_VALUE; // luôn trả về ngày giả
     }
-    return date("Y/m/d");
+    return date("Y-m-d");
 }

@@ -781,7 +781,7 @@ $tab = $_GET['tab'] ?? 'info';
 
                 <?php endif; ?>
 
-            </div>
+            </div><!-- /.tab-content -->
 
         </div>
     </div>
