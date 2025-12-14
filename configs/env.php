@@ -1,6 +1,6 @@
 <?php
 
-define('BASE_URL',         'http://localhost/phpcb/Nhom6-WD20305-new/'); // Thêm đường dẫn tới thư mục dự án
+define('BASE_URL',         'http://localhost/Du_an_1/Nhom6-WD20305/'); // Thêm đường dẫn tới thư mục dự án
 
 define('PATH_ROOT',         __DIR__ . '/../');
 

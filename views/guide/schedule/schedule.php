@@ -273,9 +273,22 @@ $filteredSchedule = array_filter($scheduleData, function ($tour) use ($today) {
         </div>
     </div>
 </div>
+<script>
+    function validateSearchForm() {
+        const departureId = document.querySelector('select[name="departure_id"]').value;
+        const startDate = document.querySelector('input[name="start_date"]').value;
+        const status = document.querySelector('select[name="status"]').value;
+
+        if ((departureId == "0" || departureId == "") && startDate == "" && status == "") {
+            alert("Vui lòng chọn ít nhất 1 trường để tìm kiếm");
+            return false; // chặn submit
+        }
+        return true; // cho phép submit
+    }
+</script>
 
 <!-- VALIDATE -->
-<script>
+<!-- <script>
     function validateSearchForm() {
         const startDate = document.querySelector('input[name="start_date"]').value;
         const status = document.querySelector('select[name="status"]').value;
@@ -286,4 +299,4 @@ $filteredSchedule = array_filter($scheduleData, function ($tour) use ($today) {
         }
         return true;
     }
-</script>
+</script> -->

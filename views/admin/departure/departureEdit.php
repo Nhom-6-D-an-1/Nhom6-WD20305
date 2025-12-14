@@ -296,7 +296,7 @@
 
             <h5 class="section-title">Thông tin cơ bản</h5>
 
-            <form method="POST">
+            <form method="POST" onsubmit="return validateDepartureForm()">
 
                 <div class="row g-4">
 
@@ -306,8 +306,8 @@
                         <input type="text" 
                                name="departure_name" 
                                class="form-control form-control-lg"
-                               value="<?= htmlspecialchars($data_departure['departure_name']) ?>" 
-                               required>
+                               value="<?= htmlspecialchars($data_departure['departure_name']) ?>">
+                        <span class="text-danger small" id="departureNameError"></span>
                     </div>
 
                     <!-- Ngày đi / Ngày về -->
@@ -316,8 +316,8 @@
                         <input type="date" 
                                name="start_date" 
                                class="form-control"
-                               value="<?= $data_departure['start_date'] ?>" 
-                               required>
+                               value="<?= $data_departure['start_date'] ?>">
+                        <span class="text-danger small" id="startDateError"></span>
                     </div>
 
                     <div class="col-md-6">
@@ -325,8 +325,8 @@
                         <input type="date" 
                                name="end_date" 
                                class="form-control"
-                               value="<?= $data_departure['end_date'] ?>" 
-                               required>
+                               value="<?= $data_departure['end_date'] ?>">
+                        <span class="text-danger small" id="endDateError"></span>
                     </div>
 
                     <!-- Số khách / Giá bán / Giờ đón -->
@@ -335,8 +335,8 @@
                         <input type="number" 
                                name="max_guests" 
                                class="form-control"
-                               value="<?= $data_departure['max_guests'] ?>" 
-                               required>
+                               value="<?= $data_departure['max_guests'] ?>">
+                        <span class="text-danger small" id="maxGuestsError"></span>
                     </div>
 
                     <div class="col-md-4">
@@ -344,8 +344,8 @@
                         <input type="number" 
                                name="actual_price" 
                                class="form-control"
-                               value="<?= $data_departure['actual_price'] ?>" 
-                               required>
+                               value="<?= $data_departure['actual_price'] ?>">
+                        <span class="text-danger small" id="priceError"></span>
                     </div>
 
                     <div class="col-md-4">
@@ -354,6 +354,7 @@
                                name="pickup_time" 
                                class="form-control"
                                value="<?= $data_departure['pickup_time'] ?>">
+                        <span class="text-danger small" id="pickupTimeError"></span>
                     </div>
 
                     <!-- Địa điểm đón -->
@@ -363,6 +364,7 @@
                                name="pickup_location" 
                                class="form-control"
                                value="<?= $data_departure['pickup_location'] ?>">
+                        <span class="text-danger small" id="pickupError"></span>
                     </div>
 
                     <!-- Ghi chú -->
@@ -371,6 +373,7 @@
                         <textarea name="note" 
                                   rows="4" 
                                   class="form-control"><?= htmlspecialchars($data_departure['note']) ?></textarea>
+                        <span class="text-danger small" id="noteError"></span>
                     </div>
 
                 </div>
@@ -391,5 +394,149 @@
 
         </div>
     </div>
-
 </div>
+<script>
+function validateDepartureForm() {
+    const name = document.querySelector('[name="departure_name"]');
+    const startDate = document.querySelector('[name="start_date"]');
+    const endDate = document.querySelector('[name="end_date"]');
+    const maxGuests = document.querySelector('[name="max_guests"]');
+    const price = document.querySelector('[name="actual_price"]');
+    const pickup = document.querySelector('[name="pickup_location"]');
+    const pickupTime = document.querySelector('[name="pickup_time"]');
+    const note = document.querySelector('[name="note"]');
+
+    // Error elements
+    const nameErr = document.getElementById('departureNameError');
+    const startErr = document.getElementById('startDateError');
+    const endErr = document.getElementById('endDateError');
+    const guestErr = document.getElementById('maxGuestsError');
+    const priceErr = document.getElementById('priceError');
+    const pickupErr = document.getElementById('pickupError');
+    const pickupTimeErr = document.getElementById('pickupTimeError');
+    const noteErr = document.getElementById('noteError');
+
+
+    // Reset lỗi
+    nameErr.innerHTML = startErr.innerHTML = endErr.innerHTML = guestErr.innerHTML = priceErr.innerHTML = noteErr.innerHTML = "";
+
+    /* 1. Tên chuyến đi */
+    const nameVal = name.value.trim();
+    if (nameVal === "") {
+        nameErr.innerHTML = "Vui lòng nhập tên chuyến đi";
+        name.focus();
+        return false;
+    }
+    if (/^\d+$/.test(nameVal)) {
+        nameErr.innerHTML = "Tên chuyến đi không được chỉ chứa số";
+        name.focus();
+        return false;
+    }
+
+    /* 2. Ngày khởi hành */
+    if (startDate.value === "") {
+        startErr.innerHTML = "Vui lòng chọn ngày khởi hành";
+        startDate.focus();
+        return false;
+    }
+
+    /* 3. Ngày kết thúc */
+    if (endDate.value === "") {
+        endErr.innerHTML = "Vui lòng chọn ngày kết thúc";
+        endDate.focus();
+        return false;
+    }
+    if (endDate.value < startDate.value) {
+        endErr.innerHTML = "Ngày kết thúc phải sau ngày khởi hành";
+        endDate.focus();
+        return false;
+    }
+
+    /* 4. Số khách */
+    if (maxGuests.value === "" || maxGuests.value <= 0) {
+        guestErr.innerHTML = "Số khách phải lớn hơn 0";
+        maxGuests.focus();
+        return false;
+    }
+
+    /* 5. Giá bán */
+    if (price.value === "" || price.value <= 0) {
+        priceErr.innerHTML = "Giá bán phải lớn hơn 0";
+        price.focus();
+        return false;
+    }
+    
+    /* 6. Điểm đón (không bắt buộc nhưng nếu nhập thì phải hợp lệ) */
+    const pickupVal = pickup.value.trim();
+    if (pickupVal !== "") {
+
+        // Không cho chỉ toàn số
+        if (/^\d+$/.test(pickupVal)) {
+            pickupErr.innerHTML = "Điểm đón không được chỉ chứa số";
+            pickup.focus();
+            return false;
+        }
+
+        // Phải có chữ
+        if (!/[a-zA-ZÀ-Ỹà-ỹ]/.test(pickupVal)) {
+            pickupErr.innerHTML = "Điểm đón phải có chữ, không được toàn ký tự đặc biệt";
+            pickup.focus();
+            return false;
+        }
+
+        // Độ dài tối thiểu
+        if (pickupVal.length < 5) {
+            pickupErr.innerHTML = "Điểm đón quá ngắn, vui lòng nhập rõ hơn";
+            pickup.focus();
+            return false;
+        }
+    }
+
+    /* 7. Giờ đón <=> Điểm đón */
+    if (pickupVal !== "" && pickupTime.value === "") {
+        pickupTimeErr.innerHTML = "Vui lòng chọn giờ đón";
+        pickupTime.focus();
+        return false;
+    }
+
+    if (pickupTime.value !== "" && pickupVal === "") {
+        pickupErr.innerHTML = "Vui lòng nhập điểm đón khi có giờ đón";
+        pickup.focus();
+        return false;
+    }
+    
+    /* 8. Ghi chú (không bắt buộc, nhưng nếu nhập thì phải hợp lệ) */
+    const noteVal = note.value.trim();
+    if (noteVal !== "") {
+
+        // Không cho chỉ toàn số
+        if (/^\d+$/.test(noteVal)) {
+            noteErr.innerHTML = "Ghi chú không được chỉ chứa số";
+            note.focus();
+            return false;
+        }
+
+        // Phải có chữ
+        if (!/[a-zA-ZÀ-Ỹà-ỹ]/.test(noteVal)) {
+            noteErr.innerHTML = "Ghi chú phải có chữ, không được toàn ký tự đặc biệt";
+            note.focus();
+            return false;
+        }
+
+        // Giới hạn độ dài (tránh nhập linh tinh)
+        if (noteVal.length < 5) {
+            noteErr.innerHTML = "Ghi chú quá ngắn, vui lòng nhập rõ hơn";
+            note.focus();
+            return false;
+        }
+
+        if (noteVal.length > 500) {
+            noteErr.innerHTML = "Ghi chú không được vượt quá 500 ký tự";
+            note.focus();
+            return false;
+        }
+    }
+
+    return true;
+}
+</script>
