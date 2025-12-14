@@ -1,77 +1,236 @@
-<h3 class="fw-bold mb-4">Sửa booking</h3>
+<style>
+/* ===============================
+   PAGE TITLE
+=============================== */
+.page-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: #1f2937;
+  margin: 8px 0 22px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #e5e7eb;
+  letter-spacing: -0.3px;
+}
 
-<div class="form-section">
-    <form method="post" action="<?= BASE_URL ?>?mode=admin&action=updatebooking">
+/* ===============================
+   CARD – APPLE STYLE
+=============================== */
+.form-card {
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 22px 24px;
+  border: 1px solid #f3f4f6;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.04);
+}
 
-        <input type="hidden" name="booking_id" value="<?= htmlspecialchars($booking['booking_id'] ?? '') ?>">
+/* ===============================
+   SECTION TITLE
+=============================== */
+.section-title {
+  font-size: 19px;
+  font-weight: 700;
+  color: #111827;
+  margin: 22px 0 14px;
+}
 
-        <div class="mb-3">
-            <label class="form-label">Chọn lịch trình (departure):</label>
-            <select name="departure_id" class="form-select" onchange="updatePrice(this)">
-                <option value="">-- Chọn lịch trình --</option>
-                <?php if (!empty($departures) && is_array($departures)): ?>
-                    <?php foreach ($departures as $d): ?>
-                        <option value="<?= htmlspecialchars((string)($d['departure_id'] ?? '')) ?>"
-                            data-price="<?= htmlspecialchars((string)($d['price'] ?? 0)) ?>"
-                            <?= ($d['departure_id'] ?? null) == ($booking['departure_id'] ?? null) ? 'selected' : '' ?>>
-                            <?= htmlspecialchars($d['version_name'] ?? ''); ?> - <?= htmlspecialchars($d['tour_name'] ?? ''); ?> (<?= !empty($d['start_date']) ? date('d/m/Y', strtotime($d['start_date'])) : 'N/A' ?>)
-                        </option>
-                    <?php endforeach; ?>
-                <?php endif; ?>
-            </select>
+/* ===============================
+   FORM CONTROL
+=============================== */
+.form-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #374151;
+}
+
+.form-control,
+.form-select {
+  border-radius: 10px !important;
+  padding: 10px 14px !important;
+  border: 1px solid #dcdcdc !important;
+  font-size: 14px;
+}
+
+/* ===============================
+   BUTTONS
+=============================== */
+.btn-save {
+  background: #d1fae5;
+  color: #047857;
+  border: none;
+  border-radius: 10px;
+  font-weight: 700;
+  padding: 10px 20px;
+}
+
+.btn-save:hover {
+  background: #a7f3d0;
+}
+
+.btn-cancel {
+  background: #e5e7eb;
+  color: #374151;
+  border: none;
+  border-radius: 10px;
+  font-weight: 600;
+  padding: 10px 20px;
+}
+
+.btn-outline {
+  border-radius: 10px;
+  font-weight: 600;
+}
+</style>
+
+<div class="container-fluid px-4">
+
+  <!-- HEADER -->
+  <div class="d-flex justify-content-between align-items-center mt-4 mb-3">
+    <div class="page-title mb-0">Sửa booking</div>
+
+    <a href="<?= BASE_URL ?>?mode=admin&action=showbooking&id=<?= htmlspecialchars($booking['booking_id'] ?? '') ?>"
+       class="btn btn-outline-secondary btn-outline">
+      Quay lại
+    </a>
+  </div>
+
+  <!-- FORM CARD -->
+  <div class="form-card">
+
+    <form method="post" onsubmit="return validateForm()" action="<?= BASE_URL ?>?mode=admin&action=updatebooking">
+
+      <input type="hidden" name="booking_id"
+             value="<?= htmlspecialchars($booking['booking_id'] ?? '') ?>">
+
+      <!-- ===============================
+           LỊCH TRÌNH
+      =============================== -->
+      <div class="section-title">Lịch trình</div>
+
+      <div class="mb-3">
+        <label class="form-label">Chọn lịch trình</label>
+        <select name="departure_id" class="form-select" onchange="updatePrice(this)">
+          <option value="">-- Chọn lịch trình --</option>
+
+          <?php foreach ($departures as $d): ?>
+            <option value="<?= $d['departure_id'] ?>"
+                    data-price="<?= $d['price'] ?>"
+              <?= ($d['departure_id'] == ($booking['departure_id'] ?? null)) ? 'selected' : '' ?>>
+              <?= htmlspecialchars($d['version_name']) ?> –
+              <?= htmlspecialchars($d['tour_name']) ?>
+              (<?= date('d/m/Y', strtotime($d['start_date'])) ?>)
+            </option>
+          <?php endforeach; ?>
+        </select>
+        <small class="text-danger" id="departureError"></small>
+      </div>
+
+      <!-- ===============================
+           THÔNG TIN KHÁCH
+      =============================== -->
+      <div class="section-title">Thông tin khách</div>
+
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <label class="form-label">Tên khách</label>
+          <input type="text" name="customer_name" class="form-control"
+                 value="<?= htmlspecialchars($booking['customer_name'] ?? '') ?>">
+          <small class="text-danger" id="nameError"></small>
         </div>
 
-        <div class="mb-3">
-            <label class="form-label">Tên khách:</label>
-            <input type="text" name="customer_name" class="form-control" placeholder="Nhập họ tên khách"
-                value="<?= htmlspecialchars($booking['customer_name'] ?? '') ?>" required>
+        <div class="col-md-6 mb-3">
+          <label class="form-label">SĐT</label>
+          <input type="text" name="customer_contact" class="form-control"
+                 value="<?= htmlspecialchars($booking['customer_contact'] ?? '') ?>">
+                 <small class="text-danger" id="phoneError"></small>
+        </div>
+      </div>
+
+      <div class="mb-3 col-md-6">
+        <label class="form-label">Loại khách</label>
+        <select name="customer_type" class="form-select">
+          <option value="le" <?= ($booking['customer_type'] ?? '') === 'le' ? 'selected' : '' ?>>Khách lẻ</option>
+          <option value="doan" <?= ($booking['customer_type'] ?? '') === 'doan' ? 'selected' : '' ?>>Khách đoàn</option>
+        </select>
+      </div>
+
+      <!-- ===============================
+           THANH TOÁN
+      =============================== -->
+      <div class="section-title">Thanh toán</div>
+
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <label class="form-label">Tổng tiền</label>
+          <input type="number" name="total_amount" class="form-control"
+                 value="<?= htmlspecialchars($booking['total_amount'] ?? 0) ?>">
+                 <small class="text-danger" id="amountError"></small>
         </div>
 
-        <div class="mb-3">
-            <label class="form-label">SĐT:</label>
-            <input type="text" name="customer_contact" class="form-control" placeholder="090xxxxxxx"
-                value="<?= htmlspecialchars($booking['customer_contact'] ?? '') ?>" required>
+        <div class="col-md-6 mb-3">
+          <label class="form-label">Trạng thái</label>
+          <select name="status" class="form-select">
+            <option value="pending" <?= ($booking['status'] ?? '') === 'pending' ? 'selected' : '' ?>>
+              Chưa thanh toán
+            </option>
+            <option value="completed" <?= ($booking['status'] ?? '') === 'completed' ? 'selected' : '' ?>>
+              Đã thanh toán
+            </option>
+          </select>
         </div>
+      </div>
 
-        <div class="mb-3">
-            <label class="form-label">Loại khách:</label>
-            <select name="customer_type" class="form-select">
-                <option value="le" <?= ($booking['customer_type'] ?? '') === 'le' ? 'selected' : '' ?>>Khách lẻ</option>
-                <option value="doan" <?= ($booking['customer_type'] ?? '') === 'doan' ? 'selected' : '' ?>>Khách đoàn</option>
-            </select>
-        </div>
+      <!-- ACTION -->
+      <div class="mt-4 d-flex gap-3">
+        <button type="submit" class="btn btn-save">Cập nhật</button>
 
-        <div class="mb-3">
-            <label class="form-label">Tổng tiền:</label>
-            <input type="number" step="0.01" name="total_amount" class="form-control" placeholder="Nhập tổng tiền"
-                value="<?= htmlspecialchars((string)($booking['total_amount'] ?? 0)) ?>">
-        </div>
-
-        <div class="mb-3">
-            <label class="form-label">Trạng thái:</label>
-            <select name="status" class="form-select">
-                <option value="pending" <?= ($booking['status'] ?? '') === 'pending' ? 'selected' : '' ?>>Chưa thanh toán</option>
-                <!-- <option value="deposit" <?= ($booking['status'] ?? '') === 'deposit' ? 'selected' : '' ?>>deposit</option> -->
-                <option value="completed" <?= ($booking['status'] ?? '') === 'completed' ? 'selected' : '' ?>>Đã thanh toán</option>
-                <!-- <option value="cancelled" <?= ($booking['status'] ?? '') === 'cancelled' ? 'selected' : '' ?>>cancelled</option> -->
-            </select>
-        </div>
-
-        <div class="mt-4 d-flex gap-3">
-            <button type="submit" class="btn btn-primary">Cập nhật</button>
-            <a href="<?= BASE_URL ?>?mode=admin&action=showbooking&id=<?= htmlspecialchars($booking['booking_id'] ?? '') ?>" class="btn btn-secondary">Huỷ</a>
-        </div>
+        <a href="<?= BASE_URL ?>?mode=admin&action=showbooking&id=<?= htmlspecialchars($booking['booking_id']) ?>"
+           class="btn btn-cancel">
+          Hủy
+        </a>
+      </div>
 
     </form>
+
+  </div>
+
 </div>
 
 <script>
-    function updatePrice(selectElement) {
-        const selectedOption = selectElement.options[selectElement.selectedIndex];
-        const price = selectedOption.getAttribute('data-price');
-        const amountInput = document.querySelector('input[name="total_amount"]');
-        if (price && price !== '0') {
-            amountInput.value = price;
-        }
+function validateForm() {
+    let ok = true;
+
+    const departure = document.querySelector('[name="departure_id"]');
+    const name = document.querySelector('[name="customer_name"]');
+    const phone = document.querySelector('[name="customer_contact"]');
+    const amount = document.querySelector('[name="total_amount"]');
+
+    const depErr = document.getElementById('departureError');
+    const nameErr = document.getElementById('nameError');
+    const phoneErr = document.getElementById('phoneError');
+    const amountErr = document.getElementById('amountError');
+
+    depErr.innerHTML = nameErr.innerHTML = phoneErr.innerHTML = amountErr.innerHTML = "";
+
+    if (departure.value === "") {
+        depErr.innerHTML = "Vui lòng chọn lịch trình";
+        ok = false;
     }
+
+    if (name.value.trim() === "" || !/[a-zA-ZÀ-ỹ]/.test(name.value)) {
+        nameErr.innerHTML = "Tên không hợp lệ";
+        ok = false;
+    }
+
+    if (!/^0\d{9}$/.test(phone.value)) {
+        phoneErr.innerHTML = "SĐT không hợp lệ";
+        ok = false;
+    }
+
+    if (amount.value !== "" && Number(amount.value) < 0) {
+        amountErr.innerHTML = "Tổng tiền phải ≥ 0";
+        ok = false;
+    }
+
+    return ok;
+}
 </script>

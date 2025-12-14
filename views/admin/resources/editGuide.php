@@ -1,118 +1,249 @@
-<div class="container py-5">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h3><i class="fas fa-user-edit text-primary"></i> Cập nhật hồ sơ Hướng dẫn viên</h3>
-        <a href="<?= BASE_URL ?>?mode=admin&action=viewsresources" class="btn btn-outline-secondary"><i class="fas fa-arrow-left"></i> Quay lại</a>
+<?php
+$errors = $_SESSION['errors'] ?? [];
+$old    = $_SESSION['old'] ?? [];
+?>
+
+<style>
+    /* ===============================
+   PAGE TITLE
+=============================== */
+    .page-title {
+        font-size: 24px;
+        font-weight: 700;
+        color: #1f2937;
+        margin: 8px 0 22px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid #e5e7eb;
+    }
+
+    /* CARD */
+    .card {
+        background: #fff;
+        border-radius: 14px;
+        padding: 22px;
+        border: 1px solid #f3f4f6;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+    }
+
+    /* FORM */
+    .form-label {
+        font-size: 13px;
+        font-weight: 600;
+        color: #374151;
+    }
+
+    .form-control,
+    .form-select {
+        border-radius: 10px;
+        padding: 10px 14px;
+        border: 1px solid #dcdcdc;
+        font-size: 14px;
+    }
+
+    /* AVATAR */
+    .avatar-preview {
+        width: 160px;
+        height: 160px;
+        object-fit: cover;
+        border-radius: 50%;
+        border: 4px solid #f3f4f6;
+    }
+
+    /* BUTTON */
+    .btn-save {
+        background: #dbeafe;
+        color: #1e40af;
+        border-radius: 10px;
+        font-weight: 700;
+        padding: 10px 22px;
+    }
+
+    .btn-save:hover {
+        background: #bfdbfe;
+    }
+
+    .btn-cancel {
+        background: #e5e7eb;
+        color: #374151;
+        border-radius: 10px;
+        font-weight: 600;
+        padding: 10px 22px;
+    }
+</style>
+
+<div class="container-fluid px-4">
+
+    <div class="d-flex justify-content-between align-items-center mt-4 mb-3">
+        <div class="page-title mb-0">Cập nhật hồ sơ Hướng dẫn viên</div>
+        <a href="<?= BASE_URL ?>?mode=admin&action=viewsresources"
+            class="btn btn-outline-secondary">
+            ← Quay lại
+        </a>
     </div>
 
-    <form action="<?= BASE_URL ?>?mode=admin&action=viewEditGuide&id=<?= $data_Guide['user_id']  ?>" method="POST" enctype="multipart/form-data">
-        <div class="row">
+    <form action="<?= BASE_URL ?>?mode=admin&action=viewEditGuide&id=<?= $data_Guide['user_id'] ?>"
+        method="POST"
+        enctype="multipart/form-data">
 
-            <div class="col-lg-4 mb-4">
-                <div class="card shadow-sm">
-                    <div class="card-body text-center">
-                        <h6 class="form-section-title border-0 text-center">Ảnh đại diện</h6>
-                        <div class="avatar-upload mb-3">
-                            <?php if ($data_Guide['avatar']) : ?>
-                                <img src="<?= BASE_ASSETS_UPLOADS . $data_Guide['avatar'] ?>" class="avatar-preview mb-3" width="200">
-                            <?php endif; ?>
-                            <input class="form-control form-control-sm" type="file" name="avatar">
-                        </div>
-                        <hr>
-                    </div>
+        <div class="row g-4">
+
+            <!-- AVATAR -->
+            <div class="col-lg-4">
+                <div class="card text-center">
+
+                    <div class="fw-bold mb-3">Ảnh đại diện</div>
+
+                    <?php if (!empty($data_Guide['avatar'])): ?>
+                        <img src="<?= BASE_ASSETS_UPLOADS . $data_Guide['avatar'] ?>"
+                            class="avatar-preview mb-3">
+                    <?php endif; ?>
+
+                    <input type="file" name="avatar" class="form-control form-control-sm">
                 </div>
             </div>
 
+            <!-- FORM -->
             <div class="col-lg-8">
-                <div class="card shadow-sm mb-4">
-                    <div class="card-body">
+                <div class="card">
 
-                        <h6 class="form-section-title">1. Thông tin cá nhân</h6>
-                        <div class="row g-3 mb-4">
-                            <div class="col-md-6">
-                                <label class="form-label">Họ và tên <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" name="full_name" value="<?= $data_Guide['full_name'] ?>" required>
-                            </div>
-                            <div class="col-md-6">
-                                <label class="form-label">Ngày sinh</label>
-                                <input type="date" class="form-control" name="birthday" value="<?= $data_Guide['birthday'] ?>">
-                            </div>
-                            <div class="col-md-6">
-                                <label class="form-label">Số điện thoại <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" name="phone" value="<?= $data_Guide['phone'] ?>">
-                            </div>
-                            <div class="col-md-6">
-                                <label class="form-label">Email</label>
-                                <input type="email" class="form-control" name="email" value="<?= $data_Guide['email'] ?>">
-                            </div>
-                            <div class="col-md-6">
-                                <label class="form-label">Tình trạng sức khỏe</label>
-                                <select class="form-control" name="health" value=<?= $data_Guide['health'] ?>>
-                                    <option value="Loại 1">Loại 1</option>
-                                    <option value="Loại 2">Loại 2</option>
-                                    <option value="Loại 3">Loại 3</option>
-                                </select>
-                            </div>
-                            <div class="col-md-6">
-                                <label class="form-label">Kinh nghiệm (năm)</label>
-                                <input type="number" class="form-control" name="experience_years" value="<?= $data_Guide['experience_years'] ?>">
-                            </div>
-                            <div class="col-md-6">
-                                <label class="form-label">Giới tính</label>
-                                <select class="form-control" name="gender" value="<?= $data_Guide['gender'] ?>">
-                                    <option value="Nam">Nam</option>
-                                    <option value="Nữ">Nữ</option>
-                                </select>
-                            </div>
-                            <div class="col-md-6">
-                                <label class="form-label">Ngôn ngữ <span class="text-danger">*</span></label>
-                                <input type="text" class="form-control" name="languages" value="<?= $data_Guide['languages'] ?>" required>
-                            </div>
-                        </div>
+                    <!-- THÔNG TIN CÁ NHÂN -->
+                    <div class="fw-bold mb-3">1. Thông tin cá nhân</div>
 
-                        <h6 class=" form-section-title">2. Đánh giá năng lực</h6>
-                        <div class="col-md-4">
-                            <label class="small text-muted">Đánh giá</label>
-                            <input type="text" class="form-control form-control-sm" name="rating" value="<?= $data_Guide['rating'] ?>">
-                        </div>
+                    <div class="row g-3 mb-4">
 
-                        <div class="d-flex justify-content-between align-items-center mb-3">
-                            <h6 class="form-section-title mb-0">3. Chứng chỉ chuyên môn</h6>
-                        </div>
-
-                        <div id="certificateList">
-                            <div class="cert-row row g-2 align-items-end">
-                                <div class="col-md-4">
-                                    <label class="small text-muted">Tên chứng chỉ</label>
-                                    <input type="text" class="form-control form-control-sm" name="certificates" value="<?= $data_Guide['certificates'] ?>">
+                        <!-- Họ tên -->
+                        <div class="col-md-6">
+                            <label class="form-label">Họ và tên *</label>
+                            <input type="text"
+                                name="full_name"
+                                class="form-control <?= isset($errors['full_name']) ? 'is-invalid' : '' ?>"
+                                value="<?= htmlspecialchars($old['full_name'] ?? $data_Guide['full_name']) ?>">
+                            <?php if (isset($errors['full_name'])): ?>
+                                <div class="invalid-feedback d-block">
+                                    <?= $errors['full_name'] ?>
                                 </div>
-                            </div>
+                            <?php endif; ?>
                         </div>
 
-                    <div class="cert-row row g-2 align-items-end mt-3">
+                        <!-- Ngày sinh -->
+                        <div class="col-md-6">
+                            <label class="form-label">Ngày sinh</label>
+                            <input type="date"
+                                name="birthday"
+                                class="form-control"
+                                value="<?= htmlspecialchars($old['birthday'] ?? $data_Guide['birthday']) ?>">
+                        </div>
+
+                        <!-- Phone -->
+                        <div class="col-md-6">
+                            <label class="form-label">Số điện thoại *</label>
+                            <input type="text"
+                                name="phone"
+                                class="form-control <?= isset($errors['phone']) ? 'is-invalid' : '' ?>"
+                                value="<?= htmlspecialchars($old['phone'] ?? $data_Guide['phone']) ?>">
+                            <?php if (isset($errors['phone'])): ?>
+                                <div class="invalid-feedback d-block">
+                                    <?= $errors['phone'] ?>
+                                </div>
+                            <?php endif; ?>
+                        </div>
+
+                        <!-- Email -->
+                        <div class="col-md-6">
+                            <label class="form-label">Email</label>
+                            <input type="email"
+                                name="email"
+                                class="form-control <?= isset($errors['email']) ? 'is-invalid' : '' ?>"
+                                value="<?= htmlspecialchars($old['email'] ?? $data_Guide['email']) ?>">
+                            <?php if (isset($errors['email'])): ?>
+                                <div class="invalid-feedback d-block">
+                                    <?= $errors['email'] ?>
+                                </div>
+                            <?php endif; ?>
+                        </div>
+
+                        <!-- Health -->
+                        <div class="col-md-6">
+                            <label class="form-label">Tình trạng sức khỏe</label>
+                            <select name="health" class="form-select">
+                                <?php foreach (['Loại 1', 'Loại 2', 'Loại 3'] as $h): ?>
+                                    <option value="<?= $h ?>"
+                                        <?= (($old['health'] ?? $data_Guide['health']) == $h) ? 'selected' : '' ?>>
+                                        <?= $h ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+
+                        <!-- Experience -->
+                        <div class="col-md-6">
+                            <label class="form-label">Kinh nghiệm (năm)</label>
+                            <input type="number"
+                                name="experience_years"
+                                class="form-control"
+                                value="<?= htmlspecialchars($old['experience_years'] ?? $data_Guide['experience_years']) ?>">
+                        </div>
+
+                        <!-- Gender -->
+                        <div class="col-md-6">
+                            <label class="form-label">Giới tính</label>
+                            <select name="gender" class="form-select">
+                                <option value="Nam" <?= (($old['gender'] ?? $data_Guide['gender']) == 'Nam') ? 'selected' : '' ?>>Nam</option>
+                                <option value="Nữ" <?= (($old['gender'] ?? $data_Guide['gender']) == 'Nữ') ? 'selected' : '' ?>>Nữ</option>
+                            </select>
+                        </div>
+
+                        <!-- Languages -->
+                        <div class="col-md-6">
+                            <label class="form-label">Ngôn ngữ *</label>
+                            <input type="text"
+                                name="languages"
+                                class="form-control <?= isset($errors['languages']) ? 'is-invalid' : '' ?>"
+                                value="<?= htmlspecialchars($old['languages'] ?? $data_Guide['languages']) ?>">
+                            <?php if (isset($errors['languages'])): ?>
+                                <div class="invalid-feedback d-block">
+                                    <?= $errors['languages'] ?>
+                                </div>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+
+                    <!-- RATING -->
+                    <div class="fw-bold mb-2">2. Đánh giá năng lực</div>
+                    <input type="text" name="rating" class="form-control mb-4"
+                        value="<?= htmlspecialchars($old['rating'] ?? $data_Guide['rating']) ?>">
+
+                    <!-- CERT -->
+                    <div class="fw-bold mb-2">3. Chứng chỉ chuyên môn</div>
+                    <div class="row g-3 mb-4">
                         <div class="col-md-4">
-                            <label class="small text-muted">Ảnh chứng chỉ</label>
-                            <input type="file" class="form-control form-control-sm" name="certificate_image">
+                            <input type="text" name="certificates" class="form-control"
+                                value="<?= htmlspecialchars('' ?? $data_Guide['certificates']) ?>">
+                        </div>
+
+                        <div class="col-md-4">
+                            <input type="file" name="certificate_image" class="form-control">
                         </div>
 
                         <div class="col-md-4">
                             <?php if (!empty($data_Guide['certificate_image'])): ?>
-                                <img src="<?= BASE_ASSETS_UPLOADS . $data_Guide['certificate_image'] ?>" 
-                                    class="img-thumbnail mt-2"
-                                    style="max-width: 150px; height: auto;">
-                                <input type="hidden" name="old_certificate_image" value="<?= $data_Guide['certificate_image'] ?>">
+                                <img src="<?= BASE_ASSETS_UPLOADS . $data_Guide['certificate_image'] ?>"
+                                    class="img-thumbnail" style="max-width:150px;">
                             <?php endif; ?>
                         </div>
                     </div>
 
-
-                        <div class="mt-4 text-end">
-                            <a href="<?= BASE_URL ?>?mode=admin&action=viewGuideDetail&id=<?= $data_Guide['user_id']  ?>" class="btn btn-light me-2">Hủy bỏ</a>
-                            <button type="submit" class="btn btn-primary px-4"><i class="fas fa-save"></i> Lưu thay đổi</button>
-                        </div>
-
+                    <!-- ACTION -->
+                    <div class="text-end">
+                        <a href="<?= BASE_URL ?>?mode=admin&action=viewGuideDetail&id=<?= $data_Guide['user_id'] ?>"
+                            class="btn btn-cancel me-2">Hủy</a>
+                        <button class="btn btn-save">💾 Lưu thay đổi</button>
                     </div>
+
                 </div>
             </div>
         </div>
     </form>
 </div>
+
+<?php unset($_SESSION['errors'], $_SESSION['old']); ?>
