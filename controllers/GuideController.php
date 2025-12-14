@@ -124,7 +124,6 @@ class GuideController
 
     public function viewDiary()
     {
-
         $diary = new DiaryModel();
         $customers = new CustomersModel();
         $guide_id = $_SESSION['user']['guide_id'];

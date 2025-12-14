@@ -27,7 +27,7 @@
                 </a>
             </li>
             <li class="nav-item mb-2">
-                <a class="nav-link <?= ($view ?? '') === 'admin/booking/booking' || ($view ?? '') === 'admin/booking/showBooking' || ($view ?? '') === 'admin/booking/editBooking' || ($view ?? '') === 'admin/booking/addBooking' || ($view ?? '') === 'admin/booking/create_fit' || ($view ?? '') === 'admin/booking/create_git' || ($view ?? '') === 'admin/booking/create_type' || ($view ?? '') === 'admin/booking/guest_list' ? 'active' : '' ?>" href="<?= BASE_URL ?>?mode=admin&action=viewsbooking">
+                <a class="nav-link <?= ($view ?? '') === 'admin/booking/booking' || ($view ?? '') === 'admin/booking/showBooking' || ($view ?? '') === 'admin/booking/editBooking' || ($view ?? '') === 'admin/booking/addBooking' || ($view ?? '') === 'admin/booking/create_fit' || ($view ?? '') === 'admin/booking/create_git' || ($view ?? '') === 'admin/booking/create_type' || ($view ?? '') === 'admin/booking/guest_list' || ($view ?? '') === 'admin/booking/create_git_guests' ? 'active' : '' ?>" href="<?= BASE_URL ?>?mode=admin&action=viewsbooking">
                     Quản lý booking
                 </a>
             </li>
