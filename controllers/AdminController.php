@@ -848,12 +848,42 @@ class AdminController
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
+            $full_name = trim($_POST['full_name'] ?? '');
+            $user_name = trim($_POST['user_name'] ?? '');
+            $password  = $_POST['password'] ?? '';
+            $role      = $_POST['role'] ?? '';
+
+            $errors = [];
+
+            if ($full_name === '') {
+                $errors['full_name'] = 'Họ và tên không được để trống';
+            }
+
+            if ($user_name === '') {
+                $errors['user_name'] = 'Tên đăng nhập không được để trống';
+            }
+
+            if (strlen($password) < 6) {
+                $errors['password'] = 'Mật khẩu phải có ít nhất 6 ký tự';
+            }
+
+            if (!in_array($role, ['admin', 'guide'])) {
+                $errors['role'] = 'Vai trò không hợp lệ';
+            }
+
+            if (!empty($errors)) {
+                $_SESSION['errors'] = $errors;
+                $_SESSION['old']    = $_POST;
+
+                header("Location: " . BASE_URL . "?mode=admin&action=createaccount");
+                exit;
+            }
+
             $data = [
-                'full_name' => $_POST['full_name'],
-                'user_name' => $_POST['user_name'],
-                'password_hash'  => password_hash($_POST['password'], PASSWORD_DEFAULT),
-                'role'      => $_POST['role'],
-                // 'status'    => $_POST['status']
+                'full_name'     => $full_name,
+                'user_name'     => $user_name,
+                'password_hash' => password_hash($password, PASSWORD_DEFAULT),
+                'role'          => $role
             ];
 
             $accountModel = new AccountModel();
@@ -863,6 +893,7 @@ class AdminController
             exit;
         }
     }
+
     public function xoaAccount()
     {
         $id = $_GET['id'] ?? null;
@@ -912,18 +943,46 @@ class AdminController
             exit;
         }
 
+        $full_name = trim($_POST['full_name'] ?? '');
+        $username  = trim($_POST['username'] ?? '');
+        $password  = $_POST['password'] ?? '';
+        $role      = $_POST['role'] ?? '';
+
+        $errors = [];
+
+        if ($full_name === '') {
+            $errors['full_name'] = 'Họ và tên không được để trống';
+        }
+
+        if ($username === '') {
+            $errors['username'] = 'Tên đăng nhập không được để trống';
+        }
+
+        if ($password !== '' && strlen($password) < 6) {
+            $errors['password'] = 'Mật khẩu phải có ít nhất 6 ký tự';
+        }
+
+        if (!in_array($role, ['admin', 'guide'])) {
+            $errors['role'] = 'Vai trò không hợp lệ';
+        }
+
+        if (!empty($errors)) {
+            $_SESSION['errors'] = $errors;
+            $_SESSION['old']    = $_POST;
+
+            header('Location: ' . BASE_URL . '?mode=admin&action=editaccount&id=' . $id);
+            exit;
+        }
+
         $data = [
-            'full_name' => trim($_POST['full_name'] ?? ''),
-            'username' => trim($_POST['username'] ?? ''),
-            'role' => $_POST['role'] ?? 'guide',
-            'status' => isset($_POST['status']) ? (int)$_POST['status'] : 1,
+            'full_name' => $full_name,
+            'username'  => $username,
+            'role'      => $role,
         ];
 
-        // Nếu nhập mật khẩu mới, băm
-        if (!empty($_POST['password'])) {
-            $data['password_hash'] = password_hash($_POST['password'], PASSWORD_DEFAULT);
-        } else {
-            $data['password_hash'] = '';
+        // Nếu có nhập mật khẩu mới
+        if ($password !== '') {
+            $data['password_hash'] = password_hash($password, PASSWORD_DEFAULT);
         }
 
         $accountModel = new AccountModel();
@@ -963,70 +1022,84 @@ class AdminController
     public function viewEditGuide()
     {
         $tourGuide = new TourGuideModel();
-        $userModel = new AccountModel(); // dùng để update bảng users
+        $userModel = new AccountModel();
 
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             $id = $_GET['id'] ?? '';
             $data_Guide = $tourGuide->getOneGuide($id);
 
-            // ===== XỬ LÝ AVATAR =====
+            $full_name  = trim($_POST['full_name'] ?? '');
+            $phone      = trim($_POST['phone'] ?? '');
+            $email      = trim($_POST['email'] ?? '');
+            $languages  = trim($_POST['languages'] ?? '');
+
+            $errors = [];
+
+            if ($full_name === '') {
+                $errors['full_name'] = 'Họ và tên không được để trống';
+            }
+
+            if ($phone === '') {
+                $errors['phone'] = 'Số điện thoại không được để trống';
+            }
+
+            if ($email !== '' && !filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                $errors['email'] = 'Email không hợp lệ';
+            }
+
+            if ($languages === '') {
+                $errors['languages'] = 'Ngôn ngữ không được để trống';
+            }
+
+            if (!empty($errors)) {
+                $_SESSION['errors'] = $errors;
+                $_SESSION['old']    = $_POST;
+
+                header("Location: " . BASE_URL . "?mode=admin&action=viewEditGuide&id=" . $id);
+                exit;
+            }
+
             $avatar = $data_Guide['avatar'];
-            if (!empty($_FILES['avatar']['name']) && $_FILES['avatar']['error'] == UPLOAD_ERR_OK) {
+            if (!empty($_FILES['avatar']['name']) && $_FILES['avatar']['error'] === UPLOAD_ERR_OK) {
                 $avatar = uploadFile($_FILES['avatar'], "guide/");
             }
 
-            // ===== XỬ LÝ ẢNH CHỨNG CHỈ =====
-            $certificate_image = $data_Guide['certificate_image'] ?? null;
-            if (!empty($_FILES['certificate_image']['name']) && $_FILES['certificate_image']['error'] == UPLOAD_ERR_OK) {
+            $certificate_image = $data_Guide['certificate_image'];
+            if (!empty($_FILES['certificate_image']['name']) && $_FILES['certificate_image']['error'] === UPLOAD_ERR_OK) {
                 $certificate_image = uploadFile($_FILES['certificate_image'], "guide/certificates/");
             }
 
-            // ===== LẤY DỮ LIỆU FORM =====
-            $full_name        = $_POST['full_name'];  // thuộc bảng users
-            $birthday         = $_POST['birthday'];
-            $phone            = $_POST['phone'];
-            $email            = $_POST['email'];
-            $gender           = $_POST['gender'];
-            $languages        = $_POST['languages'];
-            $rating           = $_POST['rating'];
-            $experience_years = $_POST['experience_years'];
-            $certificates     = $_POST['certificates'];
-            $health           = $_POST['health'];
-            $notes            = $_POST['notes'] ?? $data_Guide['notes'];
-
-            // ===== 1) UPDATE TÊN USER TRONG BẢNG users =====
             $userModel->updateUserName($id, $full_name);
 
-            // ===== 2) UPDATE THÔNG TIN HƯỚNG DẪN VIÊN TRONG BẢNG tour_guide =====
             $tourGuide->updateGuideFull([
-                "birthday"          => $birthday,
+                "birthday"          => $_POST['birthday'],
                 "phone"             => $phone,
                 "email"             => $email,
                 "avatar"            => $avatar,
-                "gender"            => $gender,
+                "gender"            => $_POST['gender'],
                 "languages"         => $languages,
-                "rating"            => $rating,
-                "experience_years"  => $experience_years,
-                "certificates"      => $certificates,
+                "rating"            => $_POST['rating'],
+                "experience_years"  => $_POST['experience_years'],
+                "certificates"      => $_POST['certificates'],
                 "certificate_image" => $certificate_image,
-                "health"            => $health,
-                "notes"             => $notes,
+                "health"            => $_POST['health'],
+                "notes"             => $_POST['notes'] ?? $data_Guide['notes'],
                 "user_id"           => $id
             ]);
 
             header("Location: " . BASE_URL . "?mode=admin&action=viewGuideDetail&id=" . $id);
-            exit();
+            exit;
         }
 
-        // ===== HIỂN THỊ FORM =====
         $id = $_GET['id'] ?? '';
         $data_Guide = $tourGuide->getOneGuide($id);
 
         $title = "Chỉnh sửa thông tin nhân sự";
-        $view = 'admin/resources/editGuide';
+        $view  = "admin/resources/editGuide";
         require_once PATH_VIEW_MAIN;
     }
+
 
 
 
