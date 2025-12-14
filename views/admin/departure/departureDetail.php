@@ -3,355 +3,367 @@
    ADMIN PREMIUM UI — FULL GLOBAL CSS
    ====================================================== */
 
-/* ROOT VARIABLES */
-:root {
-    --primary: #2563eb;
-    --primary-soft: #e8f0ff;
+    /* ROOT VARIABLES */
+    :root {
+        --primary: #2563eb;
+        --primary-soft: #e8f0ff;
 
-    --success: #22c55e;
-    --success-soft: #dcfce7;
+        --success: #22c55e;
+        --success-soft: #dcfce7;
 
-    --warning: #fbbf24;
-    --warning-soft: #fef3c7;
+        --warning: #fbbf24;
+        --warning-soft: #fef3c7;
 
-    --danger: #ef4444;
-    --danger-soft: #fee2e2;
+        --danger: #ef4444;
+        --danger-soft: #fee2e2;
 
-    --gray-dark: #1f2937;
-    --gray: #374151;
-    --gray-light: #6b7280;
-    --gray-soft: #f3f4f6;
+        --gray-dark: #1f2937;
+        --gray: #374151;
+        --gray-light: #6b7280;
+        --gray-soft: #f3f4f6;
 
-    --border: #e5e7eb;
-    --radius: 14px;
-    --radius-card: 16px;
+        --border: #e5e7eb;
+        --radius: 14px;
+        --radius-card: 16px;
 
-    --shadow: 0 4px 14px rgba(0,0,0,0.06);
-}
+        --shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+    }
 
-/* ======================================================
+    /* ======================================================
    TYPOGRAPHY
    ====================================================== */
-.page-title {
-    font-size: 26px;
-    font-weight: 700;
-    color: var(--gray-dark);
-}
+    .page-title {
+        font-size: 26px;
+        font-weight: 700;
+        color: var(--gray-dark);
+    }
 
-.page-subtitle {
-    font-size: 15px;
-    color: var(--gray-light);
-    margin-top: 2px;
-}
+    .page-subtitle {
+        font-size: 15px;
+        color: var(--gray-light);
+        margin-top: 2px;
+    }
 
-.section-title {
-    font-size: 18px;
-    font-weight: 700;
-    color: var(--primary);
-    margin-bottom: 16px;
-}
+    .section-title {
+        font-size: 18px;
+        font-weight: 700;
+        color: var(--primary);
+        margin-bottom: 16px;
+    }
 
-/* ======================================================
+    /* ======================================================
    CARD
    ====================================================== */
-.card {
-    background: #fff;
-    border-radius: var(--radius-card);
-    border: 1px solid var(--border);
-    box-shadow: var(--shadow);
-    padding: 22px;
-}
+    .card {
+        background: #fff;
+        border-radius: var(--radius-card);
+        border: 1px solid var(--border);
+        box-shadow: var(--shadow);
+        padding: 22px;
+    }
 
-/* ======================================================
+    /* ======================================================
    BUTTONS (UNIFORM)
    ====================================================== */
 
-.btn {
-    font-weight: 600 !important;
-    border-radius: 12px !important;
-    padding: 10px 20px !important;
-}
+    .btn {
+        font-weight: 600 !important;
+        border-radius: 12px !important;
+        padding: 10px 20px !important;
+    }
 
-/* Primary */
-.btn-primary {
-    background: var(--primary-soft) !important;
-    border: none !important;
-    color: var(--primary) !important;
-}
+    /* Primary */
+    .btn-primary {
+        background: var(--primary-soft) !important;
+        border: none !important;
+        color: var(--primary) !important;
+    }
 
-.btn-primary:hover {
-    background: #d6e6ff !important;
-}
+    .btn-primary:hover {
+        background: #d6e6ff !important;
+    }
 
-/* Secondary */
-.btn-secondary {
-    background: #f3f4f6 !important;
-    color: var(--gray-dark) !important;
-    border: none !important;
-}
+    /* Secondary */
+    .btn-secondary {
+        background: #f3f4f6 !important;
+        color: var(--gray-dark) !important;
+        border: none !important;
+    }
 
-.btn-secondary:hover {
-    background: #e5e7eb !important;
-}
+    .btn-secondary:hover {
+        background: #e5e7eb !important;
+    }
 
-/* Success */
-.btn-success {
-    background: var(--success-soft) !important;
-    color: #166534 !important;
-    border: none !important;
-}
+    /* Success */
+    .btn-success {
+        background: var(--success-soft) !important;
+        color: #166534 !important;
+        border: none !important;
+    }
 
-.btn-success:hover {
-    background: #bbf7d0 !important;
-}
+    .btn-success:hover {
+        background: #bbf7d0 !important;
+    }
 
-/* Danger */
-.btn-danger {
-    background: var(--danger-soft) !important;
-    color: #b91c1c !important;
-    border: none !important;
-}
+    /* Danger */
+    .btn-danger {
+        background: var(--danger-soft) !important;
+        color: #b91c1c !important;
+        border: none !important;
+    }
 
-.btn-danger:hover {
-    background: #fecaca !important;
-}
+    .btn-danger:hover {
+        background: #fecaca !important;
+    }
 
-/* Tiny square minimal buttons (Chi tiết / Sửa / Booking) */
-.action-btn {
-    padding: 8px 18px !important;
-    border-radius: 12px !important;
-    font-size: 14px !important;
-    font-weight: 600 !important;
-    display: inline-block;
-}
+    /* Tiny square minimal buttons (Chi tiết / Sửa / Booking) */
+    .action-btn {
+        padding: 8px 18px !important;
+        border-radius: 12px !important;
+        font-size: 14px !important;
+        font-weight: 600 !important;
+        display: inline-block;
+    }
 
-/* Pastel blue */
-.btn-mini-blue {
-    background: #e8f0ff;
-    color: #2563eb;
-}
-.btn-mini-blue:hover { background: #d6e6ff; }
+    /* Pastel blue */
+    .btn-mini-blue {
+        background: #e8f0ff;
+        color: #2563eb;
+    }
 
-/* Pastel yellow */
-.btn-mini-yellow {
-    background: #fff4d8;
-    color: #b97600;
-}
-.btn-mini-yellow:hover { background: #ffe8b5; }
+    .btn-mini-blue:hover {
+        background: #d6e6ff;
+    }
 
-/* Pastel booking */
-.btn-mini-green {
-    background: #e7f5ff;
-    color: var(--primary);
-}
-.btn-mini-green:hover { background: #d8ecff; }
+    /* Pastel yellow */
+    .btn-mini-yellow {
+        background: #fff4d8;
+        color: #b97600;
+    }
 
-/* ======================================================
+    .btn-mini-yellow:hover {
+        background: #ffe8b5;
+    }
+
+    /* Pastel booking */
+    .btn-mini-green {
+        background: #e7f5ff;
+        color: var(--primary);
+    }
+
+    .btn-mini-green:hover {
+        background: #d8ecff;
+    }
+
+    /* ======================================================
    TABLES — NOTION / APPLE STYLE
    ====================================================== */
 
-.table-card {
-    background: #fff;
-    border-radius: 16px;
-    padding: 24px;
-    border: 1px solid var(--border);
-    box-shadow: var(--shadow);
-}
+    .table-card {
+        background: #fff;
+        border-radius: 16px;
+        padding: 24px;
+        border: 1px solid var(--border);
+        box-shadow: var(--shadow);
+    }
 
-.table {
-    width: 100%;
-    border-collapse: collapse !important;
-}
+    .table {
+        width: 100%;
+        border-collapse: collapse !important;
+    }
 
-.table thead th {
-    background: #f9fafb !important;
-    color: var(--gray-light) !important;
-    font-weight: 700;
-    text-transform: uppercase;
-    font-size: 12px;
-    padding: 14px 10px;
-    border-bottom: 1.6px solid var(--border) !important;
-    letter-spacing: .4px;
-    text-align: center;
-}
+    .table thead th {
+        background: #f9fafb !important;
+        color: var(--gray-light) !important;
+        font-weight: 700;
+        text-transform: uppercase;
+        font-size: 12px;
+        padding: 14px 10px;
+        border-bottom: 1.6px solid var(--border) !important;
+        letter-spacing: .4px;
+        text-align: left;
+    }
 
-.table tbody td {
-    padding: 14px 12px !important;
-    font-size: 15px;
-    color: var(--gray-dark);
-    border-bottom: 1px solid #f2f3f5;
-}
+    .table tbody td {
+        padding: 14px 12px !important;
+        font-size: 15px;
+        color: var(--gray-dark);
+        border-bottom: 1px solid #f2f3f5;
+    }
 
-.table tbody tr:hover {
-    background: #f8fafc !important;
-}
+    .table tbody tr:hover {
+        background: #f8fafc !important;
+    }
 
-/* Căn trái cột 2 */
-.table td:nth-child(2) {
-    text-align: left !important;
-}
+    /* Căn trái cột 2 */
+    .table td:nth-child(2) {
+        text-align: left !important;
+    }
 
-/* Default center alignment */
-.table td {
-    text-align: center;
-}
+    /* Default center alignment */
+    .table td {
+        text-align: left;
+    }
 
-/* Remove Bootstrap borders */
-.table-bordered > :not(caption)>*>* {
-    border-width: 0 !important;
-}
+    /* Remove Bootstrap borders */
+    .table-bordered> :not(caption)>*>* {
+        border-width: 0 !important;
+    }
 
-/* ======================================================
+    /* ======================================================
    BADGES — PASTEL STATUS
    ====================================================== */
 
-.badge {
-    padding: 6px 12px !important;
-    border-radius: 20px !important;
-    font-size: 12.5px !important;
-    font-weight: 600 !important;
-}
+    .badge {
+        padding: 6px 12px !important;
+        border-radius: 20px !important;
+        font-size: 12.5px !important;
+        font-weight: 600 !important;
+    }
 
-/* OPEN */
-.badge-open {
-    background: #e0f2fe;
-    color: #0369a1;
-}
+    /* OPEN */
+    .badge-open {
+        background: #e0f2fe;
+        color: #0369a1;
+    }
 
-/* RUNNING */
-.badge-run {
-    background: #dcfce7;
-    color: #166534;
-}
+    /* RUNNING */
+    .badge-run {
+        background: #dcfce7;
+        color: #166534;
+    }
 
-/* COMPLETED */
-.badge-end {
-    background: #e5e7eb;
-    color: #374151;
-}
+    /* COMPLETED */
+    .badge-end {
+        background: #e5e7eb;
+        color: #374151;
+    }
 
-/* FULL */
-.badge-full {
-    background: #fee2e2;
-    color: #b91c1c;
-}
+    /* FULL */
+    .badge-full {
+        background: #fee2e2;
+        color: #b91c1c;
+    }
 
-/* ======================================================
+    /* ======================================================
    TABS STYLE
    ====================================================== */
 
-.nav-tabs {
-    border-bottom: 1px solid var(--border) !important;
-}
+    .nav-tabs {
+        border-bottom: 1px solid var(--border) !important;
+    }
 
-.nav-tabs .nav-link {
-    font-weight: 600;
-    color: var(--gray-light);
-    padding: 10px 22px;
-    border: none !important;
-    border-radius: 10px 10px 0 0 !important;
-}
+    .nav-tabs .nav-link {
+        font-weight: 600;
+        color: var(--gray-light);
+        padding: 10px 22px;
+        border: none !important;
+        border-radius: 10px 10px 0 0 !important;
+    }
 
-.nav-tabs .nav-link:hover {
-    background: #f3f4f6;
-    color: var(--gray-dark);
-}
+    .nav-tabs .nav-link:hover {
+        background: #f3f4f6;
+        color: var(--gray-dark);
+    }
 
-.nav-tabs .nav-link.active {
-    background: var(--primary-soft) !important;
-    color: var(--primary) !important;
-    border-bottom: 2px solid var(--primary) !important;
-}
+    .nav-tabs .nav-link.active {
+        background: var(--primary-soft) !important;
+        color: var(--primary) !important;
+        border-bottom: 2px solid var(--primary) !important;
+    }
 
-/* ======================================================
+    /* ======================================================
    FORM INPUT
    ====================================================== */
 
-.form-control, .form-select {
-    background: #f9fafb;
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 12px 14px;
-    font-size: 15px;
-    transition: .2s;
-}
+    .form-control,
+    .form-select {
+        background: #f9fafb;
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 12px 14px;
+        font-size: 15px;
+        transition: .2s;
+    }
 
-.form-control:focus,
-.form-select:focus {
-    background: #fff;
-    border-color: var(--primary);
-    box-shadow: 0 0 0 3px rgba(37, 99, 235, .15);
-}
+    .form-control:focus,
+    .form-select:focus {
+        background: #fff;
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(37, 99, 235, .15);
+    }
 
-/* Textarea */
-textarea.form-control {
-    resize: vertical;
-}
+    /* Textarea */
+    textarea.form-control {
+        resize: vertical;
+    }
 
-/* ======================================================
+    /* ======================================================
    ACTION BUTTON GROUP (Chi tiết – Sửa – Booking)
    ====================================================== */
 
-.action-group {
-    display: flex;
-    gap: 10px;
-    justify-content: center;
-}
+    .action-group {
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+    }
 
-.action-group a {
-    min-width: 95px;
-    text-align: center;
-}
+    .action-group a {
+        min-width: 95px;
+        text-align: center;
+    }
 
-/* ======================================================
+    /* ======================================================
    TABLE RESPONSIVE
    ====================================================== */
 
-@media (max-width: 768px) {
-    .table-card {
-        padding: 12px;
+    @media (max-width: 768px) {
+        .table-card {
+            padding: 12px;
+        }
+
+        .table thead {
+            display: none;
+        }
+
+        .table tbody tr {
+            display: block;
+            margin-bottom: 14px;
+            padding: 14px;
+            border-radius: 12px;
+            border: 1px solid #eee;
+            background: #fff;
+        }
     }
-    .table thead { display: none; }
-    .table tbody tr { 
-        display: block;
-        margin-bottom: 14px;
-        padding: 14px;
-        border-radius: 12px;
-        border: 1px solid #eee;
-        background: #fff;
+
+    /* Căn chuẩn cho ô người đặt */
+    .customer-cell {
+        text-align: left !important;
+        line-height: 1.35;
+        padding-top: 10px !important;
+        padding-bottom: 10px !important;
     }
-}
 
-/* Căn chuẩn cho ô người đặt */
-.customer-cell {
-    text-align: left !important;
-    line-height: 1.35;
-    padding-top: 10px !important;
-    padding-bottom: 10px !important;
-}
+    /* Tên */
+    .customer-name {
+        font-weight: 600;
+        color: var(--gray-dark);
+    }
 
-/* Tên */
-.customer-name {
-    font-weight: 600;
-    color: var(--gray-dark);
-}
+    /* SĐT */
+    .customer-phone {
+        font-size: 13px;
+        color: var(--gray-light);
+        margin-top: 3px;
+    }
 
-/* SĐT */
-.customer-phone {
-    font-size: 13px;
-    color: var(--gray-light);
-    margin-top: 3px;
-}
-
-/* Fix toàn bảng không lệch hàng */
-.table td {
-    vertical-align: middle !important;
-}
-
-
+    /* Fix toàn bảng không lệch hàng */
+    .table td {
+        vertical-align: middle !important;
+    }
 </style>
 
-<?php 
+<?php
 $tab = $_GET['tab'] ?? 'info';
 ?>
 
@@ -362,7 +374,7 @@ $tab = $_GET['tab'] ?? 'info';
         <div>
             <h3 class="fw-bold mb-1 page-title">Chi tiết chuyến đi</h3>
             <p class="page-subtitle">
-                <?= htmlspecialchars($data_departure['tour_name']) ?> → 
+                <?= htmlspecialchars($data_departure['tour_name']) ?> →
                 <?= htmlspecialchars($data_departure['version_name']) ?>
             </p>
         </div>
@@ -378,7 +390,7 @@ $tab = $_GET['tab'] ?? 'info';
 
             <!-- TABS -->
             <ul class="nav nav-tabs mb-3">
-                <?php 
+                <?php
                 $tabs = [
                     "info"      => "Thông tin",
                     "bookings"  => "Booking",
@@ -391,8 +403,8 @@ $tab = $_GET['tab'] ?? 'info';
                 <?php foreach ($tabs as $key => $title): ?>
                     <li class="nav-item">
                         <a class="nav-link <?= $tab == $key ? 'active' : '' ?>"
-                           href="?mode=admin&action=departureDetail&id=<?= $data_departure['departure_id'] ?>&tab=<?= $key ?>">
-                           <?= $title ?>
+                            href="?mode=admin&action=departureDetail&id=<?= $data_departure['departure_id'] ?>&tab=<?= $key ?>">
+                            <?= $title ?>
                         </a>
                     </li>
                 <?php endforeach; ?>
@@ -429,16 +441,16 @@ $tab = $_GET['tab'] ?? 'info';
                                 <th>Trạng thái</th>
                                 <td>
                                     <?php
-                                        $status_map = [
-                                            "open" => ["badge-open", "Mở bán"],
-                                            "running" => ["badge-run", "Đang chạy"],
-                                            "completed" => ["badge-end", "Hoàn thành"],
-                                            "full" => ["badge-full", "Full"],
-                                            "closed" => ["badge-closed", "Đóng"]
-                                        ];
-                                        $s = $data_departure['status'];
-                                        $badge = $status_map[$s][0] ?? "badge-open";
-                                        $text  = $status_map[$s][1] ?? "Mở bán";
+                                    $status_map = [
+                                        "open" => ["badge-open", "Mở bán"],
+                                        "running" => ["badge-run", "Đang chạy"],
+                                        "completed" => ["badge-end", "Hoàn thành"],
+                                        "full" => ["badge-full", "Full"],
+                                        "closed" => ["badge-closed", "Đóng"]
+                                    ];
+                                    $s = $data_departure['status'];
+                                    $badge = $status_map[$s][0] ?? "badge-open";
+                                    $text  = $status_map[$s][1] ?? "Mở bán";
                                     ?>
                                     <span class="badge <?= $badge ?>"><?= $text ?></span>
                                 </td>
@@ -451,74 +463,74 @@ $tab = $_GET['tab'] ?? 'info';
                 <!-- =============================
                      TAB 2 — BOOKING
                 ============================== -->
-  <?php if ($tab == 'bookings'): ?>
+                <?php if ($tab == 'bookings'): ?>
 
-    <h5 class="fw-bold text-primary mb-3" style="font-size: 18px;">Danh sách booking</h5>
+                    <h5 class="fw-bold text-primary mb-3" style="font-size: 18px;">Danh sách booking</h5>
 
-    <div class="table-card">
-        <table class="table table-hover align-middle booking-table">
-            <thead>
-                <tr>
-                    <th style="width: 60px;">#</th>
-                    <th style="width: 240px; text-align:left;">Người đặt</th>
-                    <th style="width: 120px;">Số khách</th>
-                    <th style="width: 150px;">Trạng thái</th>
-                    <th style="width: 180px;">Thanh toán</th>
-                </tr>
-            </thead>
+                    <div class="table-card">
+                        <table class="table table-hover align-middle booking-table">
+                            <thead>
+                                <tr>
+                                    <th style="width: 60px;">#</th>
+                                    <th style="width: 240px; text-align:left;">Người đặt</th>
+                                    <th style="width: 120px;">Số khách</th>
+                                    <th style="width: 150px;">Trạng thái</th>
+                                    <th style="width: 180px;">Thanh toán</th>
+                                </tr>
+                            </thead>
 
-            <tbody>
-                <?php if (!empty($data_booking)): ?>
-                    <?php foreach ($data_booking as $key => $booking): ?>
-                        <?php
-                            // lấy dữ liệu an toàn, dùng fallback ''
-                            $customer_name    = htmlspecialchars($booking['customer_name'] ?? '', ENT_QUOTES, 'UTF-8');
-                            $customer_contact = htmlspecialchars($booking['customer_contact'] ?? '', ENT_QUOTES, 'UTF-8');
-                            $total_guests     = (int)($booking['total_guests'] ?? 0);
-                            $status_raw       = $booking['status'] ?? '';
-                            $total_amount     = isset($booking['total_amount']) ? number_format($booking['total_amount'], 0, ',', '.') . ' VNĐ' : '0 VNĐ';
+                            <tbody>
+                                <?php if (!empty($data_booking)): ?>
+                                    <?php foreach ($data_booking as $key => $booking): ?>
+                                        <?php
+                                        // lấy dữ liệu an toàn, dùng fallback ''
+                                        $customer_name    = htmlspecialchars($booking['customer_name'] ?? '', ENT_QUOTES, 'UTF-8');
+                                        $customer_contact = htmlspecialchars($booking['customer_contact'] ?? '', ENT_QUOTES, 'UTF-8');
+                                        $total_guests     = (int)($booking['total_guests'] ?? 0);
+                                        $status_raw       = $booking['status'] ?? '';
+                                        $total_amount     = isset($booking['total_amount']) ? number_format($booking['total_amount'], 0, ',', '.') . ' VNĐ' : '0 VNĐ';
 
-                            // map trạng thái -> class + label
-                            $status_map = [
-                                'completed' => ['badge-success', 'Đã thanh toán'],
-                                'deposit'   => ['badge-info',    'Đã cọc'],
-                                'pending'   => ['badge-secondary','Chờ xác nhận'],
-                                'cancel'    => ['badge-danger',  'Đã hủy'],
-                            ];
-                            $status_cls = $status_map[$status_raw][0] ?? 'badge-secondary';
-                            $status_lbl = $status_map[$status_raw][1] ?? ($status_raw ?: '—');
-                        ?>
-                        <tr>
-                            <td class="text-center"><?= $key + 1 ?></td>
+                                        // map trạng thái -> class + label
+                                        $status_map = [
+                                            'completed' => ['badge-success', 'Đã thanh toán'],
+                                            'deposit'   => ['badge-info',    'Đã cọc'],
+                                            'pending'   => ['badge-secondary', 'Chờ xác nhận'],
+                                            'cancel'    => ['badge-danger',  'Đã hủy'],
+                                        ];
+                                        $status_cls = $status_map[$status_raw][0] ?? 'badge-secondary';
+                                        $status_lbl = $status_map[$status_raw][1] ?? ($status_raw ?: '—');
+                                        ?>
+                                        <tr>
+                                            <td class="text-center"><?= $key + 1 ?></td>
 
-                            <td class="customer-cell" style="text-align:left;">
-                                <div class="customer-name"><?= $customer_name ?></div>
-                                <?php if ($customer_contact !== ''): ?>
-                                    <div class="customer-phone text-muted" style="font-size:13px; margin-top:4px;">
-                                        <?= $customer_contact ?>
-                                    </div>
+                                            <td class="customer-cell" style="text-align:left;">
+                                                <div class="customer-name"><?= $customer_name ?></div>
+                                                <?php if ($customer_contact !== ''): ?>
+                                                    <div class="customer-phone text-muted" style="font-size:13px; margin-top:4px;">
+                                                        <?= $customer_contact ?>
+                                                    </div>
+                                                <?php endif; ?>
+                                            </td>
+
+                                            <td class="text-center"><?= $total_guests ?></td>
+
+                                            <td class="text-center">
+                                                <span class="badge <?= $status_cls ?>"><?= $status_lbl ?></span>
+                                            </td>
+
+                                            <td class="text-center"><?= $total_amount ?></td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                <?php else: ?>
+                                    <tr>
+                                        <td colspan="5" class="text-center text-muted py-4">Chưa có booking nào.</td>
+                                    </tr>
                                 <?php endif; ?>
-                            </td>
+                            </tbody>
+                        </table>
+                    </div>
 
-                            <td class="text-center"><?= $total_guests ?></td>
-
-                            <td class="text-center">
-                                <span class="badge <?= $status_cls ?>"><?= $status_lbl ?></span>
-                            </td>
-
-                            <td class="text-center"><?= $total_amount ?></td>
-                        </tr>
-                    <?php endforeach; ?>
-                <?php else: ?>
-                    <tr>
-                        <td colspan="5" class="text-center text-muted py-4">Chưa có booking nào.</td>
-                    </tr>
                 <?php endif; ?>
-            </tbody>
-        </table>
-    </div>
-
-<?php endif; ?>
 
 
                 <!-- =============================
@@ -545,7 +557,7 @@ $tab = $_GET['tab'] ?? 'info';
                             <tbody>
                                 <?php foreach ($data_guest as $i => $g): ?>
                                     <tr>
-                                        <td class="text-center"><?= $i + 1 ?></td>
+                                        <td><?= $i + 1 ?></td>
                                         <td><?= htmlspecialchars($g['full_name']) ?></td>
                                         <td><?= htmlspecialchars($g['gender']) ?></td>
                                         <td><?= htmlspecialchars($g['birth_year']) ?></td>
@@ -564,7 +576,9 @@ $tab = $_GET['tab'] ?? 'info';
                                 <?php endforeach; ?>
 
                                 <?php if (empty($data_guest)): ?>
-                                    <tr><td colspan="7" class="text-center py-4 text-muted">Chưa có khách.</td></tr>
+                                    <tr>
+                                        <td colspan="7" class="text-center py-4 text-muted">Chưa có khách.</td>
+                                    </tr>
                                 <?php endif; ?>
                             </tbody>
                         </table>
@@ -626,14 +640,16 @@ $tab = $_GET['tab'] ?? 'info';
                                         <td><?= $v['notes'] ?></td>
                                         <td><?= $v['assigned_at'] ?></td>
                                         <td>
-                                            <a href="?mode=admin&action=deleteStaff&id=<?= $v['assignment_id'] ?>" 
-                                               class="btn btn-danger btn-sm"
-                                               onclick="return confirm('Xóa nhân sự?')">Xóa</a>
+                                            <a href="?mode=admin&action=deleteStaff&id=<?= $v['assignment_id'] ?>"
+                                                class="btn btn-danger btn-sm"
+                                                onclick="return confirm('Xóa nhân sự?')">Xóa</a>
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>
                                 <?php if (empty($data_assignment)): ?>
-                                    <tr><td colspan="6" class="text-center text-muted py-4">Chưa có nhân sự.</td></tr>
+                                    <tr>
+                                        <td colspan="6" class="text-center text-muted py-4">Chưa có nhân sự.</td>
+                                    </tr>
                                 <?php endif; ?>
                             </tbody>
                         </table>
@@ -700,32 +716,93 @@ $tab = $_GET['tab'] ?? 'info';
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php foreach ($data_service_assignment as $i => $s): ?>
+                                <?php foreach ($data_service_assignment as $key => $value): ?>
                                     <tr>
-                                        <td><?= $i + 1 ?></td>
-                                        <td><?= $s['service_name'] ?></td>
-                                        <td><?= $s['supplier'] ?></td>
-                                        <td><?= number_format($s['price']) ?></td>
-                                        <td><?= $s['quantity'] ?></td>
-                                        <td><?= $s['notes'] ?></td>
+                                        <td><?= $key + 1 ?></td>
+                                        <td><?= htmlspecialchars($value['service_name'] ?? '', ENT_QUOTES, 'UTF-8') ?></td>
+                                        <td><?= htmlspecialchars($value['supplier'] ?? '', ENT_QUOTES, 'UTF-8') ?></td>
+                                        <td><?= number_format($value['price'] ?? 0, 0, '', '.') ?></td>
+                                        <td><?= (int)($value['quantity'] ?? 0) ?></td>
+                                        <td><?= htmlspecialchars($value['notes'] ?? '', ENT_QUOTES, 'UTF-8') ?></td>
                                         <td>
-                                            <a href="?mode=admin&action=deleteService&id=<?= $s['sa_id'] ?>" 
-                                               class="btn btn-danger btn-sm"
-                                               onclick="return confirm('Xóa dịch vụ?')">Xóa</a>
+                                            <a href="<?= BASE_URL ?>?mode=admin&action=deleteService&id=<?= $value['sa_id'] ?>"
+                                                class="btn btn-danger btn-sm"
+                                                onclick="return confirm('Xóa dịch vụ này?')">
+                                                Xóa
+                                            </a>
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>
                                 <?php if (empty($data_service_assignment)): ?>
-                                    <tr><td colspan="7" class="text-center py-4 text-muted">Chưa có dịch vụ.</td></tr>
+                                    <tr>
+                                        <td colspan="7" class="text-center py-4 text-muted">Chưa có dịch vụ.</td>
+                                    </tr>
                                 <?php endif; ?>
                             </tbody>
                         </table>
                     </div>
 
-                    <h6 class="fw-bold mt-3">Tổng chi phí: 
-                        <?= number_format($total_service_cost, 0, ',', '.') ?> đ
+                    <h6 class="fw-bold mt-3"><b><?= $data_departure['status'] == 'completed' ? 'Tổng chi phí dịch vụ:' : 'Tổng chi phí dịch vụ dự kiến:' ?> </b>
+                        <?= number_format($total_service_cost, 0, '', '.') ?> đ
                     </h6>
 
+
+                    <h5 class="fw-semibold text-primary mt-5 mb-3">Chi phí phát sinh</h5>
+                    <div class="card p-3 mb-4">
+                        <form action="?mode=admin&action=addExtraCost" method="POST" class="mb-3">
+                            <input type="hidden" name="departure_id" value="<?= $data_departure['departure_id'] ?>">
+
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label>Tên chi phí</label>
+                                    <input type="text" name="cost_name" class="form-control" required>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <label>Số tiền</label>
+                                    <input type="number" name="amount" class="form-control" required>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <label>Ghi chú</label>
+                                    <input type="text" name="note" class="form-control">
+                                </div>
+
+                                <div class="col-md-1 d-flex align-items-end">
+                                    <button class="btn btn-success w-100">Thêm</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+
+                    <div class="table-card">
+                        <table class="table align-middle table-hover">
+                            <thead class="table-dark">
+                                <tr>
+                                    <th>#</th>
+                                    <th>Tên chi phí</th>
+                                    <th>Số tiền</th>
+                                    <th>Ghi chú</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php foreach ($data_extraCost as $key => $value): ?>
+                                    <tr>
+                                        <td><?= $key + 1 ?></td>
+                                        <td><?= $value['cost_name'] ?></td>
+                                        <td><?= number_format($value['amount'], 0, ',', '.') ?> đ</td>
+                                        <td><?= $value['note'] ?></td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="mt-3 mb-5">
+                        <h6 class="fw-bold mt-3"><b><?= $data_departure['status'] == 'completed' ? 'Tổng chi phí phát sinh:' : 'Tổng chi phí phát sinh dự kiến:' ?> </b>
+                            <?= number_format($total_service_extraCost, 0, '', '.') ?> đ
+                        </h6>
+                    </div>
                 <?php endif; ?>
 
                 <!-- =============================
@@ -745,9 +822,9 @@ $tab = $_GET['tab'] ?? 'info';
                             <div class="card p-3"><b>Tổng khách: </b><?= $r['total_guests'] ?></div>
                         </div>
                         <div class="col-md-4">
-                            <div class="card p-3">
-                                <b>Doanh thu: </b>
-                                <?= number_format($r['revenue'], 0, ',', '.') ?> VNĐ
+                            <div class="card p-3 mb-3">
+                                <b><?= $data_departure['status'] == 'completed' ? 'Doanh thu:' : 'Doanh thu dự kiến:' ?> </b>
+                                <?= number_format($r['revenue'] ?? 0, 0, '', '.') ?> VNĐ
                             </div>
                         </div>
                     </div>
@@ -766,13 +843,23 @@ $tab = $_GET['tab'] ?? 'info';
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php foreach ($data_booking as $i => $b): ?>
+                                <?php foreach ($data_booking as $key => $value): ?>
                                     <tr>
-                                        <td><?= $i + 1 ?></td>
-                                        <td><?= $b['customer_name'] ?></td>
-                                        <td><?= $b['total_guests'] ?></td>
-                                        <td><?= number_format($b['total_amount']) ?></td>
-                                        <td><?= $b['status'] ?></td>
+                                        <td><?= $key + 1 ?></td>
+                                        <td><?= htmlspecialchars($value['customer_name'] ?? '', ENT_QUOTES, 'UTF-8') ?></td>
+                                        <td><?= (int)($value['total_guests'] ?? 0) ?></td>
+                                        <td><?= number_format($value['total_amount'] ?? 0, 0, '', '.') ?></td>
+                                        <td>
+                                            <?php if ($value['status'] == 'completed'): ?>
+                                                <span class="badge bg-success">Đã thanh toán</span>
+                                            <?php elseif ($value['status'] == 'deposit'): ?>
+                                                <span class="badge bg-info">Đã cọc</span>
+                                            <?php elseif ($value['status'] == 'pending'): ?>
+                                                <span class="badge bg-secondary">Chờ xác nhận</span>
+                                            <?php else: ?>
+                                                <span class="badge bg-danger">Đã hủy</span>
+                                            <?php endif; ?>
+                                        </td>
                                     </tr>
                                 <?php endforeach; ?>
                             </tbody>
@@ -781,7 +868,7 @@ $tab = $_GET['tab'] ?? 'info';
 
                 <?php endif; ?>
 
-            </div><!-- /.tab-content -->
+            </div>
 
         </div>
     </div>

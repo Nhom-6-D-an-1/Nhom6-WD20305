@@ -1,6 +1,6 @@
 <?php
 
-define('BASE_URL',         'http://localhost/phpcb/Nhom6-WD20305-new/'); // Thêm đường dẫn tới thư mục dự án
+define('BASE_URL',         'http://localhost/duan1/'); // Thêm đường dẫn tới thư mục dự án
 
 define('PATH_ROOT',         __DIR__ . '/../');
 
@@ -31,7 +31,7 @@ define('DB_OPTIONS', [
 define('FAKE_TIME_ENABLE', true);
 
 // Giá trị fake time (YYYY-MM-DD)
-define('FAKE_TIME_VALUE', '2025-12-10');
+define('FAKE_TIME_VALUE', '2025-12-13');
 
 /**
  * Hàm lấy ngày hiện tại, nhưng hỗ trợ FAKE TIME
@@ -42,4 +42,8 @@ function today()
         return FAKE_TIME_VALUE; // luôn trả về ngày giả
     }
     return date("Y-m-d");
+}
+function now()
+{
+    return today() . ' ' . date('H:i:s');
 }

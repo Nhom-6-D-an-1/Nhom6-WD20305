@@ -17,7 +17,7 @@
         --radius: 14px;
         --radius-card: 16px;
 
-        --shadow: 0 4px 14px rgba(0,0,0,0.06);
+        --shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
     }
 
     /* ======================================================
@@ -46,7 +46,8 @@
     /* ======================================================
     CARD
     ====================================================== */
-    .card, .table-card {
+    .card,
+    .table-card {
         background: #ffffff;
         border-radius: var(--radius-card);
         border: 1px solid var(--border);
@@ -67,6 +68,7 @@
         border-radius: 12px !important;
         font-weight: 600 !important;
     }
+
     .btn-success:hover {
         background: #d6e6ff !important;
     }
@@ -79,6 +81,7 @@
         padding: 7px 14px !important;
         border: none !important;
     }
+
     .btn-info:hover {
         background: #d6e6ff !important;
     }
@@ -92,6 +95,7 @@
         border: none !important;
         font-weight: 600 !important;
     }
+
     .btn-primary:hover {
         background: #ffe8b5 !important;
     }
@@ -105,6 +109,7 @@
         border: none !important;
         font-weight: 600 !important;
     }
+
     .btn-danger:hover {
         background: #ffd4d4 !important;
     }
@@ -121,11 +126,12 @@
         color: var(--gray-dark);
         font-size: 15px;
     }
+
     .form-control:focus,
     .form-select:focus {
         background: #fff;
         border-color: var(--primary);
-        box-shadow: 0 0 0 3px rgba(37,99,235,0.15);
+        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
     }
 
     /* ======================================================
@@ -150,6 +156,7 @@
     .table tbody tr {
         border-bottom: 1px solid #f0f1f5;
     }
+
     .table tbody tr:hover {
         background: #f7faff;
     }
@@ -179,24 +186,27 @@
         background: #e0f2fe;
         color: #0369a1;
     }
+
     .badge-run {
         background: #dcfce7;
         color: #166534;
     }
+
     .badge-end {
         background: #e5e7eb;
         color: #374151;
     }
 
-/* ================================
+    /* ================================
    HÀNH ĐỘNG – BUTTON GROUP
 ================================ */
-.action-buttons {
-    display: flex;
-    align-items: center;
-    gap: 6px; /* thu nhỏ khoảng cách */
-    justify-content: center;
-}
+    .action-buttons {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        /* thu nhỏ khoảng cách */
+        justify-content: center;
+    }
 
     /* style chung */
     .action-buttons .btn {
@@ -205,7 +215,8 @@
         font-weight: 600 !important;
         border-radius: 10px !important;
         border: none !important;
-        min-width: 84px; /* các nút bằng nhau */
+        min-width: 84px;
+        /* các nút bằng nhau */
         text-align: center;
         transition: .2s ease;
     }
@@ -215,6 +226,7 @@
         background: #e9f1ff !important;
         color: #1d4ed8 !important;
     }
+
     .btn-action-info:hover {
         background: #dbe8ff !important;
     }
@@ -224,6 +236,7 @@
         background: #fff5da !important;
         color: #b45309 !important;
     }
+
     .btn-action-edit:hover {
         background: #ffe9b4 !important;
     }
@@ -233,6 +246,7 @@
         background: #eef4ff !important;
         color: #2563eb !important;
     }
+
     .btn-action-add:hover {
         background: #dfeaff !important;
     }
@@ -241,10 +255,11 @@
     .table td.col-date,
     .table th.col-date {
         text-align: center !important;
-        width: 150px;              /* cố định width để tất cả thẳng hàng */
-        white-space: nowrap;       /* không cho xuống dòng */
+        width: 150px;
+        /* cố định width để tất cả thẳng hàng */
+        white-space: nowrap;
+        /* không cho xuống dòng */
     }
-
 </style>
 
 <div class="container-fluid px-4">
@@ -257,8 +272,8 @@
             <!-- Thanh hành động -->
             <div class="d-flex justify-content-between mb-3">
                 <div></div>
-                <a href="<?= BASE_URL ?>?mode=admin&action=createDeparture" 
-                   class="btn btn-success">
+                <a href="<?= BASE_URL ?>?mode=admin&action=createDeparture"
+                    class="btn btn-success">
                     + Tạo chuyến đi mới
                 </a>
             </div>
@@ -310,20 +325,20 @@
                                 <?php endif; ?>
                             </td>
 
-                    <td class="text-center">
-                        <div class="action-buttons">
+                            <td class="text-center">
+                                <div class="action-buttons">
 
-                            <a href="<?= BASE_URL ?>?mode=admin&action=departureDetail&id=<?= $value['departure_id'] ?>"
-                            class="btn btn-action-info">Chi tiết</a>
+                                    <a href="<?= BASE_URL ?>?mode=admin&action=departureDetail&id=<?= $value['departure_id'] ?>"
+                                        class="btn btn-action-info">Chi tiết</a>
 
-                            <a href="<?= BASE_URL ?>?mode=admin&action=departureEdit&id=<?= $value['departure_id'] ?>"
-                            class="btn btn-action-edit">Sửa</a>
+                                    <a href="<?= BASE_URL ?>?mode=admin&action=departureEdit&id=<?= $value['departure_id'] ?>"
+                                        class="btn btn-action-edit">Sửa</a>
 
-                            <a href="<?= BASE_URL ?>?mode=admin&action=createType&id=<?= $value['departure_id'] ?>"
-                            class="btn btn-action-add">booking</a>
+                                    <a href="<?= BASE_URL ?>?mode=admin&action=createType&id=<?= $value['departure_id'] ?>"
+                                        class="btn btn-action-add">booking</a>
 
-                        </div>
-                    </td>
+                                </div>
+                            </td>
 
 
                         </tr>
@@ -336,4 +351,3 @@
     </div>
 
 </div>
-
