@@ -361,6 +361,105 @@
     .table td {
         vertical-align: middle !important;
     }
+
+    /* =========================
+   FIX BOOKING TABLE ALIGN
+    ========================= */
+
+    .booking-table {
+        table-layout: fixed;
+        width: 100%;
+    }
+
+    .booking-table th,
+    .booking-table td {
+        vertical-align: middle !important;
+        white-space: nowrap;
+    }
+
+    /* Cột # */
+    .booking-table th:nth-child(1),
+    .booking-table td:nth-child(1) {
+        width: 60px;
+        text-align: center;
+    }
+
+    /* Người đặt */
+    .booking-table th:nth-child(2),
+    .booking-table td:nth-child(2) {
+        width: 240px;
+        text-align: left;
+        white-space: normal;
+    }
+
+    /* Số khách */
+    .booking-table th:nth-child(3),
+    .booking-table td:nth-child(3) {
+        width: 120px;
+        text-align: center;
+    }
+
+    /* Trạng thái */
+    .booking-table th:nth-child(4),
+    .booking-table td:nth-child(4) {
+        width: 150px;
+        text-align: center;
+    }
+
+    /* Thanh toán */
+    .booking-table th:nth-child(5),
+    .booking-table td:nth-child(5) {
+        width: 180px;
+        text-align: right;
+    }
+
+    /* =========================
+   BOOKING STATUS & PAYMENT
+    ========================= */
+
+    /* Trạng thái */
+    .booking-table td:nth-child(4) {
+        text-align: center;
+    }
+
+    .booking-table .badge {
+        min-width: 110px;
+        padding: 7px 14px;
+        font-size: 13px;
+        font-weight: 600;
+        border-radius: 999px;
+        display: inline-block;
+    }
+
+    /* Map màu trạng thái booking */
+    .badge-success {
+        background: #dcfce7;
+        color: #166534;
+    }
+
+    .badge-info {
+        background: #e0f2fe;
+        color: #075985;
+    }
+
+    .badge-secondary {
+        background: #f3f4f6;
+        color: #374151;
+    }
+
+    .badge-danger {
+        background: #fee2e2;
+        color: #b91c1c;
+    }
+
+    /* Thanh toán */
+    .booking-table td:nth-child(5) {
+        text-align: right;
+        font-weight: 700;
+        color: #1f2937;
+        letter-spacing: .3px;
+    }
+
 </style>
 
 <?php
@@ -468,14 +567,14 @@ $tab = $_GET['tab'] ?? 'info';
                     <h5 class="fw-bold text-primary mb-3" style="font-size: 18px;">Danh sách booking</h5>
 
                     <div class="table-card">
-                        <table class="table table-hover align-middle booking-table">
+                            <table class="table booking-table">
                             <thead>
                                 <tr>
                                     <th style="width: 60px;">#</th>
                                     <th style="width: 240px; text-align:left;">Người đặt</th>
                                     <th style="width: 120px;">Số khách</th>
                                     <th style="width: 150px;">Trạng thái</th>
-                                    <th style="width: 180px;">Thanh toán</th>
+                                    <th style="width: 180px; text-align:center;">Thanh toán</th>
                                 </tr>
                             </thead>
 

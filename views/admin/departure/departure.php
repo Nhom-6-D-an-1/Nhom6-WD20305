@@ -141,7 +141,7 @@
         background: #f9fafb !important;
         color: #6b7280 !important;
         text-transform: uppercase;
-        font-size: 12px;
+        font-size: 13px;
         font-weight: 600;
         border-bottom: 1px solid var(--border) !important;
         padding: 14px 10px;
@@ -288,7 +288,7 @@
                         <th class="col-date">NGÀY VỀ</th>
                         <th style="width:100px;">Số chỗ</th>
                         <th style="width:100px;">Còn trống</th>
-                        <th style="width:150px;">Giá bán</th>
+                        <th style="width:150px; text-align:center;">Giá bán</th>
                         <th style="width:150px;">Trạng thái</th>
                         <th style="width:260px;">Hành động</th>
                     </tr>
