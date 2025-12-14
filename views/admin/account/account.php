@@ -1,21 +1,5 @@
 <style>
   /* ===========================================================
-   GLOBAL LAYOUT
-=========================================================== */
-  body {
-    background: #f5f6f8;
-    font-family: "Inter", sans-serif;
-    color: #333;
-  }
-
-  h3.fw-bold {
-    font-size: 32px;
-    font-weight: 800 !important;
-    margin-bottom: 24px;
-    color: #1f2937;
-  }
-
-  /* ===========================================================
    MAIN CARD WRAPPER
 =========================================================== */
   .table-card,
