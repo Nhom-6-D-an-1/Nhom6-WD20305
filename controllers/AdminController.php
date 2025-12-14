@@ -131,6 +131,14 @@ class AdminController
             exit;
         }
 
+        $departure = new DepartureModel();
+        $info = $departure->getOneDeparture($departure_id);
+
+        if ($info['status'] !== 'open') {
+            $_SESSION['flash_error'] = "Chuyến đi không còn nhận booking.";
+            header("Location: ?mode=admin&action=viewDeparture");
+            exit;
+        }
         $title = "Chọn loại booking";
         $view = 'admin/booking/create_type';
         require_once PATH_VIEW_MAIN;
@@ -268,9 +276,15 @@ class AdminController
         $departure = new DepartureModel();
         $info = $departure->getOneDeparture($departure_id);
 
+
         if (!$info) {
             $_SESSION['flash_error'] = "Chuyến đi không tồn tại.";
             header("Location: ?mode=admin&action=viewDeparture");
+            exit;
+        }
+        if ($info['status'] !== 'open') {
+            $_SESSION['flash_error'] = "Chuyến đi không còn nhận booking đoàn.";
+            header("Location: " . BASE_URL . "?mode=admin&action=viewDeparture");
             exit;
         }
 
