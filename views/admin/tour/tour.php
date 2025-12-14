@@ -1,127 +1,126 @@
 <style>
     /* ===============================
-   PAGE TITLE
-=============================== */
-    .fw-bold {
-        font-size: 32px;
-        font-weight: 800 !important;
-        margin-bottom: 24px;
-        color: #1f2937;
+    PAGE TITLE – Match Dashboard
+    =============================== */
+
+    .page-title {
+        font-size: 24px !important;
+        font-weight: 700 !important;
+        color: #1f2937 !important; /* màu xám đậm giống Dashboard */
+        margin-bottom: 24px !important;
     }
 
     /* ===============================
-   CARD
-=============================== */
+    CARD STYLE – Premium
+    =============================== */
     .card {
-        background: white;
-        border-radius: 14px;
+        background: #ffffff;
+        border-radius: 16px;
+        border: 1px solid #eef0f3;
+        box-shadow: 0 4px 14px rgba(0,0,0,0.06);
         padding: 22px;
-        border: 1px solid #f3f4f6;
-        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
     }
 
     /* ===============================
-   ADD BUTTON (Gold pastel)
-=============================== */
+    BUTTON: ADD NEW (Pastel Blue)
+    =============================== */
     .btn-success {
-        background: #fff8da !important;
-        border: 1px solid #d6c278 !important;
+        background: #e8f0ff !important;
+        border: 1px solid #c5d6ff !important;
         padding: 10px 18px !important;
-        border-radius: 10px !important;
-        color: #7c5e10 !important;
+        border-radius: 12px !important;
+        color: #1e40af !important;
         font-weight: 600 !important;
     }
 
     .btn-success:hover {
-        background: #ffefb5 !important;
+        background: #d6e6ff !important;
     }
 
     /* ===============================
-   TABLE HEADER
-=============================== */
+    TABLE HEADER – Dashboard Style
+    =============================== */
     .table thead th {
-        background: transparent !important;
+        background: #f9fafb !important;
         color: #6b7280 !important;
         text-transform: uppercase;
-        font-size: 12.5px;
+        font-size: 12px;
         font-weight: 600;
-        border-bottom: 1px solid #e5e7eb !important;
-        text-align: left !important;
+        border-bottom: 1px solid #eceef2 !important;
         padding: 14px 10px !important;
-        letter-spacing: .4px;
+        letter-spacing: .5px;
     }
 
     /* ===============================
-   TABLE BODY
-=============================== */
+    TABLE BODY
+    =============================== */
     .table tbody tr {
-        border-bottom: 1px solid #efefef;
+        border-bottom: 1px solid #f0f1f5;
+        transition: .15s ease;
+    }
+
+    .table tbody tr:hover {
+        background: #f7faff;
     }
 
     .table tbody td {
         padding: 16px 12px !important;
         font-size: 15px;
         vertical-align: middle !important;
+        color: #1f2937;
     }
 
-    /* Căn giữa các cột số, mã tour, hành động */
+    /* Căn cột */
     .table tbody td:nth-child(1),
     .table tbody td:nth-child(3),
     .table tbody td:nth-child(5) {
         text-align: left !important;
     }
 
-    /* Cột tên tour — căn trái */
-    .table tbody td:nth-child(2) {
-        text-align: left !important;
-        padding-left: 18px !important;
-    }
-
-    /* Cột phiên bản — căn trái */
+    .table tbody td:nth-child(2),
     .table tbody td:nth-child(4) {
         text-align: left !important;
     }
 
     /* ===============================
-   BUTTONS (Pastel)
-=============================== */
+    ACTION BUTTONS – Pastel
+    =============================== */
     .btn-sm {
         padding: 7px 14px !important;
-        border-radius: 10px !important;
+        border-radius: 12px !important;
         font-size: 14px !important;
         font-weight: 600 !important;
         border: none !important;
+        transition: .2s;
     }
 
     /* Xem – xanh pastel */
     .btn-info {
-        background: #dbeafe !important;
-        color: #1e40af !important;
+        background: #e5efff !important;
+        color: #2563eb !important;
     }
-
     .btn-info:hover {
-        background: #bfdbfe !important;
+        background: #d6e6ff !important;
     }
 
     /* Sửa – vàng pastel */
     .btn-primary {
-        background: #fef3c7 !important;
-        color: #92400e !important;
+        background: #fff4d8 !important;
+        color: #b97500 !important;
     }
-
     .btn-primary:hover {
-        background: #fde68a !important;
+        background: #ffe8b5 !important;
     }
 
     /* Xóa – đỏ pastel */
     .btn-danger {
-        background: #fee2e2 !important;
-        color: #b91c1c !important;
+        background: #ffe5e5 !important;
+        color: #d02f2f !important;
+    }
+    .btn-danger:hover {
+        background: #ffd4d4 !important;
     }
 
-    .btn-danger:hover {
-        background: #fecaca !important;
-    }
 </style>
 
 <div class="container-fluid px-4">

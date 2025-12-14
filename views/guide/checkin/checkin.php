@@ -1,129 +1,240 @@
-<div class="col-12">
-    <h2>Check in, điểm danh</h2>
-    <?php if (empty($selectedDepartureId)): ?>
-        <div class="alert alert-danger text-center mt-3">
-            Hôm nay bạn không có tour đang diễn ra.
-        </div>
-    <?php else : ?>
-        <div class="dropdown d-flex gap-3 align-items-center">
-            <!-- <form method="get" id="tourFilterForm" class="d-flex align-items-center">
-            <input type="hidden" name="mode" value="guide">
-            <input type="hidden" name="action" value="viewcheckin">
-            <input type="hidden" name="stage" value="<?php echo htmlspecialchars($selectedStage ?? ''); ?>">
+<style>
+/* ===============================
+   PAGE TITLE
+=============================== */
+.page-title {
+    font-size: 24px;
+    font-weight: 700;
+    color: #1f2937;
+    margin: 8px 0 18px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #e5e7eb;
+    letter-spacing: -0.3px;
+}
 
-            <div class="me-3">
-                <select class="form-select" name="departure_id" onchange="document.getElementById('tourFilterForm').submit()">
-                    <option value="" hidden>--Chọn tour--</option>
-                    <?php if (!empty($assignedTours)) { ?>
-                        <?php foreach ($assignedTours as $tour) {
-                            $tour_display = $tour['tour_name'] . ' (' . date('d/m', strtotime($tour['start_date'])) . ' - ' . date('d/m', strtotime($tour['end_date'])) . ')';
-                        ?>
-                            <option value="<?php echo $tour['departure_id']; ?>"
-                                <?php echo (isset($selectedDepartureId) && $selectedDepartureId == $tour['departure_id']) ? 'selected' : ''; ?>>
-                                <?php echo htmlspecialchars($tour_display); ?> 
-                            </option>
-                        <?php } ?>
-                    <?php } ?>
-                </select>
-            </div>
-        </form> -->
+/* ===============================
+   CARD – APPLE STYLE
+=============================== */
+.card {
+    background: #ffffff;
+    border-radius: 14px;
+    padding: 22px;
+    border: 1px solid #f3f4f6;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.04);
+}
+
+/* ===============================
+   FILTER BAR
+=============================== */
+.filter-bar {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+/* ===============================
+   TABLE
+=============================== */
+.table thead th {
+    background: transparent !important;
+    color: #6b7280;
+    font-size: 12px;
+    text-transform: uppercase;
+    border-bottom: 1px solid #e5e7eb !important;
+    letter-spacing: .4px;
+}
+
+.table tbody td {
+    font-size: 14px;
+    vertical-align: middle;
+}
+
+/* ===============================
+   STATUS COLOR
+=============================== */
+.text-present {
+    color: #047857;
+    font-weight: 600;
+}
+
+.text-absent {
+    color: #b91c1c;
+    font-weight: 600;
+}
+
+.text-late {
+    color: #b45309;
+    font-weight: 600;
+}
+
+/* ===============================
+   BUTTON
+=============================== */
+.btn-update {
+    background: #dbeafe;
+    color: #1e40af;
+    border-radius: 10px;
+    font-weight: 700;
+    padding: 10px 24px;
+}
+
+.btn-update:hover {
+    background: #bfdbfe;
+}
+</style>
+
+<div class="container-fluid px-4">
+
+    <!-- TITLE -->
+    <div class="page-title">Check-in / Điểm danh</div>
+
+    <!-- ===============================
+         FILTER
+    =============================== -->
+    <div class="card mb-4">
+
+        <div class="filter-bar">
 
             <?php if (!empty($noRunningTour) && $noRunningTour): ?>
-                <div class="text-danger">Hôm nay bạn không có tour đang diễn ra để điểm danh.</div>
-            <?php elseif (!empty($stages)) : ?>
-                <form method="get" id="stageFilterForm">
+
+                <span class="text-danger">
+                    Hôm nay bạn không có tour đang diễn ra để điểm danh.
+                </span>
+
+            <?php elseif (!empty($stages)): ?>
+
+                <form method="get" id="stageFilterForm" class="d-flex gap-3 align-items-center">
                     <input type="hidden" name="mode" value="guide">
                     <input type="hidden" name="action" value="viewcheckin">
-                    <input type="hidden" name="departure_id" value="<?php echo htmlspecialchars($selectedDepartureId); ?>">
+                    <input type="hidden" name="departure_id"
+                           value="<?= htmlspecialchars($selectedDepartureId); ?>">
 
-                    <div class="me-3">
-                        <select class="form-select" name="stage" onchange="document.getElementById('stageFilterForm').submit()">
-                            <option value="" hidden>--Chọn địa điểm/chặng--</option>
-                            <?php foreach ($stages as $stage) { ?>
-                                <option value="<?php echo htmlspecialchars($stage['stage_description']); ?>"
-                                    <?php echo ($selectedStage == $stage['stage_description']) ? 'selected' : ''; ?>>
-                                    <?php echo htmlspecialchars($stage['label']); ?>
-                                </option>
-                            <?php } ?>
-                        </select>
-                    </div>
+                    <select class="form-select"
+                            name="stage"
+                            onchange="document.getElementById('stageFilterForm').submit()">
+                        <option value="" hidden>-- Chọn địa điểm / chặng --</option>
+
+                        <?php foreach ($stages as $stage): ?>
+                            <option value="<?= htmlspecialchars($stage['stage_description']); ?>"
+                                <?= ($selectedStage == $stage['stage_description']) ? 'selected' : ''; ?>>
+                                <?= htmlspecialchars($stage['label']); ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
                 </form>
+
             <?php else: ?>
-                <span class="text-danger">Không có lịch trình để điểm danh.</span>
+
+                <span class="text-danger">
+                    Không có lịch trình để điểm danh.
+                </span>
+
             <?php endif; ?>
+
         </div>
 
-        <div class="table-responsive mt-3">
-            <form method="post">
-                <input type="hidden" name="action" value="update_checkin_multi">
-                <input type="hidden" name="departure_id" value="<?php echo $selectedDepartureId; ?>">
-                <input type="hidden" name="stage_description" value="<?php echo htmlspecialchars($selectedStage); ?>">
-                <table class="table table-hover align-middle mb-0 customer-table">
+    </div>
+
+    <!-- ===============================
+         TABLE CHECK-IN
+    =============================== -->
+    <div class="card">
+
+        <form method="post">
+            <input type="hidden" name="action" value="update_checkin_multi">
+            <input type="hidden" name="departure_id" value="<?= $selectedDepartureId; ?>">
+            <input type="hidden" name="stage_description" value="<?= htmlspecialchars($selectedStage); ?>">
+
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+
                     <thead>
                         <tr>
-                            <th class="ps-4 py-3">Tên khách</th>
-                            <th class="py-3">Trạng thái</th>
-                            <th class="py-3 ">Thời gian check-in</th>
-                            <th class="py-3 ">Hành động</th>
+                            <th class="ps-4">Tên khách</th>
+                            <th>Trạng thái</th>
+                            <th>Thời gian check-in</th>
+                            <th>Hành động</th>
                         </tr>
                     </thead>
+
                     <tbody>
-                        <?php if (!empty($statusDisplay) && $selectedDepartureId && $selectedStage) { ?>
-                            <?php foreach ($statusDisplay as $guest) { ?>
-                                <tr class="customer-row">
-                                    <td class="ps-4 fw-semibold"><?php echo htmlspecialchars($guest['full_name']); ?></td>
-                                    <td class="status-cell">
-                                        <span class="<?php
-                                                        if ($guest['status'] == 'present') echo 'text-success';
-                                                        else if ($guest['status'] == 'absent') echo 'text-danger';
-                                                        else if ($guest['status'] == 'late') echo 'text-warning';
-                                                        else echo 'text-secondary';
-                                                        ?>">
-                                            <?php echo htmlspecialchars($guest['display_status']); ?>
+                        <?php if (!empty($statusDisplay) && $selectedDepartureId && $selectedStage): ?>
+
+                            <?php foreach ($statusDisplay as $guest): ?>
+                                <tr>
+
+                                    <td class="ps-4 fw-semibold">
+                                        <?= htmlspecialchars($guest['full_name']) ?>
+                                    </td>
+
+                                    <td>
+                                        <span class="<?=
+                                            match ($guest['status']) {
+                                                'present' => 'text-present',
+                                                'absent'  => 'text-absent',
+                                                'late'    => 'text-late',
+                                                default   => 'text-muted',
+                                            }
+                                        ?>">
+                                            <?= htmlspecialchars($guest['display_status']) ?>
                                         </span>
                                     </td>
                                     <td>
-                                        <?php
-                                        echo $guest['checkin_time']
+                                        <?= $guest['checkin_time']
                                             ? date('H:i d/m', strtotime($guest['checkin_time']))
-                                            : '--';
-                                        ?>
+                                            : '--'; ?>
                                     </td>
+
                                     <td>
-                                        <!-- <form method="post" class="d-flex gap-2 checkin-form"> -->
-                                        <!-- <input type="hidden" name="action" value="update_checkin"> -->
-                                        <input type="hidden" name="guest_id[]" value="<?php echo $guest['guest_id']; ?>">
-                                        <input type="hidden" name="departure_id" value="<?php echo htmlspecialchars($selectedDepartureId); ?>">
-                                        <input type="hidden" name="stage_description" value="<?php echo htmlspecialchars($selectedStage); ?>">
+                                        <input type="hidden" name="guest_id[]" value="<?= $guest['guest_id']; ?>">
 
-                                        <div class="dropdown">
-                                            <select class="form-select status-select" name="status[]">
-                                                <option value="" disabled selected hidden>Chọn trạng thái</option>
-
-                                                <option value="present" <?php echo ($guest['status'] == 'present') ? 'selected' : ''; ?>>Có mặt</option>
-                                                <option value="absent" <?php echo ($guest['status'] == 'absent') ? 'selected' : ''; ?>>Vắng mặt</option>
-                                            </select>
-                                        </div>
-                                        <!-- <button type="submit" class="btn btn-primary btn-sm">Cập nhật</button> -->
-                                        <!-- </form> -->
+                                        <select class="form-select"
+                                                name="status[]">
+                                            <option value="" disabled hidden>Chọn trạng thái</option>
+                                            <option value="present"
+                                                <?= ($guest['status'] == 'present') ? 'selected' : ''; ?>>
+                                                Có mặt
+                                            </option>
+                                            <option value="absent"
+                                                <?= ($guest['status'] == 'absent') ? 'selected' : ''; ?>>
+                                                Vắng mặt
+                                            </option>
+                                        </select>
                                     </td>
                                 </tr>
-                            <?php } ?>
-                        <?php } else if ($selectedDepartureId) { ?>
+                            <?php endforeach; ?>
+
+                        <?php elseif ($selectedDepartureId): ?>
+
                             <tr>
-                                <td colspan="3" class="text-center py-4 text-danger">Vui lòng chọn một chặng.</td>
+                                <td colspan="4" class="text-center text-danger py-4">
+                                    Vui lòng chọn một chặng.
+                                </td>
                             </tr>
-                        <?php } else { ?>
+
+                        <?php else: ?>
+
                             <tr>
-                                <td colspan="3" class="text-center py-4 text-danger">Vui lòng chọn một tour.</td>
+                                <td colspan="4" class="text-center text-danger py-4">
+                                    Vui lòng chọn một tour.
+                                </td>
                             </tr>
-                        <?php } ?>
+
+                        <?php endif; ?>
                     </tbody>
+
                 </table>
-                <div class="text-end mt-3">
-                    <button type="submit" class="btn btn-primary btn-lg px-4">Cập nhật tất cả</button>
-                </div>
-            </form>
-        </div>
+            </div>
+
+            <div class="text-end mt-4">
+                <button type="submit" class="btn btn-update">
+                    ✓ Cập nhật tất cả
+                </button>
+            </div>
+
+        </form>
+
+    </div>
+
 </div>
-<?php endif; ?>

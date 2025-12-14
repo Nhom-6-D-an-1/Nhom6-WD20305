@@ -1,3 +1,63 @@
+<style>
+    /* ================================
+    PAGE TITLE
+    ================================ */
+    .fw-bold {
+        font-size: 26px;
+        font-weight: 700;
+        color: #1f2937;
+    }
+
+    /* ================================
+    CARD
+    ================================ */
+    .card {
+        background: #ffffff;
+        border-radius: 16px;
+        border: 1px solid #eef0f3;
+        box-shadow: 0 4px 14px rgba(0,0,0,0.06);
+    }
+
+    /* ================================
+    LABEL
+    ================================ */
+    .form-label {
+        font-weight: 600;
+        color: #374151;
+        margin-bottom: 6px;
+    }
+
+    /* ================================
+    READ-ONLY INPUT
+    ================================ */
+    .form-control:disabled {
+        background: #f3f4f6 !important;
+        border-radius: 14px !important;
+        border: 1px solid #e5e7eb !important;
+        color: #4b5563 !important;
+        padding: 11px 14px !important;
+        font-size: 15px;
+        opacity: 1 !important;
+    }
+
+    /* ================================
+    BUTTON – BACK
+    ================================ */
+    .btn-secondary {
+        background: #e5e7eb !important;
+        color: #374151 !important;
+        padding: 10px 20px !important;
+        border-radius: 12px !important;
+        font-weight: 600 !important;
+        border: none !important;
+        transition: .2s;
+    }
+
+    .btn-secondary:hover {
+        background: #d4d6da !important;
+    }
+
+</style>
 <div class="container-fluid px-4">
     <h3 class="fw-bold mt-4 mb-4">Chi tiết danh mục tour: <?= $category['category_name'] ?></h3>
 
