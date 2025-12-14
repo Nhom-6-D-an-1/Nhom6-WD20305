@@ -6,7 +6,6 @@
   padding: 24px;
 }
 
-
 .page-title {
   font-size: 28px;
   font-weight: 700;
@@ -15,9 +14,8 @@
   letter-spacing: -0.3px;
 }
 
-
 /* ===============================
-   FILTER BOX
+   FILTER
 =============================== */
 .filter-box {
   margin-bottom: 18px;
@@ -48,7 +46,7 @@
    TABLE CARD
 =============================== */
 .table-card {
-  background: #ffffff;
+  background: #fff;
   border-radius: 14px;
   padding: 22px;
   border: 1px solid #f3f4f6;
@@ -56,30 +54,17 @@
 }
 
 /* ===============================
-   TABLE HEADER
+   TABLE
 =============================== */
 .table thead th {
   background: transparent !important;
   color: #6b7280 !important;
   font-weight: 600;
   text-transform: uppercase;
-  font-size: 12.5px;
+  font-size: 13px;
   border-bottom: 1px solid #e5e7eb !important;
-  text-align: center;
-  padding: 14px 10px !important;
+  padding: 14px 12px !important;
   letter-spacing: .5px;
-}
-
-/* ===============================
-   TABLE BODY
-=============================== */
-.table tbody tr {
-  border-bottom: 1px solid #efefef;
-  transition: .15s ease;
-}
-
-.table tbody tr:hover {
-  background: #f9fafb;
 }
 
 .table tbody td {
@@ -87,41 +72,42 @@
   font-size: 15px;
   color: #333;
   vertical-align: middle;
+  border-bottom: 1px solid #efefef;
 }
 
-/* Align columns */
-.table tbody td:nth-child(1),
-.table tbody td:nth-child(4),
-.table tbody td:nth-child(5),
-.table tbody td:nth-child(6),
-.table tbody td:nth-child(7),
-.table tbody td:nth-child(8) {
-  text-align: center;
-}
-
-.table tbody td:nth-child(2),
-.table tbody td:nth-child(3) {
-  text-align: left;
+.table tbody tr:hover {
+  background: #f9fafb;
 }
 
 /* ===============================
-   BADGE STATUS
+   ALIGN CLASSES (QUAN TRỌNG)
 =============================== */
-.badge {
+.col-center {
+  text-align: center !important;
+}
+
+.col-left {
+  text-align: left !important;
+}
+
+/* ===============================
+   BADGE
+=============================== */
+.badge-status {
   padding: 7px 16px;
   border-radius: 12px;
   font-size: 13px;
   font-weight: 600;
 }
 
-.bg-success {
-  background: #d1fae5 !important;
-  color: #047857 !important;
+.badge-success {
+  background: #d1fae5;
+  color: #047857;
 }
 
-.bg-secondary {
-  background: #fee2e2 !important;
-  color: #b91c1c !important;
+.badge-danger {
+  background: #fee2e2;
+  color: #b91c1c;
 }
 
 /* ===============================
@@ -160,7 +146,7 @@
   <div class="page-title">Quản lý booking</div>
 
   <!-- FILTER -->
-  <form method="GET" action="" class="filter-box">
+  <form method="GET" class="filter-box">
     <input type="hidden" name="mode" value="admin">
     <input type="hidden" name="action" value="viewsbooking">
 
@@ -178,11 +164,13 @@
       </div>
 
       <div class="col-md-3">
-        <input type="date" name="from_date" value="<?= $_GET['from_date'] ?? '' ?>" class="form-control">
+        <input type="date" name="from_date" class="form-control"
+               value="<?= $_GET['from_date'] ?? '' ?>">
       </div>
 
       <div class="col-md-3">
-        <input type="date" name="to_date" value="<?= $_GET['to_date'] ?? '' ?>" class="form-control">
+        <input type="date" name="to_date" class="form-control"
+               value="<?= $_GET['to_date'] ?? '' ?>">
       </div>
 
       <div class="col-md-2">
@@ -193,52 +181,61 @@
 
   <!-- TABLE -->
   <div class="table-card">
-    <table class="table table-hover align-middle">
+    <table class="table align-middle">
       <thead>
         <tr>
-          <th>#</th>
-          <th>Tên chuyến đi</th>
-          <th>Khách hàng</th>
-          <th>Liên hệ</th>
-          <th>Tổng tiền</th>
-          <th>Trạng thái</th>
-          <th>Ngày tạo</th>
-          <th>Hành động</th>
+          <th class="col-center">#</th>
+          <th class="col-left">Tên chuyến đi</th>
+          <th class="col-left">Khách hàng</th>
+          <th class="col-left">Liên hệ</th>
+          <th class="col-center">Tổng tiền</th>
+          <th class="col-center">Trạng thái</th>
+          <th class="col-center">Ngày tạo</th>
+          <th class="col-center">Hành động</th>
         </tr>
       </thead>
 
       <tbody>
         <?php if (!empty($bookings)): ?>
-          <?php foreach ($bookings as $key => $booking): ?>
+          <?php foreach ($bookings as $i => $b): ?>
             <tr>
-              <td><?= $key + 1 ?></td>
+              <td class="col-center"><?= $i + 1 ?></td>
 
-              <td>
-                <strong><?= $booking['departure_name'] ?></strong><br>
+              <td class="col-left">
+                <strong><?= $b['departure_name'] ?></strong><br>
                 <span class="text-muted small">
-                  <?= $booking['tour_name'] ?> – <?= $booking['version_name'] ?>
+                  <?= $b['tour_name'] ?> – <?= $b['version_name'] ?>
                 </span>
               </td>
 
-              <td><?= htmlspecialchars($booking['customer_name']) ?></td>
-              <td><?= htmlspecialchars($booking['customer_contact']) ?></td>
+              <td class="col-left">
+                <strong><?= htmlspecialchars($b['customer_name']) ?></strong>
+              </td>
 
-              <td><?= number_format($booking['total_amount'], 0, ',', '.') ?> ₫</td>
+              <td class="col-left">
+                <?= htmlspecialchars($b['customer_contact']) ?>
+              </td>
 
-              <td>
-                <?php if ($booking['status'] === 'completed'): ?>
-                  <span class="badge bg-success">Đã thanh toán</span>
+              <td class="col-center">
+                <?= number_format($b['total_amount'], 0, ',', '.') ?> ₫
+              </td>
+
+              <td class="col-center">
+                <?php if ($b['status'] === 'completed'): ?>
+                  <span class="badge-status badge-success">Đã thanh toán</span>
                 <?php else: ?>
-                  <span class="badge bg-secondary">Chưa thanh toán</span>
+                  <span class="badge-status badge-danger">Chưa thanh toán</span>
                 <?php endif; ?>
               </td>
 
-              <td><?= date('d/m/Y H:i', strtotime($booking['created_at'])) ?></td>
+              <td class="col-center">
+                <?= date('d/m/Y H:i', strtotime($b['created_at'])) ?>
+              </td>
 
-              <td>
-                <a href="<?= BASE_URL ?>?mode=admin&action=showbooking&id=<?= $booking['booking_id'] ?>"
+              <td class="col-center">
+                <a href="<?= BASE_URL ?>?mode=admin&action=showbooking&id=<?= $b['booking_id'] ?>"
                    class="btn btn-sm btn-info">Chi tiết</a>
-                <a href="<?= BASE_URL ?>?mode=admin&action=suabooking&id=<?= $booking['booking_id'] ?>"
+                <a href="<?= BASE_URL ?>?mode=admin&action=suabooking&id=<?= $b['booking_id'] ?>"
                    class="btn btn-sm btn-warning">Sửa</a>
               </td>
             </tr>

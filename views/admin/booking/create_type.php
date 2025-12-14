@@ -1,7 +1,5 @@
 <style>
-/* ===============================
-   PAGE TITLE
-=============================== */
+   /* PAGE TITLE */
 .page-title {
     font-size: 24px;
     font-weight: 700;
@@ -12,9 +10,7 @@
     letter-spacing: -0.3px;
 }
 
-/* ===============================
-   CARD – APPLE STYLE
-=============================== */
+   /* CARD – APPLE STYLE */
 .choice-card {
     background: #ffffff;
     border-radius: 16px;
@@ -24,9 +20,7 @@
     max-width: 720px;
 }
 
-/* ===============================
-   CHOICE BUTTON
-=============================== */
+   /* CHOICE BUTTON */
 .choice-btn {
     display: block;
     border-radius: 14px;

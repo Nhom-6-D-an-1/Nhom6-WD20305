@@ -255,6 +255,10 @@
             alert("Vui lòng nhập nội dung nhật ký");
             return false;
         }
+        if (/^\d+$/.test(note)) {
+            alert("Nội dung nhật ký không được chỉ chứa số");
+            return false;
+        }
 
         return true;
     }

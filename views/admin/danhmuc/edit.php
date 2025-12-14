@@ -1,16 +1,12 @@
 <style>
-    /* ================================
-    PAGE TITLE
-    ================================ */
+    /* PAGE TITLE */
     .fw-bold {
         font-size: 26px;
         font-weight: 700;
         color: #1f2937;
     }
 
-    /* ================================
-    CARD
-    ================================ */
+    /* CARD */
     .card {
         background: #ffffff;
         border-radius: 16px;
@@ -18,18 +14,14 @@
         box-shadow: 0 4px 14px rgba(0,0,0,0.06);
     }
 
-    /* ================================
-    LABEL
-    ================================ */
+    /* LABEL */
     .form-label {
         font-weight: 600;
         color: #374151;
         margin-bottom: 6px;
     }
 
-    /* ================================
-    INPUT + SELECT STYLE
-    ================================ */
+    /* INPUT + SELECT STYLE */
     .form-control,
     .form-select {
         border-radius: 14px !important;
@@ -47,9 +39,7 @@
         box-shadow: 0 0 0 3px rgba(59,130,246,0.15) !important;
     }
 
-    /* ================================
-    BUTTONS – PREMIUM
-    ================================ */
+    /* BUTTONS */
 
     /* Cập nhật */
     .btn-primary {
@@ -86,12 +76,13 @@
     <div class="card">
         <div class="card-body">
 
-            <form action="?mode=admin&action=updatedanhmuc&id=<?= $category['category_id'] ?>" method="POST">
+            <form action="?mode=admin&action=updatedanhmuc&id=<?= $category['category_id'] ?>" onsubmit="return validateCategoryForm()" method="POST">
 
                 <div class="mb-3">
                     <label class="form-label">Tên loại tour</label>
                     <input type="text" name="category_name" class="form-control"
-                           value="<?= $category['category_name'] ?>" required>
+                           value="<?= $category['category_name'] ?>">
+                    <span id="nameError" class="text-danger"></span>
                 </div>
 
                 <!-- <div class="mb-3">
@@ -115,3 +106,43 @@
         </div>
     </div>
 </div>
+<script>
+function validateCategoryForm() {
+    const nameInput = document.querySelector('input[name="category_name"]');
+    const error = document.getElementById('nameError');
+    const name = nameInput.value.trim();
+
+    // Reset lỗi
+    error.innerHTML = "";
+
+    // 1. Không để trống
+    if (name === "") {
+        error.innerHTML = "Vui lòng nhập tên danh mục";
+        nameInput.focus();
+        return false;
+    }
+
+    // 2. Không cho chỉ toàn số
+    if (/^\d+$/.test(name)) {
+        error.innerHTML = "Tên danh mục không được chỉ chứa số";
+        nameInput.focus();
+        return false;
+    }
+
+    // 3. Phải có chữ cái
+    if (!/[a-zA-ZÀ-Ỹà-ỹ]/.test(name)) {
+        error.innerHTML = "Tên danh mục phải có chữ, không được toàn ký tự đặc biệt";
+        nameInput.focus();
+        return false;
+    }
+
+    // 4. Độ dài tối thiểu
+    if (name.length < 3) {
+        error.innerHTML = "Tên danh mục quá ngắn (tối thiểu 3 ký tự)";
+        nameInput.focus();
+        return false;
+    }
+
+    return true;
+}
+</script>

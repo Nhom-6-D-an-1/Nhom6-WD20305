@@ -31,7 +31,7 @@ define('DB_OPTIONS', [
 define('FAKE_TIME_ENABLE', true);
 
 // Giá trị fake time (YYYY-MM-DD)
-define('FAKE_TIME_VALUE', '2025-12-13');
+define('FAKE_TIME_VALUE', '2025-12-16');
 
 /**
  * Hàm lấy ngày hiện tại, nhưng hỗ trợ FAKE TIME

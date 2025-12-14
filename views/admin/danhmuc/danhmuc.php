@@ -63,7 +63,7 @@
 .table thead th {
     background: #f9fafb !important;
     color: var(--text-light) !important;
-    font-size: 12.8px;
+    font-size: 13px;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: .5px;
