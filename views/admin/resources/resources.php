@@ -24,18 +24,32 @@
 }
 
 /* ===========================================================
+   TABLE BASE
+=========================================================== */
+.table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+/* ===========================================================
    TABLE HEADER
 =========================================================== */
 .table thead th {
-    background-color: transparent !important;
-    color: #6b7280 !important;
+    background-color: transparent;
+    color: #6b7280;
     text-transform: uppercase;
     font-size: 12.5px;
     font-weight: 600;
-    border-bottom: 1px solid #e5e7eb !important;
-    text-align: center !important;
+    border-bottom: 1px solid #e5e7eb;
     letter-spacing: .4px;
-    padding: 14px 10px !important;
+    padding: 14px 12px;
+    text-align: center;
+}
+
+/* Header cột Họ tên */
+.table thead th:nth-child(2) {
+    text-align: left;
+    padding-left: 16px;
 }
 
 /* ===========================================================
@@ -43,7 +57,7 @@
 =========================================================== */
 .table tbody tr {
     border-bottom: 1px solid #efefef;
-    transition: .15s ease;
+    transition: background .15s ease;
 }
 
 .table tbody tr:hover {
@@ -51,67 +65,93 @@
 }
 
 .table tbody td {
-    padding: 16px 12px !important;
+    padding: 16px 12px;
     font-size: 15px;
-    vertical-align: middle !important;
+    vertical-align: middle;
     color: #1f2937;
 }
 
-/* Align columns */
+/* Các cột CENTER */
 .table tbody td:nth-child(1),
 .table tbody td:nth-child(3),
 .table tbody td:nth-child(4),
 .table tbody td:nth-child(5),
 .table tbody td:nth-child(6),
 .table tbody td:nth-child(7) {
-    text-align: center !important;
+    text-align: center;
 }
 
-/* Name column */
+/* Cột HỌ TÊN – FIX DỨT ĐIỂM */
 .table tbody td:nth-child(2) {
-    text-align: left !important;
-    padding-left: 16px !important;
+    text-align: left;
+    padding-left: 16px;
+    font-weight: 600;
 }
 
 /* ===========================================================
    BADGE – PASTEL
 =========================================================== */
 .badge {
-    padding: 6px 14px !important;
-    border-radius: 10px !important;
-    font-size: 13px !important;
-    font-weight: 600 !important;
+    padding: 6px 14px;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 600;
 }
 
 .bg-primary {
-    background: #dbeafe !important;
-    color: #1e40af !important;
+    background: #dbeafe;
+    color: #1e40af;
 }
 
 .bg-success {
-    background: #d1fae5 !important;
-    color: #065f46 !important;
+    background: #d1fae5;
+    color: #065f46;
 }
 
 /* ===========================================================
    BUTTON – PASTEL
 =========================================================== */
 .btn-sm {
-    padding: 7px 14px !important;
-    border-radius: 10px !important;
-    font-size: 14px !important;
-    font-weight: 600 !important;
-    border: none !important;
+    padding: 7px 14px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    border: none;
 }
 
 .btn-info {
-    background: #dbeafe !important;
-    color: #1e40af !important;
+    background: #dbeafe;
+    color: #1e40af;
 }
 
 .btn-info:hover {
-    background: #bfdbfe !important;
+    background: #bfdbfe;
 }
+
+/* ===========================
+   BADGE SOFT (PASTEL RIÊNG)
+=========================== */
+
+/* Chứng chỉ – xanh dương pastel */
+.badge-soft-primary {
+    background: #e8f0ff;
+    color: #1e40af;
+    border-radius: 999px;
+    padding: 6px 14px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+/* Ngôn ngữ – xanh lá pastel */
+.badge-soft-success {
+    background: #dcfce7;
+    color: #166534;
+    border-radius: 999px;
+    padding: 6px 14px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
 </style>
 
 <div class="container-fluid px-4">
@@ -144,13 +184,13 @@
 
                                 <!-- NAME -->
                                 <td class="fw-semibold">
-                                    <?= htmlspecialchars($value['full_name'] ?? '') ?>
+                                    <?= htmlspecialchars($value['full_name'] ?? '', ENT_QUOTES, 'UTF-8') ?>
                                 </td>
 
                                 <!-- AVATAR -->
                                 <td>
                                     <?php if (!empty($value['avatar'])): ?>
-                                        <img src="<?= BASE_ASSETS_UPLOADS . $value['avatar'] ?>"
+                                        <img src="<?= BASE_ASSETS_UPLOADS . htmlspecialchars($value['avatar'], ENT_QUOTES, 'UTF-8') ?>"
                                              alt="avatar"
                                              class="rounded"
                                              style="width:70px;height:70px;object-fit:cover;">
@@ -162,8 +202,8 @@
                                 <!-- CERTIFICATE -->
                                 <td>
                                     <?php if (!empty($value['certificates'])): ?>
-                                        <span class="badge bg-primary">
-                                            <?= htmlspecialchars($value['certificates']) ?>
+                                        <span class="badge badge-soft-primary">
+                                            <?= htmlspecialchars($value['certificates'], ENT_QUOTES, 'UTF-8') ?>
                                         </span>
                                     <?php else: ?>
                                         <span class="text-muted">—</span>
@@ -173,8 +213,8 @@
                                 <!-- LANGUAGE -->
                                 <td>
                                     <?php if (!empty($value['languages'])): ?>
-                                        <span class="badge bg-success">
-                                            <?= htmlspecialchars($value['languages']) ?>
+                                        <span class="badge badge-soft-success">
+                                            <?= htmlspecialchars($value['languages'], ENT_QUOTES, 'UTF-8') ?>
                                         </span>
                                     <?php else: ?>
                                         <span class="text-muted">—</span>
@@ -191,7 +231,7 @@
 
                                 <!-- ACTION -->
                                 <td>
-                                    <a href="<?= BASE_URL ?>?mode=admin&action=viewGuideDetail&id=<?= $value['user_id'] ?>"
+                                    <a href="<?= BASE_URL ?>?mode=admin&action=viewGuideDetail&id=<?= (int)$value['user_id'] ?>"
                                        class="btn btn-info btn-sm w-100">
                                         Chi tiết
                                     </a>
@@ -212,3 +252,4 @@
         </div>
     </div>
 </div>
+

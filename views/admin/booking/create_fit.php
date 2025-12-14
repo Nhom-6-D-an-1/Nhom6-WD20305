@@ -1,7 +1,5 @@
 <style>
-/* ===============================
-   PAGE TITLE – DASHBOARD
-=============================== */
+   /* PAGE TITLE – DASHBOARD */
 .page-title {
     font-size: 24px;
     font-weight: 700;
@@ -12,9 +10,7 @@
     letter-spacing: -0.3px;
 }
 
-/* ===============================
-   CARD – APPLE STYLE
-=============================== */
+   /* CARD – APPLE STYLE */
 .card {
     background: #ffffff;
     border-radius: 14px;
@@ -23,9 +19,7 @@
     box-shadow: 0 4px 16px rgba(0,0,0,0.04);
 }
 
-/* ===============================
-   SECTION TITLE
-=============================== */
+   /* SECTION TITLE */
 .section-title {
     font-size: 16px;
     font-weight: 700;
@@ -33,9 +27,7 @@
     margin: 22px 0 14px;
 }
 
-/* ===============================
-   FORM CONTROL
-=============================== */
+   /* FORM CONTROL */
 .form-label {
     font-size: 13px;
     font-weight: 600;
@@ -51,9 +43,7 @@ textarea.form-control {
     font-size: 14px;
 }
 
-/* ===============================
-   BUTTON
-=============================== */
+   /* BUTTON */
 .btn-save {
     background: #d1fae5;
     color: #047857;

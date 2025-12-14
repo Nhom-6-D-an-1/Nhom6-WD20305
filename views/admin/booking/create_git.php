@@ -1,7 +1,5 @@
 <style>
-/* ===============================
-   PAGE TITLE – DASHBOARD
-=============================== */
+   /* PAGE TITLE – DASHBOARD */
 .page-title {
     font-size: 24px;
     font-weight: 700;
@@ -12,9 +10,7 @@
     letter-spacing: -0.3px;
 }
 
-/* ===============================
-   CARD – APPLE STYLE
-=============================== */
+   /* CARD – APPLE STYLE */
 .card {
     background: #ffffff;
     border-radius: 14px;
@@ -23,9 +19,7 @@
     box-shadow: 0 4px 16px rgba(0,0,0,0.04);
 }
 
-/* ===============================
-   SECTION TITLE
-=============================== */
+   /* SECTION TITLE */
 .section-title {
     font-size: 16px;
     font-weight: 700;
@@ -33,9 +27,7 @@
     margin: 22px 0 14px;
 }
 
-/* ===============================
-   FORM CONTROL
-=============================== */
+   /* FORM CONTROL */
 .form-label {
     font-size: 13px;
     font-weight: 600;
@@ -51,9 +43,7 @@ textarea.form-control {
     font-size: 14px;
 }
 
-/* ===============================
-   BUTTON
-=============================== */
+   /* BUTTON */
 .btn-next {
     background: #d1fae5;
     color: #047857;
@@ -94,9 +84,7 @@ textarea.form-control {
             <input type="hidden" name="departure_id"
                    value="<?= htmlspecialchars($_GET['id'] ?? '', ENT_QUOTES, 'UTF-8') ?>">
 
-            <!-- ===============================
-                 ĐẠI DIỆN ĐOÀN
-            =============================== -->
+                 <!-- ĐẠI DIỆN ĐOÀN -->
             <div class="section-title mt-0">Thông tin người đại diện đoàn</div>
 
             <div class="row">
@@ -140,9 +128,7 @@ textarea.form-control {
                           rows="3"></textarea>
             </div>
 
-            <!-- ===============================
-                 THANH TOÁN
-            =============================== -->
+                 <!-- THANH TOÁN -->
             <div class="section-title">Thanh toán</div>
 
             <div class="row">

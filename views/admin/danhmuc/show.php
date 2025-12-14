@@ -1,16 +1,12 @@
 <style>
-    /* ================================
-    PAGE TITLE
-    ================================ */
+    /* PAGE TITLE */
     .fw-bold {
         font-size: 26px;
         font-weight: 700;
         color: #1f2937;
     }
 
-    /* ================================
-    CARD
-    ================================ */
+    /* CARD */
     .card {
         background: #ffffff;
         border-radius: 16px;
@@ -18,18 +14,14 @@
         box-shadow: 0 4px 14px rgba(0,0,0,0.06);
     }
 
-    /* ================================
-    LABEL
-    ================================ */
+    /* LABEL */
     .form-label {
         font-weight: 600;
         color: #374151;
         margin-bottom: 6px;
     }
 
-    /* ================================
-    READ-ONLY INPUT
-    ================================ */
+    /* READ-ONLY INPUT */
     .form-control:disabled {
         background: #f3f4f6 !important;
         border-radius: 14px !important;
@@ -40,9 +32,7 @@
         opacity: 1 !important;
     }
 
-    /* ================================
-    BUTTON – BACK
-    ================================ */
+    /* BUTTON – BACK */
     .btn-secondary {
         background: #e5e7eb !important;
         color: #374151 !important;

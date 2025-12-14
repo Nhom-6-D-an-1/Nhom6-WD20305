@@ -1,7 +1,5 @@
 <style>
-/* ===============================
-   PAGE TITLE
-=============================== */
+   /* PAGE TITLE */
 .page-title {
     font-size: 24px;
     font-weight: 700;
@@ -12,9 +10,7 @@
     letter-spacing: -0.3px;
 }
 
-/* ===============================
-   CARD – APPLE STYLE
-=============================== */
+   /* CARD – APPLE STYLE */
 .card {
     background: #ffffff;
     border-radius: 14px;
@@ -23,9 +19,7 @@
     box-shadow: 0 4px 16px rgba(0,0,0,0.04);
 }
 
-/* ===============================
-   SECTION TITLE
-=============================== */
+   /* SECTION TITLE */
 .section-title {
     font-size: 16px;
     font-weight: 700;
@@ -33,9 +27,7 @@
     margin: 18px 0 14px;
 }
 
-/* ===============================
-   FORM
-=============================== */
+   /* FORM */
 .form-label {
     font-size: 13px;
     font-weight: 600;
@@ -51,9 +43,7 @@ textarea.form-control {
     font-size: 14px;
 }
 
-/* ===============================
-   TABLE
-=============================== */
+   /* TABLE */
 .table thead th {
     background: transparent !important;
     color: #6b7280;
@@ -77,9 +67,7 @@ textarea.form-control {
     text-align: center;
 }
 
-/* ===============================
-   BUTTON
-=============================== */
+   /* BUTTON */
 .btn-add {
     background: #dbeafe;
     color: #1e40af;
@@ -115,9 +103,7 @@ textarea.form-control {
         Booking ID: <strong><?= $_SESSION['git_booking_id'] ?></strong>
     </p>
 
-    <!-- ===============================
-         FORM THÊM KHÁCH
-    =============================== -->
+         <!-- FORM THÊM KHÁCH -->
     <div class="card mb-4">
 
         <form method="POST"
@@ -176,9 +162,7 @@ textarea.form-control {
         </form>
     </div>
 
-    <!-- ===============================
-         DANH SÁCH KHÁCH
-    =============================== -->
+         <!-- DANH SÁCH KHÁCH -->
     <div class="card mb-4">
 
         <div class="section-title mt-0">Danh sách khách đã nhập</div>
