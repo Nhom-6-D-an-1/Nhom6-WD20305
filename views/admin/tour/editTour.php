@@ -217,6 +217,14 @@
                               name="description"><?= $data_tour['description'] ?></textarea>
                 </div>
 
-                <!-- Nút -->
+                <!-- Nút hành động -->
                 <div class="d-flex justify-content-end mt-4">
                     <a href="<?= BASE_URL ?>?mode=admin&action=viewstour" 
+                       class="btn btn-secondary btn-lg me-2">
+                        Quay lại
+                    </a>
+
+                    <button class="btn btn-primary btn-lg px-4">
+                        Sửa Tour
+                    </button>
+                </div>

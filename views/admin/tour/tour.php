@@ -2,12 +2,11 @@
     /* ===============================
     PAGE TITLE – Match Dashboard
     =============================== */
-
     .page-title {
-        font-size: 24px !important;
-        font-weight: 700 !important;
-        color: #1f2937 !important; /* màu xám đậm giống Dashboard */
-        margin-bottom: 24px !important;
+        font-size: 24px;
+        font-weight: 700;
+        color: #1f2937;
+        margin-bottom: 24px;
     }
 
     /* ===============================
@@ -22,110 +21,84 @@
     }
 
     /* ===============================
-    BUTTON: ADD NEW (Pastel Blue)
+    BUTTON: ADD NEW
     =============================== */
     .btn-success {
-        background: #e8f0ff !important;
-        border: 1px solid #c5d6ff !important;
-        padding: 10px 18px !important;
-        border-radius: 12px !important;
-        color: #1e40af !important;
-        font-weight: 600 !important;
+        background: #e8f0ff;
+        border: 1px solid #c5d6ff;
+        padding: 10px 18px;
+        border-radius: 12px;
+        color: #1e40af;
+        font-weight: 600;
     }
-
     .btn-success:hover {
-        background: #d6e6ff !important;
+        background: #d6e6ff;
     }
 
     /* ===============================
-    TABLE HEADER – Dashboard Style
+    TABLE
     =============================== */
     .table thead th {
-        background: #f9fafb !important;
-        color: #6b7280 !important;
+        background: #f9fafb;
+        color: #6b7280;
         text-transform: uppercase;
-        font-size: 12px;
+        font-size: 14px;
         font-weight: 600;
-        border-bottom: 1px solid #eceef2 !important;
-        padding: 14px 10px !important;
+        border-bottom: 1px solid #eceef2;
+        padding: 14px 10px;
         letter-spacing: .5px;
     }
 
-    /* ===============================
-    TABLE BODY
-    =============================== */
-    .table tbody tr {
-        border-bottom: 1px solid #f0f1f5;
-        transition: .15s ease;
+    .table tbody td {
+        padding: 16px 12px;
+        font-size: 15px;
+        vertical-align: middle;
+        color: #1f2937;
     }
 
     .table tbody tr:hover {
         background: #f7faff;
     }
 
-    .table tbody td {
-        padding: 16px 12px !important;
-        font-size: 15px;
-        vertical-align: middle !important;
-        color: #1f2937;
-    }
-
-    /* Căn cột */
-    .table tbody td:nth-child(1),
-    .table tbody td:nth-child(3),
-    .table tbody td:nth-child(5) {
-        text-align: left !important;
-    }
-
-    .table tbody td:nth-child(2),
-    .table tbody td:nth-child(4) {
-        text-align: left !important;
-    }
-
     /* ===============================
-    ACTION BUTTONS – Pastel
+    ACTION BUTTONS
     =============================== */
     .btn-sm {
-        padding: 7px 14px !important;
-        border-radius: 12px !important;
-        font-size: 14px !important;
-        font-weight: 600 !important;
-        border: none !important;
-        transition: .2s;
+        padding: 7px 14px;
+        border-radius: 12px;
+        font-size: 14px;
+        font-weight: 600;
+        border: none;
     }
 
-    /* Xem – xanh pastel */
     .btn-info {
-        background: #e5efff !important;
-        color: #2563eb !important;
+        background: #e5efff;
+        color: #2563eb;
     }
     .btn-info:hover {
-        background: #d6e6ff !important;
+        background: #d6e6ff;
     }
 
-    /* Sửa – vàng pastel */
     .btn-primary {
-        background: #fff4d8 !important;
-        color: #b97500 !important;
+        background: #fff4d8;
+        color: #b97500;
     }
     .btn-primary:hover {
-        background: #ffe8b5 !important;
+        background: #ffe8b5;
     }
 
-    /* Xóa – đỏ pastel */
     .btn-danger {
-        background: #ffe5e5 !important;
-        color: #d02f2f !important;
+        background: #ffe5e5;
+        color: #d02f2f;
     }
     .btn-danger:hover {
-        background: #ffd4d4 !important;
+        background: #ffd4d4;
     }
-
 </style>
 
 <div class="container-fluid px-4">
 
-    <h3 class="fw-bold mt-4 mb-4">Danh sách Tour</h3>
+    <h3 class="fw-bold mt-4 mb-4 page-title">Danh sách Tour</h3>
 
     <div class="card mb-4">
         <div class="card-body">
@@ -155,27 +128,33 @@
                         <tr>
                             <td><?= $key + 1 ?></td>
 
-                            <td><?= htmlspecialchars($value['tour_name']) ?></td>
-
-                            <td><?= htmlspecialchars($value['tour_code']) ?></td>
+                            <td>
+                                <?= htmlspecialchars($value['tour_name'] ?? '', ENT_QUOTES, 'UTF-8') ?>
+                            </td>
 
                             <td>
-                                <strong><?= htmlspecialchars($value['version_code']) ?></strong>
+                                <?= htmlspecialchars($value['tour_code'] ?? '', ENT_QUOTES, 'UTF-8') ?>
+                            </td>
+
+                            <td>
+                                <strong><?= htmlspecialchars($value['version_code'] ?? '', ENT_QUOTES, 'UTF-8') ?></strong>
                                 <?php if (!empty($value['season'])): ?>
-                                    <span class="text-muted small"> - <?= htmlspecialchars($value['season']) ?></span>
+                                    <span class="text-muted small">
+                                        - <?= htmlspecialchars($value['season'], ENT_QUOTES, 'UTF-8') ?>
+                                    </span>
                                 <?php endif; ?>
                             </td>
 
                             <td>
                                 <a href="<?= BASE_URL ?>?mode=admin&action=tourDetail&id=<?= $value['tour_id'] ?>"
-                                    class="btn btn-info btn-sm">Xem</a>
+                                   class="btn btn-info btn-sm">Xem</a>
 
                                 <a href="<?= BASE_URL ?>?mode=admin&action=editTour&id=<?= $value['tour_id'] ?>"
-                                    class="btn btn-primary btn-sm">Sửa</a>
+                                   class="btn btn-primary btn-sm">Sửa</a>
 
                                 <a onclick="return confirm('Bạn có muốn xóa tour này?')"
-                                    href="<?= BASE_URL ?>?mode=admin&action=deleteTour&id=<?= $value['tour_id'] ?>"
-                                    class="btn btn-danger btn-sm">Xóa</a>
+                                   href="<?= BASE_URL ?>?mode=admin&action=deleteTour&id=<?= $value['tour_id'] ?>"
+                                   class="btn btn-danger btn-sm">Xóa</a>
                             </td>
                         </tr>
                     <?php endforeach; ?>
@@ -184,8 +163,7 @@
 
             <?php if (!empty($_SESSION['flash_error'])): ?>
                 <div class="alert alert-danger mt-3">
-                    <?= $_SESSION['flash_error'];
-                    unset($_SESSION['flash_error']); ?>
+                    <?= $_SESSION['flash_error']; unset($_SESSION['flash_error']); ?>
                 </div>
             <?php endif; ?>
 
