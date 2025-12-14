@@ -1,7 +1,7 @@
 <h3 class="fw-bold mb-4">Sửa booking</h3>
 
 <div class="form-section">
-    <form method="post" action="<?= BASE_URL ?>?mode=admin&action=updatebooking">
+    <form method="post" action="<?= BASE_URL ?>?mode=admin&action=updatebooking" onsubmit="return validateForm()">
 
         <input type="hidden" name="booking_id" value="<?= htmlspecialchars($booking['booking_id'] ?? '') ?>">
 
@@ -19,18 +19,21 @@
                     <?php endforeach; ?>
                 <?php endif; ?>
             </select>
+            <small class="text-danger" id="departureError"></small>
         </div>
 
         <div class="mb-3">
             <label class="form-label">Tên khách:</label>
             <input type="text" name="customer_name" class="form-control" placeholder="Nhập họ tên khách"
-                value="<?= htmlspecialchars($booking['customer_name'] ?? '') ?>" required>
+                value="<?= htmlspecialchars($booking['customer_name'] ?? '') ?>">
+             <small class="text-danger" id="nameError"></small>
         </div>
 
         <div class="mb-3">
             <label class="form-label">SĐT:</label>
             <input type="text" name="customer_contact" class="form-control" placeholder="090xxxxxxx"
-                value="<?= htmlspecialchars($booking['customer_contact'] ?? '') ?>" required>
+                value="<?= htmlspecialchars($booking['customer_contact'] ?? '') ?>">
+            <small class="text-danger" id="phoneError"></small>
         </div>
 
         <div class="mb-3">
@@ -45,6 +48,7 @@
             <label class="form-label">Tổng tiền:</label>
             <input type="number" step="0.01" name="total_amount" class="form-control" placeholder="Nhập tổng tiền"
                 value="<?= htmlspecialchars((string)($booking['total_amount'] ?? 0)) ?>">
+            <small class="text-danger" id="amountError"></small>
         </div>
 
         <div class="mb-3">
@@ -66,12 +70,41 @@
 </div>
 
 <script>
-    function updatePrice(selectElement) {
-        const selectedOption = selectElement.options[selectElement.selectedIndex];
-        const price = selectedOption.getAttribute('data-price');
-        const amountInput = document.querySelector('input[name="total_amount"]');
-        if (price && price !== '0') {
-            amountInput.value = price;
-        }
+function validateForm() {
+    let ok = true;
+
+    const departure = document.querySelector('[name="departure_id"]');
+    const name = document.querySelector('[name="customer_name"]');
+    const phone = document.querySelector('[name="customer_contact"]');
+    const amount = document.querySelector('[name="total_amount"]');
+
+    const depErr = document.getElementById('departureError');
+    const nameErr = document.getElementById('nameError');
+    const phoneErr = document.getElementById('phoneError');
+    const amountErr = document.getElementById('amountError');
+
+    depErr.innerHTML = nameErr.innerHTML = phoneErr.innerHTML = amountErr.innerHTML = "";
+
+    if (departure.value === "") {
+        depErr.innerHTML = "Vui lòng chọn lịch trình";
+        ok = false;
     }
+
+    if (name.value.trim() === "" || !/[a-zA-ZÀ-ỹ]/.test(name.value)) {
+        nameErr.innerHTML = "Tên không hợp lệ";
+        ok = false;
+    }
+
+    if (!/^0\d{9}$/.test(phone.value)) {
+        phoneErr.innerHTML = "SĐT không hợp lệ";
+        ok = false;
+    }
+
+    if (amount.value !== "" && Number(amount.value) < 0) {
+        amountErr.innerHTML = "Tổng tiền phải ≥ 0";
+        ok = false;
+    }
+
+    return ok;
+}
 </script>

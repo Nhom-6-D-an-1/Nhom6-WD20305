@@ -227,7 +227,7 @@ $tab = $_GET['tab'] ?? 'info';
                     <?php endif; ?>
 
                     <div class="card p-3 mb-4">
-                        <form method="POST"
+                        <form method="POST" onsubmit="return validateStaffForm()"
                             action="<?= BASE_URL ?>?mode=admin&action=departureDetail&id=<?= (int)$_GET['id'] ?>&tab=staff">
                             <input type="hidden" name="departure_id" value="<?= (int)$_GET['id'] ?>">
 
@@ -242,14 +242,17 @@ $tab = $_GET['tab'] ?? 'info';
                                             </option>
                                         <?php endforeach; ?>
                                     </select>
+                                    <small class="text-danger" id="guideError"></small>
                                 </div>
                                 <div class="col-md-3">
                                     <label class="form-label fw-semibold">Vai trò</label>
                                     <input name="role_in_tour" class="form-control" value="Guide">
+                                    <small class="text-danger" id="roleError"></small>
                                 </div>
                                 <div class="col-md-5">
                                     <label class="form-label fw-semibold">Ghi chú</label>
                                     <input name="notes" class="form-control">
+                                    <span class="text-danger small" id="notesError"></span>
                                 </div>
                             </div>
 
@@ -312,7 +315,7 @@ $tab = $_GET['tab'] ?? 'info';
                     <?php endif; ?>
 
                     <div class="card p-3 mb-4">
-                        <form method="POST" action="<?= BASE_URL ?>?mode=admin&action=addService">
+                        <form method="POST" action="<?= BASE_URL ?>?mode=admin&action=addService" onsubmit="return validateServiceForm()">
                             <input type="hidden" name="departure_id" value="<?= $data_departure['departure_id'] ?>">
 
                             <div class="row g-3">
@@ -325,18 +328,22 @@ $tab = $_GET['tab'] ?? 'info';
                                             </option>
                                         <?php endforeach; ?>
                                     </select>
+                                    <small class="text-danger" id="serviceError"></small>
                                 </div>
                                 <div class="col-md-3">
                                     <label class="form-label fw-semibold">Nhà cung cấp</label>
                                     <input name="supplier" class="form-control">
+                                    <small class="text-danger" id="supplierError"></small>
                                 </div>
                                 <div class="col-md-2">
                                     <label class="form-label fw-semibold">Giá</label>
                                     <input name="price" class="form-control" type="number" step="0.01">
+                                    <small class="text-danger" id="priceError"></small>
                                 </div>
                                 <div class="col-md-1">
                                     <label class="form-label fw-semibold">SL</label>
                                     <input name="quantity" class="form-control" type="number" value="1">
+                                    <small class="text-danger" id="quantityError"></small>
                                 </div>
                                 <div class="col-md-2 d-flex align-items-end">
                                     <button class="btn btn-success w-100">
@@ -347,6 +354,7 @@ $tab = $_GET['tab'] ?? 'info';
 
                             <div class="mt-2">
                                 <textarea name="notes" class="form-control" placeholder="Ghi chú"></textarea>
+                                <small class="text-danger" id="serviceNotesError"></small>
                             </div>
                         </form>
                     </div>
@@ -457,3 +465,120 @@ $tab = $_GET['tab'] ?? 'info';
         </div>
     </div>
 </div>
+<script>
+function hasValidText(value) {
+    return /[a-zA-ZÀ-Ỹà-ỹ]/.test(value);
+}
+function validateStaffForm() {
+
+    const guide = document.querySelector('[name="guide_id"]');
+    const role  = document.querySelector('[name="role_in_tour"]');
+    const notes = document.querySelector('[name="notes"]');
+
+    const guideErr = document.getElementById('guideError');
+    const roleErr  = document.getElementById('roleError');
+    const notesErr = document.getElementById('notesError');
+
+    const roleVal  = role.value.trim();
+    const notesVal = notes.value.trim();
+
+    guideErr.innerHTML = roleErr.innerHTML = notesErr.innerHTML = "";
+
+    if (!guide.value) {
+        guideErr.innerHTML = "Vui lòng chọn hướng dẫn viên";
+        guide.focus();
+        return false;
+    }
+
+    if (roleVal === "") {
+        roleErr.innerHTML = "Vui lòng nhập vai trò";
+        role.focus();
+        return false;
+    }
+
+    if (!hasValidText(roleVal)) {
+        roleErr.innerHTML = "Vai trò phải có chữ, không được nhập linh tinh";
+        role.focus();
+        return false;
+    }
+
+    if (notesVal !== "" && !hasValidText(notesVal)) {
+        notesErr.innerHTML = "Ghi chú phải có chữ, không được nhập linh tinh";
+        notes.focus();
+        return false;
+    }
+
+    return true;
+}
+function validateServiceForm() {
+
+    const form = document.querySelector('form[action*="addService"]');
+
+    const service  = form.querySelector('[name="service_id"]');
+    const supplier = form.querySelector('[name="supplier"]');
+    const price    = form.querySelector('[name="price"]');
+    const quantity = form.querySelector('[name="quantity"]');
+    const notes    = form.querySelector('[name="notes"]');
+
+    const serviceErr  = document.getElementById('serviceError');
+    const supplierErr = document.getElementById('supplierError');
+    const priceErr    = document.getElementById('priceError');
+    const quantityErr = document.getElementById('quantityError');
+    const notesErr    = document.getElementById('serviceNotesError');
+
+    serviceErr.innerHTML =
+    supplierErr.innerHTML =
+    priceErr.innerHTML =
+    quantityErr.innerHTML =
+    notesErr.innerHTML = "";
+
+    /* Dịch vụ – bắt buộc */
+    if (!service.value) {
+        serviceErr.innerHTML = "Vui lòng chọn dịch vụ";
+        service.focus();
+        return false;
+    }
+
+    /* Nhà cung cấp – BẮT BUỘC */
+    if (supplier.value.trim() === "") {
+        supplierErr.innerHTML = "Vui lòng nhập nhà cung cấp";
+        supplier.focus();
+        return false;
+    }
+
+    if (!hasValidText(supplier.value)) {
+        supplierErr.innerHTML = "Nhà cung cấp phải có chữ, không được nhập linh tinh";
+        supplier.focus();
+        return false;
+    }
+
+    /* Giá – BẮT BUỘC */
+    if (price.value.trim() === "") {
+        priceErr.innerHTML = "Vui lòng nhập giá";
+        price.focus();
+        return false;
+    }
+
+    if (Number(price.value) <= 0) {
+        priceErr.innerHTML = "Giá phải lớn hơn 0";
+        price.focus();
+        return false;
+    }
+
+    /* Số lượng – bắt buộc */
+    if (quantity.value === "" || Number(quantity.value) <= 0) {
+        quantityErr.innerHTML = "Số lượng phải lớn hơn 0";
+        quantity.focus();
+        return false;
+    }
+
+    /* Ghi chú – không bắt buộc */
+    if (notes.value.trim() !== "" && !hasValidText(notes.value)) {
+        notesErr.innerHTML = "Ghi chú phải có chữ, không được nhập linh tinh";
+        notes.focus();
+        return false;
+    }
+
+    return true;
+}
+</script>
