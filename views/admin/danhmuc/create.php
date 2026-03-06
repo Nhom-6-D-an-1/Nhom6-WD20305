@@ -1,15 +1,12 @@
 <style>
-    /* ================================
-   FORM TITLE
-    ================================ */
+   /* FORM TITLE */
     .fw-bold {
         font-size: 26px;
         color: #1f2937;
     }
 
-    /* ================================
-    CARD
-    ================================ */
+
+    /* CARD */
     .card {
         background: #ffffff;
         border-radius: 16px;
@@ -17,18 +14,14 @@
         box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
     }
 
-    /* ================================
-    LABEL
-    ================================ */
+    /* LABEL */
     .form-label {
         font-weight: 600;
         color: #374151;
         margin-bottom: 6px;
     }
 
-    /* ================================
-    INPUT + SELECT
-    ================================ */
+    /* INPUT + SELECT */
     .form-control,
     .form-select {
         border-radius: 14px !important;
@@ -46,9 +39,7 @@
         box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15) !important;
     }
 
-    /* ================================
-    BUTTONS
-    ================================ */
+    /* BUTTONS */
 
     /* Lưu */
     .btn-primary {

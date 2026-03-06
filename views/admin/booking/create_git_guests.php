@@ -215,9 +215,7 @@ textarea.form-control {
 
     </div>
 
-    <!-- ===============================
-         FINISH BOOKING
-    =============================== -->
+         <!-- FINISH BOOKING -->
     <form method="POST"
           action="<?= BASE_URL ?>?mode=admin&action=finishGit"
           class="text-end">
