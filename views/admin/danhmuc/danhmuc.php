@@ -1,7 +1,4 @@
 <style>
-/* ================================
-   GLOBAL STYLE – Match Dashboard
-================================= */
 :root {
     --primary: #3b82f6;
     --primary-soft: #e8f0ff;
@@ -13,9 +10,7 @@
     --shadow: 0 4px 14px rgba(0,0,0,0.06);
 }
 
-/* ================================
-   PAGE TITLE
-================================= */
+   /* PAGE TITLE */
 .page-title {
     font-size: 28px;
     font-weight: 700;
@@ -23,9 +18,7 @@
     color: var(--text-dark);
 }
 
-/* ================================
-   CARD
-================================= */
+   /* CARD */
 .card {
     background: var(--bg-card);
     border-radius: var(--radius);
@@ -34,9 +27,7 @@
     padding: 22px;
 }
 
-/* ================================
-   BUTTON: ADD (match dashboard button)
-================================= */
+   /* BUTTON: ADD (match dashboard button) */
 .btn-success {
     background: var(--primary-soft) !important;
     border: none !important;
@@ -52,9 +43,7 @@
     background: #dce7ff !important;
 }
 
-/* ================================
-   TABLE STYLING
-================================= */
+   /* TABLE STYLING */
 .table-wrapper {
     border-radius: var(--radius);
     overflow: hidden;
@@ -115,9 +104,7 @@
     color: #475569 !important;
 }
 
-/* ================================
-   ACTION BUTTONS (Tone xanh – pastel)
-================================= */
+   /* ACTION BUTTONS (Tone xanh – pastel) */
 .btn-sm {
     padding: 8px 15px !important;
     border-radius: 12px !important;

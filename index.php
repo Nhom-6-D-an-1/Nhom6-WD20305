@@ -43,3 +43,5 @@ switch ($mode) {
         require_once './routes/auth.php';
         break;
 }
+
+// update git profile
