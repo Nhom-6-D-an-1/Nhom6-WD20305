@@ -64,7 +64,7 @@ match ($action) {
     'deleteGitGuest'      => (new AdminController())->deleteGitGuest(),
     'finishGit'      => (new AdminController())->finishGit(),
     'deleteGuest'      => (new AdminController())->deleteGuest(),
-
+    
     'guestList'     => (new AdminController())->guestList(),
 
 
@@ -93,6 +93,8 @@ match ($action) {
     'addService'      => (new DepartureController())->addService(),
     'deleteService'      => (new DepartureController())->deleteService(),
     'addExtraCost'      => (new DepartureController())->addExtraCost(),
+    'addGuide' => (new DepartureController())->addGuide(),
+
 
 
     // Logout 
