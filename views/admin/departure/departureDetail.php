@@ -459,7 +459,6 @@
         color: #1f2937;
         letter-spacing: .3px;
     }
-
 </style>
 
 <?php
@@ -567,7 +566,7 @@ $tab = $_GET['tab'] ?? 'info';
                     <h5 class="fw-bold text-primary mb-3" style="font-size: 18px;">Danh sách booking</h5>
 
                     <div class="table-card">
-                            <table class="table booking-table">
+                        <table class="table booking-table">
                             <thead>
                                 <tr>
                                     <th style="width: 60px;">#</th>
@@ -694,6 +693,7 @@ $tab = $_GET['tab'] ?? 'info';
 
                     <div class="card p-3 mb-4">
                         <form method="POST" onsubmit="return validateStaffForm()" action="?mode=admin&action=addGuide&id=<?= $_GET['id'] ?>&tab=staff">
+                            <input type="hidden" name="departure_id" value="<?= $_GET['id'] ?>">
                             <div class="row g-3">
                                 <div class="col-md-4">
                                     <label class="form-label">Hướng dẫn viên</label>
@@ -767,7 +767,7 @@ $tab = $_GET['tab'] ?? 'info';
                     <h5 class="section-title">Phân bổ dịch vụ</h5>
 
                     <div class="card p-3 mb-4">
-                        <form method="POST" onsubmit="return validateServiceForm()" action="?mode=admin&action=addService">
+                        <form method="POST" action="?mode=admin&action=addService&id=<?= $data_departure['departure_id'] ?>">
                             <input type="hidden" name="departure_id" value="<?= $data_departure['departure_id'] ?>">
 
                             <div class="row g-3">
@@ -981,119 +981,121 @@ $tab = $_GET['tab'] ?? 'info';
     </div>
 </div>
 <script>
-function hasValidText(value) {
-    return /^[^0-9]*[a-zA-ZÀ-Ỹà-ỹ][^0-9]*$/.test(value);
-}
-function validateStaffForm() {
-
-    const guide = document.querySelector('[name="guide_id"]');
-    const role  = document.querySelector('[name="role_in_tour"]');
-    const notes = document.querySelector('[name="notes"]');
-
-    const guideErr = document.getElementById('guideError');
-    const roleErr  = document.getElementById('roleError');
-    const notesErr = document.getElementById('notesError');
-
-    const roleVal  = role.value.trim();
-    const notesVal = notes.value.trim();
-
-    guideErr.innerHTML = roleErr.innerHTML = notesErr.innerHTML = "";
-
-    if (!guide.value) {
-        guideErr.innerHTML = "Vui lòng chọn hướng dẫn viên";
-        guide.focus();
-        return false;
+    function hasValidText(value) {
+        return /^[^0-9]*[a-zA-ZÀ-Ỹà-ỹ][^0-9]*$/.test(value);
     }
 
-    if (roleVal === "") {
-        roleErr.innerHTML = "Vui lòng nhập vai trò";
-        role.focus();
-        return false;
+    function validateStaffForm() {
+
+        const guide = document.querySelector('[name="guide_id"]');
+        const role = document.querySelector('[name="role_in_tour"]');
+        const notes = document.querySelector('[name="notes"]');
+
+        const guideErr = document.getElementById('guideError');
+        const roleErr = document.getElementById('roleError');
+        const notesErr = document.getElementById('notesError');
+
+        const roleVal = role.value.trim();
+        const notesVal = notes.value.trim();
+
+        guideErr.innerHTML = roleErr.innerHTML = notesErr.innerHTML = "";
+
+        if (!guide.value) {
+            guideErr.innerHTML = "Vui lòng chọn hướng dẫn viên";
+            guide.focus();
+            return false;
+        }
+
+        if (roleVal === "") {
+            roleErr.innerHTML = "Vui lòng nhập vai trò";
+            role.focus();
+            return false;
+        }
+
+        if (!hasValidText(roleVal)) {
+            roleErr.innerHTML = "Vai trò phải có chữ, không được nhập linh tinh";
+            role.focus();
+            return false;
+        }
+
+        if (notesVal !== "" && !hasValidText(notesVal)) {
+            notesErr.innerHTML = "Ghi chú phải có chữ, không được nhập linh tinh";
+            notes.focus();
+            return false;
+        }
+
+        return true;
     }
 
-    if (!hasValidText(roleVal)) {
-        roleErr.innerHTML = "Vai trò phải có chữ, không được nhập linh tinh";
-        role.focus();
-        return false;
+    function validateServiceForm() {
+
+        const form = document.querySelector('form[action*="addService"]');
+
+        const service = form.querySelector('[name="service_id"]');
+        const supplier = form.querySelector('[name="supplier"]');
+        const price = form.querySelector('[name="price"]');
+        const quantity = form.querySelector('[name="quantity"]');
+        const notes = form.querySelector('[name="notes"]');
+
+        const serviceErr = document.getElementById('serviceError');
+        const supplierErr = document.getElementById('supplierError');
+        const priceErr = document.getElementById('priceError');
+        const quantityErr = document.getElementById('quantityError');
+        const notesErr = document.getElementById('serviceNotesError');
+
+        serviceErr.innerHTML =
+            supplierErr.innerHTML =
+            priceErr.innerHTML =
+            quantityErr.innerHTML =
+            notesErr.innerHTML = "";
+
+        /* Dịch vụ – bắt buộc */
+        if (!service.value) {
+            serviceErr.innerHTML = "Vui lòng chọn dịch vụ";
+            service.focus();
+            return false;
+        }
+
+        /* Nhà cung cấp – BẮT BUỘC */
+        if (supplier.value.trim() === "") {
+            supplierErr.innerHTML = "Vui lòng nhập nhà cung cấp";
+            supplier.focus();
+            return false;
+        }
+
+        if (!hasValidText(supplier.value)) {
+            supplierErr.innerHTML = "Nhà cung cấp phải có chữ, không được nhập linh tinh";
+            supplier.focus();
+            return false;
+        }
+
+        /* Giá – BẮT BUỘC */
+        if (price.value.trim() === "") {
+            priceErr.innerHTML = "Vui lòng nhập giá";
+            price.focus();
+            return false;
+        }
+
+        if (Number(price.value) <= 0) {
+            priceErr.innerHTML = "Giá phải lớn hơn 0";
+            price.focus();
+            return false;
+        }
+
+        /* Số lượng – bắt buộc */
+        if (quantity.value === "" || Number(quantity.value) <= 0) {
+            quantityErr.innerHTML = "Số lượng phải lớn hơn 0";
+            quantity.focus();
+            return false;
+        }
+
+        /* Ghi chú – không bắt buộc */
+        if (notes.value.trim() !== "" && !hasValidText(notes.value)) {
+            notesErr.innerHTML = "Ghi chú phải có chữ, không được nhập linh tinh";
+            notes.focus();
+            return false;
+        }
+
+        return true;
     }
-
-    if (notesVal !== "" && !hasValidText(notesVal)) {
-        notesErr.innerHTML = "Ghi chú phải có chữ, không được nhập linh tinh";
-        notes.focus();
-        return false;
-    }
-
-    return true;
-}
-function validateServiceForm() {
-
-    const form = document.querySelector('form[action*="addService"]');
-
-    const service  = form.querySelector('[name="service_id"]');
-    const supplier = form.querySelector('[name="supplier"]');
-    const price    = form.querySelector('[name="price"]');
-    const quantity = form.querySelector('[name="quantity"]');
-    const notes    = form.querySelector('[name="notes"]');
-
-    const serviceErr  = document.getElementById('serviceError');
-    const supplierErr = document.getElementById('supplierError');
-    const priceErr    = document.getElementById('priceError');
-    const quantityErr = document.getElementById('quantityError');
-    const notesErr    = document.getElementById('serviceNotesError');
-
-    serviceErr.innerHTML =
-    supplierErr.innerHTML =
-    priceErr.innerHTML =
-    quantityErr.innerHTML =
-    notesErr.innerHTML = "";
-
-    /* Dịch vụ – bắt buộc */
-    if (!service.value) {
-        serviceErr.innerHTML = "Vui lòng chọn dịch vụ";
-        service.focus();
-        return false;
-    }
-
-    /* Nhà cung cấp – BẮT BUỘC */
-    if (supplier.value.trim() === "") {
-        supplierErr.innerHTML = "Vui lòng nhập nhà cung cấp";
-        supplier.focus();
-        return false;
-    }
-
-    if (!hasValidText(supplier.value)) {
-        supplierErr.innerHTML = "Nhà cung cấp phải có chữ, không được nhập linh tinh";
-        supplier.focus();
-        return false;
-    }
-
-    /* Giá – BẮT BUỘC */
-    if (price.value.trim() === "") {
-        priceErr.innerHTML = "Vui lòng nhập giá";
-        price.focus();
-        return false;
-    }
-
-    if (Number(price.value) <= 0) {
-        priceErr.innerHTML = "Giá phải lớn hơn 0";
-        price.focus();
-        return false;
-    }
-
-    /* Số lượng – bắt buộc */
-    if (quantity.value === "" || Number(quantity.value) <= 0) {
-        quantityErr.innerHTML = "Số lượng phải lớn hơn 0";
-        quantity.focus();
-        return false;
-    }
-
-    /* Ghi chú – không bắt buộc */
-    if (notes.value.trim() !== "" && !hasValidText(notes.value)) {
-        notesErr.innerHTML = "Ghi chú phải có chữ, không được nhập linh tinh";
-        notes.focus();
-        return false;
-    }
-
-    return true;
-}
 </script>
